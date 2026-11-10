@@ -1,0 +1,9 @@
+Version 0.1.0 (2026-11-10)
+- First release: buy homes from shacks to estates on markets that are not pirate or Luddic Path
+- Prices follow market size, stability and the planet: mild, habitable worlds without pollution cost the most
+- Rent comes in every month minus the local tariff, with five rent settings from Charity to Greedy
+- Cheap rent earns reputation with the owners, greedy rent costs it and wears the home faster
+- Homes wear out over about two cycles, are condemned when ruined, and are repaired with credits
+- Sell any time from the Manage (Y) button, minus a broker fee and the tariff
+- On your own colonies homes cost half with no tariff, and NPC buyers pay sales, property tax, growth and stability
+- Raids and bombardment damage homes, saturation bombardment and lost colonies destroy them

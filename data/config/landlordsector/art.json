@@ -1,0 +1,14 @@
+{
+	# Exterior pictures for the buy screen and the Manage page, by tier and planet climate.
+	# Climates: station, temperate, arid, cold, ocean, jungle, hostile.
+	# A climate with an empty list uses the tier's "default" pictures. Each list may hold one or two
+	# pictures, and a listing picks one at random. Pictures are 512 x 320 PNG.
+	"exteriors":{
+		"shack":{"default":["graphics/landlordsector/exteriors/shack.png"]},
+		"studio":{"default":["graphics/landlordsector/exteriors/studio.png"]},
+		"small_house":{"default":["graphics/landlordsector/exteriors/small_house.png"]},
+		"house":{"default":["graphics/landlordsector/exteriors/house.png"]},
+		"villa":{"default":["graphics/landlordsector/exteriors/villa.png"]},
+		"estate":{"default":["graphics/landlordsector/exteriors/estate.png"]}
+	}
+}

@@ -1,0 +1,5 @@
+fieldID,fieldName,fieldType,defaultValue,secondaryValue,fieldDescription,minValue,maxValue,tab
+lls_header_rent,Rent Header,Header,Rent,,,,,
+lls_rentMult,Rent multiplier,Double,1.0,,"Multiplies all rent. 1 is the normal rate, 2 doubles every payment.",0,10,
+lls_header_limits,Limits Header,Header,Limits,,,,,
+lls_maxProperties,Most properties you can own,Int,0,,"The most properties you can own at once. 0 means no limit.",0,1000,

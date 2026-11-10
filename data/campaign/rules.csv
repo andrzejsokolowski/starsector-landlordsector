@@ -1,0 +1,6 @@
+id,trigger,conditions,script,text,options
+# The real estate option on the main menu of every market that sells homes (not pirate, not Luddic Path).
+lls_add_option,PopulateOptions,"$hasMarket
+$menuState == main
+LLS_CanBuy",,,15:lls_open_buy:Browse real estate,
+lls_open_selected,DialogOptionSelected,$option == lls_open_buy,LLS_OpenBuyScreen,,

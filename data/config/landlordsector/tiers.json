@@ -1,0 +1,51 @@
+{
+	# Property tiers, cheapest first. min and max are the base price range in credits, before the
+	# market's multiplier (0.25x to 4x). rentShare is the monthly rent at the Normal setting, as a share
+	# of the value. minSize is the smallest market that lists the tier. weight is how often it is rolled.
+	"tiers":[
+		{"id":"shack", "name":"Shack", "min":1000, "max":10000, "rentShare":0.03, "minSize":3, "slots":1, "weight":30},
+		{"id":"studio", "name":"Studio", "min":30000, "max":50000, "rentShare":0.025, "minSize":3, "slots":2, "weight":25},
+		{"id":"small_house", "name":"Small house", "min":100000, "max":300000, "rentShare":0.02, "minSize":4, "slots":3, "weight":20},
+		{"id":"house", "name":"House", "min":500000, "max":1000000, "rentShare":0.015, "minSize":5, "slots":4, "weight":14},
+		{"id":"villa", "name":"Villa", "min":1500000, "max":2500000, "rentShare":0.012, "minSize":6, "slots":6, "weight":8},
+		{"id":"estate", "name":"Estate", "min":3000000, "max":5000000, "rentShare":0.01, "minSize":7, "slots":8, "weight":4}
+	],
+	"economy":{
+		# Share of the full value that a repair from ruin to new costs.
+		"repairFullCost":0.10,
+		# Months from new to condemned at the Normal rent setting with no repairs.
+		"wearMonths":24,
+		# Value of a condemned property, as a share of its full value.
+		"landValue":0.2,
+		# Broker fee on a sale, on top of the market's tariff.
+		"brokerFee":0.05,
+		# Price share the player pays on their own colonies (no tariff there).
+		"ownColonyPrice":0.5,
+		# Days until a market rolls its listings again.
+		"listingRefreshDays":90,
+		# Monthly chance that NPC buyers buy one unsold listing on a player colony.
+		"npcBuyChance":0.15,
+		# Share of the price the colony earns when NPC buyers buy a home there.
+		"npcSaleShare":0.5,
+		# Monthly property tax on NPC homes in player colonies, as a share of their value.
+		"propertyTax":0.005,
+		# NPC homes a player colony can hold per point of market size.
+		"homesPerSize":3,
+		"stabilityPerHome":0.05,
+		"stabilityMax":1.0,
+		"growthPerHome":0.25,
+		"growthMax":5.0,
+		# Landlord tipping: chance per rent payment, and the tip as a share of that payment.
+		"tipChance":0.01,
+		"tipShare":0.1,
+		# Monthly random price wobble (one standard deviation) and its limits.
+		"driftPerMonth":0.02,
+		"driftMin":0.7,
+		"driftMax":1.4,
+		# Condition lost per month while any building on the market is disrupted.
+		"disruptionWear":0.05,
+		# Condition lost when the player raids or bombs the market.
+		"raidWear":0.1,
+		"tacticalBombWear":0.3
+	}
+}
