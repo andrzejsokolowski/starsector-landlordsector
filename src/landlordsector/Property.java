@@ -47,7 +47,7 @@ public class Property {
     public boolean screeningService;
     /** Decor added by tenants (new furniture, a garden) or taken away (graffiti). */
     public float decorBonus;
-    /** The home's name, for example "Verdant Cottage". Named on load for homes from before 0.3.2. */
+    /** The home's name, for example "Leafy Cottage". Named on load for homes from before 0.3.2. */
     public String name;
     /** Newest last. Each entry: flag (+, - or space), date, the colored part, the rest, split by tabs. */
     public List<String> log;
@@ -138,7 +138,7 @@ public class Property {
         return m;
     }
 
-    /** "Verdant Cottage on Jangala", or the tier name for an unnamed home. */
+    /** "Leafy Cottage on Jangala", or the tier name for an unnamed home. */
     public String displayName() {
         MarketAPI m = market();
         String n = name != null && !name.isEmpty() ? name : tier().name;

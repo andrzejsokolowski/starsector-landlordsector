@@ -9,7 +9,7 @@ import com.fs.starfarer.api.util.Misc;
 /**
  * Messages: one line in the fleet log, and for big news a message in the intel screen too. The event part of
  * a line is colored (red for bad, green for good) and the home's name stays plain, as Andrzej asked:
- * "(red) Burglars broke into (red end) Verdant Cottage on Jangala".
+ * "(red) Burglars broke into (red end) Leafy Cottage on Jangala".
  */
 public final class Notify {
 

@@ -14,7 +14,7 @@ Requires LunaLib and OddiszCommons.
   stat sheet.
 - Bigger markets list better homes: shacks and studios from size 3, small houses from 4, houses from 5,
   villas from 6 and estates from 7. New homes come on the market every 90 days.
-- Every home has a name, often taken from its traits (names.json), for example Verdant Cottage.
+- Every home has a name, often taken from its traits (names.json), for example Leafy Cottage.
 - Base prices: shack 1k to 10k, studio 30k to 50k, small house 100k to 300k, house 500k to 1M,
   villa 1.5M to 2.5M, estate 3M to 5M.
 - The market stretches those prices from a quarter to four times. Size 5 and 6 markets with 100%
@@ -31,9 +31,10 @@ Requires LunaLib and OddiszCommons.
 - Each tenant has 2 or 3 traits that fit where they come from (tenant_traits.json): pirates bring vandals,
   filthy tenants and late payers, Tri-Tachyon brings the prosperous and the tidy.
 - Wealth (E to S) fits one tier: E a shack, D a studio, C a small house, B a house, A a villa, S an estate.
-  One tier dearer is a stretch (-20 happiness), two or more they can't pay for. Two tiers cheaper is beneath
-  them (-15), three or more they won't live in. The rent setting moves the price by up to a tier (Charity -1,
-  Low -1/2, High +1/2, Greedy +1). Applicants for an advert fit the home; the market's faction tilts their wealth.
+  A home one tier above their wealth is hard to pay for (-20 happiness), two or more
+  above they can't afford. A home two tiers below is not good enough for them (-15), three or more below they
+  refuse. Low rent makes a home easier to afford: Charity makes it cost like a home one tier cheaper, Greedy like
+  one tier more expensive, Low and High half as much. Applicants for an advert fit the home; the market's faction tilts their wealth.
 - You see one trait of an applicant until you pay to screen them. A monthly screening service makes bad
   traits rarer.
 - Homes roll 0 to 3 traits of their own (house_traits.json). Tenants like (+8 happiness) or hate (-15)

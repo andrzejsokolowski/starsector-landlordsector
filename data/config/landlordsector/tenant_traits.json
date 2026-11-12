@@ -34,7 +34,7 @@
 		{"id":"heat_lover", "name":"Loves heat", "weight":1, "likes":["heat"], "dislikes":["cold"]},
 		{"id":"water_lover", "name":"Loves water", "weight":1, "likes":["water","view"]},
 		{"id":"history_buff", "name":"History buff", "weight":1, "likes":["history"]},
-		{"id":"mycophile", "name":"Mycophile", "weight":0.5, "likes":["fungus"]}
+		{"id":"mycophile", "name":"Loves mushrooms", "weight":0.5, "likes":["fungus"]}
 	],
 	# Base wealth (1 to 6) of tenants from each faction. Others are 3.
 	"wealth":{"pirates":1, "luddic_path":1, "luddic_church":2, "independent":2, "sindrian_diktat":2, "hegemony":3, "persean":3, "tritachyon":4}

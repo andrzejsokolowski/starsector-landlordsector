@@ -168,11 +168,11 @@ public final class PropertyStats {
             s.notes.add(new Note("Wealth " + letter + " can't pay for this home at " + setting.label + " rent (-"
                     + Math.round(price) + ")", false));
         } else if (price > 0f) {
-            s.notes.add(new Note("Wealth " + letter + " finds this home at " + setting.label + " rent a stretch (-"
+            s.notes.add(new Note("Wealth " + letter + " has trouble paying for this home at " + setting.label + " rent (-"
                     + Math.round(price) + ")", false));
         }
         if (beneath > 0f) {
-            s.notes.add(new Note("Wealth " + letter + " thinks this home is beneath them (-" + Math.round(beneath) + ")",
+            s.notes.add(new Note("Wealth " + letter + " thinks this home is not good enough for them (-" + Math.round(beneath) + ")",
                     false));
         }
         if (t.mood >= 5f) s.notes.add(new Note("In a good mood", true));

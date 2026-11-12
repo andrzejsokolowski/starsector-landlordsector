@@ -96,3 +96,7 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
 - 0.3.4 (Andrzej's notes after 0.3.3): game text uses the % sign, never the word "percent" (only LunaSettings.csv
   must avoid a bare %). Every event in tenant_events.json has a `kind` named in `"kinds"`; tenant trait tooltips
   say "More likely to have good/bad house events about <kind>" (`Tips.eventKinds`) and never name an event.
+
+- 0.3.5 (Andrzej: "use normal english words"): every name and line the player reads uses common everyday words.
+  No "dearer", "a stretch", "beneath them", no rare words in trait names (Sporous, Storied, Mycophile) or home
+  names (Hovel, Grange, Rime). Trait ids stay the same (saves keep ids), only the names changed.

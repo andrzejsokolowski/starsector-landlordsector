@@ -1,3 +1,9 @@
+Version 0.3.5 (2026-11-12)
+- Plain words in game text: "dearer", "a stretch" and "beneath them" are gone from the wealth tooltip and happiness notes
+- House traits renamed to common words: Frostbitten is Freezing, Paper-walled is Thin-walled, Storied is Historic, Sporous is Mushroomy, Tidepooled is Pondside, Petal-strewn is Blossoming, Verdant is Leafy
+- The Mycophile tenant trait is now Loves mushrooms
+- New home names use common words only (no Hovel, Grange, Rime and the like); homes you already have keep their names
+
 Version 0.3.4 (2026-11-12)
 - Game text shows the % sign instead of the word "percent"
 - Tenant trait tooltips no longer name single events; they say which kind of house event gets likelier, for example good events about money

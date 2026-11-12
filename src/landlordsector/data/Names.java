@@ -50,7 +50,7 @@ public final class Names {
         return out;
     }
 
-    /** A name for a home of this tier with these traits, for example "Verdant Cottage". */
+    /** A name for a home of this tier with these traits, for example "Leafy Cottage". */
     public static String make(String tierId, List<String> traits, Random random) {
         List<String> adj = new ArrayList<>();
         if (traits != null) {

@@ -128,7 +128,7 @@ public final class Tips {
             "A home two tiers below that is not good enough for them: -" + Math.round(TenantRules.BENEATH)
                     + " happiness. Three or more tiers below, they refuse to live there.",
             "Low rent makes a home easier to afford, high rent harder. Charity makes it cost like a home one"
-                    + " tier cheaper, Greedy like one tier dearer. Low and High count half as much."};
+                    + " tier cheaper, Greedy like one tier more expensive. Low and High count half as much."};
     }
 
     public static List<String[]> headhunter(FinderDefs.Def d) {

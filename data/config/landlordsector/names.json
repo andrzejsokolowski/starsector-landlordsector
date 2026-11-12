@@ -1,45 +1,45 @@
 {
-	# Property names: an adjective and a noun, for example "Verdant Cottage". The adjective comes from one
+	# Property names: an adjective and a noun, for example "Leafy Cottage". The adjective comes from one
 	# of the home's traits when it has any (byTrait, by house trait id), otherwise from "adjectives".
 	# The noun comes from the home's tier.
 	"nouns":{
-		"shack":["Shack", "Hut", "Hovel", "Shanty", "Shed", "Burrow"],
+		"shack":["Shack", "Hut", "Shanty", "Shed", "Box", "Burrow"],
 		"studio":["Studio", "Loft", "Nook", "Den", "Flat", "Perch"],
-		"small_house":["Cottage", "Bungalow", "Lodge", "Cabin", "Abode", "Haven"],
-		"house":["House", "Residence", "Homestead", "Abode", "Hearth", "Dwelling"],
-		"villa":["Villa", "Retreat", "Manor", "Pavilion", "Terrace", "Chateau"],
-		"estate":["Estate", "Hall", "Palace", "Court", "Citadel", "Grange"]
+		"small_house":["Cottage", "Bungalow", "Lodge", "Cabin", "Home", "Haven"],
+		"house":["House", "Residence", "Homestead", "Home", "Place", "Townhouse"],
+		"villa":["Villa", "Retreat", "Manor", "Mansion", "Terrace", "Chateau"],
+		"estate":["Estate", "Hall", "Palace", "Court", "Citadel", "Castle"]
 	},
 	"adjectives":["Gentle", "Humble", "Golden", "Silver", "Crooked", "Lucky", "Quiet", "Amber", "Copper", "Ivory",
-		"Hollow", "Velvet", "Lantern", "Starward", "Meridian", "Distant", "Brass", "Cobalt", "Willow", "Crimson"],
+		"Hollow", "Velvet", "Lantern", "Starry", "Sunny", "Distant", "Brass", "Cobalt", "Willow", "Crimson"],
 	"byTrait":{
 		"flowers":["Blossom", "Floral", "Primrose", "Meadow"],
-		"garden":["Green", "Verdant", "Ivy", "Orchard"],
+		"garden":["Green", "Leafy", "Ivy", "Orchard"],
 		"ocean_view":["Tidal", "Azure", "Coral", "Breakwater"],
 		"lakeside":["Lakeside", "Reed", "Still Water", "Heron"],
 		"mountain_view":["Summit", "Highland", "Cliffside", "Ridge"],
 		"starview":["Starlit", "Orbital", "Zenith", "Nova"],
 		"recycled_air":["Sealed", "Pressurized", "Filtered"],
 		"lava_lake":["Ember", "Cinder", "Ashen", "Molten"],
-		"frozen_pipes":["Frost", "Rime", "Icebound"],
-		"heated_floors":["Hearthwarm", "Snug", "Ember"],
+		"frozen_pipes":["Frost", "Icy", "Frozen"],
+		"heated_floors":["Warm", "Snug", "Cozy"],
 		"damp":["Misty", "Mossy", "Dewy"],
 		"smog":["Smoky", "Sooty", "Grey"],
-		"dust":["Dune", "Sandy", "Dustwind"],
-		"spaceport":["Thunder", "Launchside", "Roaring"],
+		"dust":["Dune", "Sandy", "Dusty"],
+		"spaceport":["Thunder", "Rocket", "Roaring"],
 		"quiet_street":["Gentle", "Hushed", "Serene", "Calm"],
 		"market_nearby":["Market", "Merchant", "Bazaar"],
 		"thin_walls":["Paper", "Narrow", "Thin"],
 		"cramped":["Tiny", "Snug", "Pocket"],
 		"reinforced":["Bastion", "Iron", "Steadfast"],
 		"bars":["Iron", "Barred", "Gated"],
-		"leaky_roof":["Drizzle", "Rainy", "Weeping"],
+		"leaky_roof":["Leaky", "Rainy", "Soggy"],
 		"new_plumbing":["Polished", "Gleaming", "Fresh"],
 		"ruins":["Old", "Ancient", "Relic", "Domain"],
-		"fungus_cellar":["Mushroom", "Sporelight", "Toadstool"],
-		"lobster_pond":["Lobster", "Claw", "Shellback"],
+		"fungus_cellar":["Mushroom", "Fungus", "Toadstool"],
+		"lobster_pond":["Lobster", "Claw", "Shell"],
 		"pool":["Poolside", "Lagoon", "Sapphire"],
 		"blossoms":["Sakura", "Petal", "Cherry"],
-		"lead_lined":["Leaden", "Shielded", "Bunker"]
+		"lead_lined":["Lead", "Shielded", "Bunker"]
 	}
 }
