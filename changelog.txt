@@ -1,3 +1,7 @@
+Version 0.2.1 (2026-11-12)
+- The large picture on the property screens now lines up with the stat sheet, from the home's name to the end of the Security row
+- Shorter rent line on the agent's screen, so it fits on one line
+
 Version 0.2.0 (2026-11-12)
 - Homes are now sold by property agents in market comm directories, not from a market menu option
 - About a quarter of markets have an agent at a time (more on big markets), each stays 3 to 6 months; your own colonies always have one

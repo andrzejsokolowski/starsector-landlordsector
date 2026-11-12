@@ -64,6 +64,11 @@ This mod is under the CC0 (Creative Commons Zero) License, allowing you to do wh
 [/spoiler]
 
 [spoiler=Version log]
+[b]0.2.1[/b]
+[list]
+[li]The large picture on the property screens now lines up with the stat sheet, from the home's name to the end of the Security row.[/li]
+[li]Shorter rent line on the agent's screen, so it fits on one line.[/li]
+[/list]
 [b]0.2.0[/b]
 [list]
 [li]Homes are now sold by property agents in market comm directories, not from a market menu option.[/li]

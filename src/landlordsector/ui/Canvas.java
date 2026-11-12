@@ -331,10 +331,30 @@ public abstract class Canvas implements CustomUIPanelPlugin {
         quad(x + w - 1f, y, 1f, h, c, alpha);
     }
 
+    /** Pictures are drawn as 16 by 10 and cropped from the middle to fit a box of another shape. */
+    public static final float PICTURE_ASPECT = 1.6f;
+
     protected void sprite(String path, float x, float y, float w, float h, float alpha) {
-        if (path == null) return;
+        if (path == null || w <= 0f || h <= 0f) return;
         SpriteAPI s = Global.getSettings().getSprite(path);
         if (s == null) return;
+        // Absolute texture window every frame, so a shared sprite never drifts.
+        float tw = s.getTextureWidth();
+        float th = s.getTextureHeight();
+        float box = w / h;
+        if (box > PICTURE_ASPECT) {
+            float keep = PICTURE_ASPECT / box;
+            s.setTexX(0f);
+            s.setTexWidth(tw);
+            s.setTexY(th * (1f - keep) / 2f);
+            s.setTexHeight(th * keep);
+        } else {
+            float keep = box / PICTURE_ASPECT;
+            s.setTexX(tw * (1f - keep) / 2f);
+            s.setTexWidth(tw * keep);
+            s.setTexY(0f);
+            s.setTexHeight(th);
+        }
         s.setSize(w, h);
         s.setAlphaMult(alpha);
         s.setNormalBlend();

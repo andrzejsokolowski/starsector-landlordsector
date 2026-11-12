@@ -48,15 +48,22 @@ public abstract class PropertyView extends Canvas {
         return 8f + 26f + 24f + 5 * ROW + s.extra.size() * ROW;
     }
 
+    /** Width the sheet's text uses: the left column, then the right column up to the end of its numbers. */
+    protected static float contentWidth(float w) {
+        return w / 2f + 10f + 278f;
+    }
+
     /**
-     * The picture (at most {@code maxImgH} tall, centred) and the stat sheet under it.
+     * The picture and the stat sheet under it. The picture spans the sheet's text, from the title on the
+     * left to the end of the Security row on the right, at most {@code maxImgH} tall (cropped from the
+     * middle when the box is flatter than 16 by 10).
      *
      * @return the y just below the sheet
      */
     protected float sheet(Sheet s, float x, float y, float w, float maxImgH) {
-        float imgH = Math.max(60f, Math.min(maxImgH, w * ART_RATIO));
-        float imgW = imgH / ART_RATIO;
-        float ix = x + (w - imgW) / 2f;
+        float imgW = Math.min(w, contentWidth(w));
+        float imgH = Math.max(60f, Math.min(maxImgH, imgW * ART_RATIO));
+        float ix = x;
         if (s.art != null) {
             picture(s.art, ix, y, imgW, imgH);
         } else {

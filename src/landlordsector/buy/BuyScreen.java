@@ -135,8 +135,7 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
             s.subtitle = where(market, st);
             s.art = l.artPath;
             s.valueLine = Misc.getDGSCredits(full);
-            s.rentLine = "about " + Misc.getDGSCredits(rent) + " a month at Normal rent"
-                    + (own ? "" : ", after the tariff");
+            s.rentLine = "about " + Misc.getDGSCredits(rent) + " a month" + (own ? "" : ", after tariff");
             s.condition = 1f;
             s.occupancy = "For sale";
             s.stats = st;
