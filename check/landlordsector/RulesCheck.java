@@ -129,9 +129,25 @@ public final class RulesCheck {
         expect(landlordsector.data.ConditionTable.size() > 100, "the condition table covers the installed mods");
         expect(landlordsector.data.ConditionTable.get("US_shrooms").happiness > 0f, "psychoactive fungus cheers tenants");
         expect(landlordsector.data.ConditionTable.get("rogue_ai_core").price < 1f, "a rogue AI core lowers prices");
-        for (String id : new String[] {"US_shrooms", "rat_rampant_military_core", "yunru_gaia", "ix_killsats"}) {
+        for (String id : new String[] {"US_shrooms", "rat_rampant_military_core", "aar_crowned_world", "ix_killsats"}) {
             expect(landlordsector.data.ConditionTable.get(id) != null, "condition table has " + id);
         }
+        // From the real effects (2026-11-12): conditions that only move stability or do nothing are left out.
+        for (String id : new String[] {"trade_center", "organized_crime", "urbanized_polity", "DE_Titanlober", "yunru_gaia"}) {
+            expect(landlordsector.data.ConditionTable.get(id) == null, id + " has no lived effect of its own");
+        }
+        // Owner-only effects.
+        landlordsector.data.ConditionTable.Effect doctrine = landlordsector.data.ConditionTable.get("ii_imperialdoctrine");
+        expect(doctrine != null && doctrine.forOwner("interstellarimperium") != null && doctrine.forOwner("hegemony") == null,
+                "the Imperial doctrine only works for the Imperium");
+        landlordsector.data.ConditionTable.Effect tdf = landlordsector.data.ConditionTable.get("istl_peremohy_condition");
+        expect(tdf != null && tdf.forOwner("dassault_mikoyan").security > 0 && tdf.forOwner("hegemony").security < 0,
+                "the Territorial Defense Force helps free factions and hurts anyone else");
+        landlordsector.data.ConditionTable.Effect legio = landlordsector.data.ConditionTable.get("tahlan_legiotyranny");
+        expect(legio != null && legio.forOwner("tahlan_legioinfernalis") != null && legio.forOwner("pirates") == null,
+                "Legio Entrenchment matches any Legio faction id");
+        expect(landlordsector.data.ConditionTable.matching(new java.util.HashSet<>(java.util.Arrays.asList("ii_imperialdoctrine",
+                "US_shrooms")), "hegemony").size() == 1, "matching skips owner-only effects of other owners");
         java.util.Set<String> houseTags = new java.util.HashSet<>();
         for (landlordsector.data.HouseTraits.Def d : landlordsector.data.HouseTraits.all()) {
             houseTags.addAll(d.tags);

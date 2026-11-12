@@ -54,7 +54,9 @@ Requires LunaLib and OddiszCommons.
 - **Location** (S+, S, A, B, C, D, E, F): the market's price grade. A standard world is C, an Earth-like
   one S, a high-hazard world with pirates F.
 - Market conditions from the base game and installed mods (conditions.json) change price, comfort,
-  tenant happiness and security, for example Psychoactive Fungus or a Rogue AI Core.
+  tenant happiness and security, from what each condition really does in the game. A condition's own
+  stability and hazard changes already count through the market, so they are not repeated. Some only
+  count under one faction. `tools/conditions` rebuilds the table when the mod list changes.
 - **Security** (0 to 100): from stability, military buildings and ground defenses, lower with pirate
   activity or Pather cells. Cuts the damage raids and disruption do.
 

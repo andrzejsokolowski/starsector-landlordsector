@@ -1,153 +1,330 @@
 {
 	# What market conditions do to homes there, on top of the built-in rule (size, stability, hazard,
-	# habitable, mild climate, pollution, pirate activity, Pather cells).
-	# price: multiplies the price (and the location grade). comfort, happiness, security: added to the
-	# stat (0 to 100 scale). Conditions that only change the hazard rating (cold, toxic atmosphere,
-	# extreme weather and the like) are already counted through the hazard and are not listed here.
-	# A condition from a mod that is not installed never appears on a market, so its line does nothing.
-	# Other mods can add lines to this file with their own conditions.
+	# habitable, mild climate, pollution, pirate activity, Pather cells). Built from each condition's
+	# real effect in the game (its code), 2026-11-12. A condition's own stability and hazard changes are
+	# already counted through the market's stability and hazard, so they are not repeated here.
+	# price multiplies the price (and the location grade). comfort, happiness and security are added
+	# (0 to 100 scale). A condition from a mod that is not installed never appears on a market, so its
+	# line does nothing. Other mods can add lines with their own conditions.
 	"conditions":{
-		# ---- Vanilla: society ----
-		"urbanized_polity":{"price":1.05, "comfort":3},
-		"rural_polity":{"price":0.95, "happiness":3},
-		"industrial_polity":{"comfort":-3},
-		"established_polity":{"price":1.05, "security":5},
-		"regional_capital":{"price":1.15, "security":10},
-		"headquarters":{"price":1.15, "security":10},
-		"trade_center":{"price":1.1, "happiness":3},
-		"free_market":{"price":0.95, "happiness":5, "security":-10},
-		"closed_immigration":{"price":1.05},
-		"luddic_majority":{"price":0.95, "happiness":3},
-		"cottage_industry":{"happiness":2},
-		"volturnian_lobster_pens":{"happiness":3},
-		"vice_demand":{"happiness":3, "security":-5},
-		"organized_crime":{"price":0.9, "security":-15},
-		"large_refugee_population":{"price":0.9, "security":-10},
-		"frontier":{"price":0.9, "security":-5},
-		"outpost":{"price":0.9},
-		"dissident":{"happiness":-5, "security":-10},
-		"decivilized_subpop":{"price":0.9, "security":-10},
-		"shipbreaking_center":{"comfort":-3},
-		"stealth_minefields":{"security":10},
-		# ---- Vanilla: events ----
-		"recent_unrest":{"price":0.9, "security":-10},
-		"event_food_shortage":{"happiness":-10},
-		"event_trade_disruption":{"price":0.95},
-		"shipping_disruption":{"price":0.95},
-		"event_smuggling":{"security":-5},
-		"hostile_activity":{"price":0.85, "security":-10},
-		"blockaded":{"price":0.85, "happiness":-10},
-		"piracy_respite":{"security":5},
-		"rogue_ai_core":{"price":0.75, "happiness":-10, "security":-20},
-		# ---- Vanilla: the land ----
-		"ruins_scattered":{"price":1.02},
-		"ruins_widespread":{"price":1.04},
-		"ruins_extensive":{"price":1.06},
-		"ruins_vast":{"price":1.08},
-		"solar_array":{"comfort":3},
-		"farmland_rich":{"comfort":3},
-		"farmland_bountiful":{"comfort":5},
-
-		# ---- Unknown Skies ----
-		"US_shrooms":{"happiness":10},
-		"US_sakura":{"price":1.25, "comfort":10, "happiness":5},
-		"US_virus":{"price":0.6, "comfort":-15, "happiness":-10},
-		"US_mind":{"happiness":5, "security":-5},
-		"US_storm":{"comfort":-8},
-		"US_floating":{"price":1.15, "comfort":5},
-		"US_religious":{"price":1.1, "happiness":5},
-		"US_tunnels":{"comfort":-3, "security":5},
-		"US_magnetic":{"comfort":3},
-		"US_fluorescent":{"comfort":3},
-		# ---- Random Assortment of Things ----
-		"rat_engineered_utopia":{"price":1.4, "comfort":15, "happiness":10},
-		"rat_bionic_plantlife":{"comfort":5},
-		"rat_ancient_megacities":{"price":1.15, "comfort":5},
-		"rat_defensive_drones":{"security":15},
-		"rat_warscape":{"price":0.75, "comfort":-10, "security":-10},
-		"rat_rampant_military_core":{"price":0.7, "happiness":-10, "security":-20},
-		# ---- Yunru Worlds ----
-		"yunru_gaia":{"price":1.2, "comfort":10},
-		"yunru_hephaestus":{"price":0.7, "comfort":-5, "security":-20},
+		# ---- vanilla ----
+		# Blockaded: While a blockade fleet group is active in the system: accessibility minus the blockade penalty (default 60%, half that if the blockade is only...
+		"blockaded":{"price":0.96, "comfort":-2, "happiness":-2, "security":-5},
+		# Closed Immigration: Adds pirates weight = colony size to incoming immigrants and lowers growth by the colony's stability value.
+		"closed_immigration":{"price":0.97, "happiness":-3, "security":-5},
+		# Decivilized Subpopulation: +25% hazard, -2 stability, +market size population growth, adds weight 10 of the 'poor' faction to incoming immigrants. Description: bandits and...
+		"decivilized_subpop":{"happiness":-2, "security":-3},
+		# Established Polity: +10% accessibility (after beating the Persean League force, or as League development programs once you join).
+		"established_polity":{"price":1.02},
+		# Food Shortage: Stability minus the food shortage event's impact, x4 reputation for player food sales. Temporary until the food need is met.
+		"event_food_shortage":{"price":0.95, "comfort":-8, "happiness":-5, "security":-3},
+		# Free Port: Stability -1 rising to -3, accessibility +5% rising to +25%, growth +3 rising to +10 (over 365 days). Immigrants include pirates, poor and...
+		"free_market":{"price":1.05, "happiness":4, "security":-5},
+		# High Gravity: +50% hazard, -10% accessibility.
+		"high_gravity":{"price":0.97},
+		# Hostile Activity: Stability -1 and accessibility -10%. Comes from the hostile activity event (hostile fleets operating in the system).
+		"hostile_activity":{"price":0.97, "security":-3},
+		# Low Gravity: Hazard +25% (gen data) and accessibility +10%.
+		"low_gravity":{"price":1.03},
+		# Luddic Majority: Only when habitable, with a rural industry and no heavy or military industry: stability +1, rural industries +1 output, growth 5 x size, Luddic...
+		"luddic_majority":{"happiness":2, "security":2},
+		# Piracy Respite: In the current mode apply does nothing to the market; pirates avoid the player's trade fleets, so shipping disruptions are greatly reduced.
+		"piracy_respite":{"security":2},
+		# Rogue AI Core: Stability -1 and +10 Luddic Path weight in incoming immigrants. Tracks days active.
+		"rogue_ai_core":{"price":0.98, "security":-3},
+		# Trade Disruption: Temporary accessibility penalty from lost trade fleets (0.1 per market-size units lost, lasts 120 days) and reduced availability of some commodities.
+		"shipping_disruption":{"price":0.98},
+		# ---- aotd_sop ----
+		# Faction Capital: Stability +3; unlocks capital buildings; losing it gives -7 stability to all player colonies.
+		"aotd_capital":{"price":1.05},
+		# Followers of Ludd: Stability +1, accessibility +5%, +1 production for all industries (all doubled with Luddic Majority). Stability -2 per colony item used, -3 per AI...
+		"aotd_followers_ludd":{"price":1.02, "happiness":2},
+		# ---- aotd_theory_of_toolbox ----
+		# CivSupplyContract: Hidden (no icon). Adds a flat population growth bonus equal to the Civilian Supply Program weight; removes itself when the weight is 0.
+		"aotd_civ_contract_pop_boost":{"price":1.02},
+		# ---- aotd_vok ----
+		# Coronal Hypershunt: Growth -50 flat, Luddic Church immigrants (LCAttractorLow). Tooltip: max colony size 2, no extra structures for lack of living space.
+		"aotd_coronal_market_cond":{"price":0.95, "comfort":-5},
+		# Floating City: Stability by altitude stage: Stable 0, Drifting -2, Unstable -5, Critical -12. City thrusters need fuel; on a fuel deficit the city descends and...
+		"aotd_floating_city":{"security":-3},
+		# Nutritious Wildlife: Population food demand -3. Artisanal Farming output x1.2.
+		"aotd_nutritious_wildlife":{"price":1.02, "comfort":3, "happiness":2},
+		# ---- apex_design ----
+		# Collective Defense: Only for apex_design markets: +1 stability, +50 flat ground defense per faction hostile to Apex (shown in the intel tab, excluding remnant and...
+		"apex_collectivedefense":{"security":5, "owners":["apex_design"]},
+		# ---- assortment_of_things ----
+		# Ancient Megacities: Growth +(size-2) and +5 Tri-Tachyon weight in incoming immigrants.
+		"rat_ancient_megacities":{"price":1.04, "comfort":3},
+		# Ancient Military Nexus: Ground defenses x1.3 if a functional ground defense building exists; fleet size +25% if a functional patrol/military/command building exists....
+		"rat_ancient_military_hub":{"security":4},
+		# Defensive Dronesystem: Launches up to 3 derelict drone fleets to guard the planet and system; +1 ship hull demand.
+		"rat_defensive_drones":{"security":3},
+		# Engineered Utopia: While the colony has fewer industries than its maximum: -25% hazard, +25% accessibility, +2 food from Farming. Lost if all industry slots are...
+		"rat_engineered_utopia":{"price":1.05, "happiness":2},
+		# Local Gravitational Dynamo: Only while the system's Gravitational Dynamo is active: hazard -50% and growth +(size-2), +5 Tri-Tachyon immigrant weight. Inactive: nothing.
+		"rat_grav_dynamo_condition":{"price":1.03, "comfort":2},
+		# Kinetic Launchsystem: With a functional spaceport: +25% accessibility and +2 volatiles demand. Bug: the else branch calls unmodifyPercent on a flat modifier and...
+		"rat_kinetic_launchsystem":{"price":1.04},
+		# Rampant Military Core: Forces an unremovable military Alpha-core administrator. Stability -1, fleet size +30%, +1 light, medium and heavy patrol.
+		"rat_rampant_military_core":{"happiness":-4, "security":3},
+		# Warscape: Only with Tech-Mining: +10% hazard and +size ship hull output. Unapply is empty, so the effects stay after removal.
+		"rat_warscape":{"price":0.98, "security":-3},
+		# ---- astral_ascension_renewed ----
+		# Arcology World: Stage for Omega-governed colonies of size 11-12: +1 max industries, accessibility +20%, income x1.25, ground defenses x1.5, fleet size +25%,...
+		"aar_arcology_world":{"price":1.15, "comfort":5, "happiness":3, "security":5},
+		# Hyper-Ecumenopolis: Size 15 stage (AscensionStage): +3 max industries, +60% accessibility, income x2, ground defense x3, fleet size +100%, hazard -75%, ship quality...
+		"aar_crowned_world":{"price":1.25, "comfort":3, "happiness":3, "security":8},
+		# Ecumenopolis: +2 max industries, +40% accessibility, income x1.5, ground defense x2, fleet size +50%, hazard -50%.
+		"aar_ecumenopolis":{"price":1.15, "comfort":4, "happiness":3, "security":6},
+		# ---- bb_plus ----
+		# Closed Door Protocols: Only for sephira_conclave markets: +10 stability, -100 population growth, pirates removed from the immigrant mix, many demands cut (drugs, organs,...
+		"bbplus_closed_door":{"happiness":-5, "security":6, "owners":["sephira_conclave"]},
+		# Terraforming Station: +20% accessibility (applied always in the code, though the tooltip lists it under unlocked effects); after $scGargantiaRepaired, +2 food at a...
+		"bbplus_gargantia_terraforming_station":{"price":1.04, "comfort":2},
+		# Hostile Lifeforms: Only +25% hazard (vanilla BaseHazardCondition).
+		"bbplus_hostile_lifeforms":{"security":-4},
+		# Starkeep Bastion: Only for Sephira Conclave owners: +30% ship quality, ground defense x1.5. With S-TechPad: tariff x0.85.
+		"bbplus_orbital_station":{"security":4, "owners":["sephira_conclave"]},
+		# ---- BlueSeaFisher ----
+		# Natural Freshwater Lake: Vanilla ResourceDepositsCondition; BSFModPlugin maps it to +4 BSF_NeonCarp (koi) output at Aquaculture. No stability, hazard or other effect.
+		"BSF_freshwaterLake":{"price":1.05, "comfort":4, "happiness":3},
+		# Warm Waters: Vanilla ResourceDepositsCondition; BSFModPlugin maps it to BSF_InstantNoodles at Light Industry (+1 modifier, base size-3). No stability, hazard...
+		"BSF_warmSea":{"price":1.02, "comfort":2, "happiness":2},
+		# ---- Cryo_but_better ----
+		# Domain Majority: Each industry: -1 drugs demand and +1 to every commodity it supplies. Removes luddic_majority. During a cryosleeper awakening (memory flag...
+		"aotd_domain_majority":{"price":1.02, "happiness":2, "security":2},
 		# ---- Diktat Enhancement ----
-		"DE_Megafauna":{"price":0.85, "security":-15},
-		"DE_Megafauna_PAGSM":{"price":0.85, "security":-15},
-		"DE_Patrioticfervor":{"happiness":-3, "security":5},
-		"DE_Patrioticfervor_PAGSM":{"happiness":-3, "security":5},
-		"DE_Unstablelamp":{"comfort":-8},
-		# ---- Emergent Threats: IX Revival ----
-		"ix_killsats":{"price":0.6, "happiness":-15, "security":-25},
-		"ix_algae":{"comfort":-5},
-		"ix_monitored":{"happiness":-5, "security":15},
-		"ix_monitored_player":{"happiness":-5, "security":15},
-		"ix_cartel_activity":{"price":0.9, "security":-15},
-		# ---- FSF Military Corporation ----
-		"aEP_ExtinctiveVirus":{"price":0.6, "comfort":-15},
-		"aEP_MilitaryZone":{"happiness":-3, "security":15},
-		# ---- More Planetary Conditions ----
-		"niko_MPC_carnivorousFauna":{"comfort":-5, "security":-10},
-		"niko_MPC_magnetarCondition":{"price":0.7, "comfort":-10},
-		"niko_MPC_ultraMagneticField":{"comfort":3},
-		"MPC_fracturedWorld":{"price":0.8, "comfort":-5},
-		"MPC_arrowPatherCondition":{"security":-10},
-		"MPC_arrowPatherConditionTwo":{"security":-10},
-		"MPC_hegeUnrest":{"happiness":-5, "security":-5},
-		"MPC_indieUnrest":{"happiness":-5, "security":-5},
-		# ---- Bultach / BB Plus ----
-		"ork_wardrive":{"security":-10},
-		"bbplus_hostile_lifeforms":{"price":0.85, "comfort":-5, "security":-15},
-		"bbplus_cracked_planet":{"price":0.85},
-		"bbplus_sigmairradiated":{"comfort":-5},
-		# ---- VIC ----
-		"VIC_VBomb_scar":{"price":0.6, "comfort":-15, "happiness":-10},
-		# ---- Lost Sector ----
-		"nskr_hellSpawnCondition":{"price":0.5, "happiness":-20, "security":-20},
-		"nskr_enigmaPop":{"happiness":-10},
-		# ---- Industrial Evolution ----
-		"IndEvo_pirate_subpop":{"security":-15},
-		"IndEvo_engineered_plague":{"price":0.7, "comfort":-10, "happiness":-10},
-		"IndEvo_edict_lockdown":{"happiness":-10, "security":10},
-		"IndEvo_edict_cleanse":{"happiness":-10},
-		"IndEvo_Parade":{"happiness":5},
-		"IndEvo_mineFieldCondition":{"security":10},
-		"IndEvo_ArtilleryStationCondition":{"security":10},
-		# ---- Interstellar Imperium, Iron Shell ----
-		"ii_vineyards":{"price":1.1, "happiness":5},
-		"ii_hostile_terrain":{"comfort":-5},
-		"eis_aquaculture":{"security":-5},
-		# ---- Blue Sea Fisher ----
-		"BSF_freshwaterLake":{"price":1.1, "comfort":8},
-		"BSF_warmSea":{"comfort":5},
-		# ---- Ashes of the Domain ----
-		"aotd_nutritious_wildlife":{"comfort":3},
-		"aotd_floating_city":{"price":1.1, "comfort":5},
-		"aotd_capital":{"price":1.1, "security":5},
-		# ---- Dassault-Mikoyan ----
-		"istl_odessa_condition":{"price":1.05, "comfort":5},
-		"istl_tenacity_condition":{"comfort":8, "happiness":5},
-		# ---- JaydeePiracy ----
-		"jdp_glassedWorld":{"comfort":-8},
-		"jdp_eutrophicatedBiosphere":{"comfort":-5},
-		"jdp_encroachingBiofactory":{"price":0.8, "comfort":-10},
-		"jdp_quarryLakes":{"comfort":3},
-		"jdp_showOfForce":{"security":5},
-		# ---- Vulpoids ----
-		"vulpoid_celebrities":{"happiness":5},
-		"vulpoid_security":{"security":10},
-		"vulpoid_estateservants":{"comfort":8, "happiness":5},
-		"vulpoid_servants":{"comfort":5},
-		"filtered_air":{"price":1.1, "comfort":10},
-		# ---- Magellan Protectorate, Apex, Halo Dynamics ----
-		"magellan_warrens":{"comfort":-3, "security":10},
-		"apex_collectivedefense":{"security":10},
-		"HSI_HeatingWorld":{"comfort":3},
-		# ---- Astral Ascension Renewed ----
-		"aar_arcology_world":{"price":1.1, "comfort":3},
-		"aar_ecumenopolis":{"price":1.2, "comfort":5},
-		"aar_crowned_world":{"price":1.3, "comfort":8},
-		# ---- Cramped quarters (Secrets of the Frontier, TASC, Grand Colonies) ----
-		"sotf_crampedcondition":{"comfort":-5},
-		"cramped_quarters":{"comfort":-5},
-		"GrandColonies_CrampedCondition":{"comfort":-5}
+		# Volturnian Lobster Brutes: Ground defense x3 (+200%). Has an immigration hook (+poor share, -size growth) but apply() never registers it, so growth is unchanged. No hazard...
+		"DE_Lobsters":{"security":10},
+		# Volturnian Lobster Brutes: Same class as DE_Lobsters: ground defense x3 (+200%); the immigration penalty is never registered, so it does nothing.
+		"DE_Lobsters_PAGSM":{"security":10},
+		# ---- dpl_phase_lab ----
+		# Matcha Makers: Matcha resource deposit: +1 dpl_matcha at Farming (or any farming-tagged industry), base 0. BaseHazardCondition with no hazard.
+		"dpl_matcha_makers":{"happiness":3},
+		# ---- EmergentThreats_IX_Revival ----
+		# Toxic Algae: +25% hazard, +2 drugs from a functional Light Industry, -2 food from Aquaculture. The algae make toxic psychoactive chemicals turned into narcotics.
+		"ix_algae":{"price":0.98, "comfort":-2, "happiness":2, "security":-2},
+		# Automated Killsats: If the colony grows above size 3, it is decivilized at once (DecivTracker.decivilize). No hazard and no stability (apply does not call the parent;...
+		"ix_killsats":{"price":0.7, "happiness":-12, "security":-18},
+		# Panopticon Monitoring: The condition class itself does nothing (code commented out). It is a marker added by IX Panopticon Node/Core structures, which give ground...
+		"ix_monitored":{"happiness":-6, "security":8},
+		# Panopticon Monitoring: apply() and the tooltip are commented out: the condition changes no stats. It is a flag read elsewhere: rules.csv blocks black-market trade and...
+		"ix_monitored_player":{"happiness":-5, "security":5},
+		# ---- FSF_MilitaryCorporation ----
+		# Military Zone: Only for the FSF faction: Population demand for luxury goods -8, drugs -8, organs -4; Mining drug demand -8; +2 max industries.
+		"aEP_MilitaryZone":{"price":0.97, "comfort":-2, "happiness":-6, "security":4, "owners":["aEP_FSF"]},
+		# Under Ground Storage: Only while the FSF faction owns the market: stability raised toward a floor of 5 (bonus up to +10). With Nexerelin enabled also +2000 flat ground...
+		"aEP_UndergroundStorage":{"security":6, "owners":["aEP_FSF"]},
+		# ---- Imperium ----
+		# Hostile Terrain: -20% accessibility (space hazards around the system make it hard to reach). Nothing else.
+		"ii_hostile_terrain":{"price":0.97},
+		# Imperial Doctrine: Only for interstellarimperium markets: +2 stability, ground defense x1.25, combat fleet size x1.1, Population demands marines (size-1) and hand...
+		"ii_imperialdoctrine":{"happiness":-3, "security":5, "owners":["interstellarimperium"]},
+		# Byzantine Vineyards: ResourceDepositsCondition mapped to ii_wine with modifier +1 (IIModPlugin): adds wine output to the matching industry. No hazard.
+		"ii_vineyards":{"price":1.03, "happiness":3},
+		# ---- IndEvo ----
+		# Domain Artillery Station: If the IndEvo_Enable_Artillery setting is on, places a Domain artillery station entity at the planet on first advance; tooltip says it defends the...
+		"IndEvo_ArtilleryStationCondition":{"security":4},
+		# Orbital Parade: Stability +1 and colony growth +5 (flat immigration weight) while a museum parade fleet is in orbit.
+		"IndEvo_Parade":{"price":1.04, "happiness":4},
+		# Edict: Subpopulation Cleansing: Senate edict: stability -(size-1), colony income x0.7, growth -size, runs size x 31 days (one month less with a beta core at the Senate). On...
+		"IndEvo_edict_cleanse":{"price":0.85, "happiness":-15, "security":-10},
+		# Edict: Forced Labour: Building upkeep x0.4 (-60%). Stability -4, falling by 1 each month back to 0. Population growth -2 x colony size. Needs a Senate in the system and...
+		"IndEvo_edict_conscription":{"price":0.95, "happiness":-10},
+		# Edict: Customs Control: Senate edict (needs Senate in system, Megaport on this planet, 2+ own colonies in system). This market: +5% accessibility per other own colony in...
+		"IndEvo_edict_customs":{"price":1.03},
+		# Edict: Hard Deadlines: Senate edict: +30% ship hull output and production budget from this colony, -20% ship production quality. Early removal adds Recent Unrest. Flavor...
+		"IndEvo_edict_deadlines":{"happiness":-3},
+		# Edict: Mandated Overtime: Senate edict: construction time of buildings on this planet halved (x0.5), output of all industries on this planet -50%. Flavor: 16 hour work days...
+		"IndEvo_edict_fastBuild":{"price":0.98, "comfort":-2, "happiness":-6},
+		# Edict: Forced Relocation: Stability -3 on all colonies in the system. This colony gets population growth +10 x size taken from the other colonies in the system (they get a...
+		"IndEvo_edict_forced_reloc":{"happiness":-6},
+		# Edict: Labour Restrictions: Stability +4; every industry -1 output and -1 demand on every commodity. Needs a Senate in the system, not a free port; removing it early causes...
+		"IndEvo_edict_labour_rest":{"comfort":2, "happiness":5},
+		# Edict: Single-Child Policy: Senate edict: freezes the population growth weight at the value for the current size, so the colony never grows. No stability effect while active;...
+		"IndEvo_edict_lockColonySize":{"price":0.97, "happiness":-6},
+		# Edict: Wartime Lockdown: Stability +5, patrol spawn rate x2, fleet size +100%, ground defense x3; all non-military industries x0.3 supply and demand. 1 unrest when it ends...
+		"IndEvo_edict_lockdown":{"price":0.93, "comfort":-3, "happiness":-12, "security":12},
+		# Edict: Trade Incentives: Player colonies without Commerce: adds an independent Open Market submarket; stability -2.
+		"IndEvo_edict_open_market":{"price":1.02, "happiness":2},
+		# Self-Replicating Minefield: Ground defense x2.5 (DEFENSE_BONUS 2.5, tooltip 'Increases Ground Defence Strength by 150%'). Spawns a mine belt terrain (plus a dust ring) around...
+		"IndEvo_mineFieldCondition":{"security":8},
+		# Lawless Subpopulation: Stability -2 base, +2 with a Privateer Base, +2 if not hostile to pirates/evil factions (range -2 to +2). Growth -size (no base, disliked) to...
+		"IndEvo_pirate_subpop":{"price":0.93, "security":-8},
+		# ---- istl_dassaultmikoyan ----
+		# Cetacean Xenolife: Aquaculture (if present and functional) +1 food; accessibility -25%.
+		"istl_odessa_condition":{"price":1.02, "comfort":2, "happiness":5},
+		# Territorial Defense Force: If owned by a 'free' faction (dassault_mikoyan, SCY, ORA, shadow_industry, star_federation, brighton): ground defenses x2.5 and stability +1. Any...
+		"istl_peremohy_condition":{"price":1.03, "happiness":5, "security":3, "owners":["dassault_mikoyan", "SCY", "ORA", "shadow_industry", "star_federation", "brighton"], "others":{"security":-6, "happiness":-3}},
+		# Holy Forests: Light Industry +1 output, only if owned by Luddic Church, Knights of Ludd, Ashen Keepers or Luddic Path.
+		"istl_tenacity_condition":{"price":1.03, "comfort":3, "happiness":3, "owners":["luddic_church", "knights_of_ludd", "ashen_keepers", "luddic_path"]},
+		# ---- jaydeepiracy ----
+		# Encroaching Biofactory: Hazard +75%. Population and Infrastructure demands +size fuel (for orbital burns). Military Base/High Command also produces organs equal to its...
+		"jdp_encroachingBiofactory":{"price":0.92, "comfort":-5, "happiness":-6, "security":-5},
+		# Glassed World: Hazard +100%, +1 max industries. About every 20-34 days a random industry is disrupted for 5-16 days. Bug: the picker loops while the chosen...
+		"jdp_glassedWorld":{"comfort":-2},
+		# Logistics Complex: If the spaceport is functional and has a Fullerene Spool: +30% accessibility (doubling the spool bonus). If a Planetary Shield is functional:...
+		"jdp_logisticsComplex":{"price":1.03, "security":3},
+		# Metastatic Sensorium: +25% hazard, -1 maximum industries, colony income +5% per point of market size of every non-hostile market within 10 LY. Description: endless...
+		"jdp_metastaticSensorium":{"price":1.08, "comfort":-2, "happiness":6},
+		# Quarry Lakes: Hazard +50%. Refining needs no ore or transplutonic ore but +2 heavy machinery.
+		"jdp_quarryLakes":{"price":0.96, "comfort":-4, "security":-2},
+		# Rebel Arsenal: Ground defense industries need no heavy armaments (demand x0); Population and Infrastructure supplies marines equal to 2x its crew output. Bug:...
+		"jdp_rebelArsenal":{"security":3},
+		# Recivilized Minority: Picks one industry at random (mining, refining, heavy/light industry, farming, aquaculture, fuel, military, commerce, tech-mining): that industry...
+		"jdp_recivilizedMinority":{"happiness":-3},
+		# Show of Force: Stability +1 and accessibility +10% (+2 and +15% with the Alpha core). Tooltip claims growth +size, but the immigration modifier is never...
+		"jdp_showOfForce":{"price":1.04, "happiness":2, "security":2},
+		# Water Ice Imports: +1 food at Farming. Flavor: synthetic comets streak across the sky.
+		"jdp_waterIceImport":{"happiness":2},
+		# ---- liminal ----
+		# Liminal Gateway: Stability +5, fleet size x4, fleet spawn rate x1.2, ground defenses x2, accessibility bonus x0, hazard x0 (hazard becomes 0). Bug: unapply removes...
+		"liminal_market_condition":{"price":0.9, "happiness":-8, "security":8},
+		# ---- lost.sector ----
+		# Enslaved Population: Only on Enigma-owned markets (otherwise unapplies itself): +3 to every industry output (tooltip wrongly says demand -3), fleet size +100%, +1...
+		"nskr_enigmaPop":{"price":0.6, "comfort":-12, "happiness":-20, "security":-8},
+		# ---- mag_protect ----
+		# Magellan City-Warrens: Ground defense x4 for Magellan factions, x2 for others. Stability +1 for Magellan factions, -2 for others. Underground city maze.
+		"magellan_warrens":{"comfort":-3, "security":8},
+		# ---- navarchy_of_tania ----
+		# Trustworthy Population: Under Navarchy of Tania: stability +10, hazard -25%, fleet size x1.5, ground defense x1.75, removes the military market. Always removes Pather...
+		"tania_farige_trustworthy":{"happiness":-4, "security":10},
+		# The Grim Phoenix: Hegemony markets only (removes itself otherwise): stability -3, fleet size -25%, accessibility x0.9, ground defense x0.85.
+		"tania_grim_phoenix_scandal":{"price":0.97, "happiness":-4, "security":-3},
+		# Lost Belief: Stability -5, fleet size x0.75, hazard +25%, accessibility x0.75. Removes itself if the owner is not the Luddic Church.
+		"tania_lost_belief_church":{"price":0.96, "happiness":-6},
+		# Lost Belief: Only on Luddic Path markets (removes itself elsewhere): -5 stability, +25% hazard, accessibility x0.75, fleet size x0.75.
+		"tania_lost_belief_path":{"price":0.97, "happiness":-5},
+		# Lost Hope: Fleet size x0.7, accessibility x0.65, income multiplier x(1 - 20) = x-19 (int bug; meant -20%). Removed if not Navarchy-owned.
+		"tania_lost_hope_navarchy":{"price":0.9, "happiness":-8, "security":-2},
+		# Major Disruption: -5 stability, ground defense x0.5, colony income x0.15. Removed after 180 days. Description: industries and defenses destroyed by a massive...
+		"tania_major_unrest":{"price":0.92, "comfort":-3, "happiness":-4, "security":-6},
+		# Revitalized Confidence: Only on Navarchy of Tania markets (removes itself elsewhere): accessibility x1.5, fleet size x1.25.
+		"tania_revitalized_confidence":{"price":1.05, "happiness":4},
+		# ---- Neutrino SLEEPYFISH AKA NOSTALGIA ----
+		# Defense Autocomplex: Only when owned by neutrinocorp: ground defenses +25 x colony size (flat).
+		"neutrino_defense_autocomplex":{"security":4, "owners":["neutrinocorp"]},
+		# ---- nexerelin ----
+		# Raiding: Added while hostile raids are active in the system: stability -(raids+1) and accessibility -10% x (raids+1); one raid gives -2 stability and -20%...
+		"nex_raid_condition":{"price":0.95, "happiness":-3, "security":-6},
+		# Rebellion: Stability reduced by the rebellion event's penalty (variable). Description: ongoing armed rebellion, prices of marines, weapons and supplies up.
+		"nex_rebellion_condition":{"price":0.85, "comfort":-3, "happiness":-8, "security":-15},
+		# Reinforced Defenses: Ground defenses x1.25 for 60 days (can be extended), then removes itself.
+		"nex_reinforced_defenses":{"happiness":-1, "security":4},
+		# Tribute: Income -15% (nex_tributeIncomePenalty). Growth x0.5 below size 5 and x0 (no growth) at size 5+, imposed by a foreign faction.
+		"nex_tribute":{"price":0.95, "happiness":-5},
+		# ---- niko_morePlanetaryConditions ----
+		# Forward Operating Base: Stability +3, accessibility -30%, ground defenses and fleet size calculated as if the colony were 2 sizes larger, +4/+2/+1 light/medium/heavy...
+		"MPC_FOB":{"price":0.85, "comfort":-5, "happiness":-5, "security":12},
+		# Investigations Underway: IAIIC crisis: -2 stability and -20% accessibility; if the governing polity is not hostile to the IAIIC a further -25% accessibility (-45% total)....
+		"MPC_IAIICInvestigationCondition":{"price":0.96, "happiness":-3, "security":-3},
+		# Knightless: Class MPC_knightsDownedCondition (id and class names are swapped with MPC_knightsDownedCondition). While valid: fleet size x0.3, accessibility...
+		"MPC_IAIICLCOverextension":{"price":1.03, "security":-3},
+		# Sabotage: Temporary IAIIC crisis sabotage, holds one or more of: accessibility -20%, fleet size -30%, or about +2 unrest (kidnappings, protests). Hidden...
+		"MPC_IAIICSabotageCondition":{"price":0.98, "happiness":-2, "security":-3},
+		# Arrow Pathers: A Luddic Path sub-sect lives here: colony income x0.25, +1 max industries, new structures and upgrades start at 60% progress. No stability effect....
+		"MPC_arrowPatherCondition":{"price":0.97, "security":-3},
+		# Crossbow of Ludd: Only when the market is owned by the Luddic Path: fleet size x1.7 and ground defense +300 flat; for 90 days after a donation, ground defense x5...
+		"MPC_arrowPatherConditionTwo":{"happiness":-5, "security":5, "owners":["luddic_path"]},
+		# Fractured World: +300% hazard (flat 3.0), -100% accessibility, +5 ore and +5 rare ore for mining industries. Planet being eaten by a black hole.
+		"MPC_fracturedWorld":{"price":0.85},
+		# Commercial Unrest: Temporary: stability -ceil(2 x unrest level), accessibility -(0.5 x unrest level), halved for colonies of size 3 or less. The unrest level comes...
+		"MPC_indieUnrest":{"price":0.97, "happiness":-2},
+		# Domain-Era Anti-Asteroid Satellites: Stability +2, accessibility -10%, ground defenses +400 flat and x1.5, suppresses meteor_impacts, adds a hidden suppressor that lowers Luddic Path...
+		"niko_MPC_antiAsteroidSatellites_derelict":{"price":1.02, "comfort":2, "security":10},
+		# Toteliac Habitat: +50% hazard, cut by military buildings (patrol 20%, military 50%, command 80%, AoTD hexagon 100%). Those buildings also get food and luxury goods...
+		"niko_MPC_carnivorousFauna":{"price":0.94, "happiness":-2, "security":-8},
+		# Frontier Reinforcement Center: Accessibility -40% on this market (comms congestion). Friendly markets in the system get +10% accessibility (+10% more after a raid on it is...
+		"niko_MPC_derelictEscort":{"price":0.97, "security":3},
+		# Pre-Collapse STC Districts: Ground defense x1.1; if player-owned and the Hyperspace Topography slipstream-detection stage is active, +3 LY slipstream detection; friendly and...
+		"niko_MPC_ftcDistricts":{"security":2},
+		# Hyperspace Bipartisan: Accessibility +50%. Hazard +50% depending on whether hyperspace clouds cover the planet. Ground defense x1.1 and +50. Mining +3 volatiles....
+		"niko_MPC_hyperspaceBipartisan":{"price":1.05, "comfort":-3, "security":2},
+		# Magnetar Devastation: +150% hazard, -75% accessibility. Tooltip: a planetary shield would be destroyed by the magnetar's ionized pulses.
+		"niko_MPC_magnetarCondition":{"price":0.88},
+		# Overgrown Nanoforge: Adds Pollution to habitable worlds and runs an out-of-control nanoforge structure that keeps spreading, taking structure slots. Each growth rolls...
+		"niko_MPC_overgrownNanoforgeCondition":{"price":0.95, "comfort":-3, "security":-5},
+		# Pre-Collapse Spy Arrays: Stability +1, ground defenses x1.1, friendly or trade fleets in the system get detected range x0.5.
+		"niko_MPC_spyArrays":{"happiness":-4, "security":4},
+		# Ultramagnetic Field: +50% hazard, -25% accessibility, ground defense x1.3, refining upkeep x0.8, half of mining ore/rare ore turned into metals/transplutonics, and...
+		"niko_MPC_ultraMagneticField":{"price":0.97, "comfort":-2, "security":4},
+		# ---- ORK ----
+		# Bultach Territory: Only for the Bultach Coalition (orks): ground defense x2, fleet size x1.8.
+		"ork_wardrive":{"security":6, "owners":["orks"]},
+		# ---- privateering ----
+		# Commissioned Station: +20% accessibility, +1 stability, maximum colony size reduced by at least 2 (set so the station cannot grow past size 4).
+		"priv_commStation":{"price":1.03},
+		# ---- secretsofthefrontier ----
+		# Cramped Quarters: Population growth -10 at size 4, -20 at size 5, -40 at size 6+. Nothing else. Description: the station has little space.
+		"sotf_crampedcondition":{"comfort":-3},
+		# Proxy Patrols: Player colonies of size 4+ friendly to the Dustkeepers: 1 proxy drone patrol (2 at size 6). Needs a spaceport.
+		"sotf_proxypatrols_condition":{"security":3},
+		# ---- ship_trophy_room ----
+		# Aureate Siege: Stability -10 (Golden Omega blockade). The Golden Omega fleets come from the Gan Eden quest scripts, which return every year with bigger escorts.
+		"ship_trophy_gan_eden_aureate_siege":{"price":0.88, "happiness":-5, "security":-10},
+		# Gan Eden Sanctuary: Clears its stability modifier and sets accessibility x0 (no access at all): the sealed habitat cannot trade with any other market.
+		"ship_trophy_gan_eden_sanctuary":{"price":0.85, "comfort":3, "security":3},
+		# ---- tahlan ----
+		# Kassadari Claim: Accessibility -100%, +50% hazard, growth -2 x size, poor immigrants.
+		"tahlan_kassadariclaim":{"price":0.88, "happiness":-2, "security":-5},
+		# Legio Entrenchment: Only for Legio Infernalis markets: +1 stability per Legio market, combat fleet size and spawn rate +10% (+20% after $tahlan_triggered, +30% on...
+		"tahlan_legiotyranny":{"price":0.95, "happiness":-10, "security":5, "ownersContain":["legio"]},
+		# ---- Terraforming & Station Construction ----
+		# Cramped Quarters: TASC station marker. Always: adds and suppresses No Atmosphere, sets a 30% base tariff if none, station hazard and accessibility mods from...
+		"cramped_quarters":{"comfort":-3},
+		# ---- US ----
+		# Chaotic Structures: Ground defense strength x2. Hazard 0 and no other effect; the description's claim that the maze hinders colony growth is not in the code.
+		"US_artificial":{"comfort":-2, "security":8},
+		# Pre-Collapse Cryosanctum: Max industries -1. On a colonized market it adds a Cryosanctum industry (disrupted for 180 days); the condition removes itself if that industry is...
+		"US_cryosanctum":{"happiness":-2},
+		# Chemical Crystals: Light Industry +1 luxury goods. Nothing else.
+		"US_crystals":{"price":1.02, "happiness":2},
+		# Old Space Accelerator: Accessibility +50% / +40% / +30% / +20% at colony size 3 / 4 / 5 / 6+ (formula (8 - size clamped 3..6) x 10). Does not call the hazard base;...
+		"US_elevator":{"price":1.05},
+		# Magnetic Crust: +3000 flat ground defense; population growth -2 x size (size clamped 3-6, so -6 to -12); incoming immigrants include extra poor (+10 weight)....
+		"US_magnetic":{"price":0.97, "security":6},
+		# Parasitic Spores: Drug demand of Population and Mining set to 0; every industry -1 output; stability raised to at least 5 (adds max(0, 5 - stability)); growth +10 x...
+		"US_mind":{"comfort":-2, "happiness":8, "security":2},
+		# Ancient Religious Landmark: Accessibility +10%, stability +1, growth 20 - 2 x size factor, Luddic Church and Luddic Path immigrants.
+		"US_religious":{"price":1.05, "happiness":3},
+		# Ever-Blooming Forest: While the planet is not polluted: +15% colony income, +5 to +8 population growth (size clamped 3..6, +2), -2 food from Farming. Tourists flock to...
+		"US_sakura":{"price":1.1, "comfort":3, "happiness":6},
+		# Psychoactive Fungus: Stability -3. Drug demand of Population and Mining set to 0. Light Industry +2 drugs if the market is a free port. Description: violent illegal...
+		"US_shrooms":{"price":0.97, "comfort":-2, "happiness":4, "security":-5},
+		# Perpetual Dust Storm: Hazard +25%, ground defenses x1.5, accessibility -10%.
+		"US_storm":{"price":0.97, "comfort":-2, "security":5},
+		# Underground Network: Adds (1 - current hazard) to hazard, so hazard ends at about 100% whatever it was (raises low, cuts high; depends on apply order). Growth -2 x...
+		"US_tunnels":{"price":0.97, "comfort":-3, "happiness":-2},
+		# Military Virus: +50% hazard, -2 stability, ground defense x0.6, population growth -8 to -14 (-2 x (size clamped 3..6 + 1)), adds 'poor' weight 10 to immigrants,...
+		"US_virus":{"price":0.88, "comfort":-6, "happiness":-4, "security":-6},
+		# ---- vic ----
+		# Extreme Viral Contamination: Without decontamination: -10 stability, +200% hazard, -45% accessibility, ground defense x0.25, -45% production quality, fleet size x0.5, -1...
+		"VIC_VBomb_scar":{"price":0.6, "comfort":-15, "happiness":-15, "security":-15},
+		# Orbital Mining Lazor: +1 ore and rare ore output, +500 flat ground defense, +25% hazard.
+		"vic_orbitalLazor":{"security":6},
+		# ---- vulpoids ----
+		# Filtered Air: Suppresses pollution, extreme weather and toxic atmosphere if present, and removes pollution after 365 days. If none of those are present: -25%...
+		"filtered_air":{"price":1.04, "comfort":3, "happiness":2},
+		# Anti-Vulpoid Sanctions: -50% accessibility. Nothing else.
+		"vulpoid_blockade":{"price":0.93},
+		# Vulpoid Celebrities: When requirements are met: colony income +10%, growth +5 x size (independent immigrants), +1 demand for domestic goods, luxury goods and drugs.
+		"vulpoid_celebrities":{"price":1.05, "happiness":4},
+		# Vulpoid Farmers: If the Vulpoid workforce requirements are met (inhabited, workforce cap, Vulpoid population), farming (or aquaculture) gets +2 production. Counts...
+		"vulpoid_farmers":{"price":1.02, "comfort":2, "happiness":2},
+		# Vulpoid Orbital Workers: Needs a size 6+ Vulpoid population: accessibility +30%.
+		"vulpoid_maintenance":{"price":1.05},
+		# Vulpoid Population: Stability +0 to +4 by Vulpoid availability (population vs colony size). Player markets: growth up to +20 x size. Workforce capacity up to 4....
+		"vulpoid_population":{"price":1.05, "comfort":5, "happiness":6},
+		# Vulpoid Security Foxes: Puts the colony's Pather Cells to sleep (no Pather attacks) when the workforce requirements are met.
+		"vulpoid_security":{"happiness":-3, "security":6},
+		# Vulpoid Servants: With a Vulpoid population at least the colony size: stability +4, drug demand -1 (Population and Mining).
+		"vulpoid_servants":{"price":1.08, "comfort":5, "happiness":8},
+		# Vulpoid Customs Agents: Workforce: +25% colony income while it has workforce capacity. Nothing else.
+		"vulpoid_traders":{"price":1.02},
+		# ---- yunruworlds ----
+		# Crashed Cryosleeper: Growth +5 x colony size and +10 'sleeper' weight in incoming immigrants. No hazard (apply does not call the parent).
+		"yunru_crashedcryo":{"price":1.05},
+		# Rogue HEPHAESTUS: Hazard +50%, ship production quality +50%, Heavy Industry and Orbital Works demand +size marines. Bug: unapply does not call the parent or undo...
+		"yunru_hephaestus":{"price":0.95, "happiness":-3, "security":-6}
 	}
 }

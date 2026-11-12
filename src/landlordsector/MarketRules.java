@@ -46,15 +46,15 @@ public final class MarketRules {
     /** The price rule times every market condition in conditions.json that this market has. */
     public static float mult(MarketAPI market) {
         float m = baseMult(market);
-        for (ConditionTable.Effect e : ConditionTable.matching(Tenants.conditions(market))) m *= e.price;
+        for (ConditionTable.Effect e : ConditionTable.matching(Tenants.conditions(market), market.getFactionId())) m *= e.price;
         return Pricing.clamp(m, Pricing.MULT_MIN, Pricing.MULT_MAX);
     }
 
     private static float baseMult(MarketAPI market) {
+        java.util.Set<String> c = Tenants.conditions(market);
         return Pricing.marketMult(market.getSize(), market.getStabilityValue(), market.getHazardValue(),
-                market.hasCondition(Conditions.HABITABLE), market.hasCondition(Conditions.MILD_CLIMATE),
-                market.hasCondition(Conditions.POLLUTION), market.hasCondition(Conditions.PIRATE_ACTIVITY),
-                market.hasCondition(Conditions.PATHER_CELLS));
+                c.contains(Conditions.HABITABLE), c.contains(Conditions.MILD_CLIMATE), c.contains(Conditions.POLLUTION),
+                c.contains(Conditions.PIRATE_ACTIVITY), c.contains(Conditions.PATHER_CELLS));
     }
 
     /** The tariff the player pays here, 0 on their own colonies. */

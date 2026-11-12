@@ -22,3 +22,9 @@ jars/
 /Landlordsector/
 /Landlordsector.zip
 /Landlordsector-*.zip
+
+# Third-party code extracted to rebuild conditions.json: never committed.
+/tools/conditions/bundles/
+/tools/conditions/api/
+/tools/conditions/cond_index.json
+/tools/conditions/batch*.txt

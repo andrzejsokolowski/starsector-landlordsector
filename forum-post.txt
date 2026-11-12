@@ -75,6 +75,12 @@ This mod is under the CC0 (Creative Commons Zero) License, allowing you to do wh
 [/spoiler]
 
 [spoiler=Version log]
+[b]0.3.1[/b]
+[list]
+[li]Market condition effects are rebuilt from what each condition really does in the game, read from its code. 142 conditions from the base game and your mods count. Conditions that only change stability or hazard (already counted) or do nothing are left out.[/li]
+[li]Conditions that only work for one faction, like the Imperial Doctrine or the FSF Military Zone, now only count under that faction.[/li]
+[li]Suppressed conditions, like pollution under Filtered Air, no longer count.[/li]
+[/list]
 [b]0.3.0[/b]
 [list]
 [li]Homes no longer come with tenants: a new home starts empty and advertised, and applicants turn up over the following days.[/li]

@@ -70,6 +70,10 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   `data/ConditionTable`. New `Property` fields load as 0, false or null from older saves; `upgradeTo030`
   in the mod plugin rolls traits and gives pre-0.3.0 homes a tenant.
 
+- conditions.json (0.3.1) is built from each condition's code: `tools/conditions` (README there). Entries may
+  name `owners` / `ownersContain` (faction-only effects) and `others`. `Tenants.conditions` skips suppressed
+  conditions, and every condition check goes through it.
+
 ## Known limits
 
 - The portfolio classes are in the save, so removing the mod mid-game breaks that save.

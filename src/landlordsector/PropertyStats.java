@@ -87,7 +87,7 @@ public final class PropertyStats {
         Set<String> conds = Tenants.conditions(m);
         float condComfort = 0f, condHappy = 0f, condSecurity = 0f;
         List<String> condNames = new ArrayList<>();
-        for (ConditionTable.Effect e : ConditionTable.matching(conds)) {
+        for (ConditionTable.Effect e : ConditionTable.matching(conds, m.getFactionId())) {
             condComfort += e.comfort;
             condHappy += e.happiness;
             condSecurity += e.security;

@@ -1,3 +1,8 @@
+Version 0.3.1 (2026-11-12)
+- Market condition effects are rebuilt from what each condition really does in the game, read from its code. 142 conditions from the base game and your mods count. Conditions that only change stability or hazard (already counted) or do nothing are left out
+- Conditions that only work for one faction, like the Imperial Doctrine or the FSF Military Zone, now only count under that faction
+- Suppressed conditions, like pollution under Filtered Air, no longer count
+
 Version 0.3.0 (2026-11-12)
 - Homes no longer come with tenants: a new home starts empty and advertised, and applicants turn up over the following days
 - Pick one of up to three applicants or turn them away. Screening shows an applicant's hidden traits, and a monthly screening service makes bad traits rarer

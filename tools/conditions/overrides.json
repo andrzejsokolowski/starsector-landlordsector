@@ -1,0 +1,200 @@
+{
+ "urbanized_polity": {
+  "price": 1,
+  "comfort": 0,
+  "happiness": 0,
+  "security": 0
+ },
+ "vice_demand": {
+  "price": 1,
+  "comfort": 0,
+  "happiness": 0,
+  "security": 0
+ },
+ "shipbreaking_center": {
+  "price": 1,
+  "comfort": 0,
+  "happiness": 0,
+  "security": 0
+ },
+ "trade_center": {
+  "price": 1,
+  "comfort": 0,
+  "happiness": 0,
+  "security": 0
+ },
+ "organized_crime": {
+  "price": 1,
+  "comfort": 0,
+  "happiness": 0,
+  "security": 0
+ },
+ "dissident": {
+  "price": 1,
+  "comfort": 0,
+  "happiness": 0,
+  "security": 0
+ },
+ "DE_Megafauna": {
+  "price": 1,
+  "comfort": 0,
+  "happiness": 0,
+  "security": 0
+ },
+ "DE_Megafauna_PAGSM": {
+  "price": 1,
+  "comfort": 0,
+  "happiness": 0,
+  "security": 0
+ },
+ "DE_Titanlober": {
+  "price": 1,
+  "comfort": 0,
+  "happiness": 0,
+  "security": 0
+ },
+ "DE_Unstablelamp": {
+  "price": 1,
+  "comfort": 0,
+  "happiness": 0,
+  "security": 0
+ },
+ "organ_harvesting_operations": {
+  "price": 1,
+  "comfort": 0,
+  "happiness": 0,
+  "security": 0
+ },
+ "DE_Patrioticfervor": {
+  "price": 1,
+  "comfort": 0,
+  "happiness": 0,
+  "security": 0
+ },
+ "ix_cartel_activity": {
+  "price": 1,
+  "comfort": 0,
+  "happiness": 0,
+  "security": 0
+ },
+ "IndEvo_WorldWonderCondition": {
+  "price": 1,
+  "comfort": 0,
+  "happiness": 0,
+  "security": 0
+ },
+ "decivilized": {
+  "price": 1,
+  "comfort": 0,
+  "happiness": 0,
+  "security": 0
+ },
+ "vri_mineshell": {
+  "price": 1,
+  "comfort": 0,
+  "happiness": 0,
+  "security": 0
+ },
+ "yunru_gaia": {
+  "price": 1,
+  "comfort": 0,
+  "happiness": 0,
+  "security": 0
+ },
+ "ruins_widespread": {
+  "price": 1,
+  "comfort": 0,
+  "happiness": 0,
+  "security": 0
+ },
+ "aEP_ExtinctiveVirus": {
+  "price": 1,
+  "comfort": 0,
+  "happiness": 0,
+  "security": 0
+ },
+ "rogue_ai_core": {
+  "price": 0.98,
+  "comfort": 0,
+  "happiness": 0,
+  "security": -3
+ },
+ "yunru_hephaestus": {
+  "price": 0.95,
+  "comfort": 0,
+  "happiness": -3,
+  "security": -6
+ },
+ "aEP_MilitaryZone": {
+  "owners": [
+   "aEP_FSF"
+  ]
+ },
+ "aEP_UndergroundStorage": {
+  "owners": [
+   "aEP_FSF"
+  ]
+ },
+ "apex_collectivedefense": {
+  "owners": [
+   "apex_design"
+  ]
+ },
+ "bbplus_closed_door": {
+  "owners": [
+   "sephira_conclave"
+  ]
+ },
+ "bbplus_orbital_station": {
+  "owners": [
+   "sephira_conclave"
+  ]
+ },
+ "ii_imperialdoctrine": {
+  "owners": [
+   "interstellarimperium"
+  ]
+ },
+ "ork_wardrive": {
+  "owners": [
+   "orks"
+  ]
+ },
+ "neutrino_defense_autocomplex": {
+  "owners": [
+   "neutrinocorp"
+  ]
+ },
+ "istl_tenacity_condition": {
+  "owners": [
+   "luddic_church",
+   "knights_of_ludd",
+   "ashen_keepers",
+   "luddic_path"
+  ]
+ },
+ "istl_peremohy_condition": {
+  "owners": [
+   "dassault_mikoyan",
+   "SCY",
+   "ORA",
+   "shadow_industry",
+   "star_federation",
+   "brighton"
+  ],
+  "others": {
+   "security": -6,
+   "happiness": -3
+  }
+ },
+ "MPC_arrowPatherConditionTwo": {
+  "owners": [
+   "luddic_path"
+  ]
+ },
+ "tahlan_legiotyranny": {
+  "ownersContain": [
+   "legio"
+  ]
+ }
+}

@@ -29,7 +29,8 @@ public final class Tenants {
         if (m == null || m.getConditions() == null) return Collections.emptySet();
         Set<String> s = new HashSet<>();
         for (MarketConditionAPI c : m.getConditions()) {
-            if (c != null && c.getId() != null) s.add(c.getId());
+            // A suppressed condition (Filtered Air hiding pollution, for example) has no effect, so it does not count.
+            if (c != null && c.getId() != null && !m.isConditionSuppressed(c.getId())) s.add(c.getId());
         }
         return s;
     }
