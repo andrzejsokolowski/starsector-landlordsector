@@ -61,7 +61,17 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   only consumed when `onEscape` returns true: the Manage page returns false so the Manage screen closes
   (0.1.0 swallowed it).
 
+- 0.3.0 tenants: `Tenant` (saved: traits, shown/screened, wealth, mood), `Tenants.create` (name and
+  portrait from the faction, traits from `data/TenantTraits` weighted by faction and market conditions),
+  `TenantRules` (plain math, checked), `TenantDaily` (transient, once a day: moods, applicants, events at
+  most every 5 days, moving out, finder deliveries, pool expiry), `Notify` (home log, fleet log, intel for
+  big events), `Finders` (finders.json people placed in comm directories, `$lls_isFinder`,
+  `LLS_FinderOptions` / `LLS_HireFinder`). House traits in `data/HouseTraits`, market condition effects in
+  `data/ConditionTable`. New `Property` fields load as 0, false or null from older saves; `upgradeTo030`
+  in the mod plugin rolls traits and gives pre-0.3.0 homes a tenant.
+
 ## Known limits
 
 - The portfolio classes are in the save, so removing the mod mid-game breaks that save.
-- 0.1.0 was played by Andrzej on 2026-11-11 (buy screen, buying). 0.2.0 screens and agents not played yet.
+- 0.1.0 was played by Andrzej on 2026-11-11 (buy screen, buying), 0.2.0 on 2026-11-12 (agent screen).
+  0.3.0 tenants and finders not played yet.

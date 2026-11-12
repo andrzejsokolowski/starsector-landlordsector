@@ -1,0 +1,25 @@
+{
+	# Tenant finders: unique people, one each, placed in the comm directory of a market of their faction
+	# when a save first loads. Hire them once (hire), then send them on searches from the Manage page
+	# (search, days). Each search brings back "tenants" tenants, all screened, drawn from their own
+	# faction's kind of people (profile) with bad traits multiplied by badTraits.
+	# gender: male, female or any. portrait: optional sprite path, otherwise a random faction portrait.
+	"finders":[
+		{"id":"rook_massey", "first":"Rook", "last":"Massey", "gender":"male", "faction":"pirates", "profile":"pirates", "hire":20000, "search":4000, "days":10, "tenants":5, "badTraits":1.0,
+		 "pitch":"I find tenants among pirates. Cheap, but they cause trouble."},
+		{"id":"dora_kade", "first":"Dora", "last":"Kade", "gender":"female", "faction":"independent", "profile":"independent", "hire":50000, "search":8000, "days":15, "tenants":3, "badTraits":1.0,
+		 "pitch":"I find tenants among spacers and dock workers."},
+		{"id":"sister_amaryllis", "first":"Amaryllis", "last":"Venn", "gender":"female", "faction":"luddic_church", "profile":"luddic_church", "hire":80000, "search":12000, "days":15, "tenants":4, "badTraits":0.6,
+		 "pitch":"I find tenants among the Luddic faithful."},
+		{"id":"sefa_ruun", "first":"Sefa", "last":"Ruun", "gender":"female", "faction":"sindrian_diktat", "profile":"sindrian_diktat", "hire":120000, "search":20000, "days":12, "tenants":4, "badTraits":0.7,
+		 "pitch":"I find tenants among Diktat citizens."},
+		{"id":"marcus_tellen", "first":"Marcus", "last":"Tellen", "gender":"male", "faction":"hegemony", "profile":"hegemony", "hire":150000, "search":25000, "days":12, "tenants":4, "badTraits":0.6,
+		 "pitch":"I find tenants among Hegemony officers and clerks."},
+		{"id":"varro_quill", "first":"Varro", "last":"Quill", "gender":"male", "faction":"persean", "profile":"persean", "hire":200000, "search":30000, "days":12, "tenants":5, "badTraits":0.7,
+		 "pitch":"I find tenants among League merchants."},
+		{"id":"ilse_varga", "first":"Ilse", "last":"Varga", "gender":"female", "faction":"tritachyon", "profile":"tritachyon", "hire":400000, "search":60000, "days":10, "tenants":5, "badTraits":0.5,
+		 "pitch":"I find tenants among Tri-Tachyon staff. They pay well."},
+		{"id":"the_broker", "first":"The", "last":"Broker", "gender":"any", "faction":"independent", "profile":"tritachyon", "hire":1000000, "search":100000, "days":7, "tenants":7, "badTraits":0.3,
+		 "pitch":"I find the best tenants in the Sector, for a price."}
+	]
+}

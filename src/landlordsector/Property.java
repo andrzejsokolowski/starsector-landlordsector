@@ -1,7 +1,12 @@
 package landlordsector;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
+
+import landlordsector.data.HouseTraits;
 
 /** A home the player owns. Saved in the portfolio. */
 public class Property {
@@ -29,6 +34,79 @@ public class Property {
     /** True when last month's rent was frozen because the owners were hostile. */
     public boolean frozen;
 
+    // ---- 0.3.0. New fields must work at their zero value: older saves load them as 0, false or null. ----
+
+    /** House trait ids (house_traits.json). */
+    public List<String> traits;
+    /** The tenant, or null while the home stands empty. */
+    public Tenant tenant;
+    /** People who answered the advert, waiting for an answer. */
+    public List<Tenant> applicants;
+    public boolean advertising;
+    /** Monthly screening service: fewer bad traits among applicants. */
+    public boolean screeningService;
+    /** Decor added by tenants (new furniture, a garden) or taken away (graffiti). */
+    public float decorBonus;
+    /** Newest last. */
+    public List<String> log;
+    public long lastEventAt;
+    /** Share of this month's rent lost to late or skipped payments (0 to 1). */
+    public float rentCut;
+
+    public List<String> traits() {
+        if (traits == null) traits = new ArrayList<>();
+        return traits;
+    }
+
+    public List<Tenant> applicants() {
+        if (applicants == null) applicants = new ArrayList<>();
+        return applicants;
+    }
+
+    public List<String> log() {
+        if (log == null) log = new ArrayList<>();
+        return log;
+    }
+
+    public boolean isRented() {
+        return tenant != null && !condemned;
+    }
+
+    public float decor() {
+        return Pricing.clamp(tier().decor + decorBonus, 0f, 100f);
+    }
+
+    /** Price multiplier of the house traits. */
+    public float traitPrice() {
+        float m = 1f;
+        for (String id : traits()) {
+            HouseTraits.Def d = HouseTraits.get(id);
+            if (d != null) m *= d.price;
+        }
+        return m;
+    }
+
+    /** Wear multiplier of the house traits and the tenant. */
+    public float wearMult() {
+        float m = 1f;
+        for (String id : traits()) {
+            HouseTraits.Def d = HouseTraits.get(id);
+            if (d != null) m *= d.wear;
+        }
+        return tenant != null ? m * tenant.wearMult() : m * TenantRules.VACANT_WEAR;
+    }
+
+    /** Adds a dated line to the home's log, keeping the last 25. */
+    public void addLog(String text) {
+        String date = "";
+        try {
+            date = Global.getSector().getClock().getShortDate() + "  ";
+        } catch (Throwable ignored) {
+        }
+        log().add(date + text);
+        while (log().size() > 25) log().remove(0);
+    }
+
     public Tier tier() {
         Tier t = TierTable.get(tierId);
         return t != null ? t : TierTable.all().get(0);
@@ -55,7 +133,7 @@ public class Property {
     public float fullValue() {
         MarketAPI m = market();
         float mult = m != null ? MarketRules.mult(m) : Pricing.MULT_MIN;
-        return basePrice * mult * drift * Pricing.decorValueMult(tier().decor);
+        return basePrice * mult * drift * Pricing.decorValueMult(decor()) * traitPrice();
     }
 
     public PropertyStats stats() {
@@ -69,7 +147,7 @@ public class Property {
     /** Next month's rent after the tariff, at today's numbers. */
     public float expectedRent() {
         MarketAPI m = market();
-        if (m == null || condemned || MarketRules.hostile(m)) return 0f;
+        if (m == null || !isRented() || MarketRules.hostile(m)) return 0f;
         float gross = Pricing.rent(fullValue(), tier().rentShare, setting().rentMult, condition, Settings.rentMult());
         return gross * (1f - MarketRules.tariff(m));
     }

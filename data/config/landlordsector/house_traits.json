@@ -1,0 +1,41 @@
+{
+	# Random traits a home rolls when it comes on the market: 1 to 3, more for bigger homes.
+	# good: shown green (true) or red (false). weight: how often it is picked among the traits that fit.
+	# Where a trait fits (all given parts must match):
+	#   anyCondition: the market has at least one of these conditions
+	#   climates: station, temperate, arid, cold, ocean, jungle, hostile
+	#   station: true for stations only, false for planets only
+	#   minTier, maxTier: 0 shack, 1 studio, 2 small house, 3 house, 4 villa, 5 estate
+	# Effects: comfort, happiness, security (added), price, wear (multiplied).
+	# tags: what tenants can like or dislike (see tenant_traits.json). conflicts: traits it never rolls with.
+	"traits":[
+		{"id":"flowers", "name":"Field of flowers", "good":true, "weight":3, "anyCondition":["habitable","US_sakura","rat_bionic_plantlife"], "comfort":5, "happiness":3, "tags":["flowers"]},
+		{"id":"garden", "name":"Private garden", "good":true, "weight":3, "anyCondition":["habitable"], "minTier":2, "comfort":4, "tags":["garden","plants"]},
+		{"id":"ocean_view", "name":"Ocean view", "good":true, "weight":4, "climates":["ocean"], "price":1.06, "comfort":5, "tags":["view","water"]},
+		{"id":"lakeside", "name":"Lakeside", "good":true, "weight":2, "anyCondition":["BSF_freshwaterLake","jdp_quarryLakes","water_surface","farmland_rich","farmland_bountiful"], "comfort":4, "tags":["water"]},
+		{"id":"mountain_view", "name":"Mountain view", "good":true, "weight":2, "station":false, "comfort":3, "tags":["view"]},
+		{"id":"starview", "name":"Viewport to the stars", "good":true, "weight":3, "station":true, "comfort":4, "tags":["view"]},
+		{"id":"recycled_air", "name":"Recycled air", "good":false, "weight":3, "station":true, "comfort":-4, "tags":["stale_air"]},
+		{"id":"lava_lake", "name":"Lava lake nearby", "good":false, "weight":4, "anyCondition":["very_hot","extreme_tectonic_activity","tectonic_activity"], "price":0.92, "comfort":-6, "tags":["heat"]},
+		{"id":"frozen_pipes", "name":"Frozen pipes", "good":false, "weight":3, "anyCondition":["cold","very_cold"], "wear":1.15, "tags":["cold"]},
+		{"id":"heated_floors", "name":"Heated floors", "good":true, "weight":2, "anyCondition":["cold","very_cold"], "minTier":2, "comfort":5},
+		{"id":"damp", "name":"Damp walls", "good":false, "weight":3, "climates":["ocean","jungle"], "comfort":-4, "wear":1.1, "tags":["damp"]},
+		{"id":"smog", "name":"Smog", "good":false, "weight":4, "anyCondition":["pollution","industrial_polity"], "comfort":-5, "tags":["smog"]},
+		{"id":"dust", "name":"Dust everywhere", "good":false, "weight":3, "climates":["arid"], "comfort":-3, "wear":1.1, "tags":["dust"]},
+		{"id":"spaceport", "name":"Next to the spaceport", "good":false, "weight":2, "happiness":-4, "tags":["noise","busy"], "conflicts":["quiet_street"]},
+		{"id":"quiet_street", "name":"Quiet street", "good":true, "weight":2, "happiness":4, "tags":["quiet"], "conflicts":["spaceport"]},
+		{"id":"market_nearby", "name":"Near the market", "good":true, "weight":2, "happiness":3, "tags":["busy"]},
+		{"id":"thin_walls", "name":"Thin walls", "good":false, "weight":3, "maxTier":1, "happiness":-3, "tags":["noise"]},
+		{"id":"cramped", "name":"Cramped", "good":false, "weight":2, "maxTier":2, "comfort":-3},
+		{"id":"reinforced", "name":"Reinforced doors", "good":true, "weight":2, "security":10},
+		{"id":"bars", "name":"Bars on the windows", "good":false, "weight":4, "anyCondition":["pirate_activity","organized_crime","IndEvo_pirate_subpop","ix_cartel_activity"], "comfort":-4, "security":8},
+		{"id":"leaky_roof", "name":"Leaky roof", "good":false, "weight":2, "station":false, "wear":1.2, "conflicts":["new_plumbing"]},
+		{"id":"new_plumbing", "name":"New plumbing", "good":true, "weight":2, "wear":0.85, "conflicts":["leaky_roof"]},
+		{"id":"ruins", "name":"Domain-era ruins nearby", "good":true, "weight":3, "anyCondition":["ruins_scattered","ruins_widespread","ruins_extensive","ruins_vast"], "price":1.05, "tags":["history"]},
+		{"id":"fungus_cellar", "name":"Mushroom cellar", "good":true, "weight":5, "anyCondition":["US_shrooms"], "happiness":6, "tags":["fungus"]},
+		{"id":"lobster_pond", "name":"Lobster pond", "good":true, "weight":4, "anyCondition":["volturnian_lobster_pens","DE_Lobsters","DE_Lobsters_PAGSM","jdp_volturnianLobsterPens"], "happiness":3, "tags":["pets"]},
+		{"id":"pool", "name":"Swimming pool", "good":true, "weight":3, "minTier":4, "price":1.04, "comfort":5, "tags":["water"]},
+		{"id":"blossoms", "name":"Blossom trees", "good":true, "weight":5, "anyCondition":["US_sakura"], "comfort":6, "tags":["flowers"]},
+		{"id":"lead_lined", "name":"Lead-lined walls", "good":true, "weight":3, "anyCondition":["irradiated","bbplus_sigmairradiated"], "comfort":4, "security":5}
+	]
+}

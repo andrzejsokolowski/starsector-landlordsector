@@ -21,6 +21,23 @@ public class Portfolio {
     public Map<String, Agents.Agent> agents = new HashMap<>();
     /** True once the first agents were placed in this save. */
     public boolean agentsSeeded;
+    /** Tenants the finders brought back, waiting to be given a home. */
+    public List<Tenant> tenantPool;
+    /** Tenant finders by id. */
+    public Map<String, Finders.State> finders;
+    public boolean findersSeeded;
+    /** Homes bought before 0.3.0 got a tenant of their own. */
+    public boolean tenantsMigrated;
+
+    public List<Tenant> tenantPool() {
+        if (tenantPool == null) tenantPool = new ArrayList<>();
+        return tenantPool;
+    }
+
+    public Map<String, Finders.State> finders() {
+        if (finders == null) finders = new HashMap<>();
+        return finders;
+    }
 
     /** Last month's totals, for the Manage page. */
     public float lastRent;

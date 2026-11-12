@@ -14,13 +14,7 @@ public final class RulesCheck {
     private static final List<String> problems = new ArrayList<>();
 
     public static void main(String[] args) throws Exception {
-        String raw = new String(Files.readAllBytes(Paths.get(args[0])), StandardCharsets.UTF_8);
-        StringBuilder text = new StringBuilder();
-        for (String line : raw.split("\n")) {
-            int hash = line.indexOf('#');
-            text.append(hash >= 0 ? line.substring(0, hash) : line).append('\n');
-        }
-        TierTable.load(new JSONObject(text.toString()));
+        loadAll(args[0]);
 
         List<Tier> tiers = TierTable.all();
         expect(tiers.size() == 6, "six tiers, found " + tiers.size());
@@ -50,13 +44,14 @@ public final class RulesCheck {
         expect(Math.abs(prime - 4f) < 1e-4, "the best possible world reaches 4x, got " + prime);
         expect(Math.abs(worst - 0.25f) < 1e-4, "the worst world drops to 0.25x, got " + worst);
         expect(Math.abs(typical - 0.95f) < 0.06f, "a standard world sits near 1x, got " + typical);
-        expect(Pricing.grade(earth).startsWith("A"), "an Earth-like world is grade A, got " + Pricing.grade(earth));
+        expect("S".equals(Pricing.grade(earth)), "an Earth-like world is grade S (Andrzej), got " + Pricing.grade(earth));
         String lg = Pricing.grade(lunamun);
-        expect(lg.startsWith("B") || lg.startsWith("C"), "Lunamun is grade B or C (Andrzej), got " + lg);
-        expect(Pricing.grade(magma).startsWith("F"), "a 275 percent magma world with pirates is F, got "
+        expect("B".equals(lg) || "C".equals(lg), "Lunamun is grade B or C (Andrzej), got " + lg);
+        expect("F".equals(Pricing.grade(magma)), "a 275 percent magma world with pirates is F, got "
                 + Pricing.grade(magma));
         String tg = Pricing.grade(typical);
-        expect(tg.startsWith("C"), "a standard world is grade C, got " + tg);
+        expect("C".equals(tg), "a standard world is grade C, got " + tg);
+        expect("S+".equals(Pricing.grade(prime)), "the best possible world is S+, got " + Pricing.grade(prime));
         expect(Math.abs(Pricing.planetMult(1f, false, false, false) - 1f) < 1e-6, "hazard 100 percent is standard");
         expect(Math.abs(Pricing.planetMult(0.5f, false, false, false) - 1.5f) < 1e-6, "hazard 50 percent is 1.5");
         expect(Pricing.planetMult(1.65f, false, false, false) > 0.8f, "hazard 165 percent is still fine");
@@ -113,8 +108,9 @@ public final class RulesCheck {
                 "security range");
         expect(Pricing.security(5f, 0f, 0f, true, true) == 5f, "pirates and Pathers cut security");
         expect(Pricing.damageMult(100f) > 0.3f && Pricing.damageMult(0f) == 1f, "security cuts damage, never to zero");
-        expect("A+".equals(Pricing.grade(4f)) && Pricing.grade(0.25f).startsWith("F")
-                && "C+".equals(Pricing.grade(1f)) && "C-".equals(Pricing.grade(0.78f)), "location grades");
+        expect("S+".equals(Pricing.grade(4f)) && "S".equals(Pricing.grade(2f)) && "A".equals(Pricing.grade(1.6f))
+                && "B".equals(Pricing.grade(1.1f)) && "C".equals(Pricing.grade(1f)) && "D".equals(Pricing.grade(0.6f))
+                && "E".equals(Pricing.grade(0.45f)) && "F".equals(Pricing.grade(0.25f)), "location grades S+ to F");
         expect(Math.abs(Pricing.decorValueMult(100f) - 1.25f) < 1e-6, "decor adds up to a quarter to the value");
         for (int i = 1; i < s.length; i++) {
             expect(s[i].happiness < s[i - 1].happiness, s[i] + ": happiness must fall as rent rises");
@@ -128,6 +124,80 @@ public final class RulesCheck {
         float arrive = Pricing.agentArrival(share, stay);
         float steady = arrive * stay / (1f + arrive * stay);
         expect(Math.abs(steady - share) < 0.01f, "arrivals keep the share steady, got " + steady);
+
+        // ---- 0.3.0 data files ----
+        expect(landlordsector.data.ConditionTable.size() > 100, "the condition table covers the installed mods");
+        expect(landlordsector.data.ConditionTable.get("US_shrooms").happiness > 0f, "psychoactive fungus cheers tenants");
+        expect(landlordsector.data.ConditionTable.get("rogue_ai_core").price < 1f, "a rogue AI core lowers prices");
+        for (String id : new String[] {"US_shrooms", "rat_rampant_military_core", "yunru_gaia", "ix_killsats"}) {
+            expect(landlordsector.data.ConditionTable.get(id) != null, "condition table has " + id);
+        }
+        java.util.Set<String> houseTags = new java.util.HashSet<>();
+        for (landlordsector.data.HouseTraits.Def d : landlordsector.data.HouseTraits.all()) {
+            houseTags.addAll(d.tags);
+            expect(d.weight > 0f && d.price > 0.5f && d.price < 1.5f && d.wear > 0.5f && d.wear < 1.5f,
+                    "house trait " + d.id + " has sane numbers");
+            for (String c : d.conflicts) expect(landlordsector.data.HouseTraits.get(c) != null, d.id + " conflicts with a real trait");
+        }
+        expect(landlordsector.data.HouseTraits.get("flowers") != null && landlordsector.data.HouseTraits.get("lava_lake") != null,
+                "Andrzej's examples: field of flowers and lava lake");
+        expect(landlordsector.data.HouseTraits.get("flowers").good && !landlordsector.data.HouseTraits.get("lava_lake").good,
+                "flowers are good, lava is bad");
+        java.util.Set<String> eventIds = new java.util.HashSet<>();
+        for (landlordsector.data.TenantEvents.Def e : landlordsector.data.TenantEvents.all()) {
+            eventIds.add(e.id);
+            expect(!e.text.isEmpty() && e.text.indexOf('%') < 0, "event " + e.id + " has plain text");
+        }
+        for (landlordsector.data.TenantTraits.Def d : landlordsector.data.TenantTraits.all()) {
+            for (String t : d.likes) expect(houseTags.contains(t), d.id + " likes " + t + ", which no house trait has");
+            for (String t : d.dislikes) expect(houseTags.contains(t), d.id + " dislikes " + t + ", which no house trait has");
+            for (String ev : d.events.keySet()) expect(eventIds.contains(ev), d.id + " names event " + ev + ", which does not exist");
+        }
+        expect(landlordsector.data.TenantTraits.get("vandal") != null && landlordsector.data.TenantTraits.get("filthy") != null
+                && landlordsector.data.TenantTraits.get("prosperous") != null && landlordsector.data.TenantTraits.get("pollen_allergy") != null,
+                "Andrzej's examples: vandal, filthy, prosperous, pollen allergy");
+        // Pirates find vandals, Tri-Tachyon finds the prosperous.
+        java.util.Set<String> none = java.util.Collections.emptySet();
+        landlordsector.data.TenantTraits.Def vandal = landlordsector.data.TenantTraits.get("vandal");
+        landlordsector.data.TenantTraits.Def rich = landlordsector.data.TenantTraits.get("prosperous");
+        expect(landlordsector.data.TenantTraits.weight(vandal, "pirates", none, 1f)
+                > 3f * landlordsector.data.TenantTraits.weight(vandal, "tritachyon", none, 1f), "pirates bring vandals");
+        expect(landlordsector.data.TenantTraits.weight(rich, "tritachyon", none, 1f)
+                > 3f * landlordsector.data.TenantTraits.weight(rich, "pirates", none, 1f), "Tri-Tachyon brings the prosperous");
+        java.util.Random rnd = new java.util.Random(1);
+        int pirateBad = 0, ttBad = 0;
+        for (int i = 0; i < 400; i++) {
+            for (String id : landlordsector.data.TenantTraits.roll("pirates", none, 1f, rnd)) {
+                if (Boolean.FALSE.equals(landlordsector.data.TenantTraits.get(id).good)) pirateBad++;
+            }
+            for (String id : landlordsector.data.TenantTraits.roll("tritachyon", none, 1f, rnd)) {
+                if (Boolean.FALSE.equals(landlordsector.data.TenantTraits.get(id).good)) ttBad++;
+            }
+        }
+        expect(pirateBad > 2 * ttBad, "pirate tenants roll far more bad traits than Tri-Tachyon ones (" + pirateBad + " vs " + ttBad + ")");
+        for (landlordsector.data.FinderDefs.Def f : landlordsector.data.FinderDefs.all()) {
+            expect(!f.first.isEmpty() && f.hire > 0f && f.search > 0f && f.days > 0f && f.tenants > 0, "finder " + f.id + " is complete");
+            expect(f.pitch.indexOf('%') < 0 && f.pitch.length() < 80, "finder " + f.id + " has a short plain pitch");
+        }
+
+        // Tenant math: Andrzej's vandal is far worse in a greedy shack than in a charity estate.
+        float vandalShack = TenantRules.eventWeight(false, true, false, 1f, 4f, 30f, RentSetting.GREEDY, 0, 50f);
+        float vandalEstate = TenantRules.eventWeight(false, true, false, 1f, 4f, 80f, RentSetting.CHARITY, 5, 50f);
+        expect(vandalShack > 8f * vandalEstate, "a vandal wrecks a greedy shack far more than a charity estate ("
+                + vandalShack + " vs " + vandalEstate + ")");
+        expect(TenantRules.eventWeight(true, false, false, 1f, 1f, 90f, RentSetting.NORMAL, 3, 50f)
+                > TenantRules.eventWeight(true, false, false, 1f, 1f, 10f, RentSetting.NORMAL, 3, 50f), "happy tenants bring good events");
+        expect(TenantRules.eventWeight(false, false, true, 1f, 1f, 50f, RentSetting.NORMAL, 3, 0f)
+                > 2f * TenantRules.eventWeight(false, false, true, 1f, 1f, 50f, RentSetting.NORMAL, 3, 100f), "security stops crime");
+        expect(TenantRules.maxSetting(1) == RentSetting.LOW && TenantRules.maxSetting(5) == RentSetting.GREEDY, "wealth sets the rent ceiling");
+        expect(TenantRules.overpricedSteps(RentSetting.GREEDY, 1) == 3, "a poor tenant on Greedy rent is 3 steps over");
+        expect(TenantRules.tenantHappiness(60f, 0f, 0, 1, 0, 0f) == 45f, "a disliked tag costs 15 happiness");
+        expect(TenantRules.tenantHappiness(60f, 0f, 1, 0, 0, 0f) == 68f, "a liked tag adds 8 happiness");
+        expect(TenantRules.moveOutChance(10f, true) == 0f && TenantRules.moveOutChance(10f, false) > 0f
+                && TenantRules.moveOutChance(50f, false) == 0f, "only unhappy, disloyal tenants move out");
+        expect(TenantRules.arrivalChance(1f, 50f, RentSetting.CHARITY) > TenantRules.arrivalChance(1f, 50f, RentSetting.GREEDY),
+                "cheap rent draws applicants faster");
+        expect(landlordsector.data.TenantEvents.minDaysBetween() >= 5f, "at most one event per home every 5 days (Andrzej)");
 
         // Listings by size.
         expect(Pricing.listingCount(3) == 2 && Pricing.listingCount(9) == 8 && Pricing.listingCount(12) == 8,
@@ -152,6 +222,28 @@ public final class RulesCheck {
         System.out.println("Landlordsector rules verified: standard " + typical + "x " + tg + ", Earth-like " + earth
                 + "x " + Pricing.grade(earth) + ", Lunamun " + lunamun + "x " + lg + ", magma with pirates " + magma
                 + "x " + Pricing.grade(magma) + ", estate rent " + estateRent);
+    }
+
+    /** Reads a Starsector JSON file: # comments stripped. */
+    static JSONObject json(java.nio.file.Path path) throws Exception {
+        String raw = new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
+        StringBuilder text = new StringBuilder();
+        for (String line : raw.split("\n")) {
+            int hash = line.indexOf('#');
+            text.append(hash >= 0 ? line.substring(0, hash) : line).append('\n');
+        }
+        return new JSONObject(text.toString());
+    }
+
+    /** Loads every data file next to tiers.json. */
+    static void loadAll(String tiersPath) throws Exception {
+        java.nio.file.Path dir = Paths.get(tiersPath).getParent();
+        TierTable.load(json(dir.resolve("tiers.json")));
+        landlordsector.data.ConditionTable.load(json(dir.resolve("conditions.json")));
+        landlordsector.data.HouseTraits.load(json(dir.resolve("house_traits.json")));
+        landlordsector.data.TenantTraits.load(json(dir.resolve("tenant_traits.json")));
+        landlordsector.data.TenantEvents.load(json(dir.resolve("tenant_events.json")));
+        landlordsector.data.FinderDefs.load(json(dir.resolve("finders.json")));
     }
 
     private static void expect(boolean ok, String what) {

@@ -104,12 +104,12 @@ public class MonthlyTick implements EconomyTickListener, ColonyPlayerHostileActL
             p.drift = Pricing.clamp(p.drift * wobble, eco.driftMin, eco.driftMax);
 
             boolean hostile = MarketRules.hostile(m);
-            p.frozen = hostile;
+            p.frozen = hostile && p.isRented();
             float net = 0f;
-            if (!p.condemned && !hostile) {
+            if (p.isRented() && !hostile) {
                 float gross = Pricing.rent(p.fullValue(), p.tier().rentShare, p.setting().rentMult, p.condition,
                         Settings.rentMult());
-                net = gross * (1f - MarketRules.tariff(m));
+                net = gross * (1f - MarketRules.tariff(m)) * (1f - Pricing.clamp(p.rentCut, 0f, 1f));
                 PropertyStats stats = p.stats();
                 if (random.nextFloat() < Pricing.tipChance(eco.tipChance, stats.happiness)) {
                     float tip = net * eco.tipShare;
@@ -124,6 +124,7 @@ public class MonthlyTick implements EconomyTickListener, ColonyPlayerHostileActL
                     if (rep != 0f) repByFaction.merge(m.getFactionId(), rep, Float::sum);
                 }
             }
+            p.rentCut = 0f;
             p.lastRent = net;
             p.totalRent += net;
             rentTotal += net;
@@ -135,16 +136,24 @@ public class MonthlyTick implements EconomyTickListener, ColonyPlayerHostileActL
                 node.tooltipCreator = TIP;
             }
 
+            if (p.screeningService) {
+                float fee = TenantRules.screeningService(Actions.normalRent(p));
+                FDNode node = report.getNode(root, p.id + "_screening");
+                node.name = "Screening service, " + p.displayName();
+                node.upkeep += fee;
+                node.tooltipCreator = TIP;
+            }
+
             // Wear after the rent: the tenants lived in it all month.
             if (!p.condemned) {
                 PropertyStats stats = p.stats();
-                float wear = Pricing.wearMult(stats.happiness) / eco.wearMonths;
+                float wear = Pricing.wearMult(stats.happiness) * p.wearMult() / eco.wearMonths;
                 if (anyDisrupted(m)) wear += eco.disruptionWear * Pricing.damageMult(stats.security);
                 p.condition -= wear;
                 if (p.condition <= 0f) {
                     p.condition = 0f;
                     p.condemned = true;
-                    news.add(p.displayName() + " is condemned. The tenants left. Repair it to rent it again.");
+                    news.add(p.displayName() + " is condemned.");
                 }
             }
         }

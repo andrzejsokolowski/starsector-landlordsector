@@ -1,8 +1,10 @@
 {
 	"ranks":{
-		"lls_property_agent":{"name":"Property Agent"}
+		"lls_property_agent":{"name":"Property Agent"},
+		"lls_tenant_finder":{"name":"Tenant Finder"}
 	},
 	"posts":{
-		"lls_property_agent":{"name":"Property Agent"}
+		"lls_property_agent":{"name":"Property Agent"},
+		"lls_tenant_finder":{"name":"Tenant Finder"}
 	}
 }

@@ -1,0 +1,36 @@
+{
+	# Tenant events. A rented home can have one at most every 5 days (minDaysBetween), with dailyChance
+	# after that, so most homes see one or two a month.
+	# Which event: weight, times the tenant's trait multipliers (tenant_traits.json), times:
+	#   bad events: 0.5 at happiness 100 up to 2.5 at happiness 0, and 0.6 on Charity rent up to 1.5 on Greedy
+	#   good events: 0.5 at happiness 0 up to 2.5 at happiness 100
+	#   damage events: 2 in a shack down to 0.6 in an estate
+	#   crime events: 1.5 at security 0 down to 0.5 at security 100
+	# Effects: condition (share, -0.2 is 20 percent off), mood (tenant mood, wears off a point a day),
+	# rentMult (this month's rent), tip (share of a month's rent paid now), decor (added to the home),
+	# rep (reputation points with the market's owners), leave (the tenant moves out).
+	# big: also sent to the intel screen. Every event goes into the home's log and the fleet log.
+	# $tenant and $home are filled in.
+	"minDaysBetween":5,
+	"dailyChance":0.06,
+	"events":[
+		{"id":"smashed_window", "good":false, "weight":2, "damage":true, "condition":-0.03, "mood":-2, "text":"$tenant smashed a window at $home."},
+		{"id":"trashed", "good":false, "weight":0.3, "damage":true, "condition":-0.15, "big":true, "text":"$tenant trashed $home."},
+		{"id":"graffiti", "good":false, "weight":1, "damage":true, "condition":-0.02, "decor":-2, "text":"$tenant painted graffiti all over $home."},
+		{"id":"mess", "good":false, "weight":1.5, "condition":-0.04, "text":"$tenant left $home a filthy mess."},
+		{"id":"late_rent", "good":false, "weight":1, "rentMult":0.5, "text":"$tenant paid the rent for $home late and short."},
+		{"id":"skipped_rent", "good":false, "weight":0.4, "rentMult":0, "big":true, "text":"$tenant skipped this month's rent at $home."},
+		{"id":"noise_complaint", "good":false, "weight":1, "rep":-0.5, "mood":-3, "text":"The neighbors complained about $tenant at $home."},
+		{"id":"burglary", "good":false, "weight":1, "crime":true, "condition":-0.05, "mood":-10, "text":"Burglars broke into $home."},
+		{"id":"small_fire", "good":false, "weight":0.2, "damage":true, "condition":-0.2, "mood":-10, "big":true, "text":"A small fire damaged $home."},
+		{"id":"sabotage", "good":false, "weight":0.05, "condition":-0.25, "big":true, "text":"$tenant wrecked the machinery at $home in the name of Ludd."},
+		{"id":"police_raid", "good":false, "weight":0.1, "crime":true, "condition":-0.05, "rep":-1, "mood":-15, "big":true, "text":"Police raided $home looking for $tenant's contraband."},
+		{"id":"fixed_something", "good":true, "weight":1, "condition":0.03, "text":"$tenant fixed a leaky tap at $home."},
+		{"id":"garden", "good":true, "weight":0.5, "decor":2, "mood":5, "text":"$tenant planted a garden at $home."},
+		{"id":"new_furniture", "good":true, "weight":0.3, "decor":5, "big":true, "text":"$tenant bought new furniture for $home."},
+		{"id":"tip", "good":true, "weight":1, "tip":0.1, "text":"$tenant left a tip with the rent for $home."},
+		{"id":"housewarming", "good":true, "weight":0.5, "mood":10, "text":"$tenant threw a party at $home."},
+		{"id":"recommended", "good":true, "weight":0.5, "rep":0.5, "text":"$tenant told the neighbors you are a good landlord."},
+		{"id":"chased_burglars", "good":true, "weight":0.3, "mood":5, "condition":0.01, "text":"$tenant chased burglars away from $home."}
+	]
+}

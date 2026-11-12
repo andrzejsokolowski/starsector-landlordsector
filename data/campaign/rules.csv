@@ -8,3 +8,12 @@ lls_agent_option,PopulateOptions,"$isPerson
 $lls_agent
 LLS_CanBuy",,,10:lls_open_buy:Show me the homes for sale.,
 lls_open_selected,DialogOptionSelected,$option == lls_open_buy,LLS_OpenBuyScreen,,
+# Tenant finders (Finders.java): one each, in a comm directory until hired.
+lls_finder_greeting,PickGreeting,"$lls_isFinder score:5","ShowPersonVisual
+FireAll PopulateOptions","After a short wait, your connection request is accepted.
+
+""$personName, tenant finder. $lls_finderPitch""",,
+lls_finder_options,PopulateOptions,"$isPerson
+$lls_isFinder",LLS_FinderOptions,,,
+lls_hire_finder_selected,DialogOptionSelected,$option == lls_hire_finder,"LLS_HireFinder
+FireAll PopulateOptions",,,

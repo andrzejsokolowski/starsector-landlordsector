@@ -4,7 +4,7 @@
 [/center]
 [center][b]
 WHAT DOES THIS MOD DO?
-Buy homes from property agents on the worlds you visit, from shacks to estates, and rent them out.
+Buy homes from property agents on the worlds you visit, from shacks to estates, and find tenants for them.
 Rent comes in every month. Keep them in repair, set the rent, sell when the price is right.
 Needs LunaLib and OddiszCommons.
 [/b][/center]
@@ -24,8 +24,19 @@ Needs LunaLib and OddiszCommons.
 [li]Comfort: the tier's base, more on mild, habitable worlds, less on stations, hostile or polluted worlds.[/li]
 [li]Decor: adds up to a quarter to the value and raises the reputation rent earns or costs.[/li]
 [li]Tenant happiness: from comfort, decor, condition and the rent setting. Happy tenants wear a home slower and tip more often.[/li]
-[li]Location: a grade from A to F (with + and -) for the market's size, stability, hazard and danger.[/li]
+[li]Location: a grade from S+ to F for the market's size, stability, hazard, danger and conditions.[/li]
+[li]Market conditions from the base game and installed mods count: a Psychoactive Fungus cheers tenants up, a Rogue AI Core drags prices down.[/li]
 [li]Security: from stability, military buildings and ground defenses, lower with pirate activity or Pather cells. Cuts the damage raids and disruption do.[/li]
+[/list]
+
+[hr][center][size=12pt][b]Tenants[/b][/size][/center][hr]
+[list]
+[li]A new home stands empty. Advertise it and applicants turn up over the days, faster with a good location, comfort and low rent. Pick one of up to three.[/li]
+[li]Each tenant has 2 or 3 traits that fit where they come from: pirates bring vandals, filthy tenants and late payers, Tri-Tachyon brings the prosperous and the tidy. You see one trait until you pay to screen them. A monthly screening service makes bad traits rarer.[/li]
+[li]Homes roll their own traits: Field of flowers, Ocean view, Lava lake nearby, Thin walls and more. Tenants like or hate some of them: a pollen allergy and a field of flowers do not mix.[/li]
+[li]Tenant events: tenants break windows, pay late, fix taps or buy furniture. Who they are, how happy they are, the rent and the home all count: a vandal on Charity rent behaves, the same vandal in a shack on Greedy rent wrecks it. At most one event per home every 5 days.[/li]
+[li]Unhappy tenants move out. You can evict.[/li]
+[li]Eight tenant finders live somewhere in the Sector's comm directories. Hire them, send them on searches, and move the tenants they bring into your empty homes.[/li]
 [/list]
 
 [hr][center][size=12pt][b]Rent[/b][/size][/center][hr]
@@ -64,6 +75,19 @@ This mod is under the CC0 (Creative Commons Zero) License, allowing you to do wh
 [/spoiler]
 
 [spoiler=Version log]
+[b]0.3.0[/b]
+[list]
+[li]Homes no longer come with tenants: a new home starts empty and advertised, and applicants turn up over the following days.[/li]
+[li]Pick one of up to three applicants or turn them away. Screening shows an applicant's hidden traits, and a monthly screening service makes bad traits rarer.[/li]
+[li]Tenants have traits that fit where they come from: pirates bring vandals and late payers, Tri-Tachyon brings the prosperous and the tidy.[/li]
+[li]Homes have random traits, good ones like Field of flowers or Ocean view and bad ones like Lava lake nearby or Thin walls. Tenants like or hate some of them.[/li]
+[li]Tenant events: tenants break things, pay late, fix things or buy furniture, depending on the tenant, the home and the rent. At most one event per home every 5 days, shown in the fleet log and the home's log.[/li]
+[li]Unhappy tenants may move out, and you can evict a tenant.[/li]
+[li]Eight tenant finders to find and hire across the Sector. Send them on searches and move the tenants they bring into your empty homes.[/li]
+[li]Location grades are now S+, S, A, B, C, D, E and F.[/li]
+[li]Market conditions from the base game and installed mods (for example Psychoactive Fungus or a Rogue AI Core) now change prices, comfort, tenant happiness and security.[/li]
+[li]Homes you owned before 0.3.0 keep a tenant and get house traits.[/li]
+[/list]
 [b]0.2.2[/b]
 [list]
 [li]Prices and location grades follow a new scale: hazard 100 percent is standard and 50 percent is ideal, size 5 and 6 are standard markets, 7 and 8 are big.[/li]

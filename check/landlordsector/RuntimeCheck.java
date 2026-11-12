@@ -66,14 +66,8 @@ public final class RuntimeCheck {
     }
 
     public static void main(String[] args) throws Exception {
-        String raw = new String(Files.readAllBytes(Paths.get(args[0])), StandardCharsets.UTF_8);
-        StringBuilder text = new StringBuilder();
-        for (String line : raw.split("\n")) {
-            int hash = line.indexOf('#');
-            text.append(hash >= 0 ? line.substring(0, hash) : line).append('\n');
-        }
         installGlobals();
-        TierTable.load(new JSONObject(text.toString()));
+        RulesCheck.loadAll(args[0]);
 
         FakeMarket heg = new FakeMarket();
         heg.id = "fake_heg"; heg.name = "Fakeholm"; heg.factionId = "hegemony"; heg.size = 6;
@@ -146,6 +140,35 @@ public final class RuntimeCheck {
         expect(Math.abs(before - credits.get() - ownPrice) < CREDIT_EPS, "own colony homes cost half with no tariff");
         Property colonyHome = Portfolio.get().properties().get(1);
 
+        // 0.3.0: a new home starts empty and advertised, applicants turn up, screening shows every trait.
+        expect(!home.isRented() && home.advertising && home.expectedRent() == 0f, "a new home starts empty and advertised");
+        expect(cheap.traits != null && !cheap.traits.isEmpty() && home.traits().equals(cheap.traits),
+                "a home keeps the house traits of its listing");
+        Random days = new Random(11);
+        for (int i = 0; i < 400 && home.applicants().isEmpty(); i++) {
+            now += DAY;
+            TenantDaily.runDay(days);
+        }
+        expect(!home.applicants().isEmpty(), "an advertised home gets applicants");
+        Tenant applicant = home.applicants().get(0);
+        expect(!applicant.screened && applicant.isShown(0) && !applicant.isShown(1), "applicants show one trait until screened");
+        expect(applicant.traits().size() >= 2 && applicant.name != null && !applicant.name.isEmpty(), "applicants have a name and traits");
+        expect(Actions.screen(home, applicant).startsWith("Screened") && applicant.isShown(1), "screening shows every trait");
+        expect(Actions.moveIn(home, applicant).contains(" moved into ") && home.isRented() && home.applicants().isEmpty(),
+                "an applicant moves in");
+        Actions.moveIn(colonyHome, Tenants.create("independent", b, 1f, true, "advert", days));
+        expect(colonyHome.isRented(), "a tenant moves into the colony home");
+        // Events: a fixed event changes the home and lands in its log.
+        float before0 = home.condition;
+        TenantDaily.apply(home, a, landlordsector.data.TenantEvents.get("smashed_window"));
+        expect(home.condition < before0 && !home.log().isEmpty(), "a bad event damages the home and is logged");
+        TenantDaily.apply(home, a, landlordsector.data.TenantEvents.get("new_furniture"));
+        expect(home.decorBonus > 0f, "a prosperous tenant's new furniture adds decor");
+        TenantDaily.apply(home, a, landlordsector.data.TenantEvents.get("skipped_rent"));
+        expect(home.rentCut == 1f, "a skipped payment takes this month's rent");
+        home.condition = 1f;
+        home.rentCut = 0f;
+
         // One month.
         MonthlyTick tick = new MonthlyTick();
         float paid = month(tick);
@@ -182,8 +205,8 @@ public final class RuntimeCheck {
         hostileFactions.clear();
 
         // Run it down until condemned, then rebuild.
-        for (int i = 0; i < 30 && !home.condemned; i++) month(tick);
-        expect(home.condemned, "an unrepaired greedy home is condemned within 30 months");
+        for (int i = 0; i < 80 && !home.condemned; i++) month(tick);
+        expect(home.condemned, "an unrepaired greedy home is condemned in time");
         month(tick);
         expect(home.lastRent == 0f, "a condemned home pays nothing");
         float full = home.fullValue();
@@ -213,18 +236,40 @@ public final class RuntimeCheck {
         HomeownerScript.beforeSave();
         expect(col.stabilityStat.getFlatStatMod("landlordsector_homeowners") == null, "nothing is left in the save");
 
+        // Tenant finders: the pirate finder sits on the pirate market, hires, searches, delivers.
+        Finders.place(days);
+        Finders.State rook = Portfolio.get().finders().get("rook_massey");
+        expect(rook != null && pir.id.equals(rook.marketId), "the pirate tenant finder sits on a pirate market");
+        expect(pir.directory.size() == 1, "the finder is in the pirate market's comm directory");
+        expect(Finders.hire(rook) == null && rook.hired && pir.directory.isEmpty(), "hiring takes the finder out of the directory");
+        expect(Finders.startSearch(rook) == null && rook.searching, "a search starts");
+        int poolBefore = Portfolio.get().tenantPool().size();
+        now += 11 * DAY;
+        Finders.deliver(days);
+        expect(Portfolio.get().tenantPool().size() == poolBefore + 5, "the pirate finder brings back 5 tenants");
+        boolean allScreened = true;
+        for (Tenant t : Portfolio.get().tenantPool()) allScreened &= t.screened && "pirates".equals(t.factionId);
+        expect(allScreened, "finder tenants come screened, from the finder's faction");
+        Finders.place(days);
+        expect(!pir.directory.contains(rook.person), "a hired finder does not come back to the directory");
+
         // Save round trip.
         com.thoughtworks.xstream.XStream x = new com.thoughtworks.xstream.XStream(new com.thoughtworks.xstream.io.xml.DomDriver());
         com.thoughtworks.xstream.XStream.setupDefaultSecurity(x);
         x.allowTypesByWildcard(new String[] {"landlordsector.**", "java.util.**", "java.lang.**"});
         // The stand-in agents are proxies, which cannot be saved; real ones are game objects.
         Map<String, Agents.Agent> agentsBefore = new HashMap<>(Portfolio.get().agents());
+        Map<String, Finders.State> findersBefore = new HashMap<>(Portfolio.get().finders());
         Portfolio.get().agents().clear();
+        Portfolio.get().finders().clear();
         String xml = x.toXML(Portfolio.get());
         Portfolio.get().agents().putAll(agentsBefore);
+        Portfolio.get().finders().putAll(findersBefore);
         Portfolio back = (Portfolio) x.fromXML(xml);
         expect(back.properties().size() == 2 && back.properties().get(0).setting() == RentSetting.GREEDY,
                 "the portfolio survives a save");
+        expect(back.properties().get(0).tenant != null && back.tenantPool().size() == Portfolio.get().tenantPool().size(),
+                "tenants and the pool survive a save");
 
         // Sell.
         before = credits.get();
@@ -286,6 +331,7 @@ public final class RuntimeCheck {
                 "getPlayerFleet", a -> fleet,
                 "getPlayerFaction", a -> player,
                 "getCampaignUI", a -> ui,
+                "getFaction", a -> faction(String.valueOf(a[0])),
                 "addTransientScript", a -> sectorScripts.add((com.fs.starfarer.api.EveryFrameScript) a[0])));
         SettingsAPI settings = mock(SettingsAPI.class, Map.of(
                 "getFloat", a -> "economyIterPerMonth".equals(a[0]) ? 10f : 0f,

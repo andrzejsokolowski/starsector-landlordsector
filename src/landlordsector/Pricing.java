@@ -151,26 +151,19 @@ public final class Pricing {
         return 1f + clamp(decor, 0f, 100f) / 100f;
     }
 
-    /** Lower edges of the grades A to E. Anything under the last is F. */
-    private static final float[] GRADE_EDGES = {1.5f, 1.05f, 0.75f, 0.55f, 0.4f};
-    private static final String[] GRADES = {"A", "B", "C", "D", "E", "F"};
+    /** Lower edges of the grades S+ to E (Andrzej, 2026-11-12). Anything under the last is F. */
+    private static final float[] GRADE_EDGES = {3.0f, 2.0f, 1.5f, 1.05f, 0.75f, 0.55f, 0.4f};
+    private static final String[] GRADES = {"S+", "S", "A", "B", "C", "D", "E", "F"};
 
     /**
-     * The location grade A to F from the market multiplier, with + for the top third of a grade and - for
-     * the bottom third. A standard world (size 5 or 6, stability 5, hazard 100 percent) is about C+.
+     * The location grade S+, S, A, B, C, D, E or F from the market multiplier. A standard world (size 5
+     * or 6, stability 5, hazard 100 percent) is C, an Earth-like one S.
      */
     public static String grade(float marketMult) {
-        float hi = 2.4f;
-        for (int i = 0; i <= GRADE_EDGES.length; i++) {
-            float lo = i < GRADE_EDGES.length ? GRADE_EDGES[i] : MULT_MIN;
-            if (marketMult >= lo || i == GRADE_EDGES.length) {
-                float t = (marketMult - lo) / (hi - lo);
-                String suffix = t >= 2f / 3f ? "+" : (t < 1f / 3f ? "-" : "");
-                return GRADES[i] + suffix;
-            }
-            hi = lo;
+        for (int i = 0; i < GRADE_EDGES.length; i++) {
+            if (marketMult >= GRADE_EDGES[i]) return GRADES[i];
         }
-        return "F";
+        return GRADES[GRADES.length - 1];
     }
 
     /** Share of eligible markets with an agent at a time: the base share, more for big markets. */

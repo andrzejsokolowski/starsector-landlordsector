@@ -1,0 +1,153 @@
+{
+	# What market conditions do to homes there, on top of the built-in rule (size, stability, hazard,
+	# habitable, mild climate, pollution, pirate activity, Pather cells).
+	# price: multiplies the price (and the location grade). comfort, happiness, security: added to the
+	# stat (0 to 100 scale). Conditions that only change the hazard rating (cold, toxic atmosphere,
+	# extreme weather and the like) are already counted through the hazard and are not listed here.
+	# A condition from a mod that is not installed never appears on a market, so its line does nothing.
+	# Other mods can add lines to this file with their own conditions.
+	"conditions":{
+		# ---- Vanilla: society ----
+		"urbanized_polity":{"price":1.05, "comfort":3},
+		"rural_polity":{"price":0.95, "happiness":3},
+		"industrial_polity":{"comfort":-3},
+		"established_polity":{"price":1.05, "security":5},
+		"regional_capital":{"price":1.15, "security":10},
+		"headquarters":{"price":1.15, "security":10},
+		"trade_center":{"price":1.1, "happiness":3},
+		"free_market":{"price":0.95, "happiness":5, "security":-10},
+		"closed_immigration":{"price":1.05},
+		"luddic_majority":{"price":0.95, "happiness":3},
+		"cottage_industry":{"happiness":2},
+		"volturnian_lobster_pens":{"happiness":3},
+		"vice_demand":{"happiness":3, "security":-5},
+		"organized_crime":{"price":0.9, "security":-15},
+		"large_refugee_population":{"price":0.9, "security":-10},
+		"frontier":{"price":0.9, "security":-5},
+		"outpost":{"price":0.9},
+		"dissident":{"happiness":-5, "security":-10},
+		"decivilized_subpop":{"price":0.9, "security":-10},
+		"shipbreaking_center":{"comfort":-3},
+		"stealth_minefields":{"security":10},
+		# ---- Vanilla: events ----
+		"recent_unrest":{"price":0.9, "security":-10},
+		"event_food_shortage":{"happiness":-10},
+		"event_trade_disruption":{"price":0.95},
+		"shipping_disruption":{"price":0.95},
+		"event_smuggling":{"security":-5},
+		"hostile_activity":{"price":0.85, "security":-10},
+		"blockaded":{"price":0.85, "happiness":-10},
+		"piracy_respite":{"security":5},
+		"rogue_ai_core":{"price":0.75, "happiness":-10, "security":-20},
+		# ---- Vanilla: the land ----
+		"ruins_scattered":{"price":1.02},
+		"ruins_widespread":{"price":1.04},
+		"ruins_extensive":{"price":1.06},
+		"ruins_vast":{"price":1.08},
+		"solar_array":{"comfort":3},
+		"farmland_rich":{"comfort":3},
+		"farmland_bountiful":{"comfort":5},
+
+		# ---- Unknown Skies ----
+		"US_shrooms":{"happiness":10},
+		"US_sakura":{"price":1.25, "comfort":10, "happiness":5},
+		"US_virus":{"price":0.6, "comfort":-15, "happiness":-10},
+		"US_mind":{"happiness":5, "security":-5},
+		"US_storm":{"comfort":-8},
+		"US_floating":{"price":1.15, "comfort":5},
+		"US_religious":{"price":1.1, "happiness":5},
+		"US_tunnels":{"comfort":-3, "security":5},
+		"US_magnetic":{"comfort":3},
+		"US_fluorescent":{"comfort":3},
+		# ---- Random Assortment of Things ----
+		"rat_engineered_utopia":{"price":1.4, "comfort":15, "happiness":10},
+		"rat_bionic_plantlife":{"comfort":5},
+		"rat_ancient_megacities":{"price":1.15, "comfort":5},
+		"rat_defensive_drones":{"security":15},
+		"rat_warscape":{"price":0.75, "comfort":-10, "security":-10},
+		"rat_rampant_military_core":{"price":0.7, "happiness":-10, "security":-20},
+		# ---- Yunru Worlds ----
+		"yunru_gaia":{"price":1.2, "comfort":10},
+		"yunru_hephaestus":{"price":0.7, "comfort":-5, "security":-20},
+		# ---- Diktat Enhancement ----
+		"DE_Megafauna":{"price":0.85, "security":-15},
+		"DE_Megafauna_PAGSM":{"price":0.85, "security":-15},
+		"DE_Patrioticfervor":{"happiness":-3, "security":5},
+		"DE_Patrioticfervor_PAGSM":{"happiness":-3, "security":5},
+		"DE_Unstablelamp":{"comfort":-8},
+		# ---- Emergent Threats: IX Revival ----
+		"ix_killsats":{"price":0.6, "happiness":-15, "security":-25},
+		"ix_algae":{"comfort":-5},
+		"ix_monitored":{"happiness":-5, "security":15},
+		"ix_monitored_player":{"happiness":-5, "security":15},
+		"ix_cartel_activity":{"price":0.9, "security":-15},
+		# ---- FSF Military Corporation ----
+		"aEP_ExtinctiveVirus":{"price":0.6, "comfort":-15},
+		"aEP_MilitaryZone":{"happiness":-3, "security":15},
+		# ---- More Planetary Conditions ----
+		"niko_MPC_carnivorousFauna":{"comfort":-5, "security":-10},
+		"niko_MPC_magnetarCondition":{"price":0.7, "comfort":-10},
+		"niko_MPC_ultraMagneticField":{"comfort":3},
+		"MPC_fracturedWorld":{"price":0.8, "comfort":-5},
+		"MPC_arrowPatherCondition":{"security":-10},
+		"MPC_arrowPatherConditionTwo":{"security":-10},
+		"MPC_hegeUnrest":{"happiness":-5, "security":-5},
+		"MPC_indieUnrest":{"happiness":-5, "security":-5},
+		# ---- Bultach / BB Plus ----
+		"ork_wardrive":{"security":-10},
+		"bbplus_hostile_lifeforms":{"price":0.85, "comfort":-5, "security":-15},
+		"bbplus_cracked_planet":{"price":0.85},
+		"bbplus_sigmairradiated":{"comfort":-5},
+		# ---- VIC ----
+		"VIC_VBomb_scar":{"price":0.6, "comfort":-15, "happiness":-10},
+		# ---- Lost Sector ----
+		"nskr_hellSpawnCondition":{"price":0.5, "happiness":-20, "security":-20},
+		"nskr_enigmaPop":{"happiness":-10},
+		# ---- Industrial Evolution ----
+		"IndEvo_pirate_subpop":{"security":-15},
+		"IndEvo_engineered_plague":{"price":0.7, "comfort":-10, "happiness":-10},
+		"IndEvo_edict_lockdown":{"happiness":-10, "security":10},
+		"IndEvo_edict_cleanse":{"happiness":-10},
+		"IndEvo_Parade":{"happiness":5},
+		"IndEvo_mineFieldCondition":{"security":10},
+		"IndEvo_ArtilleryStationCondition":{"security":10},
+		# ---- Interstellar Imperium, Iron Shell ----
+		"ii_vineyards":{"price":1.1, "happiness":5},
+		"ii_hostile_terrain":{"comfort":-5},
+		"eis_aquaculture":{"security":-5},
+		# ---- Blue Sea Fisher ----
+		"BSF_freshwaterLake":{"price":1.1, "comfort":8},
+		"BSF_warmSea":{"comfort":5},
+		# ---- Ashes of the Domain ----
+		"aotd_nutritious_wildlife":{"comfort":3},
+		"aotd_floating_city":{"price":1.1, "comfort":5},
+		"aotd_capital":{"price":1.1, "security":5},
+		# ---- Dassault-Mikoyan ----
+		"istl_odessa_condition":{"price":1.05, "comfort":5},
+		"istl_tenacity_condition":{"comfort":8, "happiness":5},
+		# ---- JaydeePiracy ----
+		"jdp_glassedWorld":{"comfort":-8},
+		"jdp_eutrophicatedBiosphere":{"comfort":-5},
+		"jdp_encroachingBiofactory":{"price":0.8, "comfort":-10},
+		"jdp_quarryLakes":{"comfort":3},
+		"jdp_showOfForce":{"security":5},
+		# ---- Vulpoids ----
+		"vulpoid_celebrities":{"happiness":5},
+		"vulpoid_security":{"security":10},
+		"vulpoid_estateservants":{"comfort":8, "happiness":5},
+		"vulpoid_servants":{"comfort":5},
+		"filtered_air":{"price":1.1, "comfort":10},
+		# ---- Magellan Protectorate, Apex, Halo Dynamics ----
+		"magellan_warrens":{"comfort":-3, "security":10},
+		"apex_collectivedefense":{"security":10},
+		"HSI_HeatingWorld":{"comfort":3},
+		# ---- Astral Ascension Renewed ----
+		"aar_arcology_world":{"price":1.1, "comfort":3},
+		"aar_ecumenopolis":{"price":1.2, "comfort":5},
+		"aar_crowned_world":{"price":1.3, "comfort":8},
+		# ---- Cramped quarters (Secrets of the Frontier, TASC, Grand Colonies) ----
+		"sotf_crampedcondition":{"comfort":-5},
+		"cramped_quarters":{"comfort":-5},
+		"GrandColonies_CrampedCondition":{"comfort":-5}
+	}
+}

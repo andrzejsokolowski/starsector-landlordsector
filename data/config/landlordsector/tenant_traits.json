@@ -1,0 +1,39 @@
+{
+	# Tenant traits. Each tenant rolls 2 or 3. good: green (true), red (false), white when left out.
+	# weight: base chance. factions: multiplies the weight for tenants from that faction (pirates find
+	# vandals, Tri-Tachyon finds the prosperous). conditions: multiplies it when the tenant comes from a
+	# market with that condition.
+	# wealth: added to the tenant's wealth (1 to 5), which sets the highest rent they pay without grumbling.
+	# wear: multiplies how fast they wear a home. happiness: added to their happiness.
+	# likes, dislikes: house trait tags (house_traits.json). Each liked tag in the home adds 8 happiness,
+	# each disliked tag takes 15.
+	# events: multiplies the chance of those tenant events (tenant_events.json) while they live there.
+	# loyal: never moves out on their own. conflicts: traits it never rolls with.
+	"traits":[
+		{"id":"vandal", "name":"Vandal", "good":false, "weight":2, "factions":{"pirates":5,"luddic_path":2,"tritachyon":0.3,"hegemony":0.5,"luddic_church":0.5}, "conditions":{"organized_crime":2,"IndEvo_pirate_subpop":2}, "events":{"smashed_window":4,"trashed":5,"graffiti":4}, "conflicts":["tidy","handy"]},
+		{"id":"filthy", "name":"Filthy", "good":false, "weight":2, "factions":{"pirates":3,"tritachyon":0.3,"hegemony":0.5}, "wear":1.3, "events":{"mess":4}, "conflicts":["tidy"]},
+		{"id":"late_payer", "name":"Late payer", "good":false, "weight":2, "factions":{"pirates":3,"independent":1.5,"tritachyon":0.3}, "events":{"late_rent":5,"skipped_rent":2}},
+		{"id":"shady", "name":"Shady connections", "good":false, "weight":1, "factions":{"pirates":6}, "conditions":{"organized_crime":3,"IndEvo_pirate_subpop":3,"ix_cartel_activity":3,"free_market":2}, "wealth":1, "events":{"skipped_rent":3,"police_raid":6}},
+		{"id":"zealot", "name":"Zealot", "good":false, "weight":0.3, "factions":{"luddic_path":12,"luddic_church":2}, "conditions":{"pather_cells":5}, "events":{"sabotage":8}, "dislikes":["view","busy"]},
+		{"id":"loud", "name":"Loud", "good":false, "weight":2, "factions":{"pirates":2,"tritachyon":0.5}, "events":{"noise_complaint":5}, "conflicts":["quiet"]},
+		{"id":"pollen_allergy", "name":"Pollen allergy", "good":false, "weight":1.5, "dislikes":["flowers","plants"]},
+		{"id":"sensitive_lungs", "name":"Sensitive lungs", "good":false, "weight":1.5, "dislikes":["smog","dust","stale_air","damp"]},
+		{"id":"prosperous", "name":"Prosperous", "good":true, "weight":1.5, "factions":{"tritachyon":5,"persean":1.5,"hegemony":1.2,"pirates":0.2,"luddic_path":0.2}, "wealth":2, "events":{"new_furniture":5,"tip":2}},
+		{"id":"tidy", "name":"Tidy", "good":true, "weight":2, "factions":{"hegemony":1.5,"tritachyon":2,"sindrian_diktat":1.5,"pirates":0.3}, "wear":0.8, "conflicts":["filthy","vandal"]},
+		{"id":"handy", "name":"Handy", "good":true, "weight":2, "factions":{"independent":1.5,"luddic_church":1.5,"pirates":0.4}, "events":{"fixed_something":5}},
+		{"id":"quiet", "name":"Quiet", "good":true, "weight":2, "factions":{"luddic_church":2,"pirates":0.3}, "happiness":3, "likes":["quiet"], "dislikes":["noise"], "conflicts":["loud"]},
+		{"id":"gardener", "name":"Gardener", "good":true, "weight":1.5, "factions":{"luddic_church":2,"pirates":0.3}, "likes":["garden","plants","flowers"], "events":{"garden":4}},
+		{"id":"loyal", "name":"Loyal", "good":true, "weight":1, "factions":{"sindrian_diktat":2,"luddic_church":1.5,"pirates":0.3}, "happiness":5, "loyal":true},
+		{"id":"veteran", "name":"Veteran", "good":true, "weight":1, "factions":{"hegemony":3,"sindrian_diktat":2,"pirates":0.3}, "events":{"chased_burglars":4}},
+		{"id":"family", "name":"Family with kids", "weight":2, "wear":1.1, "likes":["garden","quiet"], "dislikes":["noise","heat"]},
+		{"id":"pet_owner", "name":"Pet owner", "weight":2, "wear":1.1, "likes":["garden","pets"]},
+		{"id":"faithful", "name":"Faithful", "weight":1, "factions":{"luddic_church":5,"luddic_path":2}, "likes":["quiet"], "dislikes":["busy"]},
+		{"id":"tech_fan", "name":"Tech enthusiast", "weight":1, "factions":{"tritachyon":3}, "likes":["view","busy"]},
+		{"id":"heat_lover", "name":"Loves the heat", "weight":1, "likes":["heat"], "dislikes":["cold"]},
+		{"id":"water_lover", "name":"Loves the water", "weight":1, "likes":["water","view"]},
+		{"id":"history_buff", "name":"History buff", "weight":1, "likes":["history"]},
+		{"id":"mycophile", "name":"Mycophile", "weight":0.5, "likes":["fungus"]}
+	],
+	# Base wealth (1 to 5) of tenants from each faction. Others are 3.
+	"wealth":{"pirates":1, "luddic_path":1, "luddic_church":2, "independent":2, "sindrian_diktat":2, "hegemony":3, "persean":3, "tritachyon":4}
+}

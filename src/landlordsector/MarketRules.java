@@ -12,6 +12,9 @@ import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.util.Misc;
 import com.fs.starfarer.api.util.WeightedRandomPicker;
 
+import landlordsector.data.ConditionTable;
+import landlordsector.data.HouseTraits;
+
 /** The hidden rule: which markets sell homes, what they list and what it costs. */
 public final class MarketRules {
 
@@ -40,7 +43,14 @@ public final class MarketRules {
         return market.isPlayerOwned() || Factions.PLAYER.equals(market.getFactionId());
     }
 
+    /** The price rule times every market condition in conditions.json that this market has. */
     public static float mult(MarketAPI market) {
+        float m = baseMult(market);
+        for (ConditionTable.Effect e : ConditionTable.matching(Tenants.conditions(market))) m *= e.price;
+        return Pricing.clamp(m, Pricing.MULT_MIN, Pricing.MULT_MAX);
+    }
+
+    private static float baseMult(MarketAPI market) {
         return Pricing.marketMult(market.getSize(), market.getStabilityValue(), market.getHazardValue(),
                 market.hasCondition(Conditions.HABITABLE), market.hasCondition(Conditions.MILD_CLIMATE),
                 market.hasCondition(Conditions.POLLUTION), market.hasCondition(Conditions.PIRATE_ACTIVITY),
@@ -57,7 +67,14 @@ public final class MarketRules {
     public static float listingValue(MarketAPI market, Listing listing) {
         Tier t = TierTable.get(listing.tierId);
         float decor = t != null ? t.decor : 0f;
-        return listing.basePrice * mult(market) * Pricing.decorValueMult(decor);
+        float traitPrice = 1f;
+        if (listing.traits != null) {
+            for (String id : listing.traits) {
+                HouseTraits.Def d = HouseTraits.get(id);
+                if (d != null) traitPrice *= d.price;
+            }
+        }
+        return listing.basePrice * mult(market) * Pricing.decorValueMult(decor) * traitPrice;
     }
 
     /** Price to buy a listing right now, tariff and own-colony discount included. */
@@ -99,8 +116,10 @@ public final class MarketRules {
         for (int i = 0; i < count; i++) {
             Tier t = picker.pick();
             float base = t.min + (t.max - t.min) * random.nextFloat();
-            ml.list().add(new Listing(Portfolio.get().newId(), t.id, climate.id, Art.pick(t.id, climate, random),
-                    base));
+            Listing l = new Listing(Portfolio.get().newId(), t.id, climate.id, Art.pick(t.id, climate, random), base);
+            l.traits = HouseTraits.roll(Tenants.conditions(market), climate.id, climate == Climate.STATION, t.index,
+                    random);
+            ml.list().add(l);
         }
         // Cheapest first, so the screen reads like a price list.
         ml.list().sort((a, b) -> Float.compare(a.basePrice, b.basePrice));

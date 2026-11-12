@@ -73,14 +73,15 @@ public abstract class Canvas implements CustomUIPanelPlugin {
 
     private static final class Pic {
         final String path;
-        final float x, y, w, h;
+        final float x, y, w, h, aspect;
 
-        Pic(String path, float x, float y, float w, float h) {
+        Pic(String path, float x, float y, float w, float h, float aspect) {
             this.path = path;
             this.x = x;
             this.y = y;
             this.w = w;
             this.h = h;
+            this.aspect = aspect;
         }
     }
 
@@ -195,8 +196,14 @@ public abstract class Canvas implements CustomUIPanelPlugin {
         boxes.add(new Box(x, y, w, h, CARD, CARD_EDGE));
     }
 
+    /** A 16 by 10 picture, cropped from the middle to fit the box. */
     protected void picture(String path, float x, float y, float w, float h) {
-        if (path != null) pics.add(new Pic(path, x, y, w, h));
+        if (path != null) pics.add(new Pic(path, x, y, w, h, PICTURE_ASPECT));
+    }
+
+    /** A square picture (a portrait). */
+    protected void portrait(String path, float x, float y, float size) {
+        if (path != null) pics.add(new Pic(path, x, y, size, size, 1f));
     }
 
     /** A bar filled to {@code share} (0 to 1). */
@@ -286,7 +293,7 @@ public abstract class Canvas implements CustomUIPanelPlugin {
                 frame(b.x, b.y, b.w, b.h, b.enabled ? GOLD : CARD_EDGE, alphaMult * (lit ? 1f : 0.5f));
             }
             for (Pic pic : pics) {
-                sprite(pic.path, pic.x, pic.y, pic.w, pic.h, alphaMult);
+                sprite(pic.path, pic.x, pic.y, pic.w, pic.h, alphaMult, pic.aspect);
                 GL11.glDisable(GL11.GL_TEXTURE_2D);
                 frame(pic.x, pic.y, pic.w, pic.h, CARD_EDGE, alphaMult);
             }
@@ -335,6 +342,10 @@ public abstract class Canvas implements CustomUIPanelPlugin {
     public static final float PICTURE_ASPECT = 1.6f;
 
     protected void sprite(String path, float x, float y, float w, float h, float alpha) {
+        sprite(path, x, y, w, h, alpha, PICTURE_ASPECT);
+    }
+
+    protected void sprite(String path, float x, float y, float w, float h, float alpha, float aspect) {
         if (path == null || w <= 0f || h <= 0f) return;
         SpriteAPI s = Global.getSettings().getSprite(path);
         if (s == null) return;
@@ -342,14 +353,14 @@ public abstract class Canvas implements CustomUIPanelPlugin {
         float tw = s.getTextureWidth();
         float th = s.getTextureHeight();
         float box = w / h;
-        if (box > PICTURE_ASPECT) {
-            float keep = PICTURE_ASPECT / box;
+        if (box > aspect) {
+            float keep = aspect / box;
             s.setTexX(0f);
             s.setTexWidth(tw);
             s.setTexY(th * (1f - keep) / 2f);
             s.setTexHeight(th * keep);
         } else {
-            float keep = box / PICTURE_ASPECT;
+            float keep = box / aspect;
             s.setTexX(tw * (1f - keep) / 2f);
             s.setTexWidth(tw * keep);
             s.setTexY(0f);

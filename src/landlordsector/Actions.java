@@ -45,6 +45,9 @@ public final class Actions {
         p.basePrice = listing.basePrice;
         p.paidPrice = price;
         p.boughtAt = Global.getSector().getClock().getTimestamp();
+        p.traits = listing.traits != null ? new java.util.ArrayList<>(listing.traits) : new java.util.ArrayList<>();
+        p.advertising = true;
+        p.addLog("Bought for " + Misc.getDGSCredits(price) + ". Advertising for tenants.");
         portfolio.properties().add(p);
         Global.getSoundPlayer().playUISound("ui_upgrade_industry", 1f, 1f);
         return "Bought: " + p.displayName() + " for " + Misc.getDGSCredits(price) + ".";
@@ -83,5 +86,62 @@ public final class Actions {
 
     public static void setRent(Property p, RentSetting s) {
         p.setting = s;
+    }
+
+    // ---- Tenants ----
+
+    /** A month's rent at Normal for this home, after the tariff, as if rented. */
+    public static float normalRent(Property p) {
+        MarketAPI m = p.market();
+        if (m == null) return 0f;
+        return Pricing.rent(p.fullValue(), p.tier().rentShare, 1f, 1f, Settings.rentMult()) * (1f - MarketRules.tariff(m));
+    }
+
+    public static void toggleAdvertising(Property p) {
+        p.advertising = !p.advertising;
+        p.addLog(p.advertising ? "Started advertising for tenants." : "Stopped advertising.");
+    }
+
+    public static void toggleScreening(Property p) {
+        p.screeningService = !p.screeningService;
+        p.addLog(p.screeningService ? "Hired a screening service." : "Cancelled the screening service.");
+    }
+
+    public static String screen(Property p, Tenant a) {
+        if (a.screened) return a.name + " is already screened.";
+        float fee = TenantRules.screeningFee(normalRent(p));
+        if (credits() < fee) return "Not enough credits to screen " + a.name + " (" + Misc.getDGSCredits(fee) + ").";
+        Global.getSector().getPlayerFleet().getCargo().getCredits().subtract(fee);
+        a.screened = true;
+        return "Screened " + a.name + " for " + Misc.getDGSCredits(fee) + ".";
+    }
+
+    /** Moves an applicant or a pool tenant into an empty home. */
+    public static String moveIn(Property p, Tenant t) {
+        if (p.tenant != null) return p.displayName() + " already has a tenant.";
+        if (p.condemned) return p.displayName() + " is condemned. Repair it first.";
+        p.applicants().remove(t);
+        Portfolio.get().tenantPool().remove(t);
+        t.since = Global.getSector().getClock().getTimestamp();
+        t.mood = 0f;
+        p.tenant = t;
+        p.advertising = false;
+        p.applicants().clear();
+        p.addLog(t.name + " moved in.");
+        Global.getSoundPlayer().playUISound("ui_upgrade_industry", 1f, 1f);
+        return t.name + " moved into " + p.displayName() + ".";
+    }
+
+    public static String reject(Property p, Tenant a) {
+        p.applicants().remove(a);
+        return "Turned " + a.name + " away.";
+    }
+
+    public static String evict(Property p) {
+        if (p.tenant == null) return "Nobody lives there.";
+        String name = p.tenant.name;
+        p.tenant = null;
+        p.addLog("Evicted " + name + ".");
+        return "Evicted " + name + " from " + p.displayName() + ".";
     }
 }

@@ -24,6 +24,25 @@ Requires LunaLib and OddiszCommons.
   it.
 - Prices include the local tariff. On your own colonies homes cost half, with no tariff.
 
+## Tenants
+
+- A new home stands empty and advertised. Applicants turn up over the days, faster with a good location,
+  comfort and low rent. Pick one of up to three from the home's Tenant tab on the Manage page, or turn
+  them away.
+- Each tenant has 2 or 3 traits that fit where they come from (tenant_traits.json): pirates bring vandals,
+  filthy tenants and late payers, Tri-Tachyon brings the prosperous and the tidy. Wealth (1 to 5) sets the
+  rent they pay without grumbling.
+- You see one trait of an applicant until you pay to screen them. A monthly screening service makes bad
+  traits rarer.
+- Homes roll 1 to 3 traits of their own (house_traits.json). Tenants like (+8 happiness) or hate (-15)
+  some of them.
+- Tenant events (tenant_events.json): at most one per home every 5 days. Bad ones get likelier with
+  unhappy tenants, greedy rent, cheap homes (for damage) and low security (for crime). Good ones get
+  likelier with happy tenants. They go into the fleet log and the home's log.
+- Tenants below 15 happiness may move out (loyal ones never do). You can evict.
+- Tenant finders (finders.json): eight people, each in a comm directory of their faction. Hire one, send
+  them on a search from the Finders tab, and move the screened tenants they bring into your empty homes.
+
 ## Stats
 
 - **Comfort** (0 to 100): the tier's base, plus or minus with the hazard rating, a little more on
@@ -32,8 +51,10 @@ Requires LunaLib and OddiszCommons.
   raises the reputation its rent earns or costs.
 - **Tenant happiness** (0 to 100): from comfort, decor, condition and the rent setting. Happy tenants wear
   a home slower and tip more often. Unhappy ones wear it up to 1.5 times as fast.
-- **Location** (A to F, with + and -): the market's price grade. A standard world is about C+, an
-  Earth-like one A, a high-hazard world with pirates F.
+- **Location** (S+, S, A, B, C, D, E, F): the market's price grade. A standard world is C, an Earth-like
+  one S, a high-hazard world with pirates F.
+- Market conditions from the base game and installed mods (conditions.json) change price, comfort,
+  tenant happiness and security, for example Psychoactive Fungus or a Rogue AI Core.
 - **Security** (0 to 100): from stability, military buildings and ground defenses, lower with pirate
   activity or Pather cells. Cuts the damage raids and disruption do.
 

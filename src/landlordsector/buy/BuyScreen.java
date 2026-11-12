@@ -139,6 +139,7 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
             s.condition = 1f;
             s.occupancy = "For sale";
             s.stats = st;
+            s.traits.addAll(houseTraits(l.traits));
             float maxImg = H - TOP - sheetTextHeight(s) - 56f;
             sheet(s, rx, TOP, rw, maxImg);
 
