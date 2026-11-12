@@ -99,7 +99,7 @@ public abstract class PropertyView extends Canvas {
         com.fs.starfarer.api.ui.LabelAPI o = text(origin, Misc.getGrayColor(), tx, y + 28f, tw);
         float ow = o.computeTextWidth(origin);
         String letter = landlordsector.TenantRules.wealthLetter(t.wealth);
-        text(letter + ": fits a " + Tips.fitTierName(t.wealth), Misc.getHighlightColor(), tx + ow + 4f, y + 28f, tw - ow);
+        text(letter + ": fits " + Tips.aTier(t.wealth), Misc.getHighlightColor(), tx + ow + 4f, y + 28f, tw - ow);
         tip(tx + ow, y + 28f, 220f, 18f, "Wealth " + letter, Tips.wealth(t.wealth));
         text("Traits", Misc.getGrayColor(), tx, y + 48f, 60f);
         coloredRow(tenantTraits(t), tx + 60f, y + 48f, tw - 60f);
@@ -188,7 +188,7 @@ public abstract class PropertyView extends Canvas {
         text("Condition", Misc.getGrayColor(), lx, r + 2 * ROW, 120f);
         Color cond = s.condition < 0.35f ? Misc.getNegativeHighlightColor() : Misc.getPositiveHighlightColor();
         bar(lx + 120f, r + 2 * ROW + 5f, 110f, 10f, s.condition, cond);
-        text(Math.round(s.condition * 100f) + " percent", lx + 238f, r + 2 * ROW, 90f);
+        text(Math.round(s.condition * 100f) + "%", lx + 238f, r + 2 * ROW, 90f);
         row("Occupancy", s.occupancy, s.occupancyColor, lx, r + 3 * ROW, vw);
 
         PropertyStats st = s.stats;

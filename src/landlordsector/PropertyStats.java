@@ -120,7 +120,7 @@ public final class PropertyStats {
         float bare = Pricing.planetMult(hazard, false, false, false);
         factor(s, "Market size " + m.getSize(), Pricing.sizeMult(m.getSize()));
         factor(s, "Stability " + Math.round(m.getStabilityValue()), Pricing.stabilityMult(m.getStabilityValue()));
-        factor(s, "Hazard " + Math.round(hazard * 100f) + " percent", bare);
+        factor(s, "Hazard " + Math.round(hazard * 100f) + "%", bare);
         if (habitable) factor(s, "Breathable world", Pricing.planetMult(hazard, true, false, false) / bare);
         if (mild) factor(s, "Mild climate", Pricing.planetMult(hazard, false, true, false) / bare);
         if (pollution) factor(s, "Pollution", Pricing.planetMult(hazard, false, false, true) / bare);

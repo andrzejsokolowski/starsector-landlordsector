@@ -1,3 +1,9 @@
+Version 0.3.4 (2026-11-12)
+- Game text shows the % sign instead of the word "percent"
+- Tenant trait tooltips no longer name single events; they say which kind of house event gets likelier, for example good events about money
+- The wealth tooltip is rewritten in plain words
+- "fits a estate" now reads "fits an estate"
+
 Version 0.3.3 (2026-11-12)
 - A headhunter coming back with tenants now posts a message in the intel screen with a sound
 - Tenant wealth now fits a kind of home: E a shack, D a studio, C a small house, B a house, A a villa, S an estate

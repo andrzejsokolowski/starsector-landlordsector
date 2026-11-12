@@ -92,3 +92,7 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   setting shifts the price level by at most a tier. Applicants are rolled for the home's tier
   (`TenantRules.applicantWealth`) and kept only if they fit. Headhunter returns post an intel message
   (`Notify.news`). The location grade's factors and conditions are a tooltip (`PropertyStats.gradeLines`).
+
+- 0.3.4 (Andrzej's notes after 0.3.3): game text uses the % sign, never the word "percent" (only LunaSettings.csv
+  must avoid a bare %). Every event in tenant_events.json has a `kind` named in `"kinds"`; tenant trait tooltips
+  say "More likely to have good/bad house events about <kind>" (`Tips.eventKinds`) and never name an event.

@@ -17,7 +17,7 @@ Requires LunaLib and OddiszCommons.
 - Every home has a name, often taken from its traits (names.json), for example Verdant Cottage.
 - Base prices: shack 1k to 10k, studio 30k to 50k, small house 100k to 300k, house 500k to 1M,
   villa 1.5M to 2.5M, estate 3M to 5M.
-- The market stretches those prices from a quarter to four times. Size 5 and 6 markets with 100 percent
+- The market stretches those prices from a quarter to four times. Size 5 and 6 markets with 100%
   hazard are the standard. Bigger markets (7 and 8), stability, low hazard, a breathable world and a mild
   climate raise the price. Small markets, high hazard, pollution, pirate activity and Pather cells lower
   it.
@@ -37,7 +37,8 @@ Requires LunaLib and OddiszCommons.
 - You see one trait of an applicant until you pay to screen them. A monthly screening service makes bad
   traits rarer.
 - Homes roll 0 to 3 traits of their own (house_traits.json). Tenants like (+8 happiness) or hate (-15)
-  some of them. Hover over a trait to see what it does.
+  some of them. Hover over a trait to see what it does. Tenant traits tell which kind of house event
+  (money, damage, crime and safety, the neighbors, cleaning and repairs, decorating) they make likelier, not the events themselves.
 - Tenant events (tenant_events.json): at most one per home every 5 days. Bad ones get likelier with
   unhappy tenants, greedy rent, cheap homes (for damage) and low security (for crime). Good ones get
   likelier with happy tenants. They go into the fleet log and the home's log.
@@ -69,8 +70,8 @@ Requires LunaLib and OddiszCommons.
 ## Rent
 
 - Rent is paid every month, minus the local tariff, and shows in the income report as Real estate.
-- At the Normal setting a home pays a share of its value each month: shack 3 percent, studio 2.5,
-  small house 2, house 1.5, villa 1.2, estate 1. LunaLib has a rent multiplier.
+- At the Normal setting a home pays a share of its value each month: shack 3%, studio 2.5%,
+  small house 2%, house 1.5%, villa 1.2%, estate 1%. LunaLib has a rent multiplier.
 - Five rent settings: Charity, Low, Normal, High and Greedy (half to 1.6 times the rent). Cheap rent
   slowly earns reputation with the market's owners and makes tenants happier. Greedy rent costs both.
 - No rent while you are hostile with the owners.
@@ -80,11 +81,11 @@ Requires LunaLib and OddiszCommons.
 
 - Homes wear out: about two cycles from new to condemned with average tenants. A worn home pays less
   rent.
-- A condemned home has no tenants and is worth only its land. Repairs cost credits, up to 10 percent of
+- A condemned home has no tenants and is worth only its land. Repairs cost credits, up to 10% of
   the value for a full rebuild, and are paid from the Manage page.
 - Raids and bombardments on the market damage your homes. Saturation bombardment, or a colony that dies,
   destroys them. If the market changes hands, you keep them.
-- Sell any time from the Manage page for the value minus a 5 percent broker fee and the local tariff.
+- Sell any time from the Manage page for the value minus a 5% broker fee and the local tariff.
 - Prices move with the market and drift a little each month.
 
 ## Your colonies

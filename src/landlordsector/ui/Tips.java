@@ -32,7 +32,7 @@ public final class Tips {
         if (d.price != 1f) add(out, "Price x" + round2(d.price), d.price > 1f ? "+" : "-");
         if (d.wear != 1f) {
             int pct = Math.round(Math.abs(d.wear - 1f) * 100f);
-            add(out, "Wears out " + pct + " percent " + (d.wear < 1f ? "slower" : "faster"), d.wear < 1f ? "+" : "-");
+            add(out, "Wears out " + pct + "% " + (d.wear < 1f ? "slower" : "faster"), d.wear < 1f ? "+" : "-");
         }
         List<String> likes = new ArrayList<>();
         List<String> hates = new ArrayList<>();
@@ -55,14 +55,10 @@ public final class Tips {
         if (d.wealth != 0) add(out, "Wealth " + signed(d.wealth), d.wealth > 0 ? "+" : "-");
         if (d.wear != 1f) {
             int pct = Math.round(Math.abs(d.wear - 1f) * 100f);
-            add(out, "Wears a home " + pct + " percent " + (d.wear < 1f ? "slower" : "faster"), d.wear < 1f ? "+" : "-");
+            add(out, "Wears a home " + pct + "% " + (d.wear < 1f ? "slower" : "faster"), d.wear < 1f ? "+" : "-");
         }
         if (d.loyal) add(out, "Never moves out on their own", "+");
-        for (java.util.Map.Entry<String, Float> e : d.events.entrySet()) {
-            landlordsector.data.TenantEvents.Def ev = landlordsector.data.TenantEvents.get(e.getKey());
-            String color = ev == null ? null : (ev.good ? "+" : "-");
-            add(out, e.getKey().replace('_', ' ') + ": " + round2(e.getValue()) + " times as likely", color);
-        }
+        for (String[] line : eventKinds(d.events)) out.add(line);
         List<String> likes = new ArrayList<>();
         List<String> hates = new ArrayList<>();
         for (HouseTraits.Def h : HouseTraits.all()) {
@@ -74,6 +70,34 @@ public final class Tips {
         if (!likes.isEmpty()) add(out, "Likes homes that are " + String.join(", ", likes) + " (+" + Math.round(TenantRules.LIKE) + ")", "+");
         if (!hates.isEmpty()) add(out, "Hates homes that are " + String.join(", ", hates) + " (-" + Math.round(TenantRules.DISLIKE) + ")", "-");
         if (out.isEmpty()) add(out, "No effect on its own.", null);
+        return out;
+    }
+
+    /**
+     * Event multipliers told by kind, never by event (Andrzej, 2026-11-12: no spoilers): "More likely to have
+     * good house events about money". Events of one kind and side are averaged.
+     */
+    static List<String[]> eventKinds(java.util.Map<String, Float> events) {
+        java.util.Map<String, float[]> sums = new java.util.LinkedHashMap<>();
+        for (java.util.Map.Entry<String, Float> e : events.entrySet()) {
+            landlordsector.data.TenantEvents.Def ev = landlordsector.data.TenantEvents.get(e.getKey());
+            if (ev == null) continue;
+            String key = (ev.good ? "good|" : "bad|") + ev.kind;
+            float[] s = sums.computeIfAbsent(key, k -> new float[2]);
+            s[0] += (float) Math.log(Math.max(0.01f, e.getValue()));
+            s[1]++;
+        }
+        List<String[]> out = new ArrayList<>();
+        for (java.util.Map.Entry<String, float[]> e : sums.entrySet()) {
+            float mult = (float) Math.exp(e.getValue()[0] / e.getValue()[1]);
+            if (Math.abs(mult - 1f) < 0.05f) continue;
+            boolean good = e.getKey().startsWith("good|");
+            String kind = landlordsector.data.TenantEvents.kindName(e.getKey().substring(e.getKey().indexOf('|') + 1));
+            boolean more = mult > 1f;
+            String text = (more ? "More" : "Less") + " likely to have " + (good ? "good" : "bad")
+                    + " house events about " + kind;
+            add(out, text, more == good ? "+" : "-");
+        }
         return out;
     }
 
@@ -90,14 +114,21 @@ public final class Tips {
         return tiers.get(i).name.toLowerCase();
     }
 
+    /** "a shack", "an estate". */
+    public static String aTier(int wealth) {
+        String name = fitTierName(wealth);
+        return ("aeiou".indexOf(name.charAt(0)) >= 0 ? "an " : "a ") + name;
+    }
+
     public static String[] wealth(int wealth) {
         return new String[] {
-            "Wealth " + TenantRules.wealthLetter(wealth) + " fits a " + fitTierName(wealth) + ".",
-            "One tier dearer is a stretch: -" + Math.round(TenantRules.STRETCH) + " happiness. Two or more"
-                    + " they can't pay for.",
-            "Two tiers cheaper is beneath them: -" + Math.round(TenantRules.BENEATH)
-                    + " happiness. Three or more they won't live in.",
-            "Rent moves the price by up to a tier: Charity -1, Low -1/2, High +1/2, Greedy +1."};
+            "Wealth " + TenantRules.wealthLetter(wealth) + ": this tenant can afford " + aTier(wealth) + ".",
+            "A home one tier above that is hard for them to pay for: -" + Math.round(TenantRules.STRETCH)
+                    + " happiness. Two or more tiers above, they can't afford it at all.",
+            "A home two tiers below that is not good enough for them: -" + Math.round(TenantRules.BENEATH)
+                    + " happiness. Three or more tiers below, they refuse to live there.",
+            "Low rent makes a home easier to afford, high rent harder. Charity makes it cost like a home one"
+                    + " tier cheaper, Greedy like one tier dearer. Low and High count half as much."};
     }
 
     public static List<String[]> headhunter(FinderDefs.Def d) {

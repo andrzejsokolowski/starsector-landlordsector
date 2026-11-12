@@ -192,7 +192,21 @@ public final class RulesCheck {
         for (landlordsector.data.TenantEvents.Def e : landlordsector.data.TenantEvents.all()) {
             eventIds.add(e.id);
             expect(!e.text.isEmpty() && e.text.indexOf('%') < 0, "event " + e.id + " has plain text");
+            expect(landlordsector.data.TenantEvents.hasKind(e.kind),
+                    "event " + e.id + " has a kind with words in \"kinds\"");
         }
+        // 0.3.4 (Andrzej): trait tooltips name the kind of event, never the event.
+        java.util.List<String[]> pros = landlordsector.ui.Tips.tenantTrait(landlordsector.data.TenantTraits.get("prosperous"));
+        boolean money = false;
+        for (String[] line : pros) {
+            if (line[0].equals("More likely to have good house events about money") && "+".equals(line[1])) money = true;
+            expect(!line[0].contains("furniture") && !line[0].contains("times as likely"), "prosperous tooltip names no event: " + line[0]);
+        }
+        expect(money, "Prosperous: more likely to have good house events about money");
+        java.util.List<String[]> vandalTip = landlordsector.ui.Tips.tenantTrait(landlordsector.data.TenantTraits.get("vandal"));
+        boolean damage = false;
+        for (String[] line : vandalTip) if (line[0].equals("More likely to have bad house events about damage to the home") && "-".equals(line[1])) damage = true;
+        expect(damage, "Vandal: more likely to have bad house events about damage to the home, in red");
         for (landlordsector.data.TenantTraits.Def d : landlordsector.data.TenantTraits.all()) {
             for (String t : d.likes) expect(houseTags.contains(t), d.id + " likes " + t + ", which no house trait has");
             for (String t : d.dislikes) expect(houseTags.contains(t), d.id + " dislikes " + t + ", which no house trait has");

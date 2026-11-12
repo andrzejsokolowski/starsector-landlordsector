@@ -15,6 +15,8 @@ public final class TenantEvents {
     /** One event. */
     public static final class Def {
         public String id;
+        /** What the event is about (money, damage, ...). Tooltips name this, never the event itself. */
+        public String kind = "";
         public boolean good;
         public float weight = 1f;
         public boolean damage, crime, big, leave;
@@ -25,6 +27,7 @@ public final class TenantEvents {
     }
 
     private static List<Def> defs = Collections.emptyList();
+    private static java.util.Map<String, String> kinds = new java.util.HashMap<>();
     private static float minDaysBetween = 5f;
     private static float dailyChance = 0.06f;
 
@@ -40,6 +43,7 @@ public final class TenantEvents {
                 if (e == null || e.optString("id", "").isEmpty()) continue;
                 Def d = new Def();
                 d.id = e.optString("id");
+                d.kind = e.optString("kind", "");
                 d.good = e.optBoolean("good", false);
                 d.weight = (float) e.optDouble("weight", 1);
                 d.damage = e.optBoolean("damage", false);
@@ -57,12 +61,31 @@ public final class TenantEvents {
             }
         }
         defs = list;
+        java.util.Map<String, String> k = new java.util.HashMap<>();
+        JSONObject ko = json.optJSONObject("kinds");
+        if (ko != null) {
+            for (java.util.Iterator<?> it = ko.keys(); it.hasNext(); ) {
+                String key = String.valueOf(it.next());
+                k.put(key, ko.optString(key, key));
+            }
+        }
+        kinds = k;
         minDaysBetween = (float) json.optDouble("minDaysBetween", 5);
         dailyChance = (float) json.optDouble("dailyChance", 0.06);
     }
 
     public static List<Def> all() {
         return defs;
+    }
+
+    /** The words for a kind ("damage to the home"), or the kind's id when it has none. */
+    public static String kindName(String kind) {
+        String name = kinds.get(kind);
+        return name == null ? kind : name;
+    }
+
+    public static boolean hasKind(String kind) {
+        return kinds.containsKey(kind);
     }
 
     public static Def get(String id) {

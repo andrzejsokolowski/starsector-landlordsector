@@ -91,7 +91,7 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
 
         title("Real estate on " + market.getName(), MARGIN, 12f, W - 2 * MARGIN);
         String terms = own ? "Your colony: homes cost half, with no tariff."
-                : "Prices include the " + Math.round(tariff * 100f) + " percent tariff. Rent pays the same tariff.";
+                : "Prices include the " + Math.round(tariff * 100f) + "% tariff. Rent pays the same tariff.";
         text("Credits: " + Misc.getDGSCredits(Actions.credits()) + ".   " + terms, MARGIN, 42f, W - 2 * MARGIN);
 
         // The list.
