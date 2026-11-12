@@ -18,21 +18,24 @@ Requires LunaLib and OddiszCommons.
   houses from 5, villas from 6 and estates from 7. New homes come on the market every 90 days.
 - Base prices: shack 1k to 10k, studio 30k to 50k, small house 100k to 300k, house 500k to 1M,
   villa 1.5M to 2.5M, estate 3M to 5M.
-- The market stretches those prices from a quarter to four times: market size, stability and the planet
-  all count. Habitable worlds with a mild climate and no pollution cost the most.
+- The market stretches those prices from a quarter to four times. Size 5 and 6 markets with 100 percent
+  hazard are the standard. Bigger markets (7 and 8), stability, low hazard, a breathable world and a mild
+  climate raise the price. Small markets, high hazard, pollution, pirate activity and Pather cells lower
+  it.
 - Prices include the local tariff. On your own colonies homes cost half, with no tariff.
 
 ## Stats
 
-- **Comfort** (0 to 100): the tier's base, more on habitable worlds with a mild climate, less on stations,
-  hostile worlds, polluted worlds and high hazard. A worn home loses some.
+- **Comfort** (0 to 100): the tier's base, plus or minus with the hazard rating, a little more on
+  habitable worlds with a mild climate, less on stations and polluted worlds. A worn home loses some.
 - **Decor** (0 to 100): from the tier for now (furniture later). Adds up to a quarter to the value and
   raises the reputation its rent earns or costs.
 - **Tenant happiness** (0 to 100): from comfort, decor, condition and the rent setting. Happy tenants wear
   a home slower and tip more often. Unhappy ones wear it up to 1.5 times as fast.
-- **Location** (A to F): the market's price grade, from size, stability and the planet.
-- **Security** (0 to 100): from stability, military buildings and ground defenses. Cuts the damage raids
-  and disruption do.
+- **Location** (A to F, with + and -): the market's price grade. A standard world is about C+, an
+  Earth-like one A, a high-hazard world with pirates F.
+- **Security** (0 to 100): from stability, military buildings and ground defenses, lower with pirate
+  activity or Pather cells. Cuts the damage raids and disruption do.
 
 ## Rent
 

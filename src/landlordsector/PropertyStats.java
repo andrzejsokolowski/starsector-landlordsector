@@ -16,6 +16,7 @@ public final class PropertyStats {
     public float happiness;
     public float security;
     public float marketMult;
+    /** A to F with + or -, for example "C+". */
     public String grade = "F";
     /** Why the location got its grade, for example "size 6, stability 7, habitable, mild climate". */
     public String gradeReason = "";
@@ -51,7 +52,9 @@ public final class PropertyStats {
         boolean pollution = m.hasCondition(Conditions.POLLUTION);
         s.comfort = Pricing.comfort(tier.comfort, climate, habitable, mild, pollution, m.getHazardValue(), condition);
         s.happiness = Pricing.happiness(s.comfort, s.decor, setting.happiness, condition);
-        s.security = Pricing.security(m.getStabilityValue(), military(m), defenses(m));
+        boolean pirates = m.hasCondition(Conditions.PIRATE_ACTIVITY);
+        boolean pathers = m.hasCondition(Conditions.PATHER_CELLS);
+        s.security = Pricing.security(m.getStabilityValue(), military(m), defenses(m), pirates, pathers);
         s.marketMult = MarketRules.mult(m);
         s.grade = Pricing.grade(s.marketMult);
 
@@ -62,6 +65,8 @@ public final class PropertyStats {
         if (mild) why.add("mild climate");
         if (pollution) why.add("polluted");
         why.add("hazard " + Math.round(m.getHazardValue() * 100f) + " percent");
+        if (pirates) why.add("pirate activity");
+        if (pathers) why.add("Pather cells");
         s.gradeReason = String.join(", ", why);
 
         PlanetAPI planet = m.getPlanetEntity();

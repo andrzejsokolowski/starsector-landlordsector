@@ -99,8 +99,8 @@ public abstract class PropertyView extends Canvas {
             stat("Tenant happiness", st.happiness, happy, rx, r + 2 * ROW);
             stat("Security", st.security, SECURITY, rx, r + 3 * ROW);
             text("Location", Misc.getGrayColor(), lx, r + 4 * ROW, 120f);
-            text(st.grade, Misc.getHighlightColor(), lx + 120f, r + 4 * ROW, 20f);
-            text(st.gradeReason, Misc.getGrayColor(), lx + 142f, r + 4 * ROW, w - 142f);
+            text(st.grade, Misc.getHighlightColor(), lx + 120f, r + 4 * ROW, 30f);
+            text(st.gradeReason, Misc.getGrayColor(), lx + 152f, r + 4 * ROW, w - 152f);
         }
         float er = r + 5 * ROW;
         for (String[] pair : s.extra) {

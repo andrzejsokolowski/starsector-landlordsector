@@ -43,7 +43,8 @@ public final class MarketRules {
     public static float mult(MarketAPI market) {
         return Pricing.marketMult(market.getSize(), market.getStabilityValue(), market.getHazardValue(),
                 market.hasCondition(Conditions.HABITABLE), market.hasCondition(Conditions.MILD_CLIMATE),
-                market.hasCondition(Conditions.POLLUTION));
+                market.hasCondition(Conditions.POLLUTION), market.hasCondition(Conditions.PIRATE_ACTIVITY),
+                market.hasCondition(Conditions.PATHER_CELLS));
     }
 
     /** The tariff the player pays here, 0 on their own colonies. */

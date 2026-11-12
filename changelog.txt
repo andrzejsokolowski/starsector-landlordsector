@@ -1,3 +1,10 @@
+Version 0.2.2 (2026-11-12)
+- Prices and location grades follow a new scale: hazard 100 percent is standard and 50 percent is ideal, size 5 and 6 are standard markets, 7 and 8 are big
+- Pirate activity and Pather cells now lower prices, grades and security
+- Location grades now show + and -, for example C+
+- Comfort rises on low-hazard worlds and falls on high-hazard ones, with no extra penalty for barren or volcanic worlds
+- Homes you own are revalued on the new scale
+
 Version 0.2.1 (2026-11-12)
 - The large picture on the property screens now lines up with the stat sheet, from the home's name to the end of the Security row
 - Shorter rent line on the agent's screen, so it fits on one line

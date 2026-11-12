@@ -40,16 +40,34 @@ public final class RulesCheck {
         Tier estate = TierTable.get("estate");
         expect(estate != null, "an estate tier");
 
-        // Andrzej's price spread: 0.25x to 4x.
-        float prime = Pricing.marketMult(8, 10f, 0.5f, true, true, false);
-        float worst = Pricing.marketMult(3, 0f, 2.5f, false, false, true);
-        float typical = Pricing.marketMult(6, 6f, 1.25f, false, false, false);
-        expect(Math.abs(prime - 4f) < 1e-4, "a prime world reaches 4x, got " + prime);
+        // Andrzej's scale (LLS-2, 2026-11-12).
+        float prime = Pricing.marketMult(9, 10f, 0.25f, true, true, false, false, false);
+        float worst = Pricing.marketMult(3, 0f, 3f, false, false, true, true, true);
+        float typical = Pricing.marketMult(5, 5f, 1f, false, false, false, false, false);
+        float earth = Pricing.marketMult(6, 7f, 0.5f, true, true, false, false, false);
+        float lunamun = Pricing.marketMult(5, 10f, 1.65f, false, false, false, false, false);
+        float magma = Pricing.marketMult(5, 4f, 2.75f, false, false, false, true, false);
+        expect(Math.abs(prime - 4f) < 1e-4, "the best possible world reaches 4x, got " + prime);
         expect(Math.abs(worst - 0.25f) < 1e-4, "the worst world drops to 0.25x, got " + worst);
-        expect(typical > 0.5f && typical < 1.5f, "a typical world sits near 1x, got " + typical);
-        expect(Pricing.marketMult(6, 6f, 1f, true, true, false) > Pricing.marketMult(6, 6f, 1f, false, false, true),
+        expect(Math.abs(typical - 0.95f) < 0.06f, "a standard world sits near 1x, got " + typical);
+        expect(Pricing.grade(earth).startsWith("A"), "an Earth-like world is grade A, got " + Pricing.grade(earth));
+        String lg = Pricing.grade(lunamun);
+        expect(lg.startsWith("B") || lg.startsWith("C"), "Lunamun is grade B or C (Andrzej), got " + lg);
+        expect(Pricing.grade(magma).startsWith("F"), "a 275 percent magma world with pirates is F, got "
+                + Pricing.grade(magma));
+        String tg = Pricing.grade(typical);
+        expect(tg.startsWith("C"), "a standard world is grade C, got " + tg);
+        expect(Math.abs(Pricing.planetMult(1f, false, false, false) - 1f) < 1e-6, "hazard 100 percent is standard");
+        expect(Math.abs(Pricing.planetMult(0.5f, false, false, false) - 1.5f) < 1e-6, "hazard 50 percent is 1.5");
+        expect(Pricing.planetMult(1.65f, false, false, false) > 0.8f, "hazard 165 percent is still fine");
+        expect(Math.abs(Pricing.sizeMult(5) - 1f) < 0.06f && Math.abs(Pricing.sizeMult(6) - 1f) < 0.06f,
+                "size 5 and 6 are standard");
+        expect(Pricing.sizeMult(8) > Pricing.sizeMult(7) && Pricing.sizeMult(7) > Pricing.sizeMult(6) + 0.2f,
+                "size 7 is big, 8 bigger");
+        expect(Pricing.marketMult(6, 6f, 1f, true, true, false, false, false)
+                > Pricing.marketMult(6, 6f, 1f, false, false, true, false, false),
                 "mild, habitable, clean worlds cost more than polluted ones");
-        expect(Pricing.sizeMult(7) > Pricing.sizeMult(5), "bigger markets cost more");
+        expect(Pricing.dangerMult(true, false) < 1f && Pricing.dangerMult(false, true) < 1f, "pirates and Pathers cost");
         expect(Pricing.stabilityMult(9) > Pricing.stabilityMult(2), "stable markets cost more");
 
         // Rent: a 4 million estate at Normal and full condition pays 1 percent a month.
@@ -82,7 +100,7 @@ public final class RulesCheck {
             expect(tiers.get(i).comfort > tiers.get(i - 1).comfort, tiers.get(i).id + ": comfort must rise with the tier");
             expect(tiers.get(i).decor >= tiers.get(i - 1).decor, tiers.get(i).id + ": decor must not fall");
         }
-        float mildHome = Pricing.comfort(60f, Climate.TEMPERATE, true, true, false, 0.75f, 1f);
+        float mildHome = Pricing.comfort(60f, Climate.TEMPERATE, true, true, false, 0.5f, 1f);
         float toxicHome = Pricing.comfort(60f, Climate.HOSTILE, false, false, true, 2f, 1f);
         expect(mildHome > toxicHome + 30f, "a mild habitable world is far more comfortable than a toxic rock");
         expect(Pricing.comfort(60f, Climate.TEMPERATE, false, false, false, 1f, 0f) < 60f, "a ruin is less comfortable");
@@ -91,10 +109,12 @@ public final class RulesCheck {
         expect(Math.abs(happyKind - happyGreedy - 60f) < 1e-3, "Charity to Greedy moves happiness by 60");
         expect(Pricing.wearMult(100f) == 0.5f && Pricing.wearMult(0f) == 1.5f, "wear runs from half to 1.5 times");
         expect(Math.abs(Pricing.tipChance(0.01f, 50f) - 0.01f) < 1e-6, "average tenants tip at the base chance");
-        expect(Pricing.security(10f, 30f, 15f) == 100f && Pricing.security(0f, 0f, 0f) == 0f, "security range");
+        expect(Pricing.security(10f, 30f, 15f, false, false) == 100f && Pricing.security(0f, 0f, 0f, false, false) == 0f,
+                "security range");
+        expect(Pricing.security(5f, 0f, 0f, true, true) == 5f, "pirates and Pathers cut security");
         expect(Pricing.damageMult(100f) > 0.3f && Pricing.damageMult(0f) == 1f, "security cuts damage, never to zero");
-        expect("A".equals(Pricing.grade(4f)) && "F".equals(Pricing.grade(0.25f)) && "C".equals(Pricing.grade(1f)),
-                "location grades");
+        expect("A+".equals(Pricing.grade(4f)) && Pricing.grade(0.25f).startsWith("F")
+                && "C+".equals(Pricing.grade(1f)) && "C-".equals(Pricing.grade(0.78f)), "location grades");
         expect(Math.abs(Pricing.decorValueMult(100f) - 1.25f) < 1e-6, "decor adds up to a quarter to the value");
         for (int i = 1; i < s.length; i++) {
             expect(s[i].happiness < s[i - 1].happiness, s[i] + ": happiness must fall as rent rises");
@@ -129,8 +149,9 @@ public final class RulesCheck {
             for (String p : problems) System.err.println("FAIL: " + p);
             System.exit(1);
         }
-        System.out.println("Landlordsector rules verified: prime " + prime + "x, worst " + worst + "x, typical "
-                + typical + "x, estate rent " + estateRent);
+        System.out.println("Landlordsector rules verified: standard " + typical + "x " + tg + ", Earth-like " + earth
+                + "x " + Pricing.grade(earth) + ", Lunamun " + lunamun + "x " + lg + ", magma with pirates " + magma
+                + "x " + Pricing.grade(magma) + ", estate rent " + estateRent);
     }
 
     private static void expect(boolean ok, String what) {

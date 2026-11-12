@@ -3,8 +3,10 @@ package landlordsector;
 /**
  * The hidden price rule, as plain numbers so it can be checked without the game.
  *
- * <p>The market multiplier runs from 0.25 to 4. A size 8, fully stable, habitable world with a mild
- * climate and no pollution reaches 4. A small, unstable, polluted rock drops to 0.25.
+ * <p>The market multiplier runs from 0.25 to 4. Andrzej's scale (LLS-2, 2026-11-12): hazard 100 percent
+ * is standard, 50 percent (Earth today) is perfection, 165 percent is still fine. Size 5 and 6 are the
+ * standard market, 7 is big and 8 is huge. The worst place is a 275 percent magma world with pirates all
+ * around.
  */
 public final class Pricing {
 
@@ -18,29 +20,53 @@ public final class Pricing {
      * @param size market size
      * @param stability 0 to 10
      * @param hazard hazard rating, 1 for 100 percent
+     * @param pirates the market has the Pirate Activity condition
+     * @param pathers the market has Pather Cells
      */
     public static float marketMult(int size, float stability, float hazard, boolean habitable, boolean mild,
-            boolean pollution) {
-        float m = sizeMult(size) * stabilityMult(stability) * planetMult(hazard, habitable, mild, pollution);
+            boolean pollution, boolean pirates, boolean pathers) {
+        float m = sizeMult(size) * stabilityMult(stability) * planetMult(hazard, habitable, mild, pollution)
+                * dangerMult(pirates, pathers);
         return clamp(m, MULT_MIN, MULT_MAX);
     }
 
-    /** 0.55 at size 3, growing a quarter per size: about 1.07 at 6 and 1.68 at 8. */
+    /** Size 5 and 6 are standard (about 1). Small markets cost less, 7 and 8 much more. */
     public static float sizeMult(int size) {
-        return 0.55f * (float) Math.pow(1.25, Math.max(0, size - 3));
+        if (size <= 2) return 0.5f;
+        switch (size) {
+            case 3: return 0.6f;
+            case 4: return 0.8f;
+            case 5: return 0.95f;
+            case 6: return 1.05f;
+            case 7: return 1.3f;
+            case 8: return 1.6f;
+            default: return 1.6f + 0.3f * (size - 8);
+        }
     }
 
-    /** 0.6 at stability 0, 1 at 5, 1.4 at 10. */
+    /** 0.75 at stability 0, 1 at 5, 1.25 at 10. */
     public static float stabilityMult(float stability) {
-        return 0.6f + 0.08f * clamp(stability, 0f, 10f);
+        return 0.75f + 0.05f * clamp(stability, 0f, 10f);
     }
 
-    /** Hazard 100 percent gives 1, 50 percent gives 1.4, 150 percent gives 0.5. Then the three conditions. */
+    /**
+     * Hazard 100 percent is 1. Better than that rises fast (50 percent gives 1.5), worse falls slowly
+     * (165 percent gives 0.84, 275 percent 0.56, never under 0.35). A breathable world and a mild climate
+     * add a little on top of what they already take off the hazard. Pollution takes some.
+     */
     public static float planetMult(float hazard, boolean habitable, boolean mild, boolean pollution) {
-        float m = clamp(2f - hazard, 0.4f, 1.4f);
-        if (habitable) m *= 1.2f;
-        if (mild) m *= 1.25f;
-        if (pollution) m *= 0.7f;
+        float m = hazard <= 1f ? 1f + (1f - Math.max(0.4f, hazard)) : Math.max(0.35f, 1f - (hazard - 1f) * 0.25f);
+        if (habitable) m *= 1.1f;
+        if (mild) m *= 1.1f;
+        if (pollution) m *= 0.85f;
+        return m;
+    }
+
+    /** Pirates nearby take 30 percent off, Pather cells 15. */
+    public static float dangerMult(boolean pirates, boolean pathers) {
+        float m = 1f;
+        if (pirates) m *= 0.7f;
+        if (pathers) m *= 0.85f;
         return m;
     }
 
@@ -67,18 +93,17 @@ public final class Pricing {
     // ---- Property stats, all 0 to 100 ----
 
     /**
-     * Comfort: the tier's base, plus a mild climate and a habitable world, minus pollution, a station or a
-     * hostile world and a hazard rating over 100 percent. A worn home loses up to 40 percent of it.
+     * Comfort: the tier's base, plus or minus 20 for every 100 percent of hazard below or above 100 (at most
+     * +12 and -40), a little more for a mild climate and a breathable world, less for pollution and for
+     * station life. A worn home loses up to 40 percent of it.
      */
     public static float comfort(float tierComfort, Climate climate, boolean habitable, boolean mild,
             boolean pollution, float hazard, float condition) {
-        float c = tierComfort;
-        if (mild) c += 10f;
+        float c = tierComfort + clamp((1f - hazard) * 20f, -40f, 12f);
+        if (mild) c += 5f;
         if (habitable) c += 5f;
         if (pollution) c -= 10f;
         if (climate == Climate.STATION) c -= 5f;
-        if (climate == Climate.HOSTILE) c -= 10f;
-        c -= Math.max(0f, hazard - 1f) * 20f;
         c *= 0.6f + 0.4f * clamp(condition, 0f, 1f);
         return clamp(c, 0f, 100f);
     }
@@ -99,9 +124,16 @@ public final class Pricing {
         return base * (0.5f + clamp(happiness, 0f, 100f) / 100f);
     }
 
-    /** Security from stability (6 a point) plus the best military building and the best ground defense. */
-    public static float security(float stability, float military, float defenses) {
-        return clamp(clamp(stability, 0f, 10f) * 6f + military + defenses, 0f, 100f);
+    /**
+     * Security from stability (6 a point) plus the best military building and the best ground defense,
+     * minus 15 for pirate activity and 10 for Pather cells.
+     */
+    public static float security(float stability, float military, float defenses, boolean pirates,
+            boolean pathers) {
+        float s = clamp(stability, 0f, 10f) * 6f + military + defenses;
+        if (pirates) s -= 15f;
+        if (pathers) s -= 10f;
+        return clamp(s, 0f, 100f);
     }
 
     /** Raids and disruption hurt a well-guarded home less: a third less at security 50, two thirds at 100. */
@@ -119,13 +151,25 @@ public final class Pricing {
         return 1f + clamp(decor, 0f, 100f) / 100f;
     }
 
-    /** The location grade A to F: the market multiplier in a word. */
+    /** Lower edges of the grades A to E. Anything under the last is F. */
+    private static final float[] GRADE_EDGES = {1.5f, 1.05f, 0.75f, 0.55f, 0.4f};
+    private static final String[] GRADES = {"A", "B", "C", "D", "E", "F"};
+
+    /**
+     * The location grade A to F from the market multiplier, with + for the top third of a grade and - for
+     * the bottom third. A standard world (size 5 or 6, stability 5, hazard 100 percent) is about C+.
+     */
     public static String grade(float marketMult) {
-        if (marketMult >= 2.5f) return "A";
-        if (marketMult >= 1.6f) return "B";
-        if (marketMult >= 1.0f) return "C";
-        if (marketMult >= 0.6f) return "D";
-        if (marketMult >= 0.35f) return "E";
+        float hi = 2.4f;
+        for (int i = 0; i <= GRADE_EDGES.length; i++) {
+            float lo = i < GRADE_EDGES.length ? GRADE_EDGES[i] : MULT_MIN;
+            if (marketMult >= lo || i == GRADE_EDGES.length) {
+                float t = (marketMult - lo) / (hi - lo);
+                String suffix = t >= 2f / 3f ? "+" : (t < 1f / 3f ? "-" : "");
+                return GRADES[i] + suffix;
+            }
+            hi = lo;
+        }
         return "F";
     }
 
