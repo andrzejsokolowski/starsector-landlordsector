@@ -119,6 +119,12 @@ public final class TenantTraits {
 
     /** 2 or 3 traits for one tenant. */
     public static List<String> roll(String factionId, Set<String> conditions, float badMult, Random random) {
+        return roll(factionId, conditions, badMult, Collections.emptyMap(), random);
+    }
+
+    /** 2 or 3 traits, with some traits made likelier (a headhunter's perk). */
+    public static List<String> roll(String factionId, Set<String> conditions, float badMult, Map<String, Float> boost,
+            Random random) {
         int count = 2 + (random.nextFloat() < 0.4f ? 1 : 0);
         List<String> out = new ArrayList<>();
         for (int n = 0; n < count; n++) {
@@ -134,6 +140,8 @@ public final class TenantTraits {
                 }
                 if (clash) continue;
                 float w = weight(d, factionId, conditions, badMult);
+                Float b = boost == null ? null : boost.get(d.id);
+                if (b != null) w *= b;
                 if (w <= 0f) continue;
                 pool.add(d);
                 weights.add(w);

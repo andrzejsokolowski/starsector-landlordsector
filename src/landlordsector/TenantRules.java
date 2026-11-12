@@ -22,9 +22,17 @@ public final class TenantRules {
     private TenantRules() {
     }
 
-    /** The highest rent setting a tenant of this wealth (1 to 5) pays without grumbling. */
+    public static final int MAX_WEALTH = 6;
+    private static final String[] WEALTH = {"E", "D", "C", "B", "A", "S"};
+
+    /** Wealth 1 to 6 as a letter, E to S, like the location grades. */
+    public static String wealthLetter(int wealth) {
+        return WEALTH[Math.max(1, Math.min(MAX_WEALTH, wealth)) - 1];
+    }
+
+    /** The highest rent setting a tenant of this wealth (1 to 6) pays without grumbling. */
     public static RentSetting maxSetting(int wealth) {
-        switch (Math.max(1, Math.min(5, wealth))) {
+        switch (Math.max(1, Math.min(MAX_WEALTH, wealth))) {
             case 1: return RentSetting.LOW;
             case 2:
             case 3: return RentSetting.NORMAL;

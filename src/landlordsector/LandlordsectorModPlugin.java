@@ -27,6 +27,7 @@ public class LandlordsectorModPlugin extends BaseModPlugin {
         TenantTraits.load(Global.getSettings().getMergedJSON(TenantTraits.PATH));
         TenantEvents.load(Global.getSettings().getMergedJSON(TenantEvents.PATH));
         FinderDefs.load(Global.getSettings().getMergedJSON(FinderDefs.PATH));
+        landlordsector.data.Names.load(Global.getSettings().getMergedJSON(landlordsector.data.Names.PATH));
         Manage.addPage(Settings.MOD_ID, "Real estate", new Color(200, 170, 80), new RealEstatePage());
     }
 
@@ -67,6 +68,7 @@ public class LandlordsectorModPlugin extends BaseModPlugin {
                 pr.traits = HouseTraits.roll(Tenants.conditions(m), c.id, c == Climate.STATION, pr.tier().index,
                         random);
             }
+            if (pr.name == null) pr.name = landlordsector.data.Names.make(pr.tierId, pr.traits, random);
             if (!p.tenantsMigrated && pr.tenant == null && !pr.condemned && m != null) {
                 pr.tenant = Tenants.create(m.getFactionId(), m, 1f, true, "advert", random);
                 pr.addLog(pr.tenant.name + " was already living here.");
@@ -75,12 +77,19 @@ public class LandlordsectorModPlugin extends BaseModPlugin {
         p.tenantsMigrated = true;
         for (Map.Entry<String, MarketListings> e : p.listings().entrySet()) {
             com.fs.starfarer.api.campaign.econ.MarketAPI m = Global.getSector().getEconomy().getMarket(e.getKey());
+            // 0.3.2 lists fewer homes per market: drop the extra ones from older saves.
+            if (m != null) {
+                java.util.List<Listing> list = e.getValue().list();
+                while (list.size() > Pricing.listingCount(m.getSize())) list.remove(list.size() - 1);
+            }
             for (Listing l : e.getValue().list()) {
-                if (l.traits != null) continue;
-                Tier t = TierTable.get(l.tierId);
-                Climate c = climate(l.climateId);
-                l.traits = HouseTraits.roll(Tenants.conditions(m), c.id, c == Climate.STATION, t == null ? 0 : t.index,
-                        random);
+                if (l.traits == null) {
+                    Tier t = TierTable.get(l.tierId);
+                    Climate c = climate(l.climateId);
+                    l.traits = HouseTraits.roll(Tenants.conditions(m), c.id, c == Climate.STATION,
+                            t == null ? 0 : t.index, random);
+                }
+                if (l.name == null) l.name = landlordsector.data.Names.make(l.tierId, l.traits, random);
             }
         }
     }

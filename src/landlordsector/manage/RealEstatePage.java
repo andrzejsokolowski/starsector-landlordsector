@@ -80,7 +80,7 @@ public class RealEstatePage implements ManagePage {
             float bx = width - 8f - 3 * 160f;
             modeButton(Mode.HOMES, "Homes (" + all.size() + ")", bx);
             modeButton(Mode.POOL, "Tenant pool (" + portfolio.tenantPool().size() + ")", bx + 160f);
-            modeButton(Mode.FINDERS, "Finders (" + Finders.hired().size() + ")", bx + 320f);
+            modeButton(Mode.FINDERS, "Headhunters (" + Finders.hired().size() + ")", bx + 320f);
             text(all.size() + (all.size() == 1 ? " property" : " properties") + " worth "
                     + Misc.getDGSCredits(worth) + ". Credits: " + Misc.getDGSCredits(Actions.credits()) + ".",
                     10f, 38f, width - 20f);
@@ -104,6 +104,11 @@ public class RealEstatePage implements ManagePage {
         private void modeButton(Mode m, String caption, float x) {
             Btn b = button("mode:" + m.name(), caption, x, 8f, 152f, 26f, true);
             b.selected = mode == m;
+        }
+
+        /** Where the event log starts: right of the sheet. */
+        private float sideLogX() {
+            return rightX() + contentWidth(rightW()) + 28f;
         }
 
         private float rightX() {
@@ -155,13 +160,18 @@ public class RealEstatePage implements ManagePage {
             }
 
             float rx = rightX();
+            boolean sideLog = sideLogX() + 200f <= width - 8f;
             Btn d = button("sub:DETAILS", "Details", rx, TOP, 110f, 24f, true);
             d.selected = sub == Sub.DETAILS;
-            Btn t = button("sub:TENANT", chosen.tenant != null ? "Tenant" : "Tenant (" + chosen.applicants().size()
+            Btn t = button("sub:TENANT", chosen.tenant != null ? "Tenants" : "Tenants (" + chosen.applicants().size()
                     + ")", rx + 116f, TOP, 110f, 24f, true);
             t.selected = sub == Sub.TENANT;
-            Btn l = button("sub:LOG", "Log", rx + 232f, TOP, 110f, 24f, true);
-            l.selected = sub == Sub.LOG;
+            if (!sideLog) {
+                Btn l = button("sub:LOG", "Log", rx + 232f, TOP, 110f, 24f, true);
+                l.selected = sub == Sub.LOG;
+            } else if (sub == Sub.LOG) {
+                sub = Sub.DETAILS;
+            }
 
             float y0 = TOP + 34f;
             switch (sub) {
@@ -169,10 +179,15 @@ public class RealEstatePage implements ManagePage {
                     buildTenantTab(chosen, rx, y0);
                     break;
                 case LOG:
-                    buildLog(chosen, rx, y0);
+                    buildLog(chosen, rx, y0, contentWidth(rightW()));
                     break;
                 default:
                     buildDetails(chosen, rx, y0);
+            }
+            if (sideLog) {
+                float lx = sideLogX();
+                title("Events", lx, TOP, width - 8f - lx);
+                buildLog(chosen, lx, TOP + 34f, width - 8f - lx);
             }
         }
 
@@ -198,8 +213,8 @@ public class RealEstatePage implements ManagePage {
             boolean own = m != null && MarketRules.isOwn(m);
             float rw = rightW();
             Sheet s = new Sheet();
-            s.title = chosen.tier().name;
-            s.subtitle = m != null ? where(m, st) : chosen.marketName + " (gone)";
+            s.title = chosen.name != null ? chosen.name : chosen.tier().name;
+            s.subtitle = chosen.tier().name + ", " + (m != null ? where(m, st) : chosen.marketName + " (gone)");
             s.art = chosen.artPath;
             s.valueLine = Misc.getDGSCredits(chosen.value());
             float next = chosen.expectedRent();
@@ -282,15 +297,12 @@ public class RealEstatePage implements ManagePage {
             box(x, y, w, 66f);
             portrait(a.portrait, x + 6f, y + 6f, 54f);
             float tx = x + 68f;
-            text(a.name + ", from " + Tenants.factionName(a.factionId) + ", wealth " + a.wealth,
-                    Misc.getHighlightColor(), tx, y + 4f, w - 80f);
-            List<Object[]> traits = new ArrayList<>();
-            for (int i = 0; i < a.traits().size(); i++) {
-                TenantTraits.Def d = TenantTraits.get(a.traits().get(i));
-                if (d == null) continue;
-                traits.add(a.isShown(i) ? new Object[] {d.name, d.good} : new Object[] {"?", null});
-            }
-            coloredRow(traits, tx, y + 22f, w - 80f - 330f);
+            String head = a.name + ", from " + Tenants.factionName(a.factionId) + ", wealth "
+                    + TenantRules.wealthLetter(a.wealth);
+            text(head, Misc.getHighlightColor(), tx, y + 4f, w - 80f - 330f);
+            tip(tx, y + 4f, w - 80f - 330f, 18f, "Wealth " + TenantRules.wealthLetter(a.wealth),
+                    landlordsector.ui.Tips.wealth(a.wealth));
+            coloredRow(tenantTraits(a), tx, y + 22f, w - 80f - 330f);
             float h = PropertyStats.withTenant(p, a).happiness;
             text("Happiness there " + Math.round(h), traitColor(h >= 50f ? Boolean.TRUE : (h < 25f ? Boolean.FALSE : null)),
                     tx, y + 42f, 220f);
@@ -301,17 +313,36 @@ public class RealEstatePage implements ManagePage {
             button("reject:" + p.id + ":" + a.id, "Turn away", bx + 246f, y + 18f, 84f, 28f, true);
         }
 
-        private void buildLog(Property p, float rx, float y0) {
-            float cw = contentWidth(rightW());
+        /** The home's events, newest first, the event part in red or green. */
+        private void buildLog(Property p, float x, float y0, float w) {
             List<String> log = p.log();
             if (log.isEmpty()) {
-                text("Nothing yet.", Misc.getGrayColor(), rx, y0, cw);
+                text("Nothing yet.", Misc.getGrayColor(), x, y0, w);
                 return;
             }
             float y = y0;
-            for (int i = log.size() - 1; i >= 0 && y < height - 30f; i--) {
-                text(log.get(i), rx, y, cw);
-                y += 20f;
+            for (int i = log.size() - 1; i >= 0 && y < height - 40f; i--) {
+                String[] parts = log.get(i).split("\t", -1);
+                String date, colored, rest;
+                Boolean good = null;
+                if (parts.length == 4) {
+                    good = "+".equals(parts[0]) ? Boolean.TRUE : ("-".equals(parts[0]) ? Boolean.FALSE : null);
+                    date = parts[1];
+                    colored = parts[2];
+                    rest = parts[3];
+                } else {
+                    // Entries written before 0.3.2: "date  text".
+                    date = "";
+                    colored = "";
+                    rest = log.get(i);
+                }
+                if (!date.isEmpty()) {
+                    text(date, Misc.getGrayColor(), x, y, w);
+                    y += 16f;
+                }
+                String all = colored + rest;
+                int n = good == null ? 0 : colored.length();
+                y += wrapped(all, n, landlordsector.Notify.color(good), Misc.getTextColor(), x, y, w) + 6f;
             }
         }
 
@@ -320,7 +351,7 @@ public class RealEstatePage implements ManagePage {
         private void buildPool() {
             List<Tenant> pool = Portfolio.get().tenantPool();
             if (pool.isEmpty()) {
-                text("Nobody waits in your tenant pool. Tenant finders bring tenants here.", 10f, TOP + 10f,
+                text("Nobody waits in your tenant pool. Headhunters bring tenants here.", 10f, TOP + 10f,
                         width - 20f);
                 return;
             }
@@ -369,9 +400,20 @@ public class RealEstatePage implements ManagePage {
 
         private void buildFinders() {
             List<Finders.State> hired = Finders.hired();
+            float rx = rightX();
+            float cw = contentWidth(rightW());
             if (hired.isEmpty()) {
-                text("You have hired no tenant finders. Each one works out of a comm directory somewhere in the"
-                        + " Sector.", 10f, TOP + 10f, width - 20f);
+                text("You have hired no headhunters. Each works out of one market's comm directory:", 10f, TOP + 10f,
+                        width - 20f);
+                float y = TOP + 36f;
+                for (FinderDefs.Def d : FinderDefs.all()) {
+                    com.fs.starfarer.api.campaign.econ.MarketAPI m = Finders.homeMarket(d);
+                    if (m == null) continue;
+                    String line = d.name() + " on " + m.getName() + ": " + d.perk;
+                    text(line, 20f, y, width - 40f);
+                    tipColored(20f, y, width - 40f, 18f, d.name(), landlordsector.ui.Tips.headhunter(d));
+                    y += 20f;
+                }
                 return;
             }
             Finders.State chosen = null;
@@ -389,19 +431,32 @@ public class RealEstatePage implements ManagePage {
                         s.searching ? Misc.getGrayColor() : Misc.getPositiveHighlightColor(), 18f, y + 25f, LIST_W - 20f);
             }
             FinderDefs.Def d = chosen.def();
-            float rx = rightX();
-            float cw = contentWidth(rightW());
             portrait(chosen.person != null ? chosen.person.getPortraitSprite() : null, rx, TOP, 86f);
             title(d.name(), rx + 98f, TOP, cw - 98f);
-            text(d.pitch, rx + 98f, TOP + 28f, cw - 98f);
-            text("Brings " + d.tenants + " screened tenants from " + Tenants.factionName(d.profile) + " in "
-                    + Math.round(d.days) + " days.", Misc.getGrayColor(), rx + 98f, TOP + 48f, cw - 98f);
+            com.fs.starfarer.api.campaign.econ.MarketAPI home = Finders.homeMarket(d);
+            text("Headhunter" + (home != null ? " from " + home.getName() : "") + ". " + d.perk, rx + 98f, TOP + 28f,
+                    cw - 98f);
+            tipColored(rx + 98f, TOP + 28f, cw - 98f, 18f, d.name(), landlordsector.ui.Tips.headhunter(d));
+            text("Brings " + d.tenants + " screened tenants in " + Math.round(d.days) + " days.", Misc.getGrayColor(),
+                    rx + 98f, TOP + 48f, cw - 98f);
             float y = TOP + 100f;
             if (chosen.searching) {
                 text("Searching. Back in " + Math.max(1, Math.round(chosen.daysLeft())) + " days.", rx, y, cw);
             } else {
                 button("search:" + chosen.id, "Start a search for " + Misc.getDGSCredits(d.search), rx, y, 300f, 28f,
                         Actions.credits() >= d.search);
+            }
+            float oy = y + 50f;
+            text("Other headhunters", Misc.getGrayColor(), rx, oy, cw);
+            oy += 22f;
+            for (FinderDefs.Def o : FinderDefs.all()) {
+                Finders.State os = Finders.byFlag(o.id);
+                if (os != null && os.hired) continue;
+                com.fs.starfarer.api.campaign.econ.MarketAPI m = Finders.homeMarket(o);
+                if (m == null || oy > height - 30f) continue;
+                text(o.name() + " on " + m.getName() + ": " + o.perk, rx, oy, cw);
+                tipColored(rx, oy, cw, 18f, o.name(), landlordsector.ui.Tips.headhunter(o));
+                oy += 20f;
             }
         }
 

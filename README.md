@@ -8,14 +8,13 @@ Requires LunaLib and OddiszCommons.
 
 ## Buying
 
-- Homes are sold by **property agents**. Look for one in a market's comm directory and ask to see the
-  homes for sale. About a quarter of markets of size 3 or more that are not pirate or Luddic Path have an
-  agent at a time (more on big markets). Each stays 3 to 6 months, then moves on. Your own colonies
-  always have one.
+- Homes are sold by **property agents**: every market of size 3 or more that is not pirate or Luddic
+  Path has one in its comm directory. Each lists 1 to 4 homes (1 at size 3 and 4, up to 4 from size 9).
 - The property screen lists the homes on the left and shows the chosen one large on the right, with its
   stat sheet.
-- Bigger markets list more homes and better ones: shacks and studios from size 3, small houses from 4,
-  houses from 5, villas from 6 and estates from 7. New homes come on the market every 90 days.
+- Bigger markets list better homes: shacks and studios from size 3, small houses from 4, houses from 5,
+  villas from 6 and estates from 7. New homes come on the market every 90 days.
+- Every home has a name, often taken from its traits (names.json), for example Verdant Cottage.
 - Base prices: shack 1k to 10k, studio 30k to 50k, small house 100k to 300k, house 500k to 1M,
   villa 1.5M to 2.5M, estate 3M to 5M.
 - The market stretches those prices from a quarter to four times. Size 5 and 6 markets with 100 percent
@@ -30,18 +29,20 @@ Requires LunaLib and OddiszCommons.
   comfort and low rent. Pick one of up to three from the home's Tenant tab on the Manage page, or turn
   them away.
 - Each tenant has 2 or 3 traits that fit where they come from (tenant_traits.json): pirates bring vandals,
-  filthy tenants and late payers, Tri-Tachyon brings the prosperous and the tidy. Wealth (1 to 5) sets the
+  filthy tenants and late payers, Tri-Tachyon brings the prosperous and the tidy. Wealth (E to S) sets the
   rent they pay without grumbling.
 - You see one trait of an applicant until you pay to screen them. A monthly screening service makes bad
   traits rarer.
-- Homes roll 1 to 3 traits of their own (house_traits.json). Tenants like (+8 happiness) or hate (-15)
-  some of them.
+- Homes roll 0 to 3 traits of their own (house_traits.json). Tenants like (+8 happiness) or hate (-15)
+  some of them. Hover over a trait to see what it does.
 - Tenant events (tenant_events.json): at most one per home every 5 days. Bad ones get likelier with
   unhappy tenants, greedy rent, cheap homes (for damage) and low security (for crime). Good ones get
   likelier with happy tenants. They go into the fleet log and the home's log.
 - Tenants below 15 happiness may move out (loyal ones never do). You can evict.
-- Tenant finders (finders.json): eight people, each in a comm directory of their faction. Hire one, send
-  them on a search from the Finders tab, and move the screened tenants they bring into your empty homes.
+- Headhunters (headhunters.json): eleven people, each in the comm directory of their own world (Chicomoztoc,
+  Volturn, Sindria, Kanta's Den, New Auroria with United Aurora Federation, Eochu Bres, Mairaath, Port Tse,
+  Kazeron, Gilead, Jangala), each with a perk (cheap hardy tenants, rich ones, loyalists and so on). Hire one,
+  send them on a search from the Headhunters tab, and move the screened tenants they bring into your empty homes.
 
 ## Stats
 

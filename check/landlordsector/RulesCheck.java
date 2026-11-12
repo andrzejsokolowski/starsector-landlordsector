@@ -116,14 +116,44 @@ public final class RulesCheck {
             expect(s[i].happiness < s[i - 1].happiness, s[i] + ": happiness must fall as rent rises");
         }
 
-        // Agents: about a quarter of size 5 markets, more for big ones, and the arrival rate keeps that share.
-        expect(Math.abs(Pricing.agentShare(eco.agentShare, 5) - 0.25f) < 1e-6, "a quarter of size 5 markets");
-        expect(Pricing.agentShare(eco.agentShare, 8) > Pricing.agentShare(eco.agentShare, 4), "big markets more often");
-        float share = 0.25f;
-        float stay = (eco.agentMinMonths + eco.agentMaxMonths) / 2f;
-        float arrive = Pricing.agentArrival(share, stay);
-        float steady = arrive * stay / (1f + arrive * stay);
-        expect(Math.abs(steady - share) < 0.01f, "arrivals keep the share steady, got " + steady);
+        // 0.3.2: names, 0 to 3 house traits, wealth letters, headhunters.
+        for (Tier t : tiers) expect(landlordsector.data.Names.nounCount(t.id) >= 3, t.id + " has name nouns");
+        for (landlordsector.data.HouseTraits.Def d : landlordsector.data.HouseTraits.all()) {
+            expect(landlordsector.data.Names.hasWordsFor(d.id), "house trait " + d.id + " has name words");
+            expect(d.name.indexOf(' ') < 0 || d.name.contains("-"), "house trait " + d.id + " has a one-word name: " + d.name);
+        }
+        String named = landlordsector.data.Names.make("small_house", java.util.Arrays.asList("garden"), new java.util.Random(3));
+        expect(named.split(" ").length == 2, "a name is an adjective and a noun: " + named);
+        java.util.Random tr = new java.util.Random(5);
+        int[] counts = new int[4];
+        java.util.Set<String> hab = new java.util.HashSet<>(java.util.Arrays.asList("habitable", "mild_climate"));
+        for (int i = 0; i < 2000; i++) {
+            int n = landlordsector.data.HouseTraits.roll(hab, "temperate", false, 3, tr).size();
+            expect(n >= 0 && n <= 3, "0 to 3 house traits, got " + n);
+            if (n >= 0 && n <= 3) counts[n]++;
+        }
+        expect(counts[0] > 200 && counts[3] > 100, "homes with no traits and with three both happen: " + java.util.Arrays.toString(counts));
+        expect("E".equals(TenantRules.wealthLetter(1)) && "C".equals(TenantRules.wealthLetter(3))
+                && "S".equals(TenantRules.wealthLetter(6)), "wealth letters E to S");
+        expect(TenantRules.maxSetting(6) == RentSetting.GREEDY, "S wealth pays Greedy rent");
+        String[] hhMarkets = {"chicomoztoc", "volturn", "sindria", "kantas_den", "uaf_new_auroria", "eochu_bres", "mairaath",
+            "port_tse", "kazeron", "gilead", "jangala"};
+        expect(landlordsector.data.FinderDefs.all().size() == hhMarkets.length, "one headhunter per market Andrzej named");
+        for (String m : hhMarkets) {
+            boolean found = false;
+            for (landlordsector.data.FinderDefs.Def d : landlordsector.data.FinderDefs.all()) found |= d.markets.contains(m);
+            expect(found, "a headhunter lives on " + m);
+        }
+        landlordsector.data.FinderDefs.Def kanta = landlordsector.data.FinderDefs.get("hh_kantas_den");
+        landlordsector.data.FinderDefs.Def eochu = landlordsector.data.FinderDefs.get("hh_eochu_bres");
+        expect(kanta != null && kanta.wealthShift < 0 && kanta.traitBoost.containsKey("hardy"),
+                "Kanta's Den brings cheap tenants used to rough living (Andrzej)");
+        expect(eochu != null && eochu.wealthShift > 0 && eochu.traitBoost.containsKey("prosperous"),
+                "Eochu Bres brings rich tenants through connections (Andrzej)");
+        for (landlordsector.data.FinderDefs.Def d : landlordsector.data.FinderDefs.all()) {
+            for (String t : d.traitBoost.keySet()) expect(landlordsector.data.TenantTraits.get(t) != null, d.id + " boosts a real trait: " + t);
+            expect(!d.perk.isEmpty() && d.perk.indexOf('%') < 0, d.id + " has a perk line");
+        }
 
         // ---- 0.3.0 data files ----
         expect(landlordsector.data.ConditionTable.size() > 100, "the condition table covers the installed mods");
@@ -192,8 +222,8 @@ public final class RulesCheck {
         }
         expect(pirateBad > 2 * ttBad, "pirate tenants roll far more bad traits than Tri-Tachyon ones (" + pirateBad + " vs " + ttBad + ")");
         for (landlordsector.data.FinderDefs.Def f : landlordsector.data.FinderDefs.all()) {
-            expect(!f.first.isEmpty() && f.hire > 0f && f.search > 0f && f.days > 0f && f.tenants > 0, "finder " + f.id + " is complete");
-            expect(f.pitch.indexOf('%') < 0 && f.pitch.length() < 80, "finder " + f.id + " has a short plain pitch");
+            expect(!f.first.isEmpty() && f.hire > 0f && f.search > 0f && f.days > 0f && f.tenants > 0, "headhunter " + f.id + " is complete");
+            expect(f.pitch.indexOf('%') < 0 && f.pitch.length() < 80, "headhunter " + f.id + " has a short plain pitch");
         }
 
         // Tenant math: Andrzej's vandal is far worse in a greedy shack than in a charity estate.
@@ -216,8 +246,8 @@ public final class RulesCheck {
         expect(landlordsector.data.TenantEvents.minDaysBetween() >= 5f, "at most one event per home every 5 days (Andrzej)");
 
         // Listings by size.
-        expect(Pricing.listingCount(3) == 2 && Pricing.listingCount(9) == 8 && Pricing.listingCount(12) == 8,
-                "listing counts by size");
+        expect(Pricing.listingCount(3) == 1 && Pricing.listingCount(5) == 2 && Pricing.listingCount(7) == 3
+                && Pricing.listingCount(12) == 4, "fewer listings now that every market has an agent");
 
         // Climates from vanilla planet types.
         expect(Climate.ofType("terran") == Climate.TEMPERATE, "terran is temperate");
@@ -259,7 +289,8 @@ public final class RulesCheck {
         landlordsector.data.HouseTraits.load(json(dir.resolve("house_traits.json")));
         landlordsector.data.TenantTraits.load(json(dir.resolve("tenant_traits.json")));
         landlordsector.data.TenantEvents.load(json(dir.resolve("tenant_events.json")));
-        landlordsector.data.FinderDefs.load(json(dir.resolve("finders.json")));
+        landlordsector.data.FinderDefs.load(json(dir.resolve("headhunters.json")));
+        landlordsector.data.Names.load(json(dir.resolve("names.json")));
     }
 
     private static void expect(boolean ok, String what) {

@@ -74,6 +74,13 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   name `owners` / `ownersContain` (faction-only effects) and `others`. `Tenants.conditions` skips suppressed
   conditions, and every condition check goes through it.
 
+- 0.3.2 (Andrzej's notes after 0.3.1): one permanent agent per eligible market (`Agents.update`), 1 to 4
+  listings (`Pricing.listingCount`), 0 to 3 house traits with one-word names, property names (`data/Names`,
+  names.json, `Listing.name`, `Property.name`), headhunters (headhunters.json, `FinderDefs`; the code still
+  says finders) on fixed markets with perks (wealthShift, traitBoost), wealth E to S (`TenantRules.wealthLetter`),
+  hover tooltips (`Canvas.tip`, `ui/Tips`), colored event log on the right of the Manage page (log entries are
+  flag, date, colored part, rest, split by tabs).
+
 ## Known limits
 
 - The portfolio classes are in the save, so removing the mod mid-game breaks that save.

@@ -11,6 +11,8 @@ public class Listing {
     public float basePrice;
     /** House trait ids. Null on listings from before 0.3.0 until they are rolled on load. */
     public java.util.List<String> traits;
+    /** The home's name, for example "Verdant Cottage". Null on older listings until named on load. */
+    public String name;
 
     public Listing() {
     }

@@ -15,8 +15,7 @@ import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Voices;
 
 /**
- * Property agents in market comm directories. About a quarter of eligible markets have one at a time
- * (more on big markets), each stays 3 to 6 months. The player's own colonies always have one.
+ * Property agents in market comm directories: one on every market that sells homes.
  */
 public final class Agents {
 
@@ -40,41 +39,30 @@ public final class Agents {
     }
 
     /**
-     * Sends agents away whose time is up or whose market no longer sells homes, and brings new ones.
+     * Every market that sells homes has one property agent, for good (Andrzej, 2026-11-12: agents were too
+     * hard to find at one in four). Agents whose market no longer sells homes leave. Agents from 0.2 to 0.3.1
+     * that were due to move on now stay.
      *
-     * @param firstRun true on the first load of a save: markets get an agent at the target share at once
+     * @param firstRun unused since 0.3.2, kept for the callers
      */
     public static void update(Random random, boolean firstRun) {
         Portfolio portfolio = Portfolio.get();
         Map<String, Agent> agents = portfolio.agents();
-        Economy eco = TierTable.economy();
 
         Iterator<Map.Entry<String, Agent>> it = agents.entrySet().iterator();
         while (it.hasNext()) {
             Agent a = it.next().getValue();
             MarketAPI m = Global.getSector().getEconomy().getMarket(a.marketId);
-            boolean keep = m != null && MarketRules.isEligible(m) && a.person != null;
-            if (keep && a.stayDays > 0f
-                    && Global.getSector().getClock().getElapsedDaysSince(a.arrivedAt) > a.stayDays) {
-                keep = false;
+            if (m != null && MarketRules.isEligible(m) && a.person != null) {
+                a.stayDays = 0f;
+                continue;
             }
-            // A permanent agent belongs to a player colony. A colony lost to someone else loses them.
-            if (keep && a.stayDays <= 0f && !MarketRules.isOwn(m)) keep = false;
-            if (!keep) {
-                leave(a, m);
-                it.remove();
-            }
+            leave(a, m);
+            it.remove();
         }
-
-        float avgStay = (eco.agentMinMonths + eco.agentMaxMonths) / 2f;
         for (MarketAPI m : Global.getSector().getEconomy().getMarketsCopy()) {
             if (agents.containsKey(m.getId()) || !MarketRules.isEligible(m)) continue;
-            boolean own = MarketRules.isOwn(m);
-            float share = Pricing.agentShare(eco.agentShare, m.getSize());
-            float chance = own ? 1f : (firstRun ? share : Pricing.agentArrival(share, avgStay));
-            if (random.nextFloat() >= chance) continue;
-            float months = eco.agentMinMonths + random.nextFloat() * (eco.agentMaxMonths - eco.agentMinMonths);
-            Agent a = arrive(m, random, own ? 0f : months * DAYS_PER_MONTH);
+            Agent a = arrive(m, random, 0f);
             if (a != null) agents.put(m.getId(), a);
         }
     }

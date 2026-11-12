@@ -108,6 +108,28 @@ public abstract class Canvas implements CustomUIPanelPlugin {
     private final List<Box> boxes = new ArrayList<>();
     private final List<Pic> pics = new ArrayList<>();
     private final List<Bar> bars = new ArrayList<>();
+
+    /** A hover area and what its tooltip says. */
+    private static final class Tip {
+        final float x, y, w, h;
+        final String title;
+        final List<String[]> lines;
+
+        Tip(float x, float y, float w, float h, String title, List<String[]> lines) {
+            this.x = x;
+            this.y = y;
+            this.w = w;
+            this.h = h;
+            this.title = title;
+            this.lines = lines;
+        }
+    }
+
+    private static final float TIP_W = 380f;
+    private final List<Tip> tips = new ArrayList<>();
+    private Tip shownTip;
+    private CustomPanelAPI tipPanel;
+    private LabelAPI probe;
     private boolean wasDown = true;
 
     protected Canvas(float width, float height) {
@@ -132,6 +154,8 @@ public abstract class Canvas implements CustomUIPanelPlugin {
         boxes.clear();
         pics.clear();
         bars.clear();
+        tips.clear();
+        hideTip();
         build();
     }
 
@@ -207,6 +231,160 @@ public abstract class Canvas implements CustomUIPanelPlugin {
     }
 
     /** A bar filled to {@code share} (0 to 1). */
+    // ---- Tooltips ----
+
+    /** Plain tooltip lines. */
+    protected void tip(float x, float y, float w, float h, String title, String... lines) {
+        List<String[]> l = new ArrayList<>();
+        for (String s : lines) if (s != null && !s.isEmpty()) l.add(new String[] {s, null});
+        tips.add(new Tip(x, y, w, h, title, l));
+    }
+
+    /** Tooltip lines with a color each: {text, "+"} green, {text, "-"} red, {text, null} plain. */
+    protected void tipColored(float x, float y, float w, float h, String title, List<String[]> lines) {
+        tips.add(new Tip(x, y, w, h, title, lines));
+    }
+
+    private void hideTip() {
+        if (tipPanel != null && panel != null) panel.removeComponent(tipPanel);
+        tipPanel = null;
+        shownTip = null;
+    }
+
+    private void showTip(Tip t, float mx, float my) {
+        hideTip();
+        List<String[]> rows = new ArrayList<>();
+        for (String[] line : t.lines) {
+            for (String part : wrap(line[0], TIP_W - 20f)) rows.add(new String[] {part, line[1]});
+        }
+        float h = 12f + (t.title == null ? 0f : 22f) + rows.size() * 18f + 6f;
+        tipPanel = panel.createCustomPanel(TIP_W, h, new TipPlugin());
+        float y = 6f;
+        if (t.title != null) {
+            LabelAPI l = Global.getSettings().createLabel(t.title, Fonts.DEFAULT_SMALL);
+            l.setColor(Misc.getHighlightColor());
+            tipPanel.addComponent((UIComponentAPI) l).inTL(10f, y).setSize(TIP_W - 20f, 20f);
+            y += 22f;
+        }
+        for (String[] r : rows) {
+            LabelAPI l = Global.getSettings().createLabel(r[0], Fonts.DEFAULT_SMALL);
+            Color c = "+".equals(r[1]) ? Misc.getPositiveHighlightColor()
+                    : ("-".equals(r[1]) ? Misc.getNegativeHighlightColor() : Misc.getTextColor());
+            l.setColor(c);
+            tipPanel.addComponent((UIComponentAPI) l).inTL(10f, y).setSize(TIP_W - 20f, 18f);
+            y += 18f;
+        }
+        float px = Math.min(mx + 18f, width - TIP_W - 4f);
+        float py = my + 18f;
+        if (py + h > height - 4f) py = Math.max(4f, my - h - 8f);
+        panel.addComponent(tipPanel).inTL(Math.max(4f, px), py);
+        panel.bringComponentToTop(tipPanel);
+        shownTip = t;
+    }
+
+    /** Draws its own dark box under the tooltip's labels. */
+    private static final class TipPlugin implements CustomUIPanelPlugin {
+        private PositionAPI pos;
+
+        @Override
+        public void positionChanged(PositionAPI position) {
+            pos = position;
+        }
+
+        @Override
+        public void renderBelow(float alphaMult) {
+            if (pos == null) return;
+            GL11.glPushAttrib(GL11.GL_ENABLE_BIT | GL11.GL_COLOR_BUFFER_BIT | GL11.GL_CURRENT_BIT);
+            try {
+                GL11.glDisable(GL11.GL_TEXTURE_2D);
+                GL11.glEnable(GL11.GL_BLEND);
+                GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+                box(pos.getX(), pos.getY(), pos.getWidth(), pos.getHeight(), new Color(8, 12, 20, 245), alphaMult);
+                Color g = GOLD;
+                box(pos.getX(), pos.getY(), pos.getWidth(), 1f, g, alphaMult);
+                box(pos.getX(), pos.getY() + pos.getHeight() - 1f, pos.getWidth(), 1f, g, alphaMult);
+                box(pos.getX(), pos.getY(), 1f, pos.getHeight(), g, alphaMult);
+                box(pos.getX() + pos.getWidth() - 1f, pos.getY(), 1f, pos.getHeight(), g, alphaMult);
+            } finally {
+                GL11.glPopAttrib();
+            }
+        }
+
+        private static void box(float x, float y, float w, float h, Color c, float a) {
+            GL11.glColor4f(c.getRed() / 255f, c.getGreen() / 255f, c.getBlue() / 255f, c.getAlpha() / 255f * a);
+            GL11.glBegin(GL11.GL_QUADS);
+            GL11.glVertex2f(x, y);
+            GL11.glVertex2f(x + w, y);
+            GL11.glVertex2f(x + w, y + h);
+            GL11.glVertex2f(x, y + h);
+            GL11.glEnd();
+        }
+
+        @Override
+        public void render(float alphaMult) {
+        }
+
+        @Override
+        public void advance(float amount) {
+        }
+
+        @Override
+        public void processInput(List<InputEventAPI> events) {
+        }
+
+        @Override
+        public void buttonPressed(Object buttonId) {
+        }
+    }
+
+    // ---- Wrapped text ----
+
+    /** Splits text into lines no wider than {@code w}, measured with the small font. */
+    protected List<String> wrap(String text, float w) {
+        List<String> out = new ArrayList<>();
+        if (text == null || text.isEmpty()) {
+            out.add("");
+            return out;
+        }
+        if (probe == null) probe = Global.getSettings().createLabel("", Fonts.DEFAULT_SMALL);
+        StringBuilder line = new StringBuilder();
+        for (String word : text.split(" ")) {
+            String next = line.length() == 0 ? word : line + " " + word;
+            if (line.length() > 0 && probe.computeTextWidth(next) > w) {
+                out.add(line.toString());
+                line = new StringBuilder(word);
+            } else {
+                line = new StringBuilder(next);
+            }
+        }
+        if (line.length() > 0) out.add(line.toString());
+        return out;
+    }
+
+    /**
+     * Text wrapped to {@code w}, with its first {@code coloredChars} characters in {@code colored} and the
+     * rest in {@code plain}.
+     *
+     * @return the height used
+     */
+    protected float wrapped(String text, int coloredChars, Color colored, Color plain, float x, float y, float w) {
+        List<String> lines = wrap(text, w);
+        int done = 0;
+        float yy = y;
+        for (String line : lines) {
+            LabelAPI l = label(line, plain, x, yy, w, 18f, Alignment.LMID, Fonts.DEFAULT_SMALL);
+            int start = done;
+            if (coloredChars > start && !line.isEmpty()) {
+                int upTo = Math.min(line.length(), coloredChars - start);
+                l.setHighlight(line.substring(0, upTo));
+                l.setHighlightColor(colored);
+            }
+            done = start + line.length() + 1;
+            yy += 18f;
+        }
+        return yy - y;
+    }
+
     protected void bar(float x, float y, float w, float h, float share, Color fill) {
         bars.add(new Bar(x, y, w, h, share, fill));
     }
@@ -226,6 +404,16 @@ public abstract class Canvas implements CustomUIPanelPlugin {
         float my = p.getY() + p.getHeight() - Mouse.getY() / scale;
         boolean inside = mx >= 0 && my >= 0 && mx <= p.getWidth() && my <= p.getHeight();
         for (Btn b : buttons) b.hovered = inside && b.enabled && contains(b, mx, my);
+        Tip over = null;
+        if (inside) {
+            for (Tip t : tips) {
+                if (mx >= t.x && mx <= t.x + t.w && my >= t.y && my <= t.y + t.h) over = t;
+            }
+        }
+        if (over != shownTip) {
+            if (over == null) hideTip();
+            else showTip(over, mx, my);
+        }
 
         boolean down = Mouse.isButtonDown(0);
         boolean clicked = down && !wasDown;

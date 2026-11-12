@@ -78,7 +78,7 @@ public final class RuntimeCheck {
         col.stability = 5f; col.hazard = 1.25f; col.own = true;
         MarketAPI b = market(col);
         FakeMarket pir = new FakeMarket();
-        pir.id = "fake_pirate"; pir.name = "Cutthroat"; pir.factionId = "pirates"; pir.size = 5;
+        pir.id = "kantas_den"; pir.name = "Kanta's Den"; pir.factionId = "pirates"; pir.size = 5;
         MarketAPI c = market(pir);
 
         expect(MarketRules.isEligible(a) && MarketRules.isEligible(b), "Hegemony and player markets sell homes");
@@ -101,15 +101,10 @@ public final class RuntimeCheck {
         expect(heg.directory.size() == 1 && col.directory.size() == 1, "eligible markets get a property agent");
         expect(pir.directory.isEmpty(), "pirate markets get no property agent");
         Object agentPerson = heg.directory.isEmpty() ? null : heg.directory.get(0);
-        Agents.update(yes, false);
-        expect(heg.directory.size() == 1 && heg.directory.get(0) == agentPerson, "an agent stays while their time runs");
-        now += 7 * 30 * DAY;
+        now += 24 * 30 * DAY;
         Agents.update(no, false);
-        expect(heg.directory.isEmpty(), "an agent leaves after at most 6 months");
-        expect(col.directory.size() == 1, "the player's colony keeps its agent");
-        expect(Agents.hasAgent(b) && !Agents.hasAgent(a), "the agent list matches the comm directories");
-        Agents.update(yes, false);
-        expect(heg.directory.size() == 1, "a new agent can arrive later");
+        expect(heg.directory.size() == 1 && heg.directory.get(0) == agentPerson, "an agent stays for good (0.3.2)");
+        expect(col.directory.size() == 1 && Agents.hasAgent(a) && Agents.hasAgent(b), "every eligible market keeps its agent");
 
         MarketListings la = MarketRules.listings(a);
         expect(la.list().size() == Pricing.listingCount(6), "a size 6 market lists " + Pricing.listingCount(6));
@@ -142,8 +137,9 @@ public final class RuntimeCheck {
 
         // 0.3.0: a new home starts empty and advertised, applicants turn up, screening shows every trait.
         expect(!home.isRented() && home.advertising && home.expectedRent() == 0f, "a new home starts empty and advertised");
-        expect(cheap.traits != null && !cheap.traits.isEmpty() && home.traits().equals(cheap.traits),
-                "a home keeps the house traits of its listing");
+        expect(cheap.traits != null && home.traits().equals(cheap.traits), "a home keeps the house traits of its listing");
+        expect(cheap.name != null && cheap.name.equals(home.name) && home.displayName().startsWith(cheap.name),
+                "a home keeps the name of its listing");
         Random days = new Random(11);
         for (int i = 0; i < 400 && home.applicants().isEmpty(); i++) {
             now += DAY;
@@ -236,17 +232,21 @@ public final class RuntimeCheck {
         HomeownerScript.beforeSave();
         expect(col.stabilityStat.getFlatStatMod("landlordsector_homeowners") == null, "nothing is left in the save");
 
-        // Tenant finders: the pirate finder sits on the pirate market, hires, searches, delivers.
+        // Headhunters: Rook Massey sits on Kanta's Den, hires, searches, delivers. The others' markets are not here.
         Finders.place(days);
-        Finders.State rook = Portfolio.get().finders().get("rook_massey");
-        expect(rook != null && pir.id.equals(rook.marketId), "the pirate tenant finder sits on a pirate market");
-        expect(pir.directory.size() == 1, "the finder is in the pirate market's comm directory");
+        Finders.State rook = Portfolio.get().finders().get("hh_kantas_den");
+        expect(rook != null && pir.id.equals(rook.marketId), "the Kanta's Den headhunter sits on Kanta's Den");
+        expect(Portfolio.get().finders().size() == 1, "headhunters whose market is missing do not appear");
+        expect(pir.directory.size() == 1, "the headhunter is in Kanta's Den's comm directory");
         expect(Finders.hire(rook) == null && rook.hired && pir.directory.isEmpty(), "hiring takes the finder out of the directory");
         expect(Finders.startSearch(rook) == null && rook.searching, "a search starts");
         int poolBefore = Portfolio.get().tenantPool().size();
         now += 11 * DAY;
         Finders.deliver(days);
-        expect(Portfolio.get().tenantPool().size() == poolBefore + 5, "the pirate finder brings back 5 tenants");
+        expect(Portfolio.get().tenantPool().size() == poolBefore + 6, "the Kanta's Den headhunter brings back 6 tenants");
+        int hardy = 0;
+        for (Tenant t : Portfolio.get().tenantPool()) if (t.hasTrait("hardy")) hardy++;
+        expect(hardy >= 2, "most of Rook Massey's tenants are Hardy, got " + hardy);
         boolean allScreened = true;
         for (Tenant t : Portfolio.get().tenantPool()) allScreened &= t.screened && "pirates".equals(t.factionId);
         expect(allScreened, "finder tenants come screened, from the finder's faction");

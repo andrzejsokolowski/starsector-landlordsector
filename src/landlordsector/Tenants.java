@@ -45,6 +45,17 @@ public final class Tenants {
      */
     public static Tenant create(String factionId, MarketAPI market, float badMult, boolean screened, String source,
             Random random) {
+        return create(factionId, market, badMult, screened, source, random, 0, java.util.Collections.emptyMap());
+    }
+
+    /**
+     * A new tenant, shaped by a headhunter's perks.
+     *
+     * @param wealthShift added to the tenant's wealth
+     * @param traitBoost multiplies the chance of these traits
+     */
+    public static Tenant create(String factionId, MarketAPI market, float badMult, boolean screened, String source,
+            Random random, int wealthShift, java.util.Map<String, Float> traitBoost) {
         Tenant t = new Tenant();
         t.id = Portfolio.get().newId();
         t.factionId = factionId;
@@ -52,16 +63,16 @@ public final class Tenants {
         t.screened = screened;
         t.shown = 1;
         t.since = Global.getSector().getClock().getTimestamp();
-        List<String> traits = TenantTraits.roll(factionId, conditions(market), badMult, random);
+        List<String> traits = TenantTraits.roll(factionId, conditions(market), badMult, traitBoost, random);
         // Show a random one first, so the visible trait does not always come from the same end of the list.
         Collections.shuffle(traits, random);
         t.traits = traits;
-        int wealth = TenantTraits.baseWealth(factionId) + random.nextInt(3) - 1;
+        int wealth = TenantTraits.baseWealth(factionId) + random.nextInt(3) - 1 + wealthShift;
         for (String id : traits) {
             TenantTraits.Def d = TenantTraits.get(id);
             if (d != null) wealth += d.wealth;
         }
-        t.wealth = Math.max(1, Math.min(5, wealth));
+        t.wealth = Math.max(1, Math.min(TenantRules.MAX_WEALTH, wealth));
         nameAndFace(t, factionId, random);
         return t;
     }

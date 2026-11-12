@@ -139,16 +139,19 @@ public final class PropertyStats {
             for (String tag : d.likes) {
                 if (!tags.contains(tag)) continue;
                 liked++;
-                s.notes.add(new Note(d.name + ": likes the " + tagName(tag, houseTraits), true));
+                s.notes.add(new Note(d.name + ": likes the home being " + tagName(tag, houseTraits) + " (+" + Math.round(TenantRules.LIKE) + ")", true));
             }
             for (String tag : d.dislikes) {
                 if (!tags.contains(tag)) continue;
                 disliked++;
-                s.notes.add(new Note(d.name + ": hates the " + tagName(tag, houseTraits), false));
+                s.notes.add(new Note(d.name + ": hates the home being " + tagName(tag, houseTraits) + " (-" + Math.round(TenantRules.DISLIKE) + ")", false));
             }
         }
         int over = TenantRules.overpricedSteps(setting, t.wealth);
-        if (over > 0) s.notes.add(new Note("Rent above what they can afford", false));
+        if (over > 0) {
+            s.notes.add(new Note("Rent " + setting.label + " is above " + TenantRules.maxSetting(t.wealth).label
+                    + ", the most they pay happily (-" + Math.round(over * TenantRules.OVERPRICED) + ")", false));
+        }
         if (t.mood >= 5f) s.notes.add(new Note("In a good mood", true));
         if (t.mood <= -5f) s.notes.add(new Note("In a bad mood", false));
         return TenantRules.tenantHappiness(home, t.traitHappiness(), liked, disliked, over, t.mood);
@@ -158,7 +161,7 @@ public final class PropertyStats {
     private static String tagName(String tag, List<String> houseTraits) {
         for (String id : houseTraits) {
             HouseTraits.Def d = HouseTraits.get(id);
-            if (d != null && d.tags.contains(tag)) return d.name.toLowerCase();
+            if (d != null && d.tags.contains(tag)) return d.name;
         }
         return tag;
     }

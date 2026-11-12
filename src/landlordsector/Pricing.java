@@ -70,9 +70,13 @@ public final class Pricing {
         return m;
     }
 
-    /** Number of listings a market of this size rolls. */
+    /**
+     * Number of listings a market of this size rolls: 1 at size 3 and 4, 2 at 5 and 6, 3 at 7 and 8, at most 4.
+     * Every market has an agent since 0.3.2, so each lists fewer homes (Andrzej, 2026-11-12).
+     */
     public static int listingCount(int size) {
-        return Math.max(0, Math.min(8, size - 1));
+        if (size < 3) return 0;
+        return Math.max(1, Math.min(4, (size - 1) / 2));
     }
 
     /** Monthly rent before tariff. */

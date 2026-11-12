@@ -1,0 +1,55 @@
+{
+	# Headhunters: unique people, one each, waiting in the comm directory of their own market until hired.
+	# markets: market ids to look for, names: market names to look for when no id matches (New Auroria is
+	# made by United Aurora Federation's code). A headhunter whose market is not in the game does not appear.
+	# Hire them once (hire), then send them on searches from the Manage page (search credits, days). Each
+	# search brings back "tenants" screened tenants of the profile faction.
+	# Perks: badTraits multiplies bad trait chances, wealthShift is added to every tenant's wealth (1 to 6),
+	# traitBoost multiplies the chance of those tenant traits. perk: one plain line shown in the tooltip.
+	"headhunters":[
+		{"id":"hh_chicomoztoc", "first":"Otto", "last":"Brask", "gender":"male", "markets":["chicomoztoc"], "names":["Chicomoztoc"],
+		 "profile":"hegemony", "hire":60000, "search":10000, "days":12, "tenants":5, "badTraits":0.8, "wealthShift":0,
+		 "traitBoost":{"tidy":2,"handy":2}, "perk":"Factory workers: tidy and handy, rarely rich.",
+		 "pitch":"I place factory workers. Steady people."},
+		{"id":"hh_volturn", "first":"Mira", "last":"Cassel", "gender":"female", "markets":["volturn"], "names":["Volturn"],
+		 "profile":"sindrian_diktat", "hire":40000, "search":6000, "days":12, "tenants":5, "badTraits":0.9, "wealthShift":-1,
+		 "traitBoost":{"pet_owner":3,"family":2}, "perk":"Lobster farmers: families and pet owners, cheap.",
+		 "pitch":"Lobster farmers need homes. Families, mostly."},
+		{"id":"hh_sindria", "first":"Ilyan", "last":"Dross", "gender":"male", "markets":["sindria"], "names":["Sindria"],
+		 "profile":"sindrian_diktat", "hire":150000, "search":25000, "days":12, "tenants":4, "badTraits":0.4, "wealthShift":0,
+		 "traitBoost":{"loyal":4,"veteran":2}, "perk":"Vetted loyalists: loyal tenants, few troublemakers.",
+		 "pitch":"Every tenant I place is vetted twice."},
+		{"id":"hh_kantas_den", "first":"Rook", "last":"Massey", "gender":"male", "markets":["kantas_den"], "names":["Kanta's Den"],
+		 "profile":"pirates", "hire":20000, "search":3000, "days":8, "tenants":6, "badTraits":1.2, "wealthShift":-1,
+		 "traitBoost":{"hardy":6}, "perk":"Cheap tenants used to rough living: they put up with poor homes, but bring trouble.",
+		 "pitch":"My people sleep anywhere. They pay, mostly."},
+		{"id":"hh_new_auroria", "first":"Elin", "last":"Sato", "gender":"female", "markets":["uaf_new_auroria"], "names":["New Auroria"],
+		 "profile":"uaf", "hire":120000, "search":20000, "days":12, "tenants":4, "badTraits":0.6, "wealthShift":1,
+		 "traitBoost":{"tech_fan":3,"tidy":2}, "perk":"Auroran technicians: tech enthusiasts and tidy tenants.",
+		 "pitch":"I place Auroran technicians."},
+		{"id":"hh_eochu_bres", "first":"Ilse", "last":"Varga", "gender":"female", "markets":["eochu_bres"], "names":["Eochu Bres"],
+		 "profile":"tritachyon", "hire":400000, "search":60000, "days":10, "tenants":4, "badTraits":0.5, "wealthShift":2,
+		 "traitBoost":{"prosperous":4}, "perk":"Rich executives through her connections: high wealth, often Prosperous.",
+		 "pitch":"My clients have expense accounts."},
+		{"id":"hh_mairaath", "first":"Dora", "last":"Kade", "gender":"female", "markets":["mairaath"], "names":["Mairaath"],
+		 "profile":"independent", "hire":30000, "search":5000, "days":10, "tenants":8, "badTraits":1.0, "wealthShift":-1,
+		 "traitBoost":{"hardy":3,"loyal":2}, "perk":"Refugees: many tenants at once, poor but grateful.",
+		 "pitch":"Refugees need roofs. I have a lot of them."},
+		{"id":"hh_port_tse", "first":"Varro", "last":"Quill", "gender":"male", "markets":["port_tse"], "names":["Port Tse"],
+		 "profile":"persean", "hire":50000, "search":8000, "days":10, "tenants":5, "badTraits":1.0, "wealthShift":0,
+		 "traitBoost":{"handy":3,"loud":2}, "perk":"Spacers and dock crews: handy, often loud.",
+		 "pitch":"Dock crews want a bed between shifts."},
+		{"id":"hh_kazeron", "first":"Augusta", "last":"Pell", "gender":"female", "markets":["kazeron"], "names":["Kazeron"],
+		 "profile":"persean", "hire":200000, "search":30000, "days":12, "tenants":4, "badTraits":0.7, "wealthShift":1,
+		 "traitBoost":{"prosperous":2}, "perk":"League merchants: wealthy and demanding.",
+		 "pitch":"League merchants. They expect the best."},
+		{"id":"hh_gilead", "first":"Amaryllis", "last":"Venn", "gender":"female", "markets":["gilead"], "names":["Gilead"],
+		 "profile":"luddic_church", "hire":80000, "search":12000, "days":15, "tenants":4, "badTraits":0.4, "wealthShift":0,
+		 "traitBoost":{"gardener":3,"quiet":2,"faithful":2}, "perk":"The faithful: quiet gardeners who rarely cause trouble.",
+		 "pitch":"I find homes for the faithful."},
+		{"id":"hh_jangala", "first":"Tomas", "last":"Reyes", "gender":"male", "markets":["jangala"], "names":["Jangala"],
+		 "profile":"hegemony", "hire":70000, "search":10000, "days":12, "tenants":5, "badTraits":0.8, "wealthShift":0,
+		 "traitBoost":{"family":3,"gardener":2,"pet_owner":2}, "perk":"Settler families who love gardens and greenery.",
+		 "pitch":"Settler families. They like green places."}
+	]
+}

@@ -1,3 +1,14 @@
+Version 0.3.2 (2026-11-12)
+- Every market that sells homes now has a property agent, and each lists fewer homes (1 to 4 by market size)
+- Homes have 0 to 3 traits, with new names like Renovated, Barred and Verdant
+- Every home has a name, often taken from its traits, for example Verdant Cottage
+- Hover over a trait, a stat, a tenant's wealth or a headhunter to see what it does
+- The Tenant tab is now Tenants, and each home's events show on the right of the Manage page
+- Events are colored in the fleet log and the home's log: red for bad, green for good
+- Tenant finders are now headhunters: eleven of them, on Chicomoztoc, Volturn, Sindria, Kanta's Den, New Auroria (with United Aurora Federation), Eochu Bres, Mairaath, Port Tse, Kazeron, Gilead and Jangala, each bringing their own kind of tenants
+- Tenant wealth is a letter from E to S, and the happiness notes say which rent the tenant can afford
+- New tenant trait: Hardy, puts up with poorer homes
+
 Version 0.3.1 (2026-11-12)
 - Market condition effects are rebuilt from what each condition really does in the game, read from its code. 142 conditions from the base game and your mods count. Conditions that only change stability or hazard (already counted) or do nothing are left out
 - Conditions that only work for one faction, like the Imperial Doctrine or the FSF Military Zone, now only count under that faction

@@ -108,8 +108,10 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
             Tier t = TierTable.get(l.tierId);
             float y = TOP + i * (ROW_H + 4f);
             area(i, MARGIN, y, LIST_W, ROW_H, i == selected);
-            text(t != null ? t.name : l.tierId, Misc.getHighlightColor(), MARGIN + 10f, y + 6f, LIST_W - 20f);
-            text(Misc.getDGSCredits(MarketRules.buyPrice(market, l)), MARGIN + 10f, y + 26f, LIST_W - 20f);
+            text(l.name != null ? l.name : (t != null ? t.name : l.tierId), Misc.getHighlightColor(), MARGIN + 10f,
+                    y + 6f, LIST_W - 20f);
+            text((t != null ? t.name + ", " : "") + Misc.getDGSCredits(MarketRules.buyPrice(market, l)), MARGIN + 10f,
+                    y + 26f, LIST_W - 20f);
         }
         int ownedHere = Portfolio.get().countAt(market.getId());
         int cap = Settings.maxProperties();
@@ -131,8 +133,8 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
             float rent = t == null ? 0f
                     : Pricing.rent(full, t.rentShare, 1f, 1f, Settings.rentMult()) * (1f - tariff);
             Sheet s = new Sheet();
-            s.title = t != null ? t.name : l.tierId;
-            s.subtitle = where(market, st);
+            s.title = l.name != null ? l.name : (t != null ? t.name : l.tierId);
+            s.subtitle = (t != null ? t.name + ", " : "") + where(market, st);
             s.art = l.artPath;
             s.valueLine = Misc.getDGSCredits(full);
             s.rentLine = "about " + Misc.getDGSCredits(rent) + " a month" + (own ? "" : ", after tariff");

@@ -54,34 +54,50 @@ public final class Finders {
         }
     }
 
-    /** Places every finder not yet in this save, and moves unhired ones whose market is gone. */
+    /**
+     * Puts every headhunter in the comm directory of their own market (headhunters.json). One whose market
+     * is not in this game (New Auroria without United Aurora Federation) does not appear. Headhunters from
+     * older versions that are no longer in the file are taken away, unless the player hired them.
+     */
     public static void place(Random random) {
         Map<String, State> states = Portfolio.get().finders();
+        java.util.Iterator<Map.Entry<String, State>> old = states.entrySet().iterator();
+        while (old.hasNext()) {
+            State s = old.next().getValue();
+            if (FinderDefs.get(s.id) != null) continue;
+            leave(s);
+            old.remove();
+        }
         for (FinderDefs.Def d : FinderDefs.all()) {
             State s = states.get(d.id);
             if (s != null && s.hired) continue;
-            MarketAPI here = s == null ? null : Global.getSector().getEconomy().getMarket(s.marketId);
-            if (s != null && here != null && here.isInEconomy() && s.person != null) continue;
-            if (s != null) leave(s);
-            MarketAPI m = pickMarket(d.faction, random);
+            MarketAPI m = homeMarket(d);
+            if (s != null && m != null && m.getId().equals(s.marketId) && s.person != null) continue;
+            if (s != null) {
+                leave(s);
+                states.remove(d.id);
+            }
             if (m == null) continue;
             State n = arrive(d, m, random);
             if (n != null) states.put(d.id, n);
         }
     }
 
-    private static MarketAPI pickMarket(String factionId, Random random) {
-        List<MarketAPI> own = new ArrayList<>();
-        List<MarketAPI> any = new ArrayList<>();
-        for (MarketAPI m : Global.getSector().getEconomy().getMarketsCopy()) {
-            if (m == null || !m.isInEconomy() || m.isHidden() || m.isPlanetConditionMarketOnly() || m.isPlayerOwned()) {
-                continue;
-            }
-            if (factionId.equals(m.getFactionId())) own.add(m);
-            if (MarketRules.isEligible(m)) any.add(m);
+    /** The headhunter's market: by id first, then by name. Null when it is not in this game or not settled. */
+    public static MarketAPI homeMarket(FinderDefs.Def d) {
+        for (String id : d.markets) {
+            MarketAPI m = Global.getSector().getEconomy().getMarket(id);
+            if (usable(m)) return m;
         }
-        List<MarketAPI> from = own.isEmpty() ? any : own;
-        return from.isEmpty() ? null : from.get(random.nextInt(from.size()));
+        for (MarketAPI m : Global.getSector().getEconomy().getMarketsCopy()) {
+            if (!usable(m) || m.getName() == null) continue;
+            for (String name : d.names) if (name.equalsIgnoreCase(m.getName())) return m;
+        }
+        return null;
+    }
+
+    private static boolean usable(MarketAPI m) {
+        return m != null && m.isInEconomy() && !m.isPlanetConditionMarketOnly();
     }
 
     private static State arrive(FinderDefs.Def d, MarketAPI m, Random random) {
@@ -116,7 +132,7 @@ public final class Finders {
             s.marketId = m.getId();
             return s;
         } catch (Throwable t) {
-            log.warn("Landlordsector: tenant finder " + d.id + " could not be placed on " + m.getId(), t);
+            log.warn("Landlordsector: headhunter " + d.id + " could not be placed on " + m.getId(), t);
             return null;
         }
     }
@@ -129,7 +145,7 @@ public final class Finders {
             if (dir != null) dir.removePerson(s.person);
             m.removePerson(s.person);
         } catch (Throwable t) {
-            log.warn("Landlordsector: tenant finder " + s.id + " could not be removed", t);
+            log.warn("Landlordsector: headhunter " + s.id + " could not be removed", t);
         }
     }
 
@@ -161,7 +177,7 @@ public final class Finders {
     /** Null when the search started, or the reason not. */
     public static String startSearch(State s) {
         FinderDefs.Def d = s == null ? null : s.def();
-        if (d == null || !s.hired) return "That finder does not work for you.";
+        if (d == null || !s.hired) return "That headhunter does not work for you.";
         if (s.searching) return d.name() + " is already searching.";
         if (Actions.credits() < d.search) return "Not enough credits for the search.";
         Global.getSector().getPlayerFleet().getCargo().getCredits().subtract(d.search);
@@ -177,11 +193,11 @@ public final class Finders {
             if (!s.searching || d == null || s.daysLeft() > 0f) continue;
             s.searching = false;
             for (int i = 0; i < d.tenants; i++) {
-                Tenant t = Tenants.create(d.profile, null, d.badTraits, true, d.id, random);
+                Tenant t = Tenants.create(d.profile, null, d.badTraits, true, d.id, random, d.wealthShift, d.traitBoost);
                 Portfolio.get().tenantPool().add(t);
             }
             Portfolio.get().news = true;
-            Notify.line(d.name() + " found " + d.tenants + " tenants. They wait in your tenant pool.", true);
+            Notify.line(d.name() + " found " + d.tenants + " tenants. They wait in your tenant pool.", true, null);
         }
     }
 }

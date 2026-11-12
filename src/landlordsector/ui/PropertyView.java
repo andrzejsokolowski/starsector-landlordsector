@@ -34,13 +34,25 @@ public abstract class PropertyView extends Canvas {
         public final List<Object[]> traits = new ArrayList<>();
     }
 
-    /** House trait names and colors for a sheet. */
+    /** House trait names, colors and tooltips for a sheet: {name, good, tooltip title, tooltip lines}. */
     public static List<Object[]> houseTraits(List<String> ids) {
         List<Object[]> out = new ArrayList<>();
         if (ids == null) return out;
         for (String id : ids) {
             landlordsector.data.HouseTraits.Def d = landlordsector.data.HouseTraits.get(id);
-            if (d != null) out.add(new Object[] {d.name, d.good});
+            if (d != null) out.add(new Object[] {d.name, d.good, d.name, Tips.houseTrait(d)});
+        }
+        return out;
+    }
+
+    /** A tenant's traits for a row: hidden ones as "?". */
+    public static List<Object[]> tenantTraits(landlordsector.Tenant t) {
+        List<Object[]> out = new ArrayList<>();
+        for (int i = 0; i < t.traits().size(); i++) {
+            landlordsector.data.TenantTraits.Def d = landlordsector.data.TenantTraits.get(t.traits().get(i));
+            if (d == null) continue;
+            out.add(t.isShown(i) ? new Object[] {d.name, d.good, d.name, Tips.tenantTrait(d)}
+                    : new Object[] {"?", null, "Hidden trait", Tips.hidden()});
         }
         return out;
     }
@@ -50,15 +62,22 @@ public abstract class PropertyView extends Canvas {
         return good ? Misc.getPositiveHighlightColor() : Misc.getNegativeHighlightColor();
     }
 
-    /** Names in a row, each in its own color, separated by commas. Returns the x after the last one. */
+    /**
+     * Names in a row, each in its own color, separated by commas, each with its tooltip when the item has one
+     * ({name, good, tooltip title, tooltip lines}). Returns the x after the last one.
+     */
+    @SuppressWarnings("unchecked")
     protected float coloredRow(List<Object[]> items, float x, float y, float maxW) {
         float cx = x;
         for (int i = 0; i < items.size(); i++) {
-            String name = String.valueOf(items.get(i)[0]) + (i < items.size() - 1 ? "," : "");
-            com.fs.starfarer.api.ui.LabelAPI l = text(name, traitColor((Boolean) items.get(i)[1]), cx, y,
+            Object[] item = items.get(i);
+            String name = String.valueOf(item[0]) + (i < items.size() - 1 ? "," : "");
+            com.fs.starfarer.api.ui.LabelAPI l = text(name, traitColor((Boolean) item[1]), cx, y,
                     Math.max(20f, x + maxW - cx));
             float w = l.computeTextWidth(name);
-            cx += (w > 0f ? w : name.length() * 7f) + 8f;
+            float iw = w > 0f ? w : name.length() * 7f;
+            if (item.length >= 4 && item[3] != null) tipColored(cx, y, iw, 18f, (String) item[2], (List<String[]>) item[3]);
+            cx += iw + 8f;
             if (cx > x + maxW) break;
         }
         return cx;
@@ -77,16 +96,14 @@ public abstract class PropertyView extends Canvas {
         float tw = w - size - 12f;
         title(t.name, tx, y, tw);
         landlordsector.RentSetting max = landlordsector.TenantRules.maxSetting(t.wealth);
-        text("From " + landlordsector.Tenants.factionName(t.factionId) + ". Wealth " + t.wealth
-                + " of 5: pays up to " + max.label + " rent.", Misc.getGrayColor(), tx, y + 28f, tw);
-        List<Object[]> traits = new ArrayList<>();
-        for (int i = 0; i < t.traits().size(); i++) {
-            landlordsector.data.TenantTraits.Def d = landlordsector.data.TenantTraits.get(t.traits().get(i));
-            if (d == null) continue;
-            traits.add(t.isShown(i) ? new Object[] {d.name, d.good} : new Object[] {"?", null});
-        }
+        String origin = "From " + landlordsector.Tenants.factionName(t.factionId) + ".  Wealth ";
+        com.fs.starfarer.api.ui.LabelAPI o = text(origin, Misc.getGrayColor(), tx, y + 28f, tw);
+        float ow = o.computeTextWidth(origin);
+        String letter = landlordsector.TenantRules.wealthLetter(t.wealth);
+        text(letter + ": pays up to " + max.label + " rent", Misc.getHighlightColor(), tx + ow + 4f, y + 28f, tw - ow);
+        tip(tx + ow, y + 28f, 220f, 18f, "Wealth " + letter, Tips.wealth(t.wealth));
         text("Traits", Misc.getGrayColor(), tx, y + 48f, 60f);
-        coloredRow(traits, tx + 60f, y + 48f, tw - 60f);
+        coloredRow(tenantTraits(t), tx + 60f, y + 48f, tw - 60f);
         float ny = y + size + 8f;
         if (home != null) {
             landlordsector.PropertyStats st = landlordsector.PropertyStats.withTenant(home, t);
@@ -178,12 +195,22 @@ public abstract class PropertyView extends Canvas {
         PropertyStats st = s.stats;
         if (st != null) {
             stat("Comfort", st.comfort, GOLD, rx, r);
+            tip(rx, r, 280f, ROW, "Comfort", Tips.COMFORT);
             stat("Decor", st.decor, GOLD, rx, r + ROW);
+            tip(rx, r + ROW, 280f, ROW, "Decor", Tips.DECOR);
             Color happy = st.happiness >= 50f ? Misc.getPositiveHighlightColor()
                     : (st.happiness >= 25f ? Misc.getHighlightColor() : Misc.getNegativeHighlightColor());
             stat("Tenant happiness", st.happiness, happy, rx, r + 2 * ROW);
+            List<String[]> hl = new ArrayList<>();
+            hl.add(new String[] {Tips.HAPPINESS[0], null});
+            for (landlordsector.PropertyStats.Note n : st.notes) {
+                hl.add(new String[] {n.text, n.good == null ? null : (n.good ? "+" : "-")});
+            }
+            tipColored(rx, r + 2 * ROW, 280f, ROW, "Tenant happiness", hl);
             stat("Security", st.security, SECURITY, rx, r + 3 * ROW);
+            tip(rx, r + 3 * ROW, 280f, ROW, "Security", Tips.SECURITY);
             text("Location", Misc.getGrayColor(), lx, r + 4 * ROW, 120f);
+            tip(lx, r + 4 * ROW, 152f, ROW, "Location " + st.grade, Tips.LOCATION);
             text(st.grade, Misc.getHighlightColor(), lx + 120f, r + 4 * ROW, 30f);
             text(st.gradeReason, Misc.getGrayColor(), lx + 152f, r + 4 * ROW, w - 152f);
         }

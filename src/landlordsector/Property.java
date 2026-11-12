@@ -47,7 +47,9 @@ public class Property {
     public boolean screeningService;
     /** Decor added by tenants (new furniture, a garden) or taken away (graffiti). */
     public float decorBonus;
-    /** Newest last. */
+    /** The home's name, for example "Verdant Cottage". Named on load for homes from before 0.3.2. */
+    public String name;
+    /** Newest last. Each entry: flag (+, - or space), date, the colored part, the rest, split by tabs. */
     public List<String> log;
     public long lastEventAt;
     /** Share of this month's rent lost to late or skipped payments (0 to 1). */
@@ -96,14 +98,26 @@ public class Property {
         return tenant != null ? m * tenant.wearMult() : m * TenantRules.VACANT_WEAR;
     }
 
-    /** Adds a dated line to the home's log, keeping the last 25. */
+    /** Adds a plain dated line to the home's log. */
     public void addLog(String text) {
+        addLog(text, null, "");
+    }
+
+    /**
+     * Adds a dated line to the home's log, keeping the last 25.
+     *
+     * @param good green (true), red (false) or plain (null)
+     * @param colored the start of the text that is shown in that color
+     */
+    public void addLog(String text, Boolean good, String colored) {
         String date = "";
         try {
-            date = Global.getSector().getClock().getShortDate() + "  ";
+            date = Global.getSector().getClock().getShortDate();
         } catch (Throwable ignored) {
         }
-        log().add(date + text);
+        String flag = good == null ? " " : (good ? "+" : "-");
+        String c = colored == null || !text.startsWith(colored) ? "" : colored;
+        log().add(flag + "	" + date + "	" + c + "	" + text.substring(c.length()));
         while (log().size() > 25) log().remove(0);
     }
 
@@ -124,9 +138,11 @@ public class Property {
         return m;
     }
 
+    /** "Verdant Cottage on Jangala", or the tier name for an unnamed home. */
     public String displayName() {
         MarketAPI m = market();
-        return tier().name + " on " + (m != null ? m.getName() : marketName);
+        String n = name != null && !name.isEmpty() ? name : tier().name;
+        return n + " on " + (m != null ? m.getName() : marketName);
     }
 
     /** Value at full condition, at today's market, with the decor bonus. */

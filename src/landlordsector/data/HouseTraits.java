@@ -103,11 +103,11 @@ public final class HouseTraits {
         return true;
     }
 
-    /** 1 to 3 traits: one more for houses and up, and a coin flip for one more. */
+    /** 0 to 3 traits (Andrzej, 2026-11-12): none 20, one 35, two 30, three 15 percent of the time. */
     public static List<String> roll(Set<String> conditions, String climateId, boolean station, int tier,
             Random random) {
-        int count = 1 + (tier >= 3 ? 1 : 0) + (random.nextBoolean() ? 1 : 0);
-        count = Math.min(3, count);
+        float r0 = random.nextFloat();
+        int count = r0 < 0.2f ? 0 : (r0 < 0.55f ? 1 : (r0 < 0.85f ? 2 : 3));
         List<String> out = new ArrayList<>();
         for (int n = 0; n < count; n++) {
             float total = 0f;

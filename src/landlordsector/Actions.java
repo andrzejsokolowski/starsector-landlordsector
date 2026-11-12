@@ -46,6 +46,7 @@ public final class Actions {
         p.paidPrice = price;
         p.boughtAt = Global.getSector().getClock().getTimestamp();
         p.traits = listing.traits != null ? new java.util.ArrayList<>(listing.traits) : new java.util.ArrayList<>();
+        p.name = listing.name;
         p.advertising = true;
         p.addLog("Bought for " + Misc.getDGSCredits(price) + ". Advertising for tenants.");
         portfolio.properties().add(p);
@@ -127,7 +128,7 @@ public final class Actions {
         p.tenant = t;
         p.advertising = false;
         p.applicants().clear();
-        p.addLog(t.name + " moved in.");
+        p.addLog(t.name + " moved in.", true, t.name + " moved in.");
         Global.getSoundPlayer().playUISound("ui_upgrade_industry", 1f, 1f);
         return t.name + " moved into " + p.displayName() + ".";
     }
@@ -141,7 +142,7 @@ public final class Actions {
         if (p.tenant == null) return "Nobody lives there.";
         String name = p.tenant.name;
         p.tenant = null;
-        p.addLog("Evicted " + name + ".");
+        p.addLog("Evicted " + name + ".", false, "Evicted " + name + ".");
         return "Evicted " + name + " from " + p.displayName() + ".";
     }
 }

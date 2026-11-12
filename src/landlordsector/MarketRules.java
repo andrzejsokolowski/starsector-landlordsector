@@ -119,6 +119,7 @@ public final class MarketRules {
             Listing l = new Listing(Portfolio.get().newId(), t.id, climate.id, Art.pick(t.id, climate, random), base);
             l.traits = HouseTraits.roll(Tenants.conditions(market), climate.id, climate == Climate.STATION, t.index,
                     random);
+            l.name = landlordsector.data.Names.make(t.id, l.traits, random);
             ml.list().add(l);
         }
         // Cheapest first, so the screen reads like a price list.
