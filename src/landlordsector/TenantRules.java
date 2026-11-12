@@ -6,8 +6,6 @@ public final class TenantRules {
     /** Happiness from each liked tag in the home, and lost to each disliked one. */
     public static final float LIKE = 8f;
     public static final float DISLIKE = 15f;
-    /** Happiness lost per rent step above what the tenant can afford. */
-    public static final float OVERPRICED = 15f;
     /** Below this a tenant may move out. */
     public static final float MOVE_OUT_BELOW = 15f;
     /** Applicants and pool tenants wait this many days, then look elsewhere. */
@@ -30,27 +28,88 @@ public final class TenantRules {
         return WEALTH[Math.max(1, Math.min(MAX_WEALTH, wealth)) - 1];
     }
 
-    /** The highest rent setting a tenant of this wealth (1 to 6) pays without grumbling. */
-    public static RentSetting maxSetting(int wealth) {
-        switch (Math.max(1, Math.min(MAX_WEALTH, wealth))) {
-            case 1: return RentSetting.LOW;
-            case 2:
-            case 3: return RentSetting.NORMAL;
-            case 4: return RentSetting.HIGH;
-            default: return RentSetting.GREEDY;
+    /*
+     * Wealth and the home (0.3.3, Andrzej: "a wealth S guy ... should want a villa or a mansion ... a pirate would
+     * never be able to afford a villa, despite it being set to less rent"). Each wealth fits one tier: E a shack,
+     * D a studio, C a small house, B a house, A a villa, S an estate. The rent setting moves a home's price level
+     * by at most one tier (Charity -1, Low -0.5, High +0.5, Greedy +1), so it matters less than the tier.
+     */
+
+    /** Happiness lost per tier of price level above what the tenant can pay. */
+    public static final float STRETCH = 20f;
+    /** More than one tier above: they cannot pay it at all. They do not move in; a tenant already there leaves soon. */
+    public static final float CANT_AFFORD = 40f;
+    /** Two tiers below their wealth: beneath them. */
+    public static final float BENEATH = 15f;
+    /** Three or more tiers below: they would not live there. */
+    public static final float FAR_BENEATH = 30f;
+
+    /** The tier a tenant of this wealth fits: E (1) a shack (0) to S (6) an estate (5). */
+    public static int fitTier(int wealth) {
+        return Math.max(1, Math.min(MAX_WEALTH, wealth)) - 1;
+    }
+
+    /** How far the rent setting moves a home's price level, in tiers. */
+    public static float settingShift(RentSetting s) {
+        switch (s) {
+            case CHARITY: return -1f;
+            case LOW: return -0.5f;
+            case HIGH: return 0.5f;
+            case GREEDY: return 1f;
+            default: return 0f;
         }
     }
 
-    public static int overpricedSteps(RentSetting setting, int wealth) {
-        return Math.max(0, setting.ordinal() - maxSetting(wealth).ordinal());
+    /** Tiers of price level above what the tenant pays happily (0 or less: fine). */
+    public static float over(int tier, RentSetting s, int wealth) {
+        return tier + settingShift(s) - fitTier(wealth);
+    }
+
+    /** Tiers the home is below what the tenant is used to (the rent setting does not matter here). */
+    public static int below(int tier, int wealth) {
+        return fitTier(wealth) - tier;
+    }
+
+    public static boolean canAfford(int tier, RentSetting s, int wealth) {
+        return over(tier, s, wealth) <= 1.001f;
+    }
+
+    public static boolean wouldLiveIn(int tier, int wealth) {
+        return below(tier, wealth) < 3;
+    }
+
+    /** True when the tenant would move into this home at this rent. */
+    public static boolean fits(int tier, RentSetting s, int wealth) {
+        return canAfford(tier, s, wealth) && wouldLiveIn(tier, wealth);
+    }
+
+    /** Happiness lost to the price: a stretch, or more than they can pay. */
+    public static float pricePenalty(int tier, RentSetting s, int wealth) {
+        float o = over(tier, s, wealth);
+        if (o > 1.001f) return CANT_AFFORD;
+        return o > 0f ? STRETCH * o : 0f;
+    }
+
+    /** Happiness lost to a home beneath them. */
+    public static float beneathPenalty(int tier, int wealth) {
+        int b = below(tier, wealth);
+        if (b >= 3) return FAR_BENEATH;
+        return b == 2 ? BENEATH : 0f;
     }
 
     /** A tenant's happiness on top of the home's base happiness. */
     public static float tenantHappiness(float homeHappiness, float traitHappiness, int liked, int disliked,
-            int overpricedSteps, float mood) {
-        float h = homeHappiness + traitHappiness + LIKE * liked - DISLIKE * disliked
-                - OVERPRICED * overpricedSteps + mood;
+            float wealthPenalty, float mood) {
+        float h = homeHappiness + traitHappiness + LIKE * liked - DISLIKE * disliked - wealthPenalty + mood;
         return Pricing.clamp(h, 0f, 100f);
+    }
+
+    /**
+     * An applicant's wealth for a home: people who answer an advert look for that kind of home, so the tier sets
+     * the wealth. The faction tilts it by half its own wealth (base 3), the roll by one either way.
+     */
+    public static int applicantWealth(int tier, int factionWealth, int roll) {
+        return tier + 1 + Math.round((factionWealth - 3) * 0.5f) + roll;
     }
 
     /** Daily chance an advertised home gets an applicant. Better places and cheaper rent draw more. */

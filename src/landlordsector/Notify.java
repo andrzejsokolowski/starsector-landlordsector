@@ -47,6 +47,23 @@ public final class Notify {
         return text.substring(0, at);
     }
 
+    /**
+     * News the player has to act on (a headhunter is back): the fleet log line plus a message in the intel
+     * screen, with a sound.
+     */
+    public static void news(String text, String highlight, Boolean good) {
+        line(text, good, highlight);
+        Portfolio.get().news = true;
+        try {
+            MessageIntel msg = new MessageIntel(text, Misc.getTextColor(),
+                    new String[] {highlight == null ? text : highlight}, color(good));
+            msg.setIcon(Global.getSettings().getSpriteName("intel", "monthly_income_report"));
+            msg.setSound("ui_intel_something_posted");
+            Global.getSector().getCampaignUI().addMessage(msg);
+        } catch (Throwable ignored) {
+        }
+    }
+
     /** A home's event: its log, the fleet log, and the intel screen when big. */
     public static void event(Property p, String text, boolean good, boolean big) {
         String colored = coloredPart(text, p);

@@ -56,6 +56,17 @@ public final class Tenants {
      */
     public static Tenant create(String factionId, MarketAPI market, float badMult, boolean screened, String source,
             Random random, int wealthShift, java.util.Map<String, Float> traitBoost) {
+        return create(factionId, market, badMult, screened, source, random, wealthShift, traitBoost, -1);
+    }
+
+    /**
+     * A new tenant.
+     *
+     * @param forTier the tier (0 shack to 5 estate) of the home they answer an advert for, which sets their wealth
+     *        (TenantRules.applicantWealth); -1 for headhunters' tenants, whose wealth comes from the faction alone
+     */
+    public static Tenant create(String factionId, MarketAPI market, float badMult, boolean screened, String source,
+            Random random, int wealthShift, java.util.Map<String, Float> traitBoost, int forTier) {
         Tenant t = new Tenant();
         t.id = Portfolio.get().newId();
         t.factionId = factionId;
@@ -67,7 +78,9 @@ public final class Tenants {
         // Show a random one first, so the visible trait does not always come from the same end of the list.
         Collections.shuffle(traits, random);
         t.traits = traits;
-        int wealth = TenantTraits.baseWealth(factionId) + random.nextInt(3) - 1 + wealthShift;
+        int roll = random.nextInt(3) - 1;
+        int base = TenantTraits.baseWealth(factionId);
+        int wealth = (forTier >= 0 ? TenantRules.applicantWealth(forTier, base, roll) : base + roll) + wealthShift;
         for (String id : traits) {
             TenantTraits.Def d = TenantTraits.get(id);
             if (d != null) wealth += d.wealth;

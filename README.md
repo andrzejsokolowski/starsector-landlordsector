@@ -29,8 +29,11 @@ Requires LunaLib and OddiszCommons.
   comfort and low rent. Pick one of up to three from the home's Tenant tab on the Manage page, or turn
   them away.
 - Each tenant has 2 or 3 traits that fit where they come from (tenant_traits.json): pirates bring vandals,
-  filthy tenants and late payers, Tri-Tachyon brings the prosperous and the tidy. Wealth (E to S) sets the
-  rent they pay without grumbling.
+  filthy tenants and late payers, Tri-Tachyon brings the prosperous and the tidy.
+- Wealth (E to S) fits one tier: E a shack, D a studio, C a small house, B a house, A a villa, S an estate.
+  One tier dearer is a stretch (-20 happiness), two or more they can't pay for. Two tiers cheaper is beneath
+  them (-15), three or more they won't live in. The rent setting moves the price by up to a tier (Charity -1,
+  Low -1/2, High +1/2, Greedy +1). Applicants for an advert fit the home; the market's faction tilts their wealth.
 - You see one trait of an applicant until you pay to screen them. A monthly screening service makes bad
   traits rarer.
 - Homes roll 0 to 3 traits of their own (house_traits.json). Tenants like (+8 happiness) or hate (-15)
@@ -43,6 +46,7 @@ Requires LunaLib and OddiszCommons.
   Volturn, Sindria, Kanta's Den, New Auroria with United Aurora Federation, Eochu Bres, Mairaath, Port Tse,
   Kazeron, Gilead, Jangala), each with a perk (cheap hardy tenants, rich ones, loyalists and so on). Hire one,
   send them on a search from the Headhunters tab, and move the screened tenants they bring into your empty homes.
+  An intel message tells you when they are back.
 
 ## Stats
 
@@ -53,7 +57,8 @@ Requires LunaLib and OddiszCommons.
 - **Tenant happiness** (0 to 100): from comfort, decor, condition and the rent setting. Happy tenants wear
   a home slower and tip more often. Unhappy ones wear it up to 1.5 times as fast.
 - **Location** (S+, S, A, B, C, D, E, F): the market's price grade. A standard world is C, an Earth-like
-  one S, a high-hazard world with pirates F.
+  one S, a high-hazard world with pirates F. Hovering over the grade lists every price factor and market
+  condition with its effects.
 - Market conditions from the base game and installed mods (conditions.json) change price, comfort,
   tenant happiness and security, from what each condition really does in the game. A condition's own
   stability and hazard changes already count through the market, so they are not repeated. Some only

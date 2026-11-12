@@ -1,3 +1,15 @@
+Version 0.3.3 (2026-11-12)
+- A headhunter coming back with tenants now posts a message in the intel screen with a sound
+- Tenant wealth now fits a kind of home: E a shack, D a studio, C a small house, B a house, A a villa, S an estate
+- Tenants won't move into a home two tiers above their wealth, or three tiers below it, whatever the rent; one tier above is a stretch that costs happiness
+- Advertised homes draw applicants who fit them: a villa draws rich applicants, a shack poor ones
+- The rent setting now moves a home's price by at most one tier, so it matters less than the home itself
+- Tenants already living in a home far beneath them, or far too dear for them, are unhappy and may move out
+- The tenant pool shows which empty homes each tenant would take
+- Zealots now dislike busy and stale-air homes instead of homes with a view
+- Loves the water and Loves the heat are now Loves water and Loves heat
+- The location grade's details moved into a tooltip on the grade letter: every price factor and market condition with its effects
+
 Version 0.3.2 (2026-11-12)
 - Every market that sells homes now has a property agent, and each lists fewer homes (1 to 4 by market size)
 - Homes have 0 to 3 traits, with new names like Renovated, Barred and Verdant

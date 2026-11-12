@@ -86,3 +86,9 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
 - The portfolio classes are in the save, so removing the mod mid-game breaks that save.
 - 0.1.0 was played by Andrzej on 2026-11-11 (buy screen, buying), 0.2.0 on 2026-11-12 (agent screen).
   0.3.0 tenants and finders not played yet.
+
+- 0.3.3 (Andrzej's notes after 0.3.2): wealth fits a tier (`TenantRules.fitTier`, E shack to S estate). A tenant
+  never moves in two tiers above their wealth or three below (`TenantRules.fits`, `Actions.refusal`); the rent
+  setting shifts the price level by at most a tier. Applicants are rolled for the home's tier
+  (`TenantRules.applicantWealth`) and kept only if they fit. Headhunter returns post an intel message
+  (`Notify.news`). The location grade's factors and conditions are a tooltip (`PropertyStats.gradeLines`).

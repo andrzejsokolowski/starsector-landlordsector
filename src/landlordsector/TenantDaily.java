@@ -91,7 +91,14 @@ public class TenantDaily implements EveryFrameScript {
         PropertyStats st = p.stats();
         if (random.nextFloat() >= TenantRules.arrivalChance(st.marketMult, st.comfort, p.setting())) return;
         float bad = p.screeningService ? TenantRules.SCREENED_BAD_MULT : 1f;
-        Tenant a = Tenants.create(m.getFactionId(), m, bad, false, "advert", random);
+        // Only people who can pay for the home and would live in it answer the advert.
+        Tenant a = null;
+        for (int i = 0; i < 6 && a == null; i++) {
+            Tenant c = Tenants.create(m.getFactionId(), m, bad, false, "advert", random, 0,
+                    java.util.Collections.emptyMap(), p.tier().index);
+            if (TenantRules.fits(p.tier().index, p.setting(), c.wealth)) a = c;
+        }
+        if (a == null) return;
         p.applicants().add(a);
         p.addLog(a.name + " applied to rent " + p.displayName() + ".");
         Portfolio.get().news = true;

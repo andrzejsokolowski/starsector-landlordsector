@@ -147,12 +147,23 @@ public final class RuntimeCheck {
         }
         expect(!home.applicants().isEmpty(), "an advertised home gets applicants");
         Tenant applicant = home.applicants().get(0);
+        for (Tenant ap : home.applicants()) {
+            expect(TenantRules.fits(home.tier().index, home.setting(), ap.wealth), "applicants can pay for the home and would live in it");
+        }
         expect(!applicant.screened && applicant.isShown(0) && !applicant.isShown(1), "applicants show one trait until screened");
         expect(applicant.traits().size() >= 2 && applicant.name != null && !applicant.name.isEmpty(), "applicants have a name and traits");
         expect(Actions.screen(home, applicant).startsWith("Screened") && applicant.isShown(1), "screening shows every trait");
         expect(Actions.moveIn(home, applicant).contains(" moved into ") && home.isRented() && home.applicants().isEmpty(),
                 "an applicant moves in");
-        Actions.moveIn(colonyHome, Tenants.create("independent", b, 1f, true, "advert", days));
+        Tenant poor = Tenants.create("independent", b, 1f, true, "advert", days);
+        poor.wealth = 1;
+        if (colonyHome.tier().index >= 2) {
+            expect(Actions.moveIn(colonyHome, poor).contains("won't move into") && !colonyHome.isRented(),
+                    "a tenant who can't pay for a home does not move in");
+        }
+        Tenant fit = Tenants.create("independent", b, 1f, true, "advert", days);
+        fit.wealth = colonyHome.tier().index + 1;
+        Actions.moveIn(colonyHome, fit);
         expect(colonyHome.isRented(), "a tenant moves into the colony home");
         // Events: a fixed event changes the home and lands in its log.
         float before0 = home.condition;
@@ -190,7 +201,8 @@ public final class RuntimeCheck {
         expect(kind.happiness > greedy.happiness, "tenants are happier on Charity than on Greedy");
         expect(greedy.comfort >= 0f && greedy.comfort <= 100f && greedy.security >= 0f && greedy.security <= 100f,
                 "stats stay between 0 and 100");
-        expect(greedy.grade.length() == 1 && !greedy.gradeReason.isEmpty(), "the location has a grade and a reason");
+        expect(greedy.grade.length() == 1 && greedy.gradeLines.size() >= 4
+                && greedy.gradeLines.get(0)[0].startsWith("Market size"), "the location has a grade and its factors");
         expect("Station".equals(greedy.world), "a market with no planet reads as a station");
 
         // Hostility freezes rent and blocks the sale.

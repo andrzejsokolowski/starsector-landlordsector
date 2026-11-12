@@ -95,12 +95,11 @@ public abstract class PropertyView extends Canvas {
         float tx = x + size + 12f;
         float tw = w - size - 12f;
         title(t.name, tx, y, tw);
-        landlordsector.RentSetting max = landlordsector.TenantRules.maxSetting(t.wealth);
         String origin = "From " + landlordsector.Tenants.factionName(t.factionId) + ".  Wealth ";
         com.fs.starfarer.api.ui.LabelAPI o = text(origin, Misc.getGrayColor(), tx, y + 28f, tw);
         float ow = o.computeTextWidth(origin);
         String letter = landlordsector.TenantRules.wealthLetter(t.wealth);
-        text(letter + ": pays up to " + max.label + " rent", Misc.getHighlightColor(), tx + ow + 4f, y + 28f, tw - ow);
+        text(letter + ": fits a " + Tips.fitTierName(t.wealth), Misc.getHighlightColor(), tx + ow + 4f, y + 28f, tw - ow);
         tip(tx + ow, y + 28f, 220f, 18f, "Wealth " + letter, Tips.wealth(t.wealth));
         text("Traits", Misc.getGrayColor(), tx, y + 48f, 60f);
         coloredRow(tenantTraits(t), tx + 60f, y + 48f, tw - 60f);
@@ -210,9 +209,13 @@ public abstract class PropertyView extends Canvas {
             stat("Security", st.security, SECURITY, rx, r + 3 * ROW);
             tip(rx, r + 3 * ROW, 280f, ROW, "Security", Tips.SECURITY);
             text("Location", Misc.getGrayColor(), lx, r + 4 * ROW, 120f);
-            tip(lx, r + 4 * ROW, 152f, ROW, "Location " + st.grade, Tips.LOCATION);
             text(st.grade, Misc.getHighlightColor(), lx + 120f, r + 4 * ROW, 30f);
-            text(st.gradeReason, Misc.getGrayColor(), lx + 152f, r + 4 * ROW, w - 152f);
+            List<String[]> gl = st.gradeLines;
+            if (gl.isEmpty()) {
+                gl = new ArrayList<>();
+                gl.add(new String[] {st.gradeReason, null});
+            }
+            tipColored(lx, r + 4 * ROW, 152f, ROW, "Location " + st.grade, gl);
         }
         float er = r + 5 * ROW;
         if (!s.traits.isEmpty()) {

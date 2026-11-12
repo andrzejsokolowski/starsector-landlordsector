@@ -117,9 +117,21 @@ public final class Actions {
         return "Screened " + a.name + " for " + Misc.getDGSCredits(fee) + ".";
     }
 
+    /** Why this tenant would not move into this home at its rent setting, or null when they would. */
+    public static String refusal(Property p, Tenant t) {
+        int tier = p.tier().index;
+        if (!TenantRules.wouldLiveIn(tier, t.wealth)) return "Too poor a home for them";
+        if (!TenantRules.canAfford(tier, p.setting(), t.wealth)) {
+            return "Can't pay for it at " + p.setting().label + " rent";
+        }
+        return null;
+    }
+
     /** Moves an applicant or a pool tenant into an empty home. */
     public static String moveIn(Property p, Tenant t) {
         if (p.tenant != null) return p.displayName() + " already has a tenant.";
+        String no = refusal(p, t);
+        if (no != null) return t.name + " won't move into " + p.displayName() + ": " + no.toLowerCase() + ".";
         if (p.condemned) return p.displayName() + " is condemned. Repair it first.";
         p.applicants().remove(t);
         Portfolio.get().tenantPool().remove(t);

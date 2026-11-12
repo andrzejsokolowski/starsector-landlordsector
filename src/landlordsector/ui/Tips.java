@@ -83,12 +83,21 @@ public final class Tips {
         return out;
     }
 
+    /** The tier name a tenant of this wealth fits, lower case ("small house"). */
+    public static String fitTierName(int wealth) {
+        java.util.List<landlordsector.Tier> tiers = landlordsector.TierTable.all();
+        int i = Math.min(tiers.size() - 1, TenantRules.fitTier(wealth));
+        return tiers.get(i).name.toLowerCase();
+    }
+
     public static String[] wealth(int wealth) {
-        RentSetting max = TenantRules.maxSetting(wealth);
         return new String[] {
-            "Wealth " + TenantRules.wealthLetter(wealth) + " (E is the poorest, S the richest).",
-            "Pays up to " + max.label + " rent happily. Each rent step above that costs "
-                    + Math.round(TenantRules.OVERPRICED) + " happiness."};
+            "Wealth " + TenantRules.wealthLetter(wealth) + " fits a " + fitTierName(wealth) + ".",
+            "One tier dearer is a stretch: -" + Math.round(TenantRules.STRETCH) + " happiness. Two or more"
+                    + " they can't pay for.",
+            "Two tiers cheaper is beneath them: -" + Math.round(TenantRules.BENEATH)
+                    + " happiness. Three or more they won't live in.",
+            "Rent moves the price by up to a tier: Charity -1, Low -1/2, High +1/2, Greedy +1."};
     }
 
     public static List<String[]> headhunter(FinderDefs.Def d) {
@@ -112,8 +121,7 @@ public final class Tips {
             + " Happy tenants wear the home slower, tip more and cause less trouble. Below 15 they may move out."};
     public static final String[] SECURITY = {"From stability, military buildings, ground defenses and market conditions."
             + " Cuts burglaries, police raids and raid damage."};
-    public static final String[] LOCATION = {"Price grade from market size, stability, hazard and market conditions."
-            + " S+ is the best, F the worst."};
+
 
     private static String round2(float v) {
         return String.valueOf(Math.round(v * 100f) / 100f);

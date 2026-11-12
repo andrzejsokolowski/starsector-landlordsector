@@ -304,12 +304,17 @@ public class RealEstatePage implements ManagePage {
                     landlordsector.ui.Tips.wealth(a.wealth));
             coloredRow(tenantTraits(a), tx, y + 22f, w - 80f - 330f);
             float h = PropertyStats.withTenant(p, a).happiness;
-            text("Happiness there " + Math.round(h), traitColor(h >= 50f ? Boolean.TRUE : (h < 25f ? Boolean.FALSE : null)),
-                    tx, y + 42f, 220f);
+            String no = Actions.refusal(p, a);
+            if (no != null) {
+                text(no, traitColor(Boolean.FALSE), tx, y + 42f, w - 80f - 330f);
+            } else {
+                text("Happiness there " + Math.round(h),
+                        traitColor(h >= 50f ? Boolean.TRUE : (h < 25f ? Boolean.FALSE : null)), tx, y + 42f, 220f);
+            }
             float bx = x + w - 330f;
             button("screen:" + p.id + ":" + a.id, a.screened ? "Screened" : "Screen for " + Misc.getDGSCredits(fee),
                     bx, y + 18f, 150f, 28f, !a.screened && Actions.credits() >= fee);
-            button("accept:" + p.id + ":" + a.id, "Accept", bx + 156f, y + 18f, 84f, 28f, true);
+            button("accept:" + p.id + ":" + a.id, "Accept", bx + 156f, y + 18f, 84f, 28f, no == null);
             button("reject:" + p.id + ":" + a.id, "Turn away", bx + 246f, y + 18f, 84f, 28f, true);
         }
 
@@ -383,15 +388,26 @@ public class RealEstatePage implements ManagePage {
                 return;
             }
             final Tenant who = chosen;
-            empty.sort((a, b) -> Float.compare(PropertyStats.withTenant(b, who).happiness,
-                    PropertyStats.withTenant(a, who).happiness));
+            // Homes they would take first, the happiest on top.
+            empty.sort((a, b) -> {
+                boolean fa = Actions.refusal(a, who) == null, fb = Actions.refusal(b, who) == null;
+                if (fa != fb) return fa ? -1 : 1;
+                return Float.compare(PropertyStats.withTenant(b, who).happiness,
+                        PropertyStats.withTenant(a, who).happiness);
+            });
             for (Property p : empty) {
                 if (y > height - 40f) break;
-                float h = PropertyStats.withTenant(p, chosen).happiness;
-                text(p.displayName(), rx, y + 5f, cw - 330f);
-                text("Happiness " + Math.round(h), traitColor(h >= 50f ? Boolean.TRUE : (h < 25f ? Boolean.FALSE : null)),
-                        rx + cw - 320f, y + 5f, 150f);
-                button("movein:" + p.id + ":" + chosen.id, "Move in", rx + cw - 150f, y, 150f, 28f, true);
+                String no = Actions.refusal(p, chosen);
+                text(p.displayName() + ", " + p.tier().name.toLowerCase(), rx, y + 5f, cw - 440f);
+                if (no != null) {
+                    text(no, traitColor(Boolean.FALSE), rx + cw - 430f, y + 5f, 270f);
+                } else {
+                    float h = PropertyStats.withTenant(p, chosen).happiness;
+                    text("Happiness " + Math.round(h),
+                            traitColor(h >= 50f ? Boolean.TRUE : (h < 25f ? Boolean.FALSE : null)),
+                            rx + cw - 430f, y + 5f, 270f);
+                }
+                button("movein:" + p.id + ":" + chosen.id, "Move in", rx + cw - 150f, y, 150f, 28f, no == null);
                 y += 34f;
             }
         }

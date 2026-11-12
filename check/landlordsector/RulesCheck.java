@@ -135,7 +135,6 @@ public final class RulesCheck {
         expect(counts[0] > 200 && counts[3] > 100, "homes with no traits and with three both happen: " + java.util.Arrays.toString(counts));
         expect("E".equals(TenantRules.wealthLetter(1)) && "C".equals(TenantRules.wealthLetter(3))
                 && "S".equals(TenantRules.wealthLetter(6)), "wealth letters E to S");
-        expect(TenantRules.maxSetting(6) == RentSetting.GREEDY, "S wealth pays Greedy rent");
         String[] hhMarkets = {"chicomoztoc", "volturn", "sindria", "kantas_den", "uaf_new_auroria", "eochu_bres", "mairaath",
             "port_tse", "kazeron", "gilead", "jangala"};
         expect(landlordsector.data.FinderDefs.all().size() == hhMarkets.length, "one headhunter per market Andrzej named");
@@ -235,10 +234,29 @@ public final class RulesCheck {
                 > TenantRules.eventWeight(true, false, false, 1f, 1f, 10f, RentSetting.NORMAL, 3, 50f), "happy tenants bring good events");
         expect(TenantRules.eventWeight(false, false, true, 1f, 1f, 50f, RentSetting.NORMAL, 3, 0f)
                 > 2f * TenantRules.eventWeight(false, false, true, 1f, 1f, 50f, RentSetting.NORMAL, 3, 100f), "security stops crime");
-        expect(TenantRules.maxSetting(1) == RentSetting.LOW && TenantRules.maxSetting(5) == RentSetting.GREEDY, "wealth sets the rent ceiling");
-        expect(TenantRules.overpricedSteps(RentSetting.GREEDY, 1) == 3, "a poor tenant on Greedy rent is 3 steps over");
-        expect(TenantRules.tenantHappiness(60f, 0f, 0, 1, 0, 0f) == 45f, "a disliked tag costs 15 happiness");
-        expect(TenantRules.tenantHappiness(60f, 0f, 1, 0, 0, 0f) == 68f, "a liked tag adds 8 happiness");
+        // 0.3.3: wealth fits a tier (Andrzej's examples: S wants a villa or an estate, never a shack; a pirate never
+        // affords a villa, even on cheap rent). The rent setting moves the price by at most one tier.
+        expect(TenantRules.fitTier(1) == 0 && TenantRules.fitTier(6) == 5, "E fits a shack, S an estate");
+        expect(!TenantRules.fits(0, RentSetting.NORMAL, 6) && !TenantRules.fits(0, RentSetting.GREEDY, 6),
+                "S wealth won't live in a shack at any rent");
+        expect(TenantRules.fits(4, RentSetting.GREEDY, 6) && TenantRules.fits(5, RentSetting.GREEDY, 6)
+                && TenantRules.pricePenalty(4, RentSetting.GREEDY, 6) == 0f && TenantRules.beneathPenalty(4, 6) == 0f,
+                "S wealth lives happily in a villa or an estate, even on Greedy rent");
+        for (RentSetting rs : RentSetting.values()) {
+            expect(!TenantRules.fits(4, rs, 1) && !TenantRules.fits(4, rs, 2), "E and D wealth can't pay for a villa on " + rs.label);
+        }
+        expect(TenantRules.fits(1, RentSetting.CHARITY, 1) && TenantRules.pricePenalty(1, RentSetting.CHARITY, 1) == 0f,
+                "Charity rent brings a studio in reach of E wealth");
+        expect(TenantRules.pricePenalty(2, RentSetting.NORMAL, 3) == 0f
+                && TenantRules.pricePenalty(2, RentSetting.HIGH, 3) == 0.5f * TenantRules.STRETCH
+                && TenantRules.pricePenalty(2, RentSetting.GREEDY, 3) == TenantRules.STRETCH,
+                "rent above the tenant's tier is a stretch, half a tier at a time");
+        expect(TenantRules.beneathPenalty(2, 5) == TenantRules.BENEATH && TenantRules.fits(2, RentSetting.NORMAL, 5),
+                "two tiers down is beneath them but they still live there");
+        expect(TenantRules.applicantWealth(4, 3, 0) == 5 && TenantRules.applicantWealth(0, 1, 0) == 0,
+                "applicants answer an advert for their kind of home, tilted by the faction");
+        expect(TenantRules.tenantHappiness(60f, 0f, 0, 1, 0f, 0f) == 45f, "a disliked tag costs 15 happiness");
+        expect(TenantRules.tenantHappiness(60f, 0f, 1, 0, 0f, 0f) == 68f, "a liked tag adds 8 happiness");
         expect(TenantRules.moveOutChance(10f, true) == 0f && TenantRules.moveOutChance(10f, false) > 0f
                 && TenantRules.moveOutChance(50f, false) == 0f, "only unhappy, disloyal tenants move out");
         expect(TenantRules.arrivalChance(1f, 50f, RentSetting.CHARITY) > TenantRules.arrivalChance(1f, 50f, RentSetting.GREEDY),

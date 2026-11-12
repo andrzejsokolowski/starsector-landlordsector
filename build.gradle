@@ -192,7 +192,7 @@ tasks.register('checkReleaseFiles') {
         // Sound ids must exist in the game's sounds.json.
         def sounds = new File(core, 'data/config/sounds.json').getText('UTF-8')
         fileTree(projectDir) { include 'src/**/*.java' }.each { f ->
-            (f.getText('UTF-8') =~ /playUISound\("([^"]+)"/).each { m ->
+            (f.getText('UTF-8') =~ /(?:playUISound|setSound)\("([^"]+)"/).each { m ->
                 if (!sounds.contains("\"${m[1]}\"")) problems << "${f.name} plays sound ${m[1]}, which the game does not have"
             }
         }
