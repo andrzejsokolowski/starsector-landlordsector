@@ -51,11 +51,15 @@ public class Property {
         return tier().name + " on " + (m != null ? m.getName() : marketName);
     }
 
-    /** Value at full condition, at today's market. */
+    /** Value at full condition, at today's market, with the decor bonus. */
     public float fullValue() {
         MarketAPI m = market();
         float mult = m != null ? MarketRules.mult(m) : Pricing.MULT_MIN;
-        return basePrice * mult * drift;
+        return basePrice * mult * drift * Pricing.decorValueMult(tier().decor);
+    }
+
+    public PropertyStats stats() {
+        return PropertyStats.of(this);
     }
 
     public float value() {

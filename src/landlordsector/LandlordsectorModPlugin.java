@@ -23,6 +23,9 @@ public class LandlordsectorModPlugin extends BaseModPlugin {
         Global.getSector().getListenerManager().addListener(new MonthlyTick(), true);
         HomeownerScript.install();
         repairArtPaths();
+        Portfolio p = Portfolio.get();
+        Agents.update(new Random(), !p.agentsSeeded);
+        p.agentsSeeded = true;
     }
 
     @Override

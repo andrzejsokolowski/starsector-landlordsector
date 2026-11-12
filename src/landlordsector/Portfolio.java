@@ -17,6 +17,10 @@ public class Portfolio {
     /** Player colony market id -> values of the homes NPC buyers bought there. */
     public Map<String, List<Float>> npcHomes = new HashMap<>();
     public long nextId = 1;
+    /** Property agents by market id. */
+    public Map<String, Agents.Agent> agents = new HashMap<>();
+    /** True once the first agents were placed in this save. */
+    public boolean agentsSeeded;
 
     /** Last month's totals, for the Manage page. */
     public float lastRent;
@@ -42,6 +46,11 @@ public class Portfolio {
     public Map<String, MarketListings> listings() {
         if (listings == null) listings = new HashMap<>();
         return listings;
+    }
+
+    public Map<String, Agents.Agent> agents() {
+        if (agents == null) agents = new HashMap<>();
+        return agents;
     }
 
     public Map<String, List<Float>> npcHomes() {

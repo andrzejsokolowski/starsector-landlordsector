@@ -26,7 +26,8 @@ public final class TierTable {
             JSONObject t = array.getJSONObject(i);
             list.add(new Tier(t.getString("id"), t.getString("name"), (float) t.getDouble("min"),
                     (float) t.getDouble("max"), (float) t.getDouble("rentShare"), t.getInt("minSize"),
-                    t.getInt("slots"), (float) t.getDouble("weight"), i));
+                    t.getInt("slots"), (float) t.getDouble("weight"), (float) t.optDouble("comfort", 20 + 12 * i),
+                    (float) t.optDouble("decor", 5 * i), i));
         }
         if (list.isEmpty()) throw new IllegalStateException("Landlordsector: " + PATH + " has no tiers");
         Economy e = new Economy();
@@ -54,6 +55,9 @@ public final class TierTable {
             e.disruptionWear = num(ec, "disruptionWear", e.disruptionWear);
             e.raidWear = num(ec, "raidWear", e.raidWear);
             e.tacticalBombWear = num(ec, "tacticalBombWear", e.tacticalBombWear);
+            e.agentShare = num(ec, "agentShare", e.agentShare);
+            e.agentMinMonths = Math.max(1f, num(ec, "agentMinMonths", e.agentMinMonths));
+            e.agentMaxMonths = Math.max(e.agentMinMonths, num(ec, "agentMaxMonths", e.agentMaxMonths));
         }
         tiers = Collections.unmodifiableList(list);
         economy = e;

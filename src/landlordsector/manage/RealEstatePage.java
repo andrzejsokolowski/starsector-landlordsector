@@ -5,19 +5,25 @@ import java.util.List;
 
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
+import com.fs.starfarer.api.ui.Alignment;
 import com.fs.starfarer.api.ui.CustomPanelAPI;
+import com.fs.starfarer.api.ui.Fonts;
 import com.fs.starfarer.api.util.Misc;
 
 import landlordsector.Actions;
 import landlordsector.MarketRules;
 import landlordsector.Portfolio;
 import landlordsector.Property;
+import landlordsector.PropertyStats;
 import landlordsector.RentSetting;
-import landlordsector.ui.Canvas;
+import landlordsector.ui.PropertyView;
 import oddiszcommons.manage.ManagePage;
 
 /** The "Real estate" tab of the OddiszCommons Manage screen. */
 public class RealEstatePage implements ManagePage {
+
+    /** The home last looked at, kept while the game runs so reopening the tab shows it again. */
+    private String lastSelected;
 
     @Override
     public CustomPanelAPI createPanel(float width, float height) {
@@ -33,21 +39,17 @@ public class RealEstatePage implements ManagePage {
         return Global.getSector() != null && Portfolio.get().news;
     }
 
-    /** One page of the player's homes, with rent, condition, repair and sale controls. */
-    static final class View extends Canvas {
+    /** The player's homes on the left, the chosen one large on the right with its controls. */
+    final class View extends PropertyView {
 
-        private static final float ROW_H = 74f;
-        private static final float TOP = 92f;
-        private static final float THUMB_W = 96f;
-        private static final float THUMB_H = 60f;
+        private static final float LIST_W = 260f;
+        private static final float ROW_H = 50f;
+        private static final float TOP = 96f;
 
         private int page;
         private String pendingSell;
         private String message = "";
         private Color messageColor = Misc.getTextColor();
-        private List<Property> rows;
-        private int first;
-        private int perPage;
 
         View(float width, float height) {
             super(width, height);
@@ -67,102 +69,95 @@ public class RealEstatePage implements ManagePage {
             text("Last month: rent " + Misc.getDGSCredits(portfolio.lastRent) + ", home sales on your colonies "
                     + Misc.getDGSCredits(portfolio.lastSales) + ", property tax "
                     + Misc.getDGSCredits(portfolio.lastTax) + ".", Misc.getGrayColor(), 10f, 56f, width - 20f);
-            text(message, messageColor, 10f, 72f, width - 20f);
+            text(message, messageColor, 10f, 74f, width - 20f);
 
             if (all.isEmpty()) {
-                text("You own no homes yet. Dock at a market that is not pirate or Luddic Path and pick"
-                        + " Browse real estate.", 10f, TOP + 10f, width - 20f);
-                rows = all;
-                perPage = 0;
+                text("You own no homes yet. Property agents sell them: look for one in a market's comm"
+                        + " directory.", 10f, TOP + 10f, width - 20f);
                 return;
             }
 
-            perPage = Math.max(1, (int) ((height - TOP - 48f) / ROW_H));
+            Property chosen = find(lastSelected);
+            if (chosen == null) chosen = all.get(0);
+            lastSelected = chosen.id;
+
+            // The list, in pages.
+            int perPage = Math.max(1, (int) ((height - TOP - 44f) / (ROW_H + 4f)));
             int pages = (all.size() + perPage - 1) / perPage;
             page = Math.max(0, Math.min(page, pages - 1));
-            first = page * perPage;
-            rows = all;
-
-            float sellX = sellX();
-            float repairX = sellX - 170f;
-            float rentX = repairX - 180f;
-            float condX = condX();
-            float textW = Math.max(220f, condX - 126f);
-
-            for (int i = first; i < Math.min(all.size(), first + perPage); i++) {
+            for (int i = page * perPage; i < Math.min(all.size(), (page + 1) * perPage); i++) {
                 Property pr = all.get(i);
-                float y = TOP + (i - first) * ROW_H;
+                float y = TOP + (i - page * perPage) * (ROW_H + 4f);
+                area("pick:" + pr.id, 8f, y, LIST_W, ROW_H, pr == chosen);
+                text(pr.displayName(), Misc.getHighlightColor(), 18f, y + 5f, LIST_W - 20f);
+                String line;
+                Color c = Misc.getGrayColor();
                 MarketAPI m = pr.market();
-                boolean own = m != null && MarketRules.isOwn(m);
-                text(pr.displayName() + (m != null ? " (" + m.getFaction().getDisplayName() + ")" : ""),
-                        Misc.getHighlightColor(), 116f, y + 4f, textW);
-                text("Value " + Misc.getDGSCredits(pr.value()) + ", rent about "
-                        + Misc.getDGSCredits(pr.expectedRent()) + " a month", 116f, y + 22f, textW);
-                String status;
-                Color statusColor = Misc.getGrayColor();
                 if (pr.condemned) {
-                    status = "Condemned: no tenants until repaired";
-                    statusColor = Misc.getNegativeHighlightColor();
+                    line = "Condemned";
+                    c = Misc.getNegativeHighlightColor();
                 } else if (m != null && MarketRules.hostile(m)) {
-                    status = "Rent frozen: the owners are hostile";
-                    statusColor = Misc.getNegativeHighlightColor();
-                } else if (own) {
-                    status = "Your colony, no tariff. Last month " + Misc.getDGSCredits(pr.lastRent);
+                    line = "Rent frozen";
+                    c = Misc.getNegativeHighlightColor();
                 } else {
-                    status = "Last month " + Misc.getDGSCredits(pr.lastRent) + ", so far "
-                            + Misc.getDGSCredits(pr.totalRent);
+                    line = Misc.getDGSCredits(pr.expectedRent()) + " a month";
                 }
-                text(status, statusColor, 116f, y + 40f, textW);
-
-                text("Condition " + Math.round(pr.condition * 100f) + " percent", condX, y + 4f, 170f);
-
-                RentSetting s = pr.setting();
-                text("Rent", Misc.getGrayColor(), rentX, y + 4f, 180f);
-                button("lower:" + pr.id, "<", rentX, y + 24f, 28f, 26f, s != RentSetting.CHARITY);
-                label(s.label, Misc.getHighlightColor(), rentX + 32f, y + 24f, 104f, 26f,
-                        com.fs.starfarer.api.ui.Alignment.MID, com.fs.starfarer.api.ui.Fonts.DEFAULT_SMALL);
-                button("higher:" + pr.id, ">", rentX + 140f, y + 24f, 28f, 26f, s != RentSetting.GREEDY);
-
-                float cost = pr.repairCost();
-                button("repair:" + pr.id, cost > 0f ? "Repair " + Misc.getDGSCredits(cost) : "No repairs needed",
-                        repairX, y + 24f, 160f, 26f, cost > 0f && Actions.credits() >= cost && m != null);
-
-                boolean confirm = pr.id.equals(pendingSell);
-                button("sell:" + pr.id, (confirm ? "Confirm " : "Sell ") + Misc.getDGSCredits(pr.saleValue()),
-                        sellX, y + 24f, 160f, 26f, Actions.cannotSell(pr) == null);
+                text(line, c, 18f, y + 25f, LIST_W - 20f);
             }
-
             if (pages > 1) {
-                float fy = height - 40f;
-                button("prev", "Previous", 10f, fy, 120f, 28f, page > 0);
-                text("Page " + (page + 1) + " of " + pages, 140f, fy + 5f, 160f);
-                button("next", "Next", 300f, fy, 120f, 28f, page < pages - 1);
+                float fy = height - 36f;
+                button("prev", "<", 8f, fy, 40f, 28f, page > 0);
+                label("Page " + (page + 1) + " of " + pages, Misc.getTextColor(), 52f, fy, LIST_W - 88f, 28f,
+                        Alignment.MID, Fonts.DEFAULT_SMALL);
+                button("next", ">", 8f + LIST_W - 40f, fy, 40f, 28f, page < pages - 1);
             }
-        }
 
-        private float sellX() {
-            return width - 170f;
-        }
-
-        /** Condition column: left of rent (180), repair (170) and sell (170). */
-        private float condX() {
-            return sellX() - 170f - 180f - 170f;
-        }
-
-        @Override
-        protected void drawBelow(float alpha) {
-            if (rows == null) return;
-            float condX = condX();
-            for (int i = first; i < Math.min(rows.size(), first + perPage); i++) {
-                Property pr = rows.get(i);
-                float y = TOP + (i - first) * ROW_H;
-                quad(4f, y, width - 8f, ROW_H - 6f, CARD, alpha);
-                frame(4f, y, width - 8f, ROW_H - 6f, CARD_EDGE, alpha * 0.7f);
-                sprite(pr.artPath, 10f, y + 4f, THUMB_W, THUMB_H, alpha);
-                Color fill = pr.condemned ? Misc.getNegativeHighlightColor()
-                        : (pr.condition < 0.35f ? Misc.getHighlightColor() : Misc.getPositiveHighlightColor());
-                bar(condX, y + 28f, 160f, 14f, pr.condition, fill, alpha);
+            // The chosen home.
+            MarketAPI m = chosen.market();
+            PropertyStats st = chosen.stats();
+            boolean own = m != null && MarketRules.isOwn(m);
+            Sheet s = new Sheet();
+            s.title = chosen.tier().name;
+            s.subtitle = m != null ? where(m, st) : chosen.marketName + " (gone)";
+            s.art = chosen.artPath;
+            s.valueLine = Misc.getDGSCredits(chosen.value());
+            float next = chosen.expectedRent();
+            s.rentLine = next > 0f ? Misc.getDGSCredits(next) + " a month" + (own ? "" : ", after the tariff")
+                    : "none";
+            s.condition = chosen.condition;
+            if (chosen.condemned) {
+                s.occupancy = "Condemned: no tenants until repaired";
+                s.occupancyColor = Misc.getNegativeHighlightColor();
+            } else if (m != null && MarketRules.hostile(m)) {
+                s.occupancy = "Rent frozen: the owners are hostile";
+                s.occupancyColor = Misc.getNegativeHighlightColor();
+            } else {
+                s.occupancy = "Rented";
             }
+            s.stats = st;
+            s.extra.add(new String[] {"Bought for", Misc.getDGSCredits(chosen.paidPrice)});
+            s.extra.add(new String[] {"Rent so far", Misc.getDGSCredits(chosen.totalRent)
+                    + " (last month " + Misc.getDGSCredits(chosen.lastRent) + ")"});
+
+            float rx = 8f + LIST_W + 16f;
+            float rw = width - rx - 8f;
+            float maxImg = height - TOP - sheetTextHeight(s) - 48f;
+            float end = sheet(s, rx, TOP, rw, Math.min(400f, maxImg));
+
+            // Controls under the sheet.
+            float cy = Math.min(end + 8f, height - 36f);
+            RentSetting set = chosen.setting();
+            label("Rent", Misc.getGrayColor(), rx, cy, 50f, 28f, Alignment.LMID, Fonts.DEFAULT_SMALL);
+            button("lower:" + chosen.id, "<", rx + 50f, cy, 30f, 28f, set != RentSetting.CHARITY);
+            label(set.label, Misc.getHighlightColor(), rx + 84f, cy, 90f, 28f, Alignment.MID, Fonts.DEFAULT_SMALL);
+            button("higher:" + chosen.id, ">", rx + 178f, cy, 30f, 28f, set != RentSetting.GREEDY);
+            float cost = chosen.repairCost();
+            button("repair:" + chosen.id, cost > 0f ? "Repair for " + Misc.getDGSCredits(cost) : "No repairs needed",
+                    rx + 230f, cy, 220f, 28f, cost > 0f && Actions.credits() >= cost && m != null);
+            boolean confirm = chosen.id.equals(pendingSell);
+            button("sell:" + chosen.id, (confirm ? "Confirm: sell for " : "Sell for ")
+                    + Misc.getDGSCredits(chosen.saleValue()), rx + 462f, cy, 240f, 28f,
+                    Actions.cannotSell(chosen) == null);
         }
 
         @Override
@@ -187,6 +182,10 @@ public class RealEstatePage implements ManagePage {
             if (pr == null) return;
             String keepPending = null;
             switch (verb) {
+                case "pick":
+                    lastSelected = pr.id;
+                    message = "";
+                    break;
                 case "lower":
                     Actions.setRent(pr, pr.setting().lower());
                     message = "";
@@ -201,9 +200,10 @@ public class RealEstatePage implements ManagePage {
                 case "sell":
                     if (pr.id.equals(pendingSell)) {
                         show(Actions.sell(pr));
+                        lastSelected = null;
                     } else {
                         keepPending = pr.id;
-                        message = "Click again to sell " + pr.displayName() + ". The price includes a broker fee"
+                        message = "Click again to sell " + pr.displayName() + ". The price takes off a broker fee"
                                 + " and the local tariff.";
                         messageColor = Misc.getHighlightColor();
                     }
@@ -220,10 +220,11 @@ public class RealEstatePage implements ManagePage {
             boolean good = result.startsWith("Sold") || result.startsWith("Repaired") || result.startsWith("Rebuilt");
             messageColor = good ? Misc.getPositiveHighlightColor() : Misc.getNegativeHighlightColor();
         }
+    }
 
-        private static Property find(String id) {
-            for (Property pr : Portfolio.get().properties()) if (pr.id.equals(id)) return pr;
-            return null;
-        }
+    private static Property find(String id) {
+        if (id == null) return null;
+        for (Property pr : Portfolio.get().properties()) if (pr.id.equals(id)) return pr;
+        return null;
     }
 }

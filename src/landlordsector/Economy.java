@@ -25,4 +25,7 @@ public final class Economy {
     public float disruptionWear = 0.05f;
     public float raidWear = 0.1f;
     public float tacticalBombWear = 0.3f;
+    public float agentShare = 0.25f;
+    public float agentMinMonths = 3f;
+    public float agentMaxMonths = 6f;
 }

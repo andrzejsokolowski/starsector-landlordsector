@@ -42,12 +42,26 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   bombardments.
 - `HomeownerScript` (transient) - stability and growth on player colonies from NPC homes, through the
   OddiszCommons `Ledger` (released before every save).
-- `buy/BuyScreen` - the custom visual dialog opened by rules.csv (`LLS_CanBuy`, `LLS_OpenBuyScreen`).
-- `manage/RealEstatePage` - the "Real estate" tab of the OddiszCommons Manage screen.
+- `Agents` - property agents (post `lls_property_agent`, named in `data/world/factions/default_ranks.json`)
+  in market comm directories, saved in `Portfolio.agents`. Person memory `$lls_agent`. Share per market
+  `Pricing.agentShare` (agentShare 0.25 at size 5, more on big markets), stay 3 to 6 months, arrival rate
+  `Pricing.agentArrival` keeps the share steady. Player colonies always have one. Seeded on the first load
+  of a save (`agentsSeeded`), then run monthly.
+- rules.csv: `lls_agent_greeting` (PickGreeting, score 5), `lls_agent_option` (PopulateOptions with
+  `$isPerson`, `$lls_agent`, `LLS_CanBuy`), `lls_open_selected` (`LLS_OpenBuyScreen`). `LLS_CanBuy.marketOf`
+  takes the active person's market first.
+- `PropertyStats` - comfort, decor, tenant happiness, security, location grade and reason, world name.
+  The math is in `Pricing` (checked by `checkRules`). Happiness sets wear (`wearMult`) and tips, security
+  cuts raid and disruption damage, decor raises value and reputation.
+- `buy/BuyScreen` - the agent's screen: list left, chosen home right (`ui/PropertyView.sheet`).
+- `manage/RealEstatePage` - the "Real estate" tab of the OddiszCommons Manage screen, same layout plus
+  rent, repair and sell controls.
 - `ui/Canvas` - draws and hit-tests its own buttons from the mouse in `advance`. Tooltip buttons inside
-  custom panels can fail to report clicks (Gambling Den 0.1.0), so neither screen uses them.
+  custom panels can fail to report clicks (Gambling Den 0.1.0), so neither screen uses them. Escape is
+  only consumed when `onEscape` returns true: the Manage page returns false so the Manage screen closes
+  (0.1.0 swallowed it).
 
 ## Known limits
 
 - The portfolio classes are in the save, so removing the mod mid-game breaks that save.
-- Not played in game before 0.1.0 shipped. The two screens are the least checked part.
+- 0.1.0 was played by Andrzej on 2026-11-11 (buy screen, buying). 0.2.0 screens and agents not played yet.

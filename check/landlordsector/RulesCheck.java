@@ -77,6 +77,38 @@ public final class RulesCheck {
         expect(RentSetting.CHARITY.lower() == RentSetting.CHARITY && RentSetting.GREEDY.higher() == RentSetting.GREEDY,
                 "rent settings stop at both ends");
 
+        // Property stats.
+        for (int i = 1; i < tiers.size(); i++) {
+            expect(tiers.get(i).comfort > tiers.get(i - 1).comfort, tiers.get(i).id + ": comfort must rise with the tier");
+            expect(tiers.get(i).decor >= tiers.get(i - 1).decor, tiers.get(i).id + ": decor must not fall");
+        }
+        float mildHome = Pricing.comfort(60f, Climate.TEMPERATE, true, true, false, 0.75f, 1f);
+        float toxicHome = Pricing.comfort(60f, Climate.HOSTILE, false, false, true, 2f, 1f);
+        expect(mildHome > toxicHome + 30f, "a mild habitable world is far more comfortable than a toxic rock");
+        expect(Pricing.comfort(60f, Climate.TEMPERATE, false, false, false, 1f, 0f) < 60f, "a ruin is less comfortable");
+        float happyKind = Pricing.happiness(50f, 10f, RentSetting.CHARITY.happiness, 0.5f);
+        float happyGreedy = Pricing.happiness(50f, 10f, RentSetting.GREEDY.happiness, 0.5f);
+        expect(Math.abs(happyKind - happyGreedy - 60f) < 1e-3, "Charity to Greedy moves happiness by 60");
+        expect(Pricing.wearMult(100f) == 0.5f && Pricing.wearMult(0f) == 1.5f, "wear runs from half to 1.5 times");
+        expect(Math.abs(Pricing.tipChance(0.01f, 50f) - 0.01f) < 1e-6, "average tenants tip at the base chance");
+        expect(Pricing.security(10f, 30f, 15f) == 100f && Pricing.security(0f, 0f, 0f) == 0f, "security range");
+        expect(Pricing.damageMult(100f) > 0.3f && Pricing.damageMult(0f) == 1f, "security cuts damage, never to zero");
+        expect("A".equals(Pricing.grade(4f)) && "F".equals(Pricing.grade(0.25f)) && "C".equals(Pricing.grade(1f)),
+                "location grades");
+        expect(Math.abs(Pricing.decorValueMult(100f) - 1.25f) < 1e-6, "decor adds up to a quarter to the value");
+        for (int i = 1; i < s.length; i++) {
+            expect(s[i].happiness < s[i - 1].happiness, s[i] + ": happiness must fall as rent rises");
+        }
+
+        // Agents: about a quarter of size 5 markets, more for big ones, and the arrival rate keeps that share.
+        expect(Math.abs(Pricing.agentShare(eco.agentShare, 5) - 0.25f) < 1e-6, "a quarter of size 5 markets");
+        expect(Pricing.agentShare(eco.agentShare, 8) > Pricing.agentShare(eco.agentShare, 4), "big markets more often");
+        float share = 0.25f;
+        float stay = (eco.agentMinMonths + eco.agentMaxMonths) / 2f;
+        float arrive = Pricing.agentArrival(share, stay);
+        float steady = arrive * stay / (1f + arrive * stay);
+        expect(Math.abs(steady - share) < 0.01f, "arrivals keep the share steady, got " + steady);
+
         // Listings by size.
         expect(Pricing.listingCount(3) == 2 && Pricing.listingCount(9) == 8 && Pricing.listingCount(12) == 8,
                 "listing counts by size");

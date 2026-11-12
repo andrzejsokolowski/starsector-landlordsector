@@ -11,14 +11,13 @@ import com.fs.starfarer.api.util.Misc.Token;
 import landlordsector.MarketRules;
 import landlordsector.buy.BuyScreen;
 
-/** Opens the real estate screen over the market dialog. */
+/** Opens the property screen over the conversation with a property agent. */
 public class LLS_OpenBuyScreen extends BaseCommandPlugin {
 
     @Override
     public boolean execute(String ruleId, InteractionDialogAPI dialog, List<Token> params,
             Map<String, MemoryAPI> memoryMap) {
-        if (dialog == null || dialog.getInteractionTarget() == null) return false;
-        MarketAPI market = dialog.getInteractionTarget().getMarket();
+        MarketAPI market = LLS_CanBuy.marketOf(dialog);
         if (!MarketRules.isEligible(market)) return false;
         dialog.showCustomVisualDialog(BuyScreen.W, BuyScreen.H, new BuyScreen(market, null));
         return true;

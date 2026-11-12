@@ -64,6 +64,85 @@ public final class Pricing {
         return fullValue * (1f - clamp(condition, 0f, 1f)) * repairFullCost;
     }
 
+    // ---- Property stats, all 0 to 100 ----
+
+    /**
+     * Comfort: the tier's base, plus a mild climate and a habitable world, minus pollution, a station or a
+     * hostile world and a hazard rating over 100 percent. A worn home loses up to 40 percent of it.
+     */
+    public static float comfort(float tierComfort, Climate climate, boolean habitable, boolean mild,
+            boolean pollution, float hazard, float condition) {
+        float c = tierComfort;
+        if (mild) c += 10f;
+        if (habitable) c += 5f;
+        if (pollution) c -= 10f;
+        if (climate == Climate.STATION) c -= 5f;
+        if (climate == Climate.HOSTILE) c -= 10f;
+        c -= Math.max(0f, hazard - 1f) * 20f;
+        c *= 0.6f + 0.4f * clamp(condition, 0f, 1f);
+        return clamp(c, 0f, 100f);
+    }
+
+    /** Tenant happiness from comfort, decor, the rent setting and the home's condition. */
+    public static float happiness(float comfort, float decor, float settingDelta, float condition) {
+        float h = 50f + (comfort - 50f) * 0.4f + decor * 0.1f + settingDelta + (clamp(condition, 0f, 1f) - 0.5f) * 40f;
+        return clamp(h, 0f, 100f);
+    }
+
+    /** Wear speed: unhappy tenants (0) wear a home 1.5 times as fast, happy ones (100) half as fast. */
+    public static float wearMult(float happiness) {
+        return 1.5f - clamp(happiness, 0f, 100f) / 100f;
+    }
+
+    /** Tip chance: half the base for miserable tenants, one and a half times for delighted ones. */
+    public static float tipChance(float base, float happiness) {
+        return base * (0.5f + clamp(happiness, 0f, 100f) / 100f);
+    }
+
+    /** Security from stability (6 a point) plus the best military building and the best ground defense. */
+    public static float security(float stability, float military, float defenses) {
+        return clamp(clamp(stability, 0f, 10f) * 6f + military + defenses, 0f, 100f);
+    }
+
+    /** Raids and disruption hurt a well-guarded home less: a third less at security 50, two thirds at 100. */
+    public static float damageMult(float security) {
+        return 1f - clamp(security, 0f, 100f) / 150f;
+    }
+
+    /** Decor adds up to a quarter to the value. */
+    public static float decorValueMult(float decor) {
+        return 1f + clamp(decor, 0f, 100f) / 400f;
+    }
+
+    /** Decor raises the reputation cheap rent earns (and greedy rent costs), up to double. */
+    public static float decorRepMult(float decor) {
+        return 1f + clamp(decor, 0f, 100f) / 100f;
+    }
+
+    /** The location grade A to F: the market multiplier in a word. */
+    public static String grade(float marketMult) {
+        if (marketMult >= 2.5f) return "A";
+        if (marketMult >= 1.6f) return "B";
+        if (marketMult >= 1.0f) return "C";
+        if (marketMult >= 0.6f) return "D";
+        if (marketMult >= 0.35f) return "E";
+        return "F";
+    }
+
+    /** Share of eligible markets with an agent at a time: the base share, more for big markets. */
+    public static float agentShare(float base, int size) {
+        return clamp(base * (0.6f + 0.2f * (size - 3)), 0.05f, 0.6f);
+    }
+
+    /**
+     * Monthly arrival chance for a market without an agent, so that on average {@code share} of markets
+     * have one when agents stay {@code stayMonths}.
+     */
+    public static float agentArrival(float share, float stayMonths) {
+        float s = clamp(share, 0.01f, 0.95f);
+        return clamp(s / (stayMonths * (1f - s)), 0f, 1f);
+    }
+
     public static float clamp(float v, float lo, float hi) {
         return v < lo ? lo : (v > hi ? hi : v);
     }

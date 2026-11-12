@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -60,6 +61,8 @@ public final class RuntimeCheck {
         final MutableStat tariff = new MutableStat(0.3f);
         final com.fs.starfarer.api.combat.MutableStatWithTempMods stabilityStat = new com.fs.starfarer.api.combat.MutableStatWithTempMods(0f);
         final List<MarketImmigrationModifier> growth = new ArrayList<>();
+        final List<Object> directory = new ArrayList<>();
+        int agentsArrived;
     }
 
     public static void main(String[] args) throws Exception {
@@ -87,6 +90,33 @@ public final class RuntimeCheck {
         expect(MarketRules.isEligible(a) && MarketRules.isEligible(b), "Hegemony and player markets sell homes");
         expect(!MarketRules.isEligible(c), "pirate markets do not sell homes");
 
+        // Property agents: everyone eligible gets one when the dice always say yes, the pirates never.
+        Random yes = new Random() {
+            @Override
+            public float nextFloat() {
+                return 0f;
+            }
+        };
+        Random no = new Random() {
+            @Override
+            public float nextFloat() {
+                return 0.999f;
+            }
+        };
+        Agents.update(yes, true);
+        expect(heg.directory.size() == 1 && col.directory.size() == 1, "eligible markets get a property agent");
+        expect(pir.directory.isEmpty(), "pirate markets get no property agent");
+        Object agentPerson = heg.directory.isEmpty() ? null : heg.directory.get(0);
+        Agents.update(yes, false);
+        expect(heg.directory.size() == 1 && heg.directory.get(0) == agentPerson, "an agent stays while their time runs");
+        now += 7 * 30 * DAY;
+        Agents.update(no, false);
+        expect(heg.directory.isEmpty(), "an agent leaves after at most 6 months");
+        expect(col.directory.size() == 1, "the player's colony keeps its agent");
+        expect(Agents.hasAgent(b) && !Agents.hasAgent(a), "the agent list matches the comm directories");
+        Agents.update(yes, false);
+        expect(heg.directory.size() == 1, "a new agent can arrive later");
+
         MarketListings la = MarketRules.listings(a);
         expect(la.list().size() == Pricing.listingCount(6), "a size 6 market lists " + Pricing.listingCount(6));
         for (Listing l : la.list()) {
@@ -100,7 +130,7 @@ public final class RuntimeCheck {
         // Buy the cheapest on the Hegemony world: the price includes the 30 percent tariff.
         Listing cheap = la.list().get(0);
         float before = credits.get();
-        float expected = cheap.basePrice * MarketRules.mult(a) * 1.3f;
+        float expected = MarketRules.listingValue(a, cheap) * 1.3f;
         String result = Actions.buy(a, cheap);
         expect(result.startsWith("Bought"), "buying works: " + result);
         expect(Math.abs(before - credits.get() - expected) < CREDIT_EPS, "the buy price includes the tariff");
@@ -111,7 +141,7 @@ public final class RuntimeCheck {
         // On the player's colony: half price, no tariff.
         Listing own = MarketRules.listings(b).list().get(0);
         before = credits.get();
-        float ownPrice = own.basePrice * MarketRules.mult(b) * 0.5f;
+        float ownPrice = MarketRules.listingValue(b, own) * 0.5f;
         Actions.buy(b, own);
         expect(Math.abs(before - credits.get() - ownPrice) < CREDIT_EPS, "own colony homes cost half with no tariff");
         Property colonyHome = Portfolio.get().properties().get(1);
@@ -133,6 +163,16 @@ public final class RuntimeCheck {
         Float rep = repChanges.get("hegemony");
         expect(rep != null && rep < 0f, "greedy rent costs Hegemony reputation");
         expect(!repChanges.containsKey("player"), "own colonies never change reputation");
+
+        PropertyStats greedy = home.stats();
+        Actions.setRent(home, RentSetting.CHARITY);
+        PropertyStats kind = home.stats();
+        Actions.setRent(home, RentSetting.GREEDY);
+        expect(kind.happiness > greedy.happiness, "tenants are happier on Charity than on Greedy");
+        expect(greedy.comfort >= 0f && greedy.comfort <= 100f && greedy.security >= 0f && greedy.security <= 100f,
+                "stats stay between 0 and 100");
+        expect(greedy.grade.length() == 1 && !greedy.gradeReason.isEmpty(), "the location has a grade and a reason");
+        expect("Station".equals(greedy.world), "a market with no planet reads as a station");
 
         // Hostility freezes rent and blocks the sale.
         hostileFactions.add("hegemony");
@@ -177,7 +217,11 @@ public final class RuntimeCheck {
         com.thoughtworks.xstream.XStream x = new com.thoughtworks.xstream.XStream(new com.thoughtworks.xstream.io.xml.DomDriver());
         com.thoughtworks.xstream.XStream.setupDefaultSecurity(x);
         x.allowTypesByWildcard(new String[] {"landlordsector.**", "java.util.**", "java.lang.**"});
+        // The stand-in agents are proxies, which cannot be saved; real ones are game objects.
+        Map<String, Agents.Agent> agentsBefore = new HashMap<>(Portfolio.get().agents());
+        Portfolio.get().agents().clear();
         String xml = x.toXML(Portfolio.get());
+        Portfolio.get().agents().putAll(agentsBefore);
         Portfolio back = (Portfolio) x.fromXML(xml);
         expect(back.properties().size() == 2 && back.properties().get(0).setting() == RentSetting.GREEDY,
                 "the portfolio survives a save");
@@ -261,7 +305,19 @@ public final class RuntimeCheck {
                 "adjustRelationship", a -> {
                     repChanges.merge((String) a[0], (Float) a[1], Float::sum);
                     return null;
-                }));
+                },
+                "createRandomPerson", a -> person()));
+    }
+
+    private static com.fs.starfarer.api.characters.PersonAPI person() {
+        Map<String, Object> mem = new HashMap<>();
+        Object[] market = new Object[1];
+        com.fs.starfarer.api.campaign.rules.MemoryAPI memory = mock(com.fs.starfarer.api.campaign.rules.MemoryAPI.class,
+                Map.of("set", a -> mem.put((String) a[0], a[1]), "getBoolean", a -> Boolean.TRUE.equals(mem.get(a[0]))));
+        return mock(com.fs.starfarer.api.characters.PersonAPI.class, Map.of(
+                "getMemoryWithoutUpdate", a -> memory,
+                "setMarket", a -> market[0] = a[0],
+                "getMarket", a -> market[0]));
     }
 
     private static MarketAPI market(FakeMarket f) {
@@ -280,6 +336,13 @@ public final class RuntimeCheck {
         h.put("getTariff", a -> f.tariff);
         h.put("getStability", a -> f.stabilityStat);
         h.put("addTransientImmigrationModifier", a -> f.growth.add((MarketImmigrationModifier) a[0]));
+        com.fs.starfarer.api.campaign.CommDirectoryAPI dir = mock(com.fs.starfarer.api.campaign.CommDirectoryAPI.class,
+                Map.of("addPerson", a -> {
+                    f.directory.add(a[0]);
+                    f.agentsArrived++;
+                    return "entry";
+                }, "removePerson", a -> f.directory.remove(a[0])));
+        h.put("getCommDirectory", a -> dir);
         MarketAPI m = mock(MarketAPI.class, h);
         markets.put(f.id, m);
         return m;

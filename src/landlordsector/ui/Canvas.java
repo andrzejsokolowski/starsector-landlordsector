@@ -25,7 +25,8 @@ import com.fs.starfarer.api.util.Misc;
  * look right and still never report a click (Gambling Den 0.1.0), so every control here is a rectangle
  * this class draws, with a label on top, and clicks are read from the mouse in {@link #advance}.
  *
- * <p>Coordinates passed in are from the panel's top left, y growing downwards.
+ * <p>Coordinates passed in are from the panel's top left, y growing downwards. {@link #build} lays out
+ * labels, buttons, boxes, pictures and bars; they are drawn in that order under the labels.
  */
 public abstract class Canvas implements CustomUIPanelPlugin {
 
@@ -34,6 +35,7 @@ public abstract class Canvas implements CustomUIPanelPlugin {
     public static final Color CARD_EDGE = new Color(70, 84, 110, 255);
     public static final Color BTN = new Color(30, 44, 66, 255);
     public static final Color BTN_HOVER = new Color(46, 66, 98, 255);
+    public static final Color BTN_SELECTED = new Color(70, 62, 30, 255);
     public static final Color BTN_OFF = new Color(26, 28, 34, 255);
     public static final Color GOLD = new Color(200, 170, 80, 255);
 
@@ -42,6 +44,7 @@ public abstract class Canvas implements CustomUIPanelPlugin {
         public final Object action;
         public final float x, y, w, h;
         public boolean enabled = true;
+        public boolean selected;
         public boolean hovered;
         public LabelAPI label;
 
@@ -54,12 +57,56 @@ public abstract class Canvas implements CustomUIPanelPlugin {
         }
     }
 
+    private static final class Box {
+        final float x, y, w, h;
+        final Color fill, edge;
+
+        Box(float x, float y, float w, float h, Color fill, Color edge) {
+            this.x = x;
+            this.y = y;
+            this.w = w;
+            this.h = h;
+            this.fill = fill;
+            this.edge = edge;
+        }
+    }
+
+    private static final class Pic {
+        final String path;
+        final float x, y, w, h;
+
+        Pic(String path, float x, float y, float w, float h) {
+            this.path = path;
+            this.x = x;
+            this.y = y;
+            this.w = w;
+            this.h = h;
+        }
+    }
+
+    private static final class Bar {
+        final float x, y, w, h, share;
+        final Color fill;
+
+        Bar(float x, float y, float w, float h, float share, Color fill) {
+            this.x = x;
+            this.y = y;
+            this.w = w;
+            this.h = h;
+            this.share = share;
+            this.fill = fill;
+        }
+    }
+
     protected CustomPanelAPI panel;
     protected PositionAPI p;
     protected final float width;
     protected final float height;
     private final List<Btn> buttons = new ArrayList<>();
     private final List<UIComponentAPI> components = new ArrayList<>();
+    private final List<Box> boxes = new ArrayList<>();
+    private final List<Pic> pics = new ArrayList<>();
+    private final List<Bar> bars = new ArrayList<>();
     private boolean wasDown = true;
 
     protected Canvas(float width, float height) {
@@ -75,12 +122,15 @@ public abstract class Canvas implements CustomUIPanelPlugin {
         rebuild();
     }
 
-    /** Throws away every label and button and asks the subclass to lay them out again. */
+    /** Throws away everything and asks the subclass to lay it out again. */
     public final void rebuild() {
         if (panel == null) return;
         for (UIComponentAPI c : components) panel.removeComponent(c);
         components.clear();
         buttons.clear();
+        boxes.clear();
+        pics.clear();
+        bars.clear();
         build();
     }
 
@@ -88,12 +138,16 @@ public abstract class Canvas implements CustomUIPanelPlugin {
 
     protected abstract void onAction(Object action);
 
-    /** Escape was pressed. */
-    protected void onEscape() {
+    /**
+     * Escape was pressed. Return true to take the key; false leaves it to whatever holds this panel
+     * (the Manage screen closes on it).
+     */
+    protected boolean onEscape() {
+        return false;
     }
 
-    /** Custom drawing under the buttons and labels, in GL coordinates (see {@link #glX}, {@link #glY}). */
-    protected void drawBelow(float alpha) {
+    /** The background under everything, in panel coordinates. */
+    protected void drawBackground(float alpha) {
     }
 
     // ---- Building ----
@@ -127,6 +181,27 @@ public abstract class Canvas implements CustomUIPanelPlugin {
                 Alignment.MID, Fonts.DEFAULT_SMALL);
         buttons.add(b);
         return b;
+    }
+
+    /** A clickable area with no caption of its own: put labels on top of it. */
+    protected Btn area(Object action, float x, float y, float w, float h, boolean selected) {
+        Btn b = new Btn(action, x, y, w, h);
+        b.selected = selected;
+        buttons.add(b);
+        return b;
+    }
+
+    protected void box(float x, float y, float w, float h) {
+        boxes.add(new Box(x, y, w, h, CARD, CARD_EDGE));
+    }
+
+    protected void picture(String path, float x, float y, float w, float h) {
+        if (path != null) pics.add(new Pic(path, x, y, w, h));
+    }
+
+    /** A bar filled to {@code share} (0 to 1). */
+    protected void bar(float x, float y, float w, float h, float share, Color fill) {
+        bars.add(new Bar(x, y, w, h, share, fill));
     }
 
     // ---- Engine callbacks ----
@@ -171,8 +246,8 @@ public abstract class Canvas implements CustomUIPanelPlugin {
         for (InputEventAPI e : events) {
             if (e.isConsumed() || !e.isKeyDownEvent()) continue;
             if (e.getEventValue() == Keyboard.KEY_ESCAPE) {
-                e.consume();
-                onEscape();
+                // Only take Escape when this panel uses it, so the Manage screen can still close on it.
+                if (onEscape()) e.consume();
                 return;
             }
         }
@@ -195,12 +270,31 @@ public abstract class Canvas implements CustomUIPanelPlugin {
             GL11.glDisable(GL11.GL_TEXTURE_2D);
             GL11.glEnable(GL11.GL_BLEND);
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-            drawBelow(alphaMult);
-            GL11.glDisable(GL11.GL_TEXTURE_2D);
+            drawBackground(alphaMult);
+            for (Box b : boxes) {
+                quad(b.x, b.y, b.w, b.h, b.fill, alphaMult);
+                frame(b.x, b.y, b.w, b.h, b.edge, alphaMult * 0.8f);
+            }
             for (Btn b : buttons) {
-                Color fill = !b.enabled ? BTN_OFF : (b.hovered ? BTN_HOVER : BTN);
+                Color fill;
+                if (!b.enabled) fill = BTN_OFF;
+                else if (b.selected) fill = BTN_SELECTED;
+                else if (b.hovered) fill = BTN_HOVER;
+                else fill = BTN;
                 quad(b.x, b.y, b.w, b.h, fill, alphaMult);
-                frame(b.x, b.y, b.w, b.h, b.enabled ? GOLD : CARD_EDGE, alphaMult * (b.hovered ? 1f : 0.6f));
+                boolean lit = b.enabled && (b.hovered || b.selected);
+                frame(b.x, b.y, b.w, b.h, b.enabled ? GOLD : CARD_EDGE, alphaMult * (lit ? 1f : 0.5f));
+            }
+            for (Pic pic : pics) {
+                sprite(pic.path, pic.x, pic.y, pic.w, pic.h, alphaMult);
+                GL11.glDisable(GL11.GL_TEXTURE_2D);
+                frame(pic.x, pic.y, pic.w, pic.h, CARD_EDGE, alphaMult);
+            }
+            GL11.glDisable(GL11.GL_TEXTURE_2D);
+            for (Bar b : bars) {
+                quad(b.x, b.y, b.w, b.h, BTN_OFF, alphaMult);
+                quad(b.x, b.y, b.w * Math.max(0f, Math.min(1f, b.share)), b.h, b.fill, alphaMult);
+                frame(b.x, b.y, b.w, b.h, CARD_EDGE, alphaMult);
             }
         } finally {
             GL11.glPopAttrib();
@@ -235,13 +329,6 @@ public abstract class Canvas implements CustomUIPanelPlugin {
         quad(x, y + h - 1f, w, 1f, c, alpha);
         quad(x, y, 1f, h, c, alpha);
         quad(x + w - 1f, y, 1f, h, c, alpha);
-    }
-
-    /** A bar filled to {@code share} (0 to 1). */
-    protected void bar(float x, float y, float w, float h, float share, Color fill, float alpha) {
-        quad(x, y, w, h, BTN_OFF, alpha);
-        quad(x, y, w * Math.max(0f, Math.min(1f, share)), h, fill, alpha);
-        frame(x, y, w, h, CARD_EDGE, alpha);
     }
 
     protected void sprite(String path, float x, float y, float w, float h, float alpha) {

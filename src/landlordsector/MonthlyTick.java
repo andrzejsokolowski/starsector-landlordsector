@@ -110,7 +110,8 @@ public class MonthlyTick implements EconomyTickListener, ColonyPlayerHostileActL
                 float gross = Pricing.rent(p.fullValue(), p.tier().rentShare, p.setting().rentMult, p.condition,
                         Settings.rentMult());
                 net = gross * (1f - MarketRules.tariff(m));
-                if (random.nextFloat() < eco.tipChance) {
+                PropertyStats stats = p.stats();
+                if (random.nextFloat() < Pricing.tipChance(eco.tipChance, stats.happiness)) {
                     float tip = net * eco.tipShare;
                     net += tip;
                     tips += tip;
@@ -118,7 +119,8 @@ public class MonthlyTick implements EconomyTickListener, ColonyPlayerHostileActL
                             + ". It happens.");
                 }
                 if (!MarketRules.isOwn(m)) {
-                    float rep = p.setting().repPerMonth * (1f + 0.25f * p.tier().index);
+                    float rep = p.setting().repPerMonth * (1f + 0.25f * p.tier().index)
+                            * Pricing.decorRepMult(stats.decor);
                     if (rep != 0f) repByFaction.merge(m.getFactionId(), rep, Float::sum);
                 }
             }
@@ -135,8 +137,9 @@ public class MonthlyTick implements EconomyTickListener, ColonyPlayerHostileActL
 
             // Wear after the rent: the tenants lived in it all month.
             if (!p.condemned) {
-                float wear = p.setting().wearMult / eco.wearMonths;
-                if (anyDisrupted(m)) wear += eco.disruptionWear;
+                PropertyStats stats = p.stats();
+                float wear = Pricing.wearMult(stats.happiness) / eco.wearMonths;
+                if (anyDisrupted(m)) wear += eco.disruptionWear * Pricing.damageMult(stats.security);
                 p.condition -= wear;
                 if (p.condition <= 0f) {
                     p.condition = 0f;
@@ -147,6 +150,7 @@ public class MonthlyTick implements EconomyTickListener, ColonyPlayerHostileActL
         }
 
         applyReputation(repByFaction);
+        Agents.update(random, false);
         float[] npc = runOwnColonies(portfolio, report, root, news);
 
         portfolio.lastRent = rentTotal;
@@ -202,7 +206,7 @@ public class MonthlyTick implements EconomyTickListener, ColonyPlayerHostileActL
             while (li.hasNext() && homes.size() < cap) {
                 Listing l = li.next();
                 if (random.nextFloat() >= eco.npcBuyChance) continue;
-                float price = l.basePrice * MarketRules.mult(m);
+                float price = MarketRules.listingValue(m, l);
                 li.remove();
                 homes.add(price);
                 sold += price * eco.npcSaleShare;
@@ -247,7 +251,7 @@ public class MonthlyTick implements EconomyTickListener, ColonyPlayerHostileActL
                 continue;
             }
             if (p.condemned) continue;
-            p.condition = Math.max(0f, p.condition - wear);
+            p.condition = Math.max(0f, p.condition - wear * Pricing.damageMult(p.stats().security));
             if (p.condition <= 0f) p.condemned = true;
         }
     }

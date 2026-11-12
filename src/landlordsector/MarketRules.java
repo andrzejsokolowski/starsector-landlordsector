@@ -52,9 +52,16 @@ public final class MarketRules {
         return Pricing.clamp(market.getTariff().getModifiedValue(), 0f, 0.9f);
     }
 
+    /** What a listing is worth new, at today's market, with its tier's decor. */
+    public static float listingValue(MarketAPI market, Listing listing) {
+        Tier t = TierTable.get(listing.tierId);
+        float decor = t != null ? t.decor : 0f;
+        return listing.basePrice * mult(market) * Pricing.decorValueMult(decor);
+    }
+
     /** Price to buy a listing right now, tariff and own-colony discount included. */
     public static float buyPrice(MarketAPI market, Listing listing) {
-        float price = listing.basePrice * mult(market);
+        float price = listingValue(market, listing);
         if (isOwn(market)) return price * TierTable.economy().ownColonyPrice;
         return price * (1f + tariff(market));
     }

@@ -11,35 +11,35 @@ import com.fs.starfarer.api.ui.CustomPanelAPI;
 import com.fs.starfarer.api.util.Misc;
 
 import landlordsector.Actions;
-import landlordsector.Climate;
 import landlordsector.Listing;
 import landlordsector.MarketListings;
 import landlordsector.MarketRules;
+import landlordsector.Portfolio;
 import landlordsector.Pricing;
+import landlordsector.PropertyStats;
 import landlordsector.Settings;
 import landlordsector.Tier;
 import landlordsector.TierTable;
-import landlordsector.ui.Canvas;
+import landlordsector.ui.PropertyView;
 
-/** The real estate screen of one market: up to eight homes for sale as picture cards. */
-public class BuyScreen extends Canvas implements CustomVisualDialogDelegate {
+/** The property agent's screen: homes for sale on the left, the chosen one large on the right. */
+public class BuyScreen extends PropertyView implements CustomVisualDialogDelegate {
 
-    public static final float W = 1040f;
-    public static final float H = 660f;
+    public static final float W = 1060f;
+    public static final float H = 720f;
     private static final float MARGIN = 14f;
-    private static final float GAP = 12f;
-    private static final float CARD_W = (W - 2 * MARGIN - 3 * GAP) / 4f;
-    private static final float IMG_H = CARD_W * 320f / 512f;
-    private static final float CARD_H = IMG_H + 100f;
-    private static final float TOP = 84f;
+    private static final float LIST_W = 240f;
+    private static final float ROW_H = 52f;
+    private static final float TOP = 76f;
     private static final String LEAVE = "leave";
+    private static final String BUY = "buy";
 
     private final MarketAPI market;
     private final Runnable onClose;
     private DialogCallbacks callbacks;
     private String message = "";
     private Color messageColor = Misc.getTextColor();
-    private List<Listing> shown;
+    private int selected;
     private boolean closed;
 
     public BuyScreen(MarketAPI market, Runnable onClose) {
@@ -77,9 +77,15 @@ public class BuyScreen extends Canvas implements CustomVisualDialogDelegate {
     // ---- Layout ----
 
     @Override
+    protected void drawBackground(float alpha) {
+        quad(0f, 0f, W, H, BG, alpha);
+        frame(0f, 0f, W, H, GOLD, alpha * 0.5f);
+    }
+
+    @Override
     protected void build() {
         MarketListings ml = MarketRules.listings(market);
-        shown = ml.list();
+        List<Listing> shown = ml.list();
         boolean own = MarketRules.isOwn(market);
         float tariff = MarketRules.tariff(market);
 
@@ -87,65 +93,71 @@ public class BuyScreen extends Canvas implements CustomVisualDialogDelegate {
         String terms = own ? "Your colony: homes cost half, with no tariff."
                 : "Prices include the " + Math.round(tariff * 100f) + " percent tariff. Rent pays the same tariff.";
         text("Credits: " + Misc.getDGSCredits(Actions.credits()) + ".   " + terms, MARGIN, 42f, W - 2 * MARGIN);
-        int ownedHere = landlordsector.Portfolio.get().countAt(market.getId());
-        int cap = Settings.maxProperties();
-        String owned = "You own " + ownedHere + (ownedHere == 1 ? " home" : " homes") + " here and "
-                + landlordsector.Portfolio.get().properties().size() + " in all"
-                + (cap > 0 ? " (most allowed: " + cap + ")." : ".");
-        text(owned, Misc.getGrayColor(), MARGIN, 60f, W - 2 * MARGIN);
 
+        // The list.
         if (shown.isEmpty()) {
             float days = TierTable.economy().listingRefreshDays
                     - Global.getSector().getClock().getElapsedDaysSince(ml.rolledAt);
-            text("Nothing is for sale right now. New homes come on the market in about "
-                    + Math.max(1, Math.round(days)) + " days.", MARGIN, TOP + 20f, W - 2 * MARGIN);
+            text("Nothing for sale right now.", MARGIN, TOP + 8f, LIST_W);
+            text("New homes in about " + Math.max(1, Math.round(days)) + " days.", Misc.getGrayColor(), MARGIN,
+                    TOP + 26f, LIST_W);
         }
-
-        String blocked = Actions.cannotBuy(market, null);
+        selected = Math.max(0, Math.min(selected, shown.size() - 1));
         for (int i = 0; i < shown.size() && i < 8; i++) {
             Listing l = shown.get(i);
             Tier t = TierTable.get(l.tierId);
-            if (t == null) continue;
-            float x = MARGIN + (i % 4) * (CARD_W + GAP);
-            float y = TOP + (i / 4) * (CARD_H + GAP);
-            float price = MarketRules.buyPrice(market, l);
-            float full = l.basePrice * MarketRules.mult(market);
-            float rent = Pricing.rent(full, t.rentShare, 1f, 1f, Settings.rentMult()) * (1f - tariff);
-            float ty = y + IMG_H + 6f;
-            text(t.name + ", " + climateLabel(l.climateId), Misc.getHighlightColor(), x + 8f, ty, CARD_W - 16f);
-            text("Value " + Misc.getDGSCredits(full), x + 8f, ty + 18f, CARD_W - 16f);
-            text("Rent about " + Misc.getDGSCredits(rent) + " a month", Misc.getGrayColor(), x + 8f, ty + 36f,
-                    CARD_W - 16f);
-            boolean afford = Actions.credits() >= price;
-            button(l, "Buy for " + Misc.getDGSCredits(price), x + 8f, y + CARD_H - 32f, CARD_W - 16f, 26f,
-                    blocked == null && afford);
+            float y = TOP + i * (ROW_H + 4f);
+            area(i, MARGIN, y, LIST_W, ROW_H, i == selected);
+            text(t != null ? t.name : l.tierId, Misc.getHighlightColor(), MARGIN + 10f, y + 6f, LIST_W - 20f);
+            text(Misc.getDGSCredits(MarketRules.buyPrice(market, l)), MARGIN + 10f, y + 26f, LIST_W - 20f);
         }
+        int ownedHere = Portfolio.get().countAt(market.getId());
+        int cap = Settings.maxProperties();
+        float oy = TOP + 8 * (ROW_H + 4f) + 6f;
+        text("You own " + ownedHere + (ownedHere == 1 ? " home" : " homes") + " here,", Misc.getGrayColor(),
+                MARGIN, oy, LIST_W);
+        text(Portfolio.get().properties().size() + " in all" + (cap > 0 ? " (most allowed " + cap + ")." : "."),
+                Misc.getGrayColor(), MARGIN, oy + 18f, LIST_W);
 
+        // The chosen home.
+        float rx = MARGIN + LIST_W + 16f;
+        float rw = W - rx - MARGIN;
+        String blocked = Actions.cannotBuy(market, null);
+        if (!shown.isEmpty()) {
+            Listing l = shown.get(selected);
+            Tier t = TierTable.get(l.tierId);
+            PropertyStats st = PropertyStats.of(l, market);
+            float full = MarketRules.listingValue(market, l);
+            float rent = t == null ? 0f
+                    : Pricing.rent(full, t.rentShare, 1f, 1f, Settings.rentMult()) * (1f - tariff);
+            Sheet s = new Sheet();
+            s.title = t != null ? t.name : l.tierId;
+            s.subtitle = where(market, st);
+            s.art = l.artPath;
+            s.valueLine = Misc.getDGSCredits(full);
+            s.rentLine = "about " + Misc.getDGSCredits(rent) + " a month at Normal rent"
+                    + (own ? "" : ", after the tariff");
+            s.condition = 1f;
+            s.occupancy = "For sale";
+            s.stats = st;
+            float maxImg = H - TOP - sheetTextHeight(s) - 56f;
+            sheet(s, rx, TOP, rw, maxImg);
+
+            float price = MarketRules.buyPrice(market, l);
+            boolean afford = Actions.credits() >= price;
+            button(BUY, "Buy for " + Misc.getDGSCredits(price), W - MARGIN - 150f - 12f - 230f, H - 46f, 230f,
+                    30f, blocked == null && afford);
+            if (blocked == null && !afford && message.isEmpty()) {
+                message = "Not enough credits for this one.";
+                messageColor = Misc.getNegativeHighlightColor();
+            }
+        }
         if (blocked != null && message.isEmpty()) {
             message = blocked;
             messageColor = Misc.getNegativeHighlightColor();
         }
-        text(message, messageColor, MARGIN, H - 44f, W - 200f);
+        text(message, messageColor, MARGIN, H - 42f, W - 2 * MARGIN - 410f);
         button(LEAVE, "Leave", W - MARGIN - 150f, H - 46f, 150f, 30f, true);
-    }
-
-    private static String climateLabel(String id) {
-        for (Climate c : Climate.values()) if (c.id.equals(id)) return c.label.toLowerCase();
-        return "";
-    }
-
-    @Override
-    protected void drawBelow(float alpha) {
-        quad(0f, 0f, W, H, BG, alpha);
-        frame(0f, 0f, W, H, GOLD, alpha * 0.5f);
-        if (shown == null) return;
-        for (int i = 0; i < shown.size() && i < 8; i++) {
-            float x = MARGIN + (i % 4) * (CARD_W + GAP);
-            float y = TOP + (i / 4) * (CARD_H + GAP);
-            quad(x, y, CARD_W, CARD_H, CARD, alpha);
-            sprite(shown.get(i).artPath, x, y, CARD_W, IMG_H, alpha);
-            frame(x, y, CARD_W, CARD_H, CARD_EDGE, alpha);
-        }
     }
 
     @Override
@@ -154,8 +166,16 @@ public class BuyScreen extends Canvas implements CustomVisualDialogDelegate {
             leave();
             return;
         }
-        if (action instanceof Listing) {
-            String result = Actions.buy(market, (Listing) action);
+        if (action instanceof Integer) {
+            selected = (Integer) action;
+            message = "";
+            rebuild();
+            return;
+        }
+        if (BUY.equals(action)) {
+            List<Listing> shown = MarketRules.listings(market).list();
+            if (selected < 0 || selected >= shown.size()) return;
+            String result = Actions.buy(market, shown.get(selected));
             message = result;
             messageColor = result.startsWith("Bought") ? Misc.getPositiveHighlightColor()
                     : Misc.getNegativeHighlightColor();
@@ -164,8 +184,9 @@ public class BuyScreen extends Canvas implements CustomVisualDialogDelegate {
     }
 
     @Override
-    protected void onEscape() {
+    protected boolean onEscape() {
         leave();
+        return true;
     }
 
     private void leave() {

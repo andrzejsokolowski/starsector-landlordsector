@@ -2,13 +2,14 @@
 	# Property tiers, cheapest first. min and max are the base price range in credits, before the
 	# market's multiplier (0.25x to 4x). rentShare is the monthly rent at the Normal setting, as a share
 	# of the value. minSize is the smallest market that lists the tier. weight is how often it is rolled.
+	# comfort and decor are the tier's base scores from 0 to 100 (furniture adds decor later).
 	"tiers":[
-		{"id":"shack", "name":"Shack", "min":1000, "max":10000, "rentShare":0.03, "minSize":3, "slots":1, "weight":30},
-		{"id":"studio", "name":"Studio", "min":30000, "max":50000, "rentShare":0.025, "minSize":3, "slots":2, "weight":25},
-		{"id":"small_house", "name":"Small house", "min":100000, "max":300000, "rentShare":0.02, "minSize":4, "slots":3, "weight":20},
-		{"id":"house", "name":"House", "min":500000, "max":1000000, "rentShare":0.015, "minSize":5, "slots":4, "weight":14},
-		{"id":"villa", "name":"Villa", "min":1500000, "max":2500000, "rentShare":0.012, "minSize":6, "slots":6, "weight":8},
-		{"id":"estate", "name":"Estate", "min":3000000, "max":5000000, "rentShare":0.01, "minSize":7, "slots":8, "weight":4}
+		{"id":"shack", "name":"Shack", "min":1000, "max":10000, "rentShare":0.03, "minSize":3, "slots":1, "weight":30, "comfort":15, "decor":0},
+		{"id":"studio", "name":"Studio", "min":30000, "max":50000, "rentShare":0.025, "minSize":3, "slots":2, "weight":25, "comfort":30, "decor":5},
+		{"id":"small_house", "name":"Small house", "min":100000, "max":300000, "rentShare":0.02, "minSize":4, "slots":3, "weight":20, "comfort":45, "decor":10},
+		{"id":"house", "name":"House", "min":500000, "max":1000000, "rentShare":0.015, "minSize":5, "slots":4, "weight":14, "comfort":60, "decor":20},
+		{"id":"villa", "name":"Villa", "min":1500000, "max":2500000, "rentShare":0.012, "minSize":6, "slots":6, "weight":8, "comfort":75, "decor":30},
+		{"id":"estate", "name":"Estate", "min":3000000, "max":5000000, "rentShare":0.01, "minSize":7, "slots":8, "weight":4, "comfort":85, "decor":40}
 	],
 	"economy":{
 		# Share of the full value that a repair from ruin to new costs.
@@ -46,6 +47,11 @@
 		"disruptionWear":0.05,
 		# Condition lost when the player raids or bombs the market.
 		"raidWear":0.1,
-		"tacticalBombWear":0.3
+		"tacticalBombWear":0.3,
+		# Property agents: share of eligible size 5 markets that have one at a time (bigger markets
+		# more, smaller less), and how many months one stays before moving on.
+		"agentShare":0.25,
+		"agentMinMonths":3,
+		"agentMaxMonths":6
 	}
 }
