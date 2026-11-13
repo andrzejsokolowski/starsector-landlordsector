@@ -17,8 +17,6 @@ public final class Economy {
     public float stabilityMax = 1f;
     public float growthPerHome = 0.25f;
     public float growthMax = 5f;
-    public float tipChance = 0.01f;
-    public float tipShare = 0.1f;
     public float driftPerMonth = 0.02f;
     public float driftMin = 0.7f;
     public float driftMax = 1.4f;

@@ -95,8 +95,8 @@ public class TenantDaily implements EveryFrameScript {
         Tenant a = null;
         for (int i = 0; i < 6 && a == null; i++) {
             Tenant c = Tenants.create(m.getFactionId(), m, bad, false, "advert", random, 0,
-                    java.util.Collections.emptyMap(), p.tier().index);
-            if (TenantRules.fits(p.tier().index, p.setting(), c.wealth)) a = c;
+                    Tenants.fitBoost(p.traits()), p.tier().index);
+            if (TenantRules.fits(p.tier().index, p.setting(), c.wealth, c.homeShift())) a = c;
         }
         if (a == null) return;
         p.applicants().add(a);
@@ -113,6 +113,11 @@ public class TenantDaily implements EveryFrameScript {
         float total = 0f;
         for (TenantEvents.Def d : TenantEvents.all()) {
             if (d.leave) continue;
+            if (!d.requires.isEmpty()) {
+                boolean ok = false;
+                for (String tr : d.requires) if (p.tenant.has(tr)) ok = true;
+                if (!ok) continue;
+            }
             float w = TenantRules.eventWeight(d.good, d.damage, d.crime, d.weight, p.tenant.eventMult(d.id),
                     st.happiness, p.setting(), p.tier().index, st.security);
             if (w <= 0f) continue;

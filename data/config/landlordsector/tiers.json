@@ -36,9 +36,6 @@
 		"stabilityMax":1.0,
 		"growthPerHome":0.25,
 		"growthMax":5.0,
-		# Landlord tipping: chance per rent payment, and the tip as a share of that payment.
-		"tipChance":0.01,
-		"tipShare":0.1,
 		# Monthly random price wobble (one standard deviation) and its limits.
 		"driftPerMonth":0.02,
 		"driftMin":0.7,

@@ -87,8 +87,31 @@ public final class RulesCheck {
             expect(s[i].wearMult >= s[i - 1].wearMult, s[i] + ": wear must not fall");
             expect(s[i].repPerMonth < s[i - 1].repPerMonth, s[i] + ": reputation must fall");
         }
-        expect(RentSetting.CHARITY.lower() == RentSetting.CHARITY && RentSetting.GREEDY.higher() == RentSetting.GREEDY,
+        expect(RentSetting.FREE.lower() == RentSetting.FREE && RentSetting.GREEDY.higher() == RentSetting.GREEDY,
                 "rent settings stop at both ends");
+        expect(RentSetting.FREE.rentMult == 0f && RentSetting.CHARITY.lower() == RentSetting.FREE, "rent can be free");
+        expect(TenantRules.pricePenalty(2, RentSetting.FREE, 1) < TenantRules.pricePenalty(2, RentSetting.CHARITY, 1)
+                && !TenantRules.fits(4, RentSetting.FREE, 1), "free rent helps more than Charity, but no villa for the poor");
+        // 0.3.8: taste traits, decor, security.
+        expect(TenantRules.pricePenalty(4, RentSetting.NORMAL, 4, 1) == 0f
+                && TenantRules.pricePenalty(4, RentSetting.NORMAL, 4, 0) == TenantRules.STRETCH,
+                "a Social climber of wealth B is happy in a villa that others find too big");
+        expect(TenantRules.beneathPenalty(2, 4, 1) == TenantRules.BENEATH && TenantRules.beneathPenalty(2, 4, 0) == 0f,
+                "a Social climber finds a small house too small a tier sooner");
+        expect(TenantRules.wouldLiveIn(2, 6, -1) && !TenantRules.wouldLiveIn(2, 6, 0),
+                "a Frugal S tenant lives in a small house that other S tenants refuse");
+        expect(!TenantRules.canAfford(5, RentSetting.NORMAL, 3) && !TenantRules.fits(5, RentSetting.NORMAL, 3, 1),
+                "taste never changes what a tenant can pay");
+        expect(Pricing.decorHappiness(0f) < -5f && Pricing.decorHappiness(Pricing.DECOR_PLAIN) == 0f
+                && Pricing.decorHappiness(100f) > 20f, "bare walls cost happiness, plain is neutral, furnished adds");
+        expect(Pricing.securityHappiness(90f, false) > 0f && Pricing.securityHappiness(90f, true) < 0f
+                && Pricing.securityHappiness(10f, false) < 0f, "law-abiding tenants like security, criminals don't");
+        landlordsector.data.TenantEvents.Def tipEv = landlordsector.data.TenantEvents.get("tip");
+        expect(tipEv != null && tipEv.requires.contains("generous"), "only Generous tenants tip");
+        expect(landlordsector.data.TenantTraits.get("generous") != null
+                && landlordsector.data.TenantTraits.get("social_climber").homeShift == 1
+                && landlordsector.data.TenantTraits.get("frugal").homeShift == -1
+                && landlordsector.data.TenantTraits.get("shady").criminal, "new traits load");
 
         // Property stats.
         for (int i = 1; i < tiers.size(); i++) {
@@ -103,7 +126,6 @@ public final class RulesCheck {
         float happyGreedy = Pricing.happiness(50f, 10f, RentSetting.GREEDY.happiness, 0.5f);
         expect(Math.abs(happyKind - happyGreedy - 60f) < 1e-3, "Charity to Greedy moves happiness by 60");
         expect(Pricing.wearMult(100f) == 0.5f && Pricing.wearMult(0f) == 1.5f, "wear runs from half to 1.5 times");
-        expect(Math.abs(Pricing.tipChance(0.01f, 50f) - 0.01f) < 1e-6, "average tenants tip at the base chance");
         expect(Pricing.security(10f, 30f, 15f, false, false) == 100f && Pricing.security(0f, 0f, 0f, false, false) == 0f,
                 "security range");
         expect(Pricing.security(5f, 0f, 0f, true, true) == 5f, "pirates and Pathers cut security");

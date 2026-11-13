@@ -14,6 +14,8 @@ public final class TenantEvents {
 
     /** One event. */
     public static final class Def {
+        /** Only tenants with one of these traits have this event (the tip: Generous, Andrzej 0.3.8). */
+        public java.util.Set<String> requires = java.util.Collections.emptySet();
         public String id;
         /** What the event is about (money, damage, ...). Tooltips name this, never the event itself. */
         public String kind = "";
@@ -49,6 +51,11 @@ public final class TenantEvents {
                 d.damage = e.optBoolean("damage", false);
                 d.crime = e.optBoolean("crime", false);
                 d.big = e.optBoolean("big", false);
+                org.json.JSONArray req = e.optJSONArray("requires");
+                if (req != null && req.length() > 0) {
+                    d.requires = new java.util.HashSet<>();
+                    for (int k = 0; k < req.length(); k++) d.requires.add(req.optString(k));
+                }
                 d.leave = e.optBoolean("leave", false);
                 d.condition = (float) e.optDouble("condition", 0);
                 d.mood = (float) e.optDouble("mood", 0);

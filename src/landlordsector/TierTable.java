@@ -47,8 +47,6 @@ public final class TierTable {
             e.stabilityMax = num(ec, "stabilityMax", e.stabilityMax);
             e.growthPerHome = num(ec, "growthPerHome", e.growthPerHome);
             e.growthMax = num(ec, "growthMax", e.growthMax);
-            e.tipChance = num(ec, "tipChance", e.tipChance);
-            e.tipShare = num(ec, "tipShare", e.tipShare);
             e.driftPerMonth = num(ec, "driftPerMonth", e.driftPerMonth);
             e.driftMin = num(ec, "driftMin", e.driftMin);
             e.driftMax = num(ec, "driftMax", e.driftMax);

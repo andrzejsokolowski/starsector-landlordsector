@@ -95,6 +95,9 @@ public final class Tips {
             add(out, "Wears a home " + pct + "% " + (d.wear < 1f ? "slower" : "faster"), d.wear < 1f ? "+" : "-");
         }
         if (d.loyal) add(out, "Never moves out on their own", "+");
+        if (d.homeShift > 0) add(out, "Wants a home " + d.homeShift + " size bigger than they can comfortably pay for", null);
+        if (d.homeShift < 0) add(out, "Happy with a home " + (-d.homeShift) + " size smaller than they can pay for", null);
+        if (d.criminal) add(out, "Security makes them unhappy instead of happy", "-");
         for (String[] line : eventKinds(d.events)) out.add(line);
         List<String> likes = new ArrayList<>();
         List<String> hates = new ArrayList<>();
@@ -161,14 +164,21 @@ public final class Tips {
     }
 
     public static String[] wealth(int wealth) {
+        return wealth(wealth, 0);
+    }
+
+    public static String[] wealth(int wealth, int shift) {
+        String taste = shift > 0 ? " They want a bigger home than that." : (shift < 0
+                ? " They are happy with a smaller home than that." : "");
         return new String[] {
-            "Wealth " + TenantRules.wealthLetter(wealth) + ": this tenant can afford " + aTier(wealth) + ".",
+            "This tenant can afford " + aTier(wealth) + "." + taste,
             "A home one tier above that is hard for them to pay for: -" + Math.round(TenantRules.STRETCH)
                     + " happiness. Two or more tiers above, they can't afford it at all.",
             "A home two tiers below that is not good enough for them: -" + Math.round(TenantRules.BENEATH)
                     + " happiness. Three or more tiers below, they refuse to live there.",
             "Low rent makes a home easier to afford, high rent harder. Charity makes it cost like a home one"
-                    + " tier cheaper, Greedy like one tier more expensive. Low and High count half as much."};
+                    + " tier cheaper, Greedy like one tier more expensive. Low and High count half as much. Free"
+                    + " rent counts like one and a half tiers cheaper."};
     }
 
     public static List<String[]> headhunter(FinderDefs.Def d) {

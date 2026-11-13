@@ -35,6 +35,10 @@ public final class TenantTraits {
         public Map<String, Float> events = Collections.emptyMap();
         public boolean loyal;
         public Set<String> conflicts = Collections.emptySet();
+        /** Tiers bigger (+) or smaller (-) than their wealth fits that they want their home. */
+        public int homeShift;
+        /** Security makes them unhappy instead of happy. */
+        public boolean criminal;
     }
 
     private static Map<String, Def> defs = Collections.emptyMap();
@@ -64,6 +68,8 @@ public final class TenantTraits {
                 d.dislikes = HouseTraits.strings(t.optJSONArray("dislikes"));
                 d.events = floats(t.optJSONObject("events"));
                 d.loyal = t.optBoolean("loyal", false);
+                d.homeShift = t.optInt("homeShift", 0);
+                d.criminal = t.optBoolean("criminal", false);
                 d.conflicts = HouseTraits.strings(t.optJSONArray("conflicts"));
                 map.put(d.id, d);
             }

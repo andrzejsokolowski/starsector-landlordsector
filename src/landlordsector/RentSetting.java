@@ -2,6 +2,8 @@ package landlordsector;
 
 /** The rent control. Cheap rent earns reputation, greedy rent costs it and wears the home faster. */
 public enum RentSetting {
+    /** No rent at all (Andrzej, 0.3.8). */
+    FREE("Free", 0f, 0.8f, 0.5f, 40f),
     CHARITY("Charity", 0.5f, 0.8f, 0.3f, 30f),
     LOW("Low", 0.75f, 0.9f, 0.1f, 15f),
     NORMAL("Normal", 1f, 1f, 0f, 0f),

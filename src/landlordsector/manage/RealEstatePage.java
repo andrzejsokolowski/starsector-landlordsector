@@ -78,9 +78,9 @@ public class RealEstatePage implements ManagePage {
 
             title("Real estate", 10f, 8f, 300f);
             float bx = width - 8f - 3 * 160f;
-            modeButton(Mode.HOMES, "Homes (" + all.size() + ")", bx);
-            modeButton(Mode.POOL, "Tenant pool (" + portfolio.tenantPool().size() + ")", bx + 160f);
-            modeButton(Mode.FINDERS, "Headhunters (" + Finders.hired().size() + ")", bx + 320f);
+            modeButton(Mode.HOMES, "Homes: " + all.size(), "H", bx);
+            modeButton(Mode.POOL, "Tenant pool: " + portfolio.tenantPool().size(), "P", bx + 160f);
+            modeButton(Mode.FINDERS, "Headhunters: " + Finders.hired().size(), "U", bx + 320f);
             text(all.size() + (all.size() == 1 ? " property" : " properties") + " worth "
                     + Misc.getDGSCredits(worth) + ". Credits: " + Misc.getDGSCredits(Actions.credits()) + ".",
                     10f, 38f, width - 20f);
@@ -101,9 +101,31 @@ public class RealEstatePage implements ManagePage {
             }
         }
 
-        private void modeButton(Mode m, String caption, float x) {
-            Btn b = button("mode:" + m.name(), caption, x, 8f, 152f, 26f, true);
+        private void modeButton(Mode m, String caption, String key, float x) {
+            Btn b = hotkeyButton("mode:" + m.name(), caption, key, x, 8f, 152f, 26f);
             b.selected = mode == m;
+        }
+
+        /** H, P, U switch Homes, Tenant pool, Headhunters; D, T, L the home's Details, Tenants, Log (0.3.8). */
+        @Override
+        protected boolean onKey(int key) {
+            String a = null;
+            switch (key) {
+                case org.lwjgl.input.Keyboard.KEY_H: a = "mode:HOMES"; break;
+                case org.lwjgl.input.Keyboard.KEY_P: a = "mode:POOL"; break;
+                case org.lwjgl.input.Keyboard.KEY_U: a = "mode:FINDERS"; break;
+                case org.lwjgl.input.Keyboard.KEY_D: if (mode == Mode.HOMES) a = "sub:DETAILS"; break;
+                case org.lwjgl.input.Keyboard.KEY_T: if (mode == Mode.HOMES) a = "sub:TENANT"; break;
+                case org.lwjgl.input.Keyboard.KEY_L: if (mode == Mode.HOMES && !sideLog()) a = "sub:LOG"; break;
+                default: break;
+            }
+            if (a == null) return false;
+            onAction(a);
+            return true;
+        }
+
+        private boolean sideLog() {
+            return sideLogX() + 200f <= width - 8f;
         }
 
         /** Where the event log starts: right of the sheet. */
@@ -155,19 +177,21 @@ public class RealEstatePage implements ManagePage {
                 Property pr = all.get(i);
                 float y = rowY(i, range[0]);
                 area("home:" + pr.id, 8f, y, LIST_W, ROW_H, pr == chosen);
-                text(pr.displayName(), Misc.getHighlightColor(), 18f, y + 5f, LIST_W - 20f);
+                // Rented homes grey, vacant ones orange: the ones that need you stand out (0.3.8).
+                text(pr.displayName(), pr.tenant != null && !pr.condemned ? Misc.getGrayColor()
+                        : Misc.getHighlightColor(), 18f, y + 5f, LIST_W - 20f);
                 text(homeStatus(pr), homeStatusColor(pr), 18f, y + 25f, LIST_W - 20f);
             }
 
             float rx = rightX();
-            boolean sideLog = sideLogX() + 200f <= width - 8f;
-            Btn d = button("sub:DETAILS", "Details", rx, TOP, 110f, 24f, true);
+            boolean sideLog = sideLog();
+            Btn d = hotkeyButton("sub:DETAILS", "Details", "D", rx, TOP, 130f, 24f);
             d.selected = sub == Sub.DETAILS;
-            Btn t = button("sub:TENANT", chosen.tenant != null ? "Tenants" : "Tenants (" + chosen.applicants().size()
-                    + ")", rx + 116f, TOP, 110f, 24f, true);
+            Btn t = hotkeyButton("sub:TENANT", chosen.tenant != null ? "Tenants" : "Tenants: "
+                    + chosen.applicants().size(), "T", rx + 136f, TOP, 130f, 24f);
             t.selected = sub == Sub.TENANT;
             if (!sideLog) {
-                Btn l = button("sub:LOG", "Log", rx + 232f, TOP, 110f, 24f, true);
+                Btn l = hotkeyButton("sub:LOG", "Log", "L", rx + 272f, TOP, 130f, 24f);
                 l.selected = sub == Sub.LOG;
             } else if (sub == Sub.LOG) {
                 sub = Sub.DETAILS;
@@ -217,6 +241,9 @@ public class RealEstatePage implements ManagePage {
             s.subtitle = chosen.tier().name + ", " + (m != null ? where(m, st) : chosen.marketName + " (gone)");
             s.art = chosen.artPath;
             s.valueLine = Misc.getDGSCredits(chosen.value());
+            s.valueLines = PropertyStats.valueLines(chosen.tier(), chosen.basePrice, st.grade, st.marketMult,
+                    chosen.drift, chosen.traitPrice(), chosen.decor(), chosen.condition, chosen.condemned,
+                    chosen.value());
             float next = chosen.expectedRent();
             s.rentLine = next > 0f ? Misc.getDGSCredits(next) + " a month" + (own ? "" : ", after tariff") : "none";
             s.condition = chosen.condition;
@@ -243,7 +270,7 @@ public class RealEstatePage implements ManagePage {
             float cy = Math.min(end + 8f, height - 36f);
             RentSetting set = chosen.setting();
             label("Rent", Misc.getGrayColor(), rx, cy, 50f, 28f, Alignment.LMID, Fonts.DEFAULT_SMALL);
-            button("lower:" + chosen.id, "<", rx + 50f, cy, 30f, 28f, set != RentSetting.CHARITY);
+            button("lower:" + chosen.id, "<", rx + 50f, cy, 30f, 28f, set != RentSetting.FREE);
             label(set.label, Misc.getHighlightColor(), rx + 84f, cy, 90f, 28f, Alignment.MID, Fonts.DEFAULT_SMALL);
             button("higher:" + chosen.id, ">", rx + 178f, cy, 30f, 28f, set != RentSetting.GREEDY);
             float cost = chosen.repairCost();
@@ -253,6 +280,13 @@ public class RealEstatePage implements ManagePage {
             button("sell:" + chosen.id, (confirm ? "Confirm: sell for " : "Sell for ")
                     + Misc.getDGSCredits(chosen.saleValue()), rx + 462f, cy, 240f, 28f,
                     Actions.cannotSell(chosen) == null);
+            String noSale = Actions.cannotSell(chosen);
+            tip(rx + 462f, cy, 240f, 28f, "Selling", "You can sell a home in any condition, rented or not. You get"
+                    + " its value minus a " + Math.round(landlordsector.TierTable.economy().brokerFee * 100f)
+                    + "% broker fee and the local tariff.", noSale);
+            tip(rx, cy, 210f, 28f, "Rent", "Free: no rent at all, tenants are very happy. Charity and Low: less rent,"
+                    + " happier tenants, more reputation. High and Greedy: more rent, unhappier tenants, faster wear,"
+                    + " lost reputation.");
         }
 
         private void buildTenantTab(Property p, float rx, float y0) {
@@ -277,20 +311,88 @@ public class RealEstatePage implements ManagePage {
                     + Misc.getDGSCredits(TenantRules.screeningService(normal)) + " a month", rx + 210f, y0, 360f, 28f,
                     true);
             scr.selected = p.screeningService;
+            tip(rx, y0, 200f, 28f, "Advertising", "While on, people looking for a home apply to rent it, up to "
+                    + TenantRules.MAX_APPLICANTS + " at a time. Each waits " + Math.round(TenantRules.APPLICANT_DAYS)
+                    + " days for your answer. They come faster to good locations, comfortable homes and cheap rent."
+                    + " Applicants are more likely to have traits that suit this home and less likely to hate it."
+                    + " You see one trait of each until you screen them.");
+            tip(rx + 210f, y0, 360f, 28f, "Screening service", "A company checks everyone who answers your advert"
+                    + " before they reach you, for a tenth of the Normal rent a month. Applicants are then half as"
+                    + " likely to have bad traits. It does not show their traits: the Screen button on an applicant"
+                    + " does that, for half a month's Normal rent (at least 500).");
             int pool = Portfolio.get().tenantPool().size();
             text(pool > 0 ? pool + (pool == 1 ? " tenant waits" : " tenants wait") + " in your tenant pool." : "",
                     Misc.getGrayColor(), rx, y0 + 36f, cw);
 
             float y = y0 + 62f;
+            title("Applicants", rx, y, cw);
+            y += 30f;
             if (p.applicants().isEmpty()) {
                 text(p.advertising ? "No applicants yet." : "Not advertising.", Misc.getGrayColor(), rx, y, cw);
-                return;
+                y += 26f;
             }
             float fee = TenantRules.screeningFee(normal);
             for (Tenant a : p.applicants()) {
                 applicantRow(p, a, rx, y, cw, fee);
                 y += 72f;
             }
+            // The tenant pool in its own spot under the applicants (Andrzej, 0.3.8).
+            List<Tenant> poolList = Portfolio.get().tenantPool();
+            y += 8f;
+            title("From your tenant pool", rx, y, cw);
+            y += 30f;
+            if (poolList.isEmpty()) {
+                text("Nobody waits in your tenant pool. Headhunters bring tenants there.", Misc.getGrayColor(), rx, y,
+                        cw);
+                return;
+            }
+            for (Tenant a : poolList) {
+                if (y + 66f > height - 8f) break;
+                poolRow(p, a, rx, y, cw);
+                y += 72f;
+            }
+        }
+
+        private void poolRow(Property p, Tenant a, float x, float y, float w) {
+            box(x, y, w, 66f);
+            portrait(a.portrait, x + 6f, y + 6f, 54f);
+            float tx = x + 68f;
+            float hw = w - 80f - 180f;
+            headLine(a, tx, y + 4f, hw);
+            coloredRow(tenantTraits(a), tx, y + 22f, hw);
+            happinessThere(p, a, tx, y + 42f);
+            button("movein:" + p.id + ":" + a.id, "Move in", x + w - 8f - 160f, y + 18f, 160f, 28f,
+                    Actions.refusal(p, a) == null);
+        }
+
+        /** "Name - Faction   Wealth: [B]" with the wealth tooltip. */
+        private void headLine(Tenant a, float tx, float y, float hw) {
+            String head = nameAndFaction(a);
+            com.fs.starfarer.api.ui.LabelAPI nl = text(head, Misc.getHighlightColor(), tx, y, hw);
+            factionColored(nl, a);
+            float nw = Math.min(hw, nl.computeTextWidth(head) + 4f);
+            String letter = TenantRules.wealthLetter(a.wealth);
+            String wl = PropertyStats.graded("Wealth", letter);
+            com.fs.starfarer.api.ui.LabelAPI w = text(wl, Misc.getGrayColor(), tx + nw + 14f, y,
+                    Math.max(40f, hw - nw - 14f));
+            w.setHighlight("[" + letter + "]");
+            w.setHighlightColors(Misc.getHighlightColor());
+            tip(tx + nw + 14f, y, 100f, 18f, wl, landlordsector.ui.Tips.wealth(a.wealth, a.homeShift()));
+        }
+
+        /** "Happiness there 56" or why they won't move in, with the happiness tooltip. */
+        private void happinessThere(Property p, Tenant a, float tx, float y) {
+            String no = Actions.refusal(p, a);
+            PropertyStats st = PropertyStats.withTenant(p, a);
+            if (no != null) {
+                text(no, traitColor(Boolean.FALSE), tx, y, 360f);
+            } else {
+                float h = st.happiness;
+                text("Happiness there " + Math.round(h),
+                        traitColor(h >= 50f ? Boolean.TRUE : (h < 25f ? Boolean.FALSE : null)), tx, y, 220f);
+            }
+            tipColored(tx, y, 220f, 18f, "Happiness there: " + Math.round(st.happiness),
+                    visibleLines(a, st.happinessLines));
         }
 
         private void applicantRow(Property p, Tenant a, float x, float y, float w, float fee) {
@@ -298,25 +400,15 @@ public class RealEstatePage implements ManagePage {
             portrait(a.portrait, x + 6f, y + 6f, 54f);
             float tx = x + 68f;
             float hw = w - 80f - 330f;
-            String head = nameAndFaction(a);
-            com.fs.starfarer.api.ui.LabelAPI nl = text(head, Misc.getHighlightColor(), tx, y + 4f, hw);
-            factionColored(nl, a);
-            float nw = Math.min(hw, nl.computeTextWidth(head) + 4f);
-            String wl = "Wealth " + TenantRules.wealthLetter(a.wealth);
-            text(wl, Misc.getHighlightColor(), tx + nw + 12f, y + 4f, Math.max(40f, hw - nw - 12f));
-            tip(tx + nw + 12f, y + 4f, 90f, 18f, wl, landlordsector.ui.Tips.wealth(a.wealth));
-            coloredRow(tenantTraits(a), tx, y + 22f, w - 80f - 330f);
-            float h = PropertyStats.withTenant(p, a).happiness;
+            headLine(a, tx, y + 4f, hw);
+            coloredRow(tenantTraits(a), tx, y + 22f, w - 80f - 340f);
+            happinessThere(p, a, tx, y + 42f);
             String no = Actions.refusal(p, a);
-            if (no != null) {
-                text(no, traitColor(Boolean.FALSE), tx, y + 42f, w - 80f - 330f);
-            } else {
-                text("Happiness there " + Math.round(h),
-                        traitColor(h >= 50f ? Boolean.TRUE : (h < 25f ? Boolean.FALSE : null)), tx, y + 42f, 220f);
-            }
-            float bx = x + w - 330f;
+            // 8 pixels from the card's right edge (0.3.8: Turn away touched it).
+            float bx = x + w - 8f - 330f;
             button("screen:" + p.id + ":" + a.id, a.screened ? "Screened" : "Screen for " + Misc.getDGSCredits(fee),
                     bx, y + 18f, 150f, 28f, !a.screened && Actions.credits() >= fee);
+            tip(bx, y + 18f, 150f, 28f, "Screen", "Shows all of this applicant's traits.");
             button("accept:" + p.id + ":" + a.id, "Accept", bx + 156f, y + 18f, 84f, 28f, no == null);
             button("reject:" + p.id + ":" + a.id, "Turn away", bx + 246f, y + 18f, 84f, 28f, true);
         }
@@ -371,8 +463,8 @@ public class RealEstatePage implements ManagePage {
                 Tenant t = pool.get(i);
                 float y = rowY(i, range[0]);
                 area("pool:" + t.id, 8f, y, LIST_W, ROW_H, t == chosen);
-                String wants = "Wealth " + TenantRules.wealthLetter(t.wealth) + ", wants "
-                        + landlordsector.ui.Tips.aTier(t.wealth);
+                String wants = PropertyStats.graded("Wealth", TenantRules.wealthLetter(t.wealth)) + ", wants "
+                        + PropertyStats.article(PropertyStats.desiredTier(t.wealth, t.homeShift()).toLowerCase());
                 com.fs.starfarer.api.ui.LabelAPI nl = text(nameAndFaction(t), Misc.getHighlightColor(), 18f, y + 5f,
                         LIST_W - 20f);
                 boolean tooLong = nl.computeTextWidth(nameAndFaction(t)) > LIST_W - 24f;
@@ -412,14 +504,17 @@ public class RealEstatePage implements ManagePage {
                 if (y > height - 40f) break;
                 String no = Actions.refusal(p, chosen);
                 text(p.displayName() + ", " + p.tier().name.toLowerCase(), rx, y + 5f, cw - 440f);
+                PropertyStats pst = PropertyStats.withTenant(p, chosen);
                 if (no != null) {
                     text(no, traitColor(Boolean.FALSE), rx + cw - 430f, y + 5f, 270f);
                 } else {
-                    float h = PropertyStats.withTenant(p, chosen).happiness;
+                    float h = pst.happiness;
                     text("Happiness " + Math.round(h),
                             traitColor(h >= 50f ? Boolean.TRUE : (h < 25f ? Boolean.FALSE : null)),
                             rx + cw - 430f, y + 5f, 270f);
                 }
+                tipColored(rx + cw - 430f, y + 5f, 270f, 18f, "Happiness there: " + Math.round(pst.happiness),
+                        visibleLines(chosen, pst.happinessLines));
                 button("movein:" + p.id + ":" + chosen.id, "Move in", rx + cw - 150f, y, 150f, 28f, no == null);
                 y += 34f;
             }
@@ -535,7 +630,7 @@ public class RealEstatePage implements ManagePage {
                     Tenant t = findPool(parts[1]);
                     if (t != null) {
                         Portfolio.get().tenantPool().remove(t);
-                        good("Sent " + t.name + " away.");
+                        good("Dismissed " + t.name + ".");
                     }
                     selectedPool = null;
                     break;

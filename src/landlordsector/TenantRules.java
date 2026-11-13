@@ -8,6 +8,13 @@ public final class TenantRules {
     public static final float DISLIKE = 15f;
     /** Below this a tenant may move out. */
     public static final float MOVE_OUT_BELOW = 15f;
+    /** From this happiness up a tenant does small repairs: this much condition back each month. */
+    public static final float MAINTAIN_ABOVE = 60f;
+    public static final float MAINTAIN_REPAIR = 0.01f;
+    /** From this happiness up a tenant may decorate the home: this chance a month, this much decor. */
+    public static final float IMPROVE_ABOVE = 80f;
+    public static final float IMPROVE_CHANCE = 0.25f;
+    public static final float IMPROVE_DECOR = 2f;
     /** Applicants and pool tenants wait this many days, then look elsewhere. */
     public static final float APPLICANT_DAYS = 30f;
     public static final float POOL_DAYS = 60f;
@@ -49,15 +56,49 @@ public final class TenantRules {
         return Math.max(1, Math.min(MAX_WEALTH, wealth)) - 1;
     }
 
-    /** How far the rent setting moves a home's price level, in tiers. */
+    /** How far the rent setting moves a home's price level, in tiers. Free rent still never puts a villa in reach of the poor (0.3.3 rule). */
     public static float settingShift(RentSetting s) {
         switch (s) {
+            case FREE: return -1.5f;
             case CHARITY: return -1f;
             case LOW: return -0.5f;
             case HIGH: return 0.5f;
             case GREEDY: return 1f;
             default: return 0f;
         }
+    }
+
+    /*
+     * Taste (0.3.8, Andrzej: "traits that make them prefer larger houses they can't afford, and smaller houses
+     * despite being rich"). A trait's homeShift moves the home size a tenant wants: Social climber +1, Frugal -1.
+     * What they can pay never changes; a home above their wealth up to the size they want costs no happiness, and a
+     * home counts as too small from the size they want.
+     */
+
+    /** The tier this tenant wants: the tier their wealth fits, moved by their traits. */
+    public static int desiredTier(int wealth, int shift) {
+        return Math.max(0, Math.min(MAX_WEALTH - 1, fitTier(wealth) + shift));
+    }
+
+    public static float pricePenalty(int tier, RentSetting s, int wealth, int shift) {
+        float o = over(tier, s, wealth);
+        if (o > 1.001f) return CANT_AFFORD;
+        float above = tier + settingShift(s) - Math.max(fitTier(wealth), desiredTier(wealth, shift));
+        return above > 0f ? STRETCH * above : 0f;
+    }
+
+    public static float beneathPenalty(int tier, int wealth, int shift) {
+        int b = desiredTier(wealth, shift) - tier;
+        if (b >= 3) return FAR_BENEATH;
+        return b == 2 ? BENEATH : 0f;
+    }
+
+    public static boolean wouldLiveIn(int tier, int wealth, int shift) {
+        return desiredTier(wealth, shift) - tier < 3;
+    }
+
+    public static boolean fits(int tier, RentSetting s, int wealth, int shift) {
+        return canAfford(tier, s, wealth) && wouldLiveIn(tier, wealth, shift);
     }
 
     /** Tiers of price level above what the tenant pays happily (0 or less: fine). */
@@ -121,6 +162,7 @@ public final class TenantRules {
 
     public static float settingDraw(RentSetting s) {
         switch (s) {
+            case FREE: return 2.5f;
             case CHARITY: return 1.8f;
             case LOW: return 1.4f;
             case HIGH: return 0.7f;
@@ -132,6 +174,7 @@ public final class TenantRules {
     /** Bad events get rarer on cheap rent and more common on greedy rent, beyond what happiness does. */
     public static float settingBadMult(RentSetting s) {
         switch (s) {
+            case FREE: return 0.5f;
             case CHARITY: return 0.6f;
             case LOW: return 0.8f;
             case HIGH: return 1.25f;

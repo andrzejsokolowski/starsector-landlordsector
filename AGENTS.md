@@ -112,3 +112,12 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
 - 0.3.7 (Andrzej: new players may not know faction colors): tenant names read "Name - Faction" with only the
   faction name in its color (`PropertyView.nameAndFaction` / `factionColored`). The pool list moves the faction to
   the second line when the name is too long.
+
+- 0.3.8 (Andrzej's notes after 0.3.7): `RentSetting.FREE` (shift -1.5, so the 0.3.3 rule "the poor never afford a
+  villa" holds). Taste: tenant trait `homeShift` (Social climber +1, Frugal -1) through the `TenantRules` overloads
+  with a shift; `criminal` traits flip `Pricing.securityHappiness`. `Pricing.decorHappiness` (20 is neutral). No
+  monthly tips: the tip event `requires` Generous (`TenantEvents.Def.requires`). Happiness 60+ repairs 1% a month,
+  80+ may decorate (`TenantRules.MAINTAIN_*`, `IMPROVE_*`, in `MonthlyTick`). Advert applicants get trait odds from
+  the home (`Tenants.fitBoost`). `PropertyStats.valueLines` / `graded`. Manage page hotkeys via `Canvas.onKey` and
+  `hotkeyButton`. LunaLib `lls_kaysaarsDemise` (`Settings.kaysaarsDemise`, unused for now).
+

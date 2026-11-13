@@ -68,6 +68,30 @@ public class Tenant {
         return m;
     }
 
+    /** How many tiers bigger (+) or smaller (-) than their wealth fits this tenant wants their home. */
+    public int homeShift() {
+        int n = 0;
+        for (String id : traits()) {
+            landlordsector.data.TenantTraits.Def d = landlordsector.data.TenantTraits.get(id);
+            if (d != null) n += d.homeShift;
+        }
+        return n;
+    }
+
+    /** True when a trait marks them a criminal: security makes them unhappy instead of happy. */
+    public boolean criminal() {
+        for (String id : traits()) {
+            landlordsector.data.TenantTraits.Def d = landlordsector.data.TenantTraits.get(id);
+            if (d != null && d.criminal) return true;
+        }
+        return false;
+    }
+
+    /** True when the tenant has this trait. */
+    public boolean has(String traitId) {
+        return traits().contains(traitId);
+    }
+
     /** "Matteo" from "Matteo Zaniah". */
     public String firstName() {
         if (name == null || name.trim().isEmpty()) return "They";

@@ -51,7 +51,7 @@ public final class Pricing {
 
     /**
      * Hazard 100 percent is 1. Better than that rises fast (50 percent gives 1.5), worse falls slowly
-     * (165 percent gives 0.84, 275 percent 0.56, never under 0.35). A breathable world and a mild climate
+     * (165 percent gives 0.84, 275 percent 0.56, never under 0.35). A habitable world and a mild climate
      * add a little on top of what they already take off the hazard. Pollution takes some.
      */
     public static float planetMult(float hazard, boolean habitable, boolean mild, boolean pollution) {
@@ -98,7 +98,7 @@ public final class Pricing {
 
     /**
      * Comfort: the tier's base, plus or minus 20 for every 100 percent of hazard below or above 100 (at most
-     * +12 and -40), a little more for a mild climate and a breathable world, less for pollution and for
+     * +12 and -40), a little more for a mild climate and a habitable world, less for pollution and for
      * station life. A worn home loses up to 40 percent of it.
      */
     public static float comfort(float tierComfort, Climate climate, boolean habitable, boolean mild,
@@ -114,8 +114,25 @@ public final class Pricing {
 
     /** Tenant happiness from comfort, decor, the rent setting and the home's condition. */
     public static float happiness(float comfort, float decor, float settingDelta, float condition) {
-        float h = 50f + (comfort - 50f) * 0.4f + decor * 0.1f + settingDelta + (clamp(condition, 0f, 1f) - 0.5f) * 40f;
+        float h = 50f + (comfort - 50f) * 0.4f + decorHappiness(decor) + settingDelta
+                + (clamp(condition, 0f, 1f) - 0.5f) * 40f;
         return clamp(h, 0f, 100f);
+    }
+
+    /** Decor 20 is a plain home (0). Bare walls cost up to 6 happiness, a fully furnished one adds 24 (0.3.8). */
+    public static final float DECOR_PLAIN = 20f;
+
+    public static float decorHappiness(float decor) {
+        return (clamp(decor, 0f, 100f) - DECOR_PLAIN) * 0.3f;
+    }
+
+    /**
+     * Security 50 is neutral. Law-abiding tenants gain up to 5 happiness from a safe home and lose up to 5 in a
+     * lawless one; criminals the other way round (Andrzej, 0.3.8).
+     */
+    public static float securityHappiness(float security, boolean criminal) {
+        float v = (clamp(security, 0f, 100f) - 50f) * 0.1f;
+        return criminal ? -v : v;
     }
 
     /** Wear speed: unhappy tenants (0) wear a home 1.5 times as fast, happy ones (100) half as fast. */
@@ -123,10 +140,6 @@ public final class Pricing {
         return 1.5f - clamp(happiness, 0f, 100f) / 100f;
     }
 
-    /** Tip chance: half the base for miserable tenants, one and a half times for delighted ones. */
-    public static float tipChance(float base, float happiness) {
-        return base * (0.5f + clamp(happiness, 0f, 100f) / 100f);
-    }
 
     /**
      * Security from stability (6 a point) plus the best military building and the best ground defense,

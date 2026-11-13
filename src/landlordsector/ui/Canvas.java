@@ -179,6 +179,20 @@ public abstract class Canvas implements CustomUIPanelPlugin {
         return false;
     }
 
+    /** A key was pressed (an LWJGL key code). Return true to take it. */
+    protected boolean onKey(int key) {
+        return false;
+    }
+
+    /** A button whose caption ends in a hotkey, "Homes (H)", the "(H)" in gold like the game's own. */
+    protected Btn hotkeyButton(Object action, String caption, String key, float x, float y, float w, float h) {
+        String full = caption + " (" + key + ")";
+        Btn b = button(action, full, x, y, w, h, true);
+        b.label.setHighlight("(" + key + ")");
+        b.label.setHighlightColors(Misc.getHighlightColor());
+        return b;
+    }
+
     /** The background under everything, in panel coordinates. */
     protected void drawBackground(float alpha) {
     }
@@ -493,6 +507,10 @@ public abstract class Canvas implements CustomUIPanelPlugin {
             if (e.getEventValue() == Keyboard.KEY_ESCAPE) {
                 // Only take Escape when this panel uses it, so the Manage screen can still close on it.
                 if (onEscape()) e.consume();
+                return;
+            }
+            if (onKey(e.getEventValue())) {
+                e.consume();
                 return;
             }
         }

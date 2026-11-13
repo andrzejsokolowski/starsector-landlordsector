@@ -120,7 +120,7 @@ public final class Actions {
     /** Why this tenant would not move into this home at its rent setting, or null when they would. */
     public static String refusal(Property p, Tenant t) {
         int tier = p.tier().index;
-        if (!TenantRules.wouldLiveIn(tier, t.wealth)) return "Too rich for a home this cheap";
+        if (!TenantRules.wouldLiveIn(tier, t.wealth, t.homeShift())) return "Too rich for a home this cheap";
         if (!TenantRules.canAfford(tier, p.setting(), t.wealth)) {
             return "Can't pay for it at " + p.setting().label + " rent";
         }

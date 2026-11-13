@@ -18,7 +18,7 @@ Requires LunaLib and OddiszCommons.
 - Base prices: shack 1k to 10k, studio 30k to 50k, small house 100k to 300k, house 500k to 1M,
   villa 1.5M to 2.5M, estate 3M to 5M.
 - The market stretches those prices from a quarter to four times. Size 5 and 6 markets with 100%
-  hazard are the standard. Bigger markets (7 and 8), stability, low hazard, a breathable world and a mild
+  hazard are the standard. Bigger markets (7 and 8), stability, low hazard, a habitable world and a mild
   climate raise the price. Small markets, high hazard, pollution, pirate activity and Pather cells lower
   it.
 - Prices include the local tariff. On your own colonies homes cost half, with no tariff.
@@ -57,8 +57,10 @@ Requires LunaLib and OddiszCommons.
   habitable worlds with a mild climate, less on stations and polluted worlds. A worn home loses some.
 - **Decor** (0 to 100): from the tier for now (furniture later). Adds up to a quarter to the value and
   raises the reputation its rent earns or costs.
-- **Tenant happiness** (0 to 100): from comfort, decor, condition and the rent setting. Happy tenants wear
-  a home slower and tip more often. Unhappy ones wear it up to 1.5 times as fast.
+- **Tenant happiness** (0 to 100): from comfort, decor (below 20 costs happiness), condition, security and the
+  rent setting. Below 15 a tenant may move out; above 60 they do small repairs (+1% condition a month); above 80
+  they may decorate the home. Happy tenants wear a home slower; unhappy ones up to 1.5 times as fast. Only
+  Generous tenants tip.
 - **Location** (S+, S, A, B, C, D, E, F): the market's price grade. A standard world is C, an Earth-like
   one S, a high-hazard world with pirates F. Hovering over the grade lists every price factor and the market
   conditions that change the price. Hovering over a stat bar lists what makes up that stat.
@@ -67,7 +69,10 @@ Requires LunaLib and OddiszCommons.
   stability and hazard changes already count through the market, so they are not repeated. Some only
   count under one faction. `tools/conditions` rebuilds the table when the mod list changes.
 - **Security** (0 to 100): from stability, military buildings and ground defenses, lower with pirate
-  activity or Pather cells. Cuts the damage raids and disruption do.
+  activity or Pather cells. Law-abiding tenants are happier in a safe home, criminals less happy. Cuts
+  break-ins, police raids and the damage raids and disruption do.
+- Every stat bar and the Value row have a tooltip listing what makes them up.
+- Rent settings: Free, Charity, Low, Normal, High, Greedy. Free counts like a home one and a half tiers cheaper.
 
 ## Rent
 

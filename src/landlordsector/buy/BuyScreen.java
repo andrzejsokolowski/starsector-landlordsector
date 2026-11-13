@@ -122,7 +122,8 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
         }
         int ownedHere = Portfolio.get().countAt(market.getId());
         int cap = Settings.maxProperties();
-        float oy = TOP + Math.min(shown.size(), rows) * (ROW_H + 4f) + 6f;
+        // Below the list, or below the "nothing for sale" lines when there is none (0.3.8: they overlapped).
+        float oy = shown.isEmpty() ? TOP + 60f : TOP + Math.min(shown.size(), rows) * (ROW_H + 4f) + 6f;
         text("You own " + ownedHere + (ownedHere == 1 ? " home" : " homes") + " here,", Misc.getGrayColor(),
                 MARGIN, oy, LIST_W);
         text(Portfolio.get().properties().size() + " in all" + (cap > 0 ? " (most allowed " + cap + ")." : "."),
@@ -144,6 +145,13 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
             s.subtitle = (t != null ? t.name + ", " : "") + where(market, st);
             s.art = l.artPath;
             s.valueLine = Misc.getDGSCredits(full);
+            if (t != null) {
+                s.valueLines = PropertyStats.valueLines(t, l.basePrice, st.grade, st.marketMult, 1f,
+                        MarketRules.traitPrice(l.traits, market), t.decor, 1f, false, full);
+                float pay = MarketRules.buyPrice(market, l);
+                s.valueLines.add(new String[] {(own ? "Your colony: you pay half, " : "With the tariff you pay ")
+                        + Misc.getDGSCredits(pay) + ".", null});
+            }
             s.rentLine = "about " + Misc.getDGSCredits(rent) + " a month" + (own ? "" : ", after tariff");
             s.condition = 1f;
             s.occupancy = "For sale";

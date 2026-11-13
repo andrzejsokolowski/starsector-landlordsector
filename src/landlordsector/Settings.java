@@ -28,4 +28,14 @@ public final class Settings {
             return 0;
         }
     }
+
+    /** "Kaysaar's Demise" (Andrzej, 0.3.8): off by default and does nothing yet. */
+    public static boolean kaysaarsDemise() {
+        try {
+            Boolean b = LunaSettings.getBoolean(MOD_ID, "lls_kaysaarsDemise");
+            return b != null && b;
+        } catch (Throwable t) {
+            return false;
+        }
+    }
 }

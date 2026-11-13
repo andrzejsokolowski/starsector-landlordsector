@@ -119,6 +119,24 @@ public final class Tenants {
         return com.fs.starfarer.api.util.Misc.getHighlightColor();
     }
 
+    /**
+     * Trait odds for people answering an advert for a home with these house traits (Andrzej, 0.3.8: "an allergic
+     * person won't apply for a floral garden home"): traits that like something here 1.5 times as likely, traits
+     * that hate something here a third as likely.
+     */
+    public static java.util.Map<String, Float> fitBoost(List<String> houseTraits) {
+        java.util.Map<String, Float> out = new java.util.HashMap<>();
+        java.util.Set<String> tags = landlordsector.data.HouseTraits.tags(houseTraits);
+        if (tags.isEmpty()) return out;
+        for (TenantTraits.Def d : TenantTraits.all()) {
+            float m = 1f;
+            for (String t : d.likes) if (tags.contains(t)) m = 1.5f;
+            for (String t : d.dislikes) if (tags.contains(t)) m = Math.min(m, 1f) * 0.33f;
+            if (m != 1f) out.put(d.id, m);
+        }
+        return out;
+    }
+
     /** The faction's display name, or the id when the faction is not in this game. */
     public static String factionName(String factionId) {
         try {

@@ -23,6 +23,8 @@ public abstract class PropertyView extends Canvas {
         public String subtitle = "";
         public String art;
         public String valueLine = "";
+        /** What makes up the value, for the Value row's tooltip. */
+        public List<String[]> valueLines;
         public String rentLine = "";
         public float condition = 1f;
         public String occupancy = "";
@@ -96,12 +98,12 @@ public abstract class PropertyView extends Canvas {
         float tw = w - size - 12f;
         String head = nameAndFaction(t);
         factionColored(title(head, tx, y, tw), t);
-        String origin = "Wealth ";
-        com.fs.starfarer.api.ui.LabelAPI o = text(origin, Misc.getGrayColor(), tx, y + 28f, tw);
-        float ow = o.computeTextWidth(origin);
         String letter = landlordsector.TenantRules.wealthLetter(t.wealth);
-        text(letter + ": fits " + Tips.aTier(t.wealth), Misc.getHighlightColor(), tx + ow + 4f, y + 28f, tw - ow);
-        tip(tx + ow, y + 28f, 220f, 18f, "Wealth " + letter, Tips.wealth(t.wealth));
+        String wl = landlordsector.PropertyStats.graded("Wealth", letter);
+        com.fs.starfarer.api.ui.LabelAPI o = text(wl, Misc.getGrayColor(), tx, y + 28f, tw);
+        o.setHighlight("[" + letter + "]");
+        o.setHighlightColors(Misc.getHighlightColor());
+        tip(tx, y + 28f, Math.max(80f, o.computeTextWidth(wl) + 8f), 18f, wl, Tips.wealth(t.wealth, t.homeShift()));
         text("Traits", Misc.getGrayColor(), tx, y + 48f, 60f);
         coloredRow(tenantTraits(t), tx + 60f, y + 48f, tw - 60f);
         float ny = y + size + 8f;
@@ -112,6 +114,8 @@ public abstract class PropertyView extends Canvas {
                     : (st.happiness >= 25f ? Misc.getHighlightColor() : Misc.getNegativeHighlightColor());
             bar(x + 120f, ny + 5f, 110f, 10f, st.happiness / 100f, happy);
             text(String.valueOf(Math.round(st.happiness)), x + 238f, ny, 40f);
+            tipColored(x, ny, 280f, ROW, "Happiness there: " + Math.round(st.happiness), visibleLines(t,
+                    st.happinessLines));
             ny += ROW;
             for (landlordsector.PropertyStats.Note n : st.notes) {
                 if (n.text.contains(":") && hiddenTraitName(t, n.text.substring(0, n.text.indexOf(':')))) {
@@ -138,6 +142,17 @@ public abstract class PropertyView extends Canvas {
     public static void factionColored(com.fs.starfarer.api.ui.LabelAPI label, landlordsector.Tenant t) {
         label.setHighlight(landlordsector.Tenants.factionName(t.factionId));
         label.setHighlightColors(landlordsector.Tenants.factionColor(t.factionId));
+    }
+
+    /** Tooltip lines without the ones about the tenant's hidden traits. */
+    public static List<String[]> visibleLines(landlordsector.Tenant t, List<String[]> lines) {
+        List<String[]> out = new ArrayList<>();
+        for (String[] l : lines) {
+            int c = l[0].indexOf(':');
+            if (c > 0 && hiddenTraitName(t, l[0].substring(0, c))) continue;
+            out.add(l);
+        }
+        return out;
     }
 
     /** True when {@code name} is one of the tenant's traits that is still hidden. */
@@ -200,6 +215,7 @@ public abstract class PropertyView extends Canvas {
         float vw = col - 130f;
 
         row("Value", s.valueLine, Misc.getHighlightColor(), lx, r, vw);
+        if (s.valueLines != null) tipColored(lx, r, 260f, ROW, "Value", s.valueLines);
         row("Rent", s.rentLine, Misc.getTextColor(), lx, r + ROW, vw);
         text("Condition", Misc.getGrayColor(), lx, r + 2 * ROW, 120f);
         Color cond = s.condition < 0.35f ? Misc.getNegativeHighlightColor() : Misc.getPositiveHighlightColor();
@@ -220,13 +236,13 @@ public abstract class PropertyView extends Canvas {
             stat("Security", st.security, SECURITY, rx, r + 3 * ROW);
             tipColored(rx, r + 3 * ROW, 280f, ROW, "Security " + Math.round(st.security), st.securityLines);
             text("Location", Misc.getGrayColor(), lx, r + 4 * ROW, 120f);
-            text(st.grade, Misc.getHighlightColor(), lx + 120f, r + 4 * ROW, 30f);
+            text("[" + st.grade + "]", Misc.getHighlightColor(), lx + 120f, r + 4 * ROW, 50f);
             List<String[]> gl = st.gradeLines;
             if (gl.isEmpty()) {
                 gl = new ArrayList<>();
                 gl.add(new String[] {st.gradeReason, null});
             }
-            tipColored(lx, r + 4 * ROW, 152f, ROW, "Location " + st.grade, gl);
+            tipColored(lx, r + 4 * ROW, 172f, ROW, landlordsector.PropertyStats.graded("Location", st.grade), gl);
         }
         float er = r + 5 * ROW;
         if (!s.traits.isEmpty()) {

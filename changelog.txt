@@ -1,3 +1,22 @@
+Version 0.3.8 (2026-11-13)
+- Hover Value to see what makes up a home's value: base value, location multiplier, market trend, traits, decor and condition
+- The location tooltip lists its multipliers without "price" on every line
+- Grades read "Wealth: [B]" and "Location: [A]"; the tenant card no longer says "fits an estate"
+- "Breathable world" is now "Habitable world"
+- Decor matters: below 20 tenants are less happy, above 20 happier
+- Security changes happiness: law-abiding tenants like a safe home, criminals (Vandal, Shady connections) feel watched
+- Tenants no longer tip on their own; only the new Generous trait tips
+- New tenant traits: Social climber (wants a bigger home than they can comfortably pay for), Frugal (happy with a smaller one) and Generous
+- Rent can be set to Free
+- Tenants above 60 happiness do small repairs each month, above 80 they may decorate the home; the happiness tooltip lists these limits
+- People answering an advert are more likely to have traits that suit the home and less likely to hate it
+- The Tenants tab of an empty home also lists your tenant pool, with Move in buttons
+- Home list: rented homes grey, vacant ones orange
+- Tooltips on Advertising, Screening service, Screen, Rent and Sell, and on the happiness of applicants and pool tenants
+- Hotkeys on the Manage page: H Homes, P Tenant pool, U Headhunters, D Details, T Tenants, L Log
+- Agent screen text no longer overlaps when nothing is for sale; the Turn away button no longer touches the card edge
+- New LunaLib setting "Kaysaar's Demise" (off, does nothing yet)
+
 Version 0.3.7 (2026-11-13)
 - Tenant names read "Matteo Zaniah - Hegemony", with the faction name in its faction's color
 

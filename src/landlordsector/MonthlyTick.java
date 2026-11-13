@@ -86,7 +86,6 @@ public class MonthlyTick implements EconomyTickListener, ColonyPlayerHostileActL
         Map<String, Float> repByFaction = new HashMap<>();
         List<String> news = new ArrayList<>();
         float rentTotal = 0f;
-        float tips = 0f;
 
         Iterator<Property> it = portfolio.properties().iterator();
         while (it.hasNext()) {
@@ -111,13 +110,6 @@ public class MonthlyTick implements EconomyTickListener, ColonyPlayerHostileActL
                         Settings.rentMult());
                 net = gross * (1f - MarketRules.tariff(m)) * (1f - Pricing.clamp(p.rentCut, 0f, 1f));
                 PropertyStats stats = p.stats();
-                if (random.nextFloat() < Pricing.tipChance(eco.tipChance, stats.happiness)) {
-                    float tip = net * eco.tipShare;
-                    net += tip;
-                    tips += tip;
-                    news.add("A tenant on " + m.getName() + " tipped their landlord " + Misc.getDGSCredits(tip)
-                            + ". It happens.");
-                }
                 if (!MarketRules.isOwn(m)) {
                     float rep = p.setting().repPerMonth * (1f + 0.25f * p.tier().index)
                             * Pricing.decorRepMult(stats.decor);
@@ -150,6 +142,15 @@ public class MonthlyTick implements EconomyTickListener, ColonyPlayerHostileActL
                 float wear = Pricing.wearMult(stats.happiness) * p.wearMult() / eco.wearMonths;
                 if (anyDisrupted(m)) wear += eco.disruptionWear * Pricing.damageMult(stats.security);
                 p.condition -= wear;
+                // Happy tenants look after the home (Andrzej, 0.3.8): small repairs above 60, decorating above 80.
+                if (p.tenant != null && stats.happiness >= TenantRules.MAINTAIN_ABOVE) {
+                    p.condition = Math.min(1f, p.condition + TenantRules.MAINTAIN_REPAIR);
+                }
+                if (p.tenant != null && stats.happiness >= TenantRules.IMPROVE_ABOVE
+                        && random.nextFloat() < TenantRules.IMPROVE_CHANCE && p.decor() < 100f) {
+                    p.decorBonus += TenantRules.IMPROVE_DECOR;
+                    Notify.event(p, p.tenant.name + " decorated " + p.displayName() + " on their own.", true, false);
+                }
                 if (p.condition <= 0f) {
                     p.condition = 0f;
                     p.condemned = true;
