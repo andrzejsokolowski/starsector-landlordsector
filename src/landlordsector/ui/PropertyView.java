@@ -94,10 +94,8 @@ public abstract class PropertyView extends Canvas {
         portrait(t.portrait, x, y, size);
         float tx = x + size + 12f;
         float tw = w - size - 12f;
-        com.fs.starfarer.api.ui.LabelAPI nl = title(t.name, tx, y, tw);
-        nl.setColor(landlordsector.Tenants.factionColor(t.factionId));
-        tip(tx, y, Math.min(tw, nl.computeTextWidth(t.name) + 10f), 26f,
-                landlordsector.Tenants.factionName(t.factionId));
+        String head = nameAndFaction(t);
+        factionColored(title(head, tx, y, tw), t);
         String origin = "Wealth ";
         com.fs.starfarer.api.ui.LabelAPI o = text(origin, Misc.getGrayColor(), tx, y + 28f, tw);
         float ow = o.computeTextWidth(origin);
@@ -126,6 +124,20 @@ public abstract class PropertyView extends Canvas {
             }
         }
         return ny;
+    }
+
+    /**
+     * "Matteo Zaniah - Hegemony" (Andrzej, 0.3.7: players new to the Sector may not know every faction's color,
+     * so the faction is named, in its own color).
+     */
+    public static String nameAndFaction(landlordsector.Tenant t) {
+        return t.name + " - " + landlordsector.Tenants.factionName(t.factionId);
+    }
+
+    /** Colors the faction part of a {@link #nameAndFaction} label in the faction's own color. */
+    public static void factionColored(com.fs.starfarer.api.ui.LabelAPI label, landlordsector.Tenant t) {
+        label.setHighlight(landlordsector.Tenants.factionName(t.factionId));
+        label.setHighlightColors(landlordsector.Tenants.factionColor(t.factionId));
     }
 
     /** True when {@code name} is one of the tenant's traits that is still hidden. */

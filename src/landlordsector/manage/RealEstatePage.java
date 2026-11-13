@@ -298,9 +298,10 @@ public class RealEstatePage implements ManagePage {
             portrait(a.portrait, x + 6f, y + 6f, 54f);
             float tx = x + 68f;
             float hw = w - 80f - 330f;
-            com.fs.starfarer.api.ui.LabelAPI nl = text(a.name, Tenants.factionColor(a.factionId), tx, y + 4f, hw);
-            float nw = Math.min(hw, nl.computeTextWidth(a.name) + 4f);
-            tip(tx, y + 4f, nw, 18f, Tenants.factionName(a.factionId));
+            String head = nameAndFaction(a);
+            com.fs.starfarer.api.ui.LabelAPI nl = text(head, Misc.getHighlightColor(), tx, y + 4f, hw);
+            factionColored(nl, a);
+            float nw = Math.min(hw, nl.computeTextWidth(head) + 4f);
             String wl = "Wealth " + TenantRules.wealthLetter(a.wealth);
             text(wl, Misc.getHighlightColor(), tx + nw + 12f, y + 4f, Math.max(40f, hw - nw - 12f));
             tip(tx + nw + 12f, y + 4f, 90f, 18f, wl, landlordsector.ui.Tips.wealth(a.wealth));
@@ -370,9 +371,20 @@ public class RealEstatePage implements ManagePage {
                 Tenant t = pool.get(i);
                 float y = rowY(i, range[0]);
                 area("pool:" + t.id, 8f, y, LIST_W, ROW_H, t == chosen);
-                text(t.name, Tenants.factionColor(t.factionId), 18f, y + 5f, LIST_W - 20f);
-                text("Wealth " + TenantRules.wealthLetter(t.wealth) + ", wants " + landlordsector.ui.Tips.aTier(t.wealth),
-                        Misc.getGrayColor(), 18f, y + 25f, LIST_W - 20f);
+                String wants = "Wealth " + TenantRules.wealthLetter(t.wealth) + ", wants "
+                        + landlordsector.ui.Tips.aTier(t.wealth);
+                com.fs.starfarer.api.ui.LabelAPI nl = text(nameAndFaction(t), Misc.getHighlightColor(), 18f, y + 5f,
+                        LIST_W - 20f);
+                boolean tooLong = nl.computeTextWidth(nameAndFaction(t)) > LIST_W - 24f;
+                if (tooLong) {
+                    // Too long for one line: the faction moves down next to the wealth.
+                    nl.setText(t.name);
+                    wants = Tenants.factionName(t.factionId) + " - " + wants;
+                } else {
+                    factionColored(nl, t);
+                }
+                com.fs.starfarer.api.ui.LabelAPI wl = text(wants, Misc.getGrayColor(), 18f, y + 25f, LIST_W - 20f);
+                if (tooLong) factionColored(wl, t);
             }
             float rx = rightX();
             float cw = contentWidth(rightW());

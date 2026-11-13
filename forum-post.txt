@@ -76,6 +76,10 @@ This mod is under the CC0 (Creative Commons Zero) License, allowing you to do wh
 [/spoiler]
 
 [spoiler=Version log]
+[b]0.3.7[/b]
+[list]
+[li]Tenant names read "Matteo Zaniah - Hegemony", with the faction name in its faction's color[/li]
+[/list]
 [b]0.3.6[/b]
 [list]
 [li]The agent's Real estate screen now nearly fills the screen[/li]

@@ -1,3 +1,6 @@
+Version 0.3.7 (2026-11-13)
+- Tenant names read "Matteo Zaniah - Hegemony", with the faction name in its faction's color
+
 Version 0.3.6 (2026-11-13)
 - The agent's Real estate screen now nearly fills the screen
 - Comfort, Decor, Tenant happiness and Security show what makes up their number when you hover over the bar

@@ -108,3 +108,7 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   Tenant names use `Tenants.factionColor` (the faction's base UI color) instead of "From X". House traits may
   `cancel` conditions with their hazard (Geothermal, Air-conditioned): `HouseTraits.hazardOffset`,
   `MarketRules.traitPrice`. Wealth notes read "Desired home size: Villa. Matteo thinks a shack is too small".
+
+- 0.3.7 (Andrzej: new players may not know faction colors): tenant names read "Name - Faction" with only the
+  faction name in its color (`PropertyView.nameAndFaction` / `factionColored`). The pool list moves the faction to
+  the second line when the name is too long.
