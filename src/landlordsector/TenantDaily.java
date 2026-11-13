@@ -160,7 +160,9 @@ public class TenantDaily implements EveryFrameScript {
         if (e.rep != 0f && m != null && !MarketRules.isOwn(m)) {
             Global.getSector().getPlayerFaction().adjustRelationship(m.getFactionId(), e.rep / 100f);
         }
-        Notify.event(p, text, e.good, e.big);
+        String said = e.big && t != null ? TenantEvents.say(e.id, t.traits(), t.factionId, new java.util.Random())
+                : null;
+        Notify.event(p, text, e.good, e.big, t != null ? t.name : null, said);
         if (e.leave && t != null) p.tenant = null;
     }
 

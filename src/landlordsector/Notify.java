@@ -66,13 +66,27 @@ public final class Notify {
 
     /** A home's event: its log, the fleet log, and the intel screen when big. */
     public static void event(Property p, String text, boolean good, boolean big) {
+        event(p, text, good, big, null, null);
+    }
+
+    /**
+     * A home's event, with what the tenant says about it when {@code said} is not null: 'Vencel Tolstoy: "Try
+     * kicking me out, haha."' under the event, in the home's log, the fleet log and the intel message.
+     */
+    public static void event(Property p, String text, boolean good, boolean big, String who, String said) {
         String colored = coloredPart(text, p);
         p.addLog(text, good, colored);
         line(text, good, colored);
+        String quote = said == null || who == null ? null : who + ": \"" + said + "\"";
+        if (quote != null) {
+            p.addLog(quote, null, "");
+            line(quote, null, null);
+        }
         if (!big) return;
         Portfolio.get().news = true;
         try {
             MessageIntel msg = new MessageIntel(text, Misc.getTextColor(), new String[] {colored}, color(good));
+            if (quote != null) msg.addLine(quote, Misc.getGrayColor(), new String[] {who}, Misc.getHighlightColor());
             msg.setIcon(Global.getSettings().getSpriteName("intel", "monthly_income_report"));
             Global.getSector().getCampaignUI().addMessage(msg);
         } catch (Throwable ignored) {

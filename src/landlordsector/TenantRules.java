@@ -56,7 +56,7 @@ public final class TenantRules {
         return Math.max(1, Math.min(MAX_WEALTH, wealth)) - 1;
     }
 
-    /** How far the rent setting moves a home's price level, in tiers. Free rent still never puts a villa in reach of the poor (0.3.3 rule). */
+    /** How far the rent setting moves a home's price level, in tiers. Free is handled on its own: anyone affords it. */
     public static float settingShift(RentSetting s) {
         switch (s) {
             case FREE: return -1.5f;
@@ -81,6 +81,7 @@ public final class TenantRules {
     }
 
     public static float pricePenalty(int tier, RentSetting s, int wealth, int shift) {
+        if (s == RentSetting.FREE) return 0f;
         float o = over(tier, s, wealth);
         if (o > 1.001f) return CANT_AFFORD;
         float above = tier + settingShift(s) - Math.max(fitTier(wealth), desiredTier(wealth, shift));
@@ -88,17 +89,34 @@ public final class TenantRules {
     }
 
     public static float beneathPenalty(int tier, int wealth, int shift) {
+        return beneathPenalty(tier, wealth, shift, RentSetting.NORMAL);
+    }
+
+    /**
+     * Free rent (Andrzej, 0.3.9): "rich people still won't live in shacks, even for free - but they may go down
+     * from an estate to a house for free living". On Free a home counts one size less far below what they want.
+     */
+    public static int belowWanted(int tier, int wealth, int shift, RentSetting s) {
         int b = desiredTier(wealth, shift) - tier;
+        return s == RentSetting.FREE ? b - 1 : b;
+    }
+
+    public static float beneathPenalty(int tier, int wealth, int shift, RentSetting s) {
+        int b = belowWanted(tier, wealth, shift, s);
         if (b >= 3) return FAR_BENEATH;
         return b == 2 ? BENEATH : 0f;
     }
 
     public static boolean wouldLiveIn(int tier, int wealth, int shift) {
-        return desiredTier(wealth, shift) - tier < 3;
+        return wouldLiveIn(tier, wealth, shift, RentSetting.NORMAL);
+    }
+
+    public static boolean wouldLiveIn(int tier, int wealth, int shift, RentSetting s) {
+        return belowWanted(tier, wealth, shift, s) < 3;
     }
 
     public static boolean fits(int tier, RentSetting s, int wealth, int shift) {
-        return canAfford(tier, s, wealth) && wouldLiveIn(tier, wealth, shift);
+        return canAfford(tier, s, wealth) && wouldLiveIn(tier, wealth, shift, s);
     }
 
     /** Tiers of price level above what the tenant pays happily (0 or less: fine). */
@@ -111,7 +129,9 @@ public final class TenantRules {
         return fitTier(wealth) - tier;
     }
 
+    /** Anyone can take a home on Free rent (Andrzej, 0.3.9: "Free should be free"). */
     public static boolean canAfford(int tier, RentSetting s, int wealth) {
+        if (s == RentSetting.FREE) return true;
         return over(tier, s, wealth) <= 1.001f;
     }
 

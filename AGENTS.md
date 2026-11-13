@@ -121,3 +121,9 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   the home (`Tenants.fitBoost`). `PropertyStats.valueLines` / `graded`. Manage page hotkeys via `Canvas.onKey` and
   `hotkeyButton`. LunaLib `lls_kaysaarsDemise` (`Settings.kaysaarsDemise`, unused for now).
 
+- 0.3.9 (Andrzej: "Free should be free"): on `RentSetting.FREE` anyone can afford any home (`canAfford`,
+  `pricePenalty`) and `belowWanted` counts a home one size closer, so an S tenant takes a house but never a shack.
+  This replaces the 0.3.3 "no villa for the poor" rule for Free only. Big events carry a tenant message:
+  `"messages"` in tenant_events.json (groups by traits, then factions, then plain), `TenantEvents.say`,
+  `Notify.event(..., who, said)` puts it in the home log, fleet log and the intel message.
+

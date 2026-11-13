@@ -90,8 +90,14 @@ public final class RulesCheck {
         expect(RentSetting.FREE.lower() == RentSetting.FREE && RentSetting.GREEDY.higher() == RentSetting.GREEDY,
                 "rent settings stop at both ends");
         expect(RentSetting.FREE.rentMult == 0f && RentSetting.CHARITY.lower() == RentSetting.FREE, "rent can be free");
-        expect(TenantRules.pricePenalty(2, RentSetting.FREE, 1) < TenantRules.pricePenalty(2, RentSetting.CHARITY, 1)
-                && !TenantRules.fits(4, RentSetting.FREE, 1), "free rent helps more than Charity, but no villa for the poor");
+        // 0.3.9 (Andrzej): "Free should be free" - anyone affords it, the rich go one size further down, never a shack.
+        expect(TenantRules.fits(5, RentSetting.FREE, 1, 0) && TenantRules.pricePenalty(5, RentSetting.FREE, 1, 0) == 0f,
+                "a poor tenant takes a free estate");
+        expect(TenantRules.beneathPenalty(3, 6, 0, RentSetting.FREE) == 0f
+                && TenantRules.beneathPenalty(3, 6, 0, RentSetting.NORMAL) == TenantRules.BENEATH,
+                "an S tenant takes a free house without complaint");
+        expect(!TenantRules.fits(0, RentSetting.FREE, 6, 0) && !TenantRules.fits(0, RentSetting.FREE, 5, 0),
+                "rich tenants never live in a shack, even for free");
         // 0.3.8: taste traits, decor, security.
         expect(TenantRules.pricePenalty(4, RentSetting.NORMAL, 4, 1) == 0f
                 && TenantRules.pricePenalty(4, RentSetting.NORMAL, 4, 0) == TenantRules.STRETCH,
@@ -108,6 +114,21 @@ public final class RulesCheck {
                 && Pricing.securityHappiness(10f, false) < 0f, "law-abiding tenants like security, criminals don't");
         landlordsector.data.TenantEvents.Def tipEv = landlordsector.data.TenantEvents.get("tip");
         expect(tipEv != null && tipEv.requires.contains("generous"), "only Generous tenants tip");
+        // 0.3.9: big events carry a line in the tenant's own voice; trait lines win over faction and plain ones.
+        for (landlordsector.data.TenantEvents.Def ev : landlordsector.data.TenantEvents.all()) {
+            if (ev.big) expect(landlordsector.data.TenantEvents.hasMessages(ev.id), ev.id + " is big but has no tenant message");
+        }
+        java.util.Random sayRnd = new java.util.Random(3);
+        for (int i = 0; i < 20; i++) {
+            String v = landlordsector.data.TenantEvents.say("trashed", java.util.Arrays.asList("vandal"), "hegemony", sayRnd);
+            String plain = landlordsector.data.TenantEvents.say("trashed", java.util.Arrays.asList("tidy"), "hegemony", sayRnd);
+            expect(v != null && (v.startsWith("Try kicking") || v.startsWith("Place looked") || v.startsWith("Walls were")),
+                    "a Vandal speaks as a vandal: " + v);
+            expect(plain != null && (plain.startsWith("Sorry about") || plain.startsWith("It was a bad")),
+                    "an ordinary tenant gets the plain lines: " + plain);
+        }
+        expect(landlordsector.data.TenantEvents.say("smashed_window", java.util.Arrays.asList("vandal"), "pirates", sayRnd) == null,
+                "small events stay quiet");
         expect(landlordsector.data.TenantTraits.get("generous") != null
                 && landlordsector.data.TenantTraits.get("social_climber").homeShift == 1
                 && landlordsector.data.TenantTraits.get("frugal").homeShift == -1
@@ -317,6 +338,7 @@ public final class RulesCheck {
                 && TenantRules.pricePenalty(4, RentSetting.GREEDY, 6) == 0f && TenantRules.beneathPenalty(4, 6) == 0f,
                 "S wealth lives happily in a villa or an estate, even on Greedy rent");
         for (RentSetting rs : RentSetting.values()) {
+            if (rs == RentSetting.FREE) continue;
             expect(!TenantRules.fits(4, rs, 1) && !TenantRules.fits(4, rs, 2), "E and D wealth can't pay for a villa on " + rs.label);
         }
         expect(TenantRules.fits(1, RentSetting.CHARITY, 1) && TenantRules.pricePenalty(1, RentSetting.CHARITY, 1) == 0f,

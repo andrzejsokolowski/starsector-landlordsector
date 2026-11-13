@@ -1,3 +1,7 @@
+Version 0.3.9 (2026-11-13)
+- Free rent is free: anyone can afford any home on Free, and a rich tenant will take a home one size further down than usual (an estate tenant takes a house), but never a shack
+- Tenants send you a message in their own words when something big happens at their home (trashed, skipped rent, fire, sabotage, police raid, new furniture)
+
 Version 0.3.8 (2026-11-13)
 - Hover Value to see what makes up a home's value: base value, location multiplier, market trend, traits, decor and condition
 - The location tooltip lists its multipliers without "price" on every line

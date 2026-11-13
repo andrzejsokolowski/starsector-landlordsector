@@ -76,6 +76,11 @@ This mod is under the CC0 (Creative Commons Zero) License, allowing you to do wh
 [/spoiler]
 
 [spoiler=Version log]
+[b]0.3.9[/b]
+[list]
+[li]Free rent is free: anyone can afford any home on Free, and a rich tenant will take a home one size further down than usual (an estate tenant takes a house), but never a shack[/li]
+[li]Tenants send you a message in their own words when something big happens at their home (trashed, skipped rent, fire, sabotage, police raid, new furniture)[/li]
+[/list]
 [b]0.3.8[/b]
 [list]
 [li]Hover Value to see what makes up a home's value: base value, location multiplier, market trend, traits, decor and condition[/li]

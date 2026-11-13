@@ -16,6 +16,49 @@
 	"minDaysBetween":5,
 	"dailyChance":0.06,
 	"kinds":{"money":"money", "damage":"damage to the home", "upkeep":"cleaning and repairs", "neighbors":"the neighbors", "crime":"crime and safety", "decor":"decorating the home"},
+	# messages: what the tenant says to you about a big event (0.3.9), shown under it in the log and the intel
+	# message. Each group has lines and may name traits or factions. Lines for one of the tenant's traits come
+	# first, then lines for their faction, then the group with neither. One line is picked at random.
+	"messages":{
+		"trashed":[
+			{"traits":["vandal"], "lines":["Try kicking me out, haha.", "Place looked boring anyway. You're welcome.", "Walls were in the way. Not anymore."]},
+			{"traits":["pet_owner"], "lines":["Sorry, boss, I kept telling my dog not to do it.", "The dog says sorry. I say sorry too. Mostly the dog."]},
+			{"traits":["family"], "lines":["The kids had friends over. I'm so sorry. I'll talk to them.", "I left them alone for one hour, boss. One hour."]},
+			{"traits":["loud"], "lines":["Party got a bit out of hand. Worth it though.", "You should've been there, boss. Best night of the year."]},
+			{"factions":["pirates"], "lines":["Rough night. Put it on my tab.", "Some friends dropped by. They don't knock."]},
+			{"lines":["Sorry about the mess. Things got out of hand.", "It was a bad week, boss. A really bad week."]}
+		],
+		"skipped_rent":[
+			{"traits":["late_payer"], "lines":["Next month, boss. Promise. Probably.", "Money's tight. You'll get it. Eventually."]},
+			{"traits":["shady"], "lines":["Business is slow. Don't ask what business.", "My partner owes me. When he pays, you get paid. Don't ask who he is."]},
+			{"traits":["social_climber"], "lines":["Had to keep up appearances this month. The rent will have to wait.", "New suit, new shoes, no rent. You understand, right?"]},
+			{"traits":["vandal"], "lines":["Rent? Come and get it, haha."]},
+			{"factions":["pirates"], "lines":["The job fell through. You'll get yours when I get mine."]},
+			{"lines":["I can't pay this month. I'm sorry.", "Lost my job. Give me a little time?"]}
+		],
+		"small_fire":[
+			{"traits":["family"], "lines":["Everyone's out and safe. The kitchen isn't.", "The kids are fine. Scared, but fine. The kitchen's a mess."]},
+			{"traits":["pet_owner"], "lines":["Got the dog out first. Then me. Then the fire got the kitchen."]},
+			{"traits":["handy"], "lines":["Put it out myself. The wiring in this place is a joke, boss."]},
+			{"lines":["Boss, the kitchen caught fire. Everyone's fine, the walls aren't.", "Fire's out. Mostly. You might want to send someone."]}
+		],
+		"sabotage":[
+			{"traits":["zealot"], "lines":["The machines are silent now. Ludd be praised.", "I freed this house from its chains. You should thank me."]},
+			{"lines":["It had to be done. The Lord sees all."]}
+		],
+		"police_raid":[
+			{"traits":["shady"], "lines":["Cops took nothing. Nothing they could find, anyway.", "If anyone asks, you've never met me."]},
+			{"traits":["veteran"], "lines":["They had the wrong door. I told them so. They didn't listen."]},
+			{"factions":["pirates"], "lines":["Bunch of badges kicked my door in. Your door. Whatever."]},
+			{"lines":["I swear that crate wasn't mine.", "Police tore the place apart. Found nothing. Fix the door?"]}
+		],
+		"new_furniture":[
+			{"traits":["prosperous"], "lines":["Got a new sofa. The old one didn't match the curtains.", "Picked up some furniture. Your place deserved better."]},
+			{"traits":["generous"], "lines":["Brought in some new furniture. Consider it a gift."]},
+			{"traits":["tech_fan"], "lines":["New smart table. It talks. Don't worry, it's friendly."]},
+			{"lines":["Hope you don't mind, I got some new furniture.", "Place feels like home now. New chairs!"]}
+		]
+	},
 	"events":[
 		{"id":"smashed_window", "kind":"damage", "good":false, "weight":2, "damage":true, "condition":-0.03, "mood":-2, "text":"$tenant smashed a window at $home."},
 		{"id":"trashed", "kind":"damage", "good":false, "weight":0.3, "damage":true, "condition":-0.15, "big":true, "text":"$tenant trashed $home."},

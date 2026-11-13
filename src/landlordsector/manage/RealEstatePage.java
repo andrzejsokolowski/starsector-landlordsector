@@ -284,7 +284,7 @@ public class RealEstatePage implements ManagePage {
             tip(rx + 462f, cy, 240f, 28f, "Selling", "You can sell a home in any condition, rented or not. You get"
                     + " its value minus a " + Math.round(landlordsector.TierTable.economy().brokerFee * 100f)
                     + "% broker fee and the local tariff.", noSale);
-            tip(rx, cy, 210f, 28f, "Rent", "Free: no rent at all, tenants are very happy. Charity and Low: less rent,"
+            tip(rx, cy, 210f, 28f, "Rent", "Free: no rent at all. Anyone can afford it, tenants are grateful, and rich ones take a smaller home than usual. Charity and Low: less rent,"
                     + " happier tenants, more reputation. High and Greedy: more rent, unhappier tenants, faster wear,"
                     + " lost reputation.");
         }

@@ -293,7 +293,7 @@ public final class PropertyStats {
         }
         int shift = t.homeShift();
         float price = TenantRules.pricePenalty(tier.index, setting, t.wealth, shift);
-        float beneath = TenantRules.beneathPenalty(tier.index, t.wealth, shift);
+        float beneath = TenantRules.beneathPenalty(tier.index, t.wealth, shift, setting);
         String first = t.firstName();
         String want = "Desired home size: " + desiredTier(t.wealth, shift) + ". ";
         String here = article(tier.name.toLowerCase());

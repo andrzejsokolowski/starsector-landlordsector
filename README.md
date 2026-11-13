@@ -41,7 +41,8 @@ Requires LunaLib and OddiszCommons.
   worlds) take the cold or the heat off one home: its comfort and price use the hazard without it. Tenants like (+8 happiness) or hate (-15)
   some of them. Hover over a trait to see what it does. Tenant traits tell which kind of house event
   (money, damage, crime and safety, the neighbors, cleaning and repairs, decorating) they make likelier, not the events themselves.
-- Tenant events (tenant_events.json): at most one per home every 5 days. Bad ones get likelier with
+- Tenant events (tenant_events.json): at most one per home every 5 days. For the big ones the tenant also
+  sends you a line in their own words ("messages" in the same file, by trait or faction). Bad ones get likelier with
   unhappy tenants, greedy rent, cheap homes (for damage) and low security (for crime). Good ones get
   likelier with happy tenants. They go into the fleet log and the home's log.
 - Tenants below 15 happiness may move out (loyal ones never do). You can evict.
@@ -72,7 +73,8 @@ Requires LunaLib and OddiszCommons.
   activity or Pather cells. Law-abiding tenants are happier in a safe home, criminals less happy. Cuts
   break-ins, police raids and the damage raids and disruption do.
 - Every stat bar and the Value row have a tooltip listing what makes them up.
-- Rent settings: Free, Charity, Low, Normal, High, Greedy. Free counts like a home one and a half tiers cheaper.
+- Rent settings: Free, Charity, Low, Normal, High, Greedy. On Free anyone can afford any home, and rich tenants
+  take a home one size further down than usual (never a shack).
 
 ## Rent
 
