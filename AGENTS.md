@@ -94,6 +94,8 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   `TenantDaily.finishWork` finishes renovations and one-time `fixes`. `LandlordsectorModPlugin.upgradeTo040` moves
   any trait id that is now an upgrade into `Property.upgrades` (same id, built). Manage page: Upgrades tab (G).
   Space (family size) waits for 0.5.0; Loud tenants make no noise for others until homes hold more people.
+  0.4.1: furniture icons are Andrzej's, 80x80 in `graphics/icons/cargo/landlordsector/<id>.png`, cut from his sheet
+  (first view of each piece, background already transparent). A new piece needs an icon there and its csv row.
 
 ## Known limits
 

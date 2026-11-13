@@ -1,3 +1,6 @@
+Version 0.4.1 (2026-11-13)
+- Every piece of furniture has its own icon
+
 Version 0.4.0 (2026-11-13)
 - Furniture: 21 pieces as cargo items. Open markets on worlds with a property agent stock 1 to 3 pieces, restocked every 30 days, and salvage sometimes holds one
 - New Upgrades tab (G) for each home on the Manage page: place furniture from your cargo from anywhere, take it back at any time, and build renovations
