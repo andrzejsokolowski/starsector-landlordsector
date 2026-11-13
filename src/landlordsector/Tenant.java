@@ -98,6 +98,40 @@ public class Tenant {
         return name.trim().split("\s+")[0];
     }
 
+    /**
+     * 0.4.0: what one home level costs this tenant compared with others (Loves heat: 0 for heat). Traits add up:
+     * each trait's multiplier minus 1 is added to 1, never below 0, so every trait's share can be shown on its own.
+     */
+    public float levelMult(String levelId) {
+        float m = 1f;
+        for (String id : traits()) {
+            TenantTraits.Def d = TenantTraits.get(id);
+            if (d == null) continue;
+            Float f = d.levels.get(levelId);
+            if (f != null) m += f - 1f;
+        }
+        return Math.max(0f, m);
+    }
+
+    /** 0.4.0: multiplies every health cost (Hardy halves them). Adds up like {@link #levelMult}. */
+    public float healthCost() {
+        float m = 1f;
+        for (String id : traits()) {
+            TenantTraits.Def d = TenantTraits.get(id);
+            if (d != null) m += d.healthCost - 1f;
+        }
+        return Math.max(0f, m);
+    }
+
+    /** 0.4.0: true when the tenant has kids (Family with kids). */
+    public boolean hasKids() {
+        for (String id : traits()) {
+            TenantTraits.Def d = TenantTraits.get(id);
+            if (d != null && d.kids) return true;
+        }
+        return false;
+    }
+
     public float traitHappiness() {
         float h = 0f;
         for (String id : traits()) {

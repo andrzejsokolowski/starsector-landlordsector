@@ -28,6 +28,13 @@ public class Portfolio {
     public boolean findersSeeded;
     /** Homes bought before 0.3.0 got a tenant of their own. */
     public boolean tenantsMigrated;
+    /** 0.4.0: when each market's open market last got its furniture, by market id. */
+    public Map<String, Long> shopStocked;
+
+    public Map<String, Long> shopStocked() {
+        if (shopStocked == null) shopStocked = new HashMap<>();
+        return shopStocked;
+    }
 
     public List<Tenant> tenantPool() {
         if (tenantPool == null) tenantPool = new ArrayList<>();

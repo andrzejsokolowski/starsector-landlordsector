@@ -26,8 +26,23 @@ public final class Tips {
     /** What a house trait does, and which tenant traits like or hate it. */
     public static List<String[]> houseTrait(HouseTraits.Def d) {
         List<String[]> out = new ArrayList<>();
+        // Home levels first (0.4.0): "Heat -1", green when it helps.
+        for (java.util.Map.Entry<String, Float> e : d.levels.entrySet()) {
+            landlordsector.data.Levels.Def ld = landlordsector.data.Levels.get(e.getKey());
+            if (ld == null || e.getValue() == 0f) continue;
+            add(out, landlordsector.data.Levels.change(ld, e.getValue()),
+                    landlordsector.data.Levels.helps(ld, e.getValue()) ? "+" : "-");
+        }
         if (d.comfort != 0f) add(out, signed(d.comfort) + " comfort", d.comfort > 0 ? "+" : "-");
+        if (d.decor != 0f) add(out, signed(d.decor) + " decor", d.decor > 0 ? "+" : "-");
         if (d.happiness != 0f) add(out, signed(d.happiness) + " tenant happiness", d.happiness > 0 ? "+" : "-");
+        if (d.health != 0f) add(out, signed(d.health) + " tenant health", d.health > 0 ? "+" : "-");
+        if (d.kidsHappiness() != 0f) {
+            add(out, signed(d.kidsHappiness()) + " happiness for tenants with kids", d.kidsHappiness() > 0 ? "+" : "-");
+        }
+        if (d.kidsHealth() != 0f) {
+            add(out, signed(d.kidsHealth()) + " health for tenants with kids", d.kidsHealth() > 0 ? "+" : "-");
+        }
         if (d.security != 0f) add(out, signed(d.security) + " security", d.security > 0 ? "+" : "-");
         if (d.price != 1f) add(out, "Price x" + round2(d.price), d.price > 1f ? "+" : "-");
         if (d.wear != 1f) {
@@ -46,6 +61,7 @@ public final class Tips {
             add(out, "No " + conditionName(e.getKey()).toLowerCase() + " in this home (hazard -"
                     + Math.round(e.getValue() * 100f) + "%)", "+");
         }
+        for (String[] line : eventKinds(d.events)) out.add(line);
         List<Boolean> likeGood = new ArrayList<>(), hateGood = new ArrayList<>();
         for (String n : likes) likeGood.add(TenantTraits.byName(n));
         for (String n : hates) hateGood.add(TenantTraits.byName(n));
@@ -85,6 +101,56 @@ public final class Tips {
         return id.replace('_', ' ');
     }
 
+    /** What an upgrade does (0.4.0): its effects, then where it goes and what it costs. */
+    public static List<String[]> upgrade(landlordsector.data.Upgrades.Def d) {
+        List<String[]> out = houseTrait(d.effects);
+        if (out.size() == 1 && "No effect on its own.".equals(out.get(0)[0]) && !d.fixes.isEmpty()) out.clear();
+        for (String f : d.fixes) {
+            HouseTraits.Def t = HouseTraits.get(f);
+            if (t != null) out.add(new String[] {"Removes " + t.name + " for good", null, t.name, t.good ? "+" : "-"});
+        }
+        if (d.furniture()) {
+            add(out, "Furniture: uses one furniture slot. You can take it back at any time.", null);
+        } else {
+            String what = d.oneTime ? "A one-time job: it takes no renovation slot." : "Renovation: uses one renovation"
+                    + " slot and stays with the home.";
+            add(out, what + " Costs " + Math.round(d.cost * 100f) + "% of the home's value (at least "
+                    + com.fs.starfarer.api.util.Misc.getDGSCredits(d.minCost) + ") and takes " + Math.round(d.days)
+                    + " days.", null);
+        }
+        if (d.minTier > 0 || d.station != null || !d.needs.isEmpty()) {
+            StringBuilder b = new StringBuilder("Only for ");
+            List<String> parts = new ArrayList<>();
+            if (d.minTier > 0) {
+                parts.add(landlordsector.TierTable.all().get(Math.min(d.minTier,
+                        landlordsector.TierTable.all().size() - 1)).name.toLowerCase() + "s and bigger");
+            }
+            if (Boolean.FALSE.equals(d.station)) parts.add("planets");
+            if (Boolean.TRUE.equals(d.station)) parts.add("stations");
+            for (String n : d.needs) {
+                HouseTraits.Def t = HouseTraits.get(n);
+                if (t != null) parts.add(t.name + " homes");
+            }
+            b.append(String.join(", ", parts)).append(".");
+            add(out, b.toString(), null);
+        }
+        return out;
+    }
+
+    /** "Likes homes with Aquarium, Pool (+8)": the verb in its color, every upgrade name green (0.4.0). */
+    static String[] withUpgrades(String verb, String verbColor, List<String> names, String tail) {
+        String[] line = new String[4 + names.size() * 2];
+        line[0] = verb + " homes with " + String.join(", ", names) + tail;
+        line[1] = null;
+        line[2] = verb;
+        line[3] = verbColor;
+        for (int i = 0; i < names.size(); i++) {
+            line[4 + i * 2] = names.get(i);
+            line[5 + i * 2] = "+";
+        }
+        return line;
+    }
+
     /** What a tenant trait does. */
     public static List<String[]> tenantTrait(TenantTraits.Def d) {
         List<String[]> out = new ArrayList<>();
@@ -98,6 +164,20 @@ public final class Tips {
         if (d.homeShift > 0) add(out, "Wants a home " + d.homeShift + " size bigger than they can comfortably pay for", null);
         if (d.homeShift < 0) add(out, "Happy with a home " + (-d.homeShift) + " size smaller than they can pay for", null);
         if (d.criminal) add(out, "Security makes them unhappy instead of happy", "-");
+        for (java.util.Map.Entry<String, Float> e : d.levels.entrySet()) {
+            landlordsector.data.Levels.Def ld = landlordsector.data.Levels.get(e.getKey());
+            if (ld == null) continue;
+            float f = e.getValue();
+            String text = f <= 0.001f ? "Not bothered by " + ld.name.toLowerCase()
+                    : (f > 1f ? ld.name + " bothers them " + round2(f) + " times as much"
+                            : ld.name + " bothers them less (x" + round2(f) + ")");
+            add(out, text, f > 1f ? "-" : "+");
+        }
+        if (d.healthCost != 1f) {
+            add(out, d.healthCost < 1f ? "Loses health slower (x" + round2(d.healthCost) + ")"
+                    : "Loses health faster (x" + round2(d.healthCost) + ")", d.healthCost < 1f ? "+" : "-");
+        }
+        if (d.kids) add(out, "Has kids: upgrades for kids count for them", null);
         for (String[] line : eventKinds(d.events)) out.add(line);
         List<String> likes = new ArrayList<>();
         List<String> hates = new ArrayList<>();
@@ -107,6 +187,16 @@ public final class Tips {
                 if (d.dislikes.contains(tag) && !hates.contains(h.name)) hates.add(h.name);
             }
         }
+        // Upgrades they like or hate (0.4.0): "Likes homes with: Aquarium, Pool".
+        List<String> likesUp = new ArrayList<>(), hatesUp = new ArrayList<>();
+        for (landlordsector.data.Upgrades.Def u : landlordsector.data.Upgrades.all()) {
+            for (String tag : u.effects.tags) {
+                if (d.likes.contains(tag) && !likesUp.contains(u.name)) likesUp.add(u.name);
+                if (d.dislikes.contains(tag) && !hatesUp.contains(u.name)) hatesUp.add(u.name);
+            }
+        }
+        if (!likesUp.isEmpty()) out.add(withUpgrades("Likes", "+", likesUp, " (+" + Math.round(TenantRules.LIKE) + ")"));
+        if (!hatesUp.isEmpty()) out.add(withUpgrades("Hates", "-", hatesUp, " (-" + Math.round(TenantRules.DISLIKE) + ")"));
         List<Boolean> likeGood = new ArrayList<>(), hateGood = new ArrayList<>();
         for (String n : likes) likeGood.add(HouseTraits.byName(n));
         for (String n : hates) hateGood.add(HouseTraits.byName(n));

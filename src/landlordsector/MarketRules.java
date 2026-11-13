@@ -88,7 +88,11 @@ public final class MarketRules {
     public static float listingValue(MarketAPI market, Listing listing) {
         Tier t = TierTable.get(listing.tierId);
         float decor = t != null ? t.decor : 0f;
-        return listing.basePrice * mult(market) * Pricing.decorValueMult(decor) * traitPrice(listing.traits, market);
+        for (String id : listing.features()) {
+            HouseTraits.Def d = HouseTraits.get(id);
+            if (d != null) decor += d.decor;
+        }
+        return listing.basePrice * mult(market) * Pricing.decorValueMult(decor) * traitPrice(listing.features(), market);
     }
 
     /** Price to buy a listing right now, tariff and own-colony discount included. */
@@ -133,7 +137,9 @@ public final class MarketRules {
             Listing l = new Listing(Portfolio.get().newId(), t.id, climate.id, Art.pick(t.id, climate, random), base);
             l.traits = HouseTraits.roll(Tenants.conditions(market), climate.id, climate == Climate.STATION, t.index,
                     random);
-            l.name = landlordsector.data.Names.make(t.id, l.traits, random);
+            l.upgrades = landlordsector.data.Upgrades.roll(Tenants.conditions(market), climate.id,
+                    climate == Climate.STATION, t.index, l.traits, random);
+            l.name = landlordsector.data.Names.make(t.id, l.features(), random);
             ml.list().add(l);
         }
         // Cheapest first, so the screen reads like a price list.

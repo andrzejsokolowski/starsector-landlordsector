@@ -40,6 +40,26 @@ public final class HouseTraits {
          * cold, 25% hazard). Comfort and the home's price use the hazard without them.
          */
         public Map<String, Float> cancels = Collections.emptyMap();
+
+        // ---- 0.4.0: the effects upgrades share with traits. ----
+
+        public float decor, health;
+        /** Home levels this changes, as written: {"heat":-1} cooler, {"air":1} cleaner (levels.json). */
+        public Map<String, Float> levels = Collections.emptyMap();
+        /** Effects only for tenants with kids: happiness, health. */
+        public Map<String, Float> kids = Collections.emptyMap();
+        /** Tenant event weight multipliers. */
+        public Map<String, Float> events = Collections.emptyMap();
+
+        public float kidsHappiness() {
+            Float f = kids.get("happiness");
+            return f == null ? 0f : f;
+        }
+
+        public float kidsHealth() {
+            Float f = kids.get("health");
+            return f == null ? 0f : f;
+        }
     }
 
     private static Map<String, Def> defs = Collections.emptyMap();
@@ -64,28 +84,42 @@ public final class HouseTraits {
                 d.station = t.has("station") && !t.isNull("station") ? t.optBoolean("station") : null;
                 d.minTier = t.optInt("minTier", 0);
                 d.maxTier = t.optInt("maxTier", 99);
-                d.comfort = (float) t.optDouble("comfort", 0);
-                d.happiness = (float) t.optDouble("happiness", 0);
-                d.security = (float) t.optDouble("security", 0);
-                d.price = (float) t.optDouble("price", 1);
-                d.wear = (float) t.optDouble("wear", 1);
-                d.tags = strings(t.optJSONArray("tags"));
+                effects(t, d);
                 d.conflicts = strings(t.optJSONArray("conflicts"));
-                JSONObject c = t.optJSONObject("cancels");
-                if (c != null && c.length() > 0) {
-                    d.cancels = new LinkedHashMap<>();
-                    for (java.util.Iterator<?> it = c.keys(); it.hasNext();) {
-                        String k = String.valueOf(it.next());
-                        d.cancels.put(k, (float) c.optDouble(k, 0));
-                    }
-                }
                 map.put(d.id, d);
             }
         }
         defs = map;
     }
 
-    static Set<String> strings(JSONArray a) {
+    /** Reads the effects house traits and upgrades share (0.4.0). */
+    public static void effects(JSONObject t, Def d) {
+        d.comfort = (float) t.optDouble("comfort", 0);
+        d.decor = (float) t.optDouble("decor", 0);
+        d.happiness = (float) t.optDouble("happiness", 0);
+        d.health = (float) t.optDouble("health", 0);
+        d.security = (float) t.optDouble("security", 0);
+        d.price = (float) t.optDouble("price", 1);
+        d.wear = (float) t.optDouble("wear", 1);
+        d.tags = strings(t.optJSONArray("tags"));
+        d.cancels = numbers(t.optJSONObject("cancels"), 0f);
+        d.levels = numbers(t.optJSONObject("levels"), 0f);
+        d.kids = numbers(t.optJSONObject("kids"), 0f);
+        d.events = numbers(t.optJSONObject("events"), 1f);
+    }
+
+    /** A JSON object of numbers, in order. */
+    public static Map<String, Float> numbers(JSONObject o, float fallback) {
+        if (o == null || o.length() == 0) return Collections.emptyMap();
+        Map<String, Float> m = new LinkedHashMap<>();
+        for (java.util.Iterator<?> it = o.keys(); it.hasNext();) {
+            String k = String.valueOf(it.next());
+            m.put(k, (float) o.optDouble(k, fallback));
+        }
+        return m;
+    }
+
+    public static Set<String> strings(JSONArray a) {
         if (a == null) return Collections.emptySet();
         Set<String> s = new HashSet<>();
         for (int i = 0; i < a.length(); i++) {
@@ -101,8 +135,15 @@ public final class HouseTraits {
         return null;
     }
 
+    /** A house trait, or the effects of an upgrade with this id (upgrades count wherever traits do, 0.4.0). */
     public static Def get(String id) {
-        return defs.get(id);
+        Def d = defs.get(id);
+        return d != null ? d : Upgrades.effects(id);
+    }
+
+    /** True for a real house trait, not an upgrade. */
+    public static boolean isTrait(String id) {
+        return defs.containsKey(id);
     }
 
     public static Collection<Def> all() {
@@ -160,7 +201,7 @@ public final class HouseTraits {
         float off = 0f;
         if (traitIds == null) return off;
         for (String id : traitIds) {
-            Def d = defs.get(id);
+            Def d = get(id);
             if (d == null) continue;
             for (Map.Entry<String, Float> e : d.cancels.entrySet()) {
                 if (conditions.contains(e.getKey())) off += e.getValue();
@@ -174,7 +215,7 @@ public final class HouseTraits {
         Set<String> s = new HashSet<>();
         if (traitIds == null) return s;
         for (String id : traitIds) {
-            Def d = defs.get(id);
+            Def d = get(id);
             if (d != null) s.addAll(d.tags);
         }
         return s;

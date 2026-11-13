@@ -81,11 +81,25 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   hover tooltips (`Canvas.tip`, `ui/Tips`), colored event log on the right of the Manage page (log entries are
   flag, date, colored part, rest, split by tabs).
 
+- 0.4.0 (LLS-4, Andrzej's "make everything feel connected"): four layers. The place (market conditions, house
+  traits) sets home levels (`data/Levels`, levels.json: heat, cold, air, noise, light, 0 to 3, `better` levels flip
+  the written sign), the levels cost people happiness and health (`PropertyStats.levels` / `health`, tenant trait
+  `levels` multipliers and `healthCost`, added up per trait), and health changes what happens (`sickOnly` /
+  `sickMult` events, `TenantRules.treatmentChance`). Upgrades (`data/Upgrades`, upgrades.json) carry a
+  `HouseTraits.Def` of effects, and `HouseTraits.get` falls back to them, so an installed upgrade counts wherever a
+  trait does: `Property.features()` / `Listing.features()` (traits plus finished upgrades) feed the stats, price,
+  wear, tags and event odds. `Installed` (saved: id, startedAt, days, furniture) in `Property.upgrades`;
+  `Listing.upgrades` for homes for sale. Furniture items are `lls_<id>` rows in special_items.csv
+  (`items/FurnitureItemPlugin`); `FurnitureSources` (transient listener) stocks open markets and adds loot.
+  `TenantDaily.finishWork` finishes renovations and one-time `fixes`. `LandlordsectorModPlugin.upgradeTo040` moves
+  any trait id that is now an upgrade into `Property.upgrades` (same id, built). Manage page: Upgrades tab (G).
+  Space (family size) waits for 0.5.0; Loud tenants make no noise for others until homes hold more people.
+
 ## Known limits
 
 - The portfolio classes are in the save, so removing the mod mid-game breaks that save.
-- 0.1.0 was played by Andrzej on 2026-11-11 (buy screen, buying), 0.2.0 on 2026-11-12 (agent screen).
-  0.3.0 tenants and finders not played yet.
+- Andrzej plays each version and sends notes with screenshots: 0.1.0, 0.2.0, 0.3.1, 0.3.2, 0.3.3, 0.3.4,
+  0.3.5 and 0.3.7 so far. His notes count as the play test; name only the changes he hasn't seen yet.
 
 - 0.3.3 (Andrzej's notes after 0.3.2): wealth fits a tier (`TenantRules.fitTier`, E shack to S estate). A tenant
   never moves in two tiers above their wealth or three below (`TenantRules.fits`, `Actions.refusal`); the rent

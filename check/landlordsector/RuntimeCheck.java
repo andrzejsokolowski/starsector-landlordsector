@@ -63,7 +63,13 @@ public final class RuntimeCheck {
         final List<MarketImmigrationModifier> growth = new ArrayList<>();
         final List<Object> directory = new ArrayList<>();
         int agentsArrived;
+        /** 0.4.0: market conditions, and the open market's special items by id. */
+        final java.util.Set<String> conditions = new java.util.HashSet<>();
+        final Map<String, Float> openStock = new HashMap<>();
     }
+
+    /** 0.4.0: special items in the player's cargo, by id. */
+    private static final Map<String, Float> cargoSpecials = new HashMap<>();
 
     public static void main(String[] args) throws Exception {
         installGlobals();
@@ -265,6 +271,80 @@ public final class RuntimeCheck {
         Finders.place(days);
         expect(!pir.directory.contains(rook.person), "a hired finder does not come back to the directory");
 
+        // ---- 0.4.0: home levels, health, furniture, renovations, old saves ----
+        // Three years of Greedy rent wore the home down again: fix it up first.
+        home.condition = 1f;
+        home.condemned = false;
+        heg.conditions.add("hot");
+        heg.conditions.add("pollution");
+        PropertyStats hot = home.stats();
+        expect(hot.levels.get("heat") == 1 && hot.levels.get("air") == 1, "a hot, polluted world gives Heat 1 and Air 1");
+        expect(hot.health < landlordsector.data.Levels.baseHealth(), "heat and bad air cost health");
+        expect(hot.levelLines.get("heat").get(0)[0].endsWith("Heat +1"), "the heat tooltip names its source");
+        landlordsector.data.Upgrades.Def fans = landlordsector.data.Upgrades.get("fans");
+        expect(Actions.cannotPlace(home, fans) != null, "no placing furniture you do not have");
+        cargoSpecials.put("lls_fans", 2f);
+        expect(Actions.place(home, fans).startsWith("Placed") && cargoSpecials.get("lls_fans") == 1f,
+                "placing takes one piece out of the cargo");
+        expect(home.stats().levels.get("heat") == 0, "fans take Heat 1 down to 0");
+        expect(home.stats().health > hot.health, "a cooler home is healthier");
+        if (home.tier().slots == 1) expect(Actions.cannotPlace(home, fans) != null, "a shack holds one piece");
+        Installed placed = home.upgrades().get(home.upgrades().size() - 1);
+        expect(Actions.takeBack(home, placed).startsWith("Took back") && cargoSpecials.get("lls_fans") == 2f,
+                "taking furniture back puts it in the cargo");
+        expect(home.stats().levels.get("heat") == 1, "without the fans the heat is back");
+
+        landlordsector.data.Upgrades.Def alarm = landlordsector.data.Upgrades.get("alarm");
+        float secBefore = home.stats().security;
+        float c0 = credits.get();
+        String started = Actions.build(home, alarm);
+        expect(started.startsWith("Started"), "a renovation starts: " + started);
+        expect(c0 - credits.get() >= alarm.minCost - CREDIT_EPS, "a renovation costs credits");
+        expect(home.stats().security == secBefore, "a renovation does nothing until it is built");
+        now += 3 * DAY;
+        TenantDaily.finishWork(home);
+        expect(!home.features().contains("alarm"), "three days in, the alarm is not done");
+        now += 5 * DAY;
+        TenantDaily.finishWork(home);
+        expect(home.features().contains("alarm") && home.stats().security > secBefore, "a finished alarm raises security");
+        expect(TenantDaily.featureMult(home.features(), "burglary") == 0.5f, "the alarm halves burglaries");
+        if (landlordsector.data.Upgrades.renovationSlots(home.tierId) == 1) {
+            expect("No free renovation slot.".equals(Actions.cannotBuild(home, landlordsector.data.Upgrades.get("insulation"))),
+                    "one renovation slot is full with one renovation");
+        }
+        // A one-time job fixes a bad trait and takes no slot.
+        home.traits().add("damp");
+        expect(Actions.build(home, landlordsector.data.Upgrades.get("mold_removal")).startsWith("Started"),
+                "mold removal starts in a Musty home even with the renovation slots full");
+        now += 11 * DAY;
+        TenantDaily.finishWork(home);
+        expect(!home.traits().contains("damp") && !home.has("mold_removal"), "mold removal removes Musty and leaves");
+        // Saves from before 0.4.0: a renovation-trait moves to the upgrades.
+        home.traits().add("pool");
+        LandlordsectorModPlugin.upgradeTo040(Portfolio.get());
+        expect(!home.traits().contains("pool") && home.has("pool") && home.features().contains("pool"),
+                "an old Poolside trait becomes a built Pool");
+        // Tenants who love heat do not mind it.
+        if (home.tenant != null) {
+            PropertyStats before040 = home.stats();
+            home.tenant.traits().add("heat_lover");
+            PropertyStats lover = home.stats();
+            home.tenant.traits().remove("heat_lover");
+            expect(lover.health > before040.health, "Loves heat loses no health to the heat");
+        }
+        // Furniture in the shops.
+        FurnitureSources.stock(a, days);
+        float stocked = 0f;
+        for (float v : heg.openStock.values()) stocked += v;
+        expect(stocked >= landlordsector.data.Upgrades.shopMin() && stocked <= landlordsector.data.Upgrades.shopMax(),
+                "an open market stocks furniture: " + stocked);
+        FurnitureSources.stock(a, days);
+        float again = 0f;
+        for (float v : heg.openStock.values()) again += v;
+        expect(again == stocked, "the stock waits for the restock days");
+        // Fans back in for the save and the sale.
+        Actions.place(home, fans);
+
         // Save round trip.
         com.thoughtworks.xstream.XStream x = new com.thoughtworks.xstream.XStream(new com.thoughtworks.xstream.io.xml.DomDriver());
         com.thoughtworks.xstream.XStream.setupDefaultSecurity(x);
@@ -282,13 +362,18 @@ public final class RuntimeCheck {
                 "the portfolio survives a save");
         expect(back.properties().get(0).tenant != null && back.tenantPool().size() == Portfolio.get().tenantPool().size(),
                 "tenants and the pool survive a save");
+        expect(back.properties().get(0).upgrades().size() == home.upgrades().size()
+                && back.properties().get(0).has("pool"), "upgrades survive a save");
 
         // Sell.
         before = credits.get();
-        float sale = home.saleValue();
+        float sale = home.saleValue(false);
+        expect(home.saleValue(true) > sale, "a furnished sale pays for the furniture");
+        float fansBefore = cargoSpecials.get("lls_fans");
         expect(Actions.sell(home).startsWith("Sold"), "selling works");
         expect(Math.abs(credits.get() - before - sale) < CREDIT_EPS, "the sale pays the sale value");
         expect(Math.abs(sale - home.value() * (1f - 0.05f - 0.3f)) < 1f, "sale minus 5 percent fee and tariff");
+        expect(cargoSpecials.get("lls_fans") == fansBefore + 1f, "selling a home gives its furniture back");
 
         // A colony that is gone takes its homes with it.
         markets.remove(b.getId());
@@ -330,7 +415,7 @@ public final class RuntimeCheck {
                 "getTimestamp", a -> now,
                 "getElapsedDaysSince", a -> (now - (Long) a[0]) / (float) DAY));
         MutableValue cr = credits;
-        CargoAPI cargo = mock(CargoAPI.class, Map.of("getCredits", a -> cr));
+        CargoAPI cargo = specialsCargo(cargoSpecials, Map.of("getCredits", a -> cr));
         CampaignFleetAPI fleet = mock(CampaignFleetAPI.class, Map.of("getCargo", a -> cargo));
         EconomyAPI economy = mock(EconomyAPI.class, Map.of(
                 "getMarket", a -> markets.get((String) a[0]),
@@ -345,7 +430,16 @@ public final class RuntimeCheck {
                 "getCampaignUI", a -> ui,
                 "getFaction", a -> faction(String.valueOf(a[0])),
                 "addTransientScript", a -> sectorScripts.add((com.fs.starfarer.api.EveryFrameScript) a[0])));
+        // Made on first use: the item spec stand-in pulls in game classes that need the settings first.
+        Object[] itemSpec = new Object[1];
         SettingsAPI settings = mock(SettingsAPI.class, Map.of(
+                "getSpecialItemSpec", a -> {
+                    if (itemSpec[0] == null) {
+                        itemSpec[0] = mock(com.fs.starfarer.api.campaign.SpecialItemSpecAPI.class,
+                                Map.of("getBasePrice", b -> 1000f));
+                    }
+                    return itemSpec[0];
+                },
                 "getFloat", a -> "economyIterPerMonth".equals(a[0]) ? 10f : 0f,
                 "getSpriteName", a -> "graphics/x.png",
                 "getString", a -> "graphics/fonts/insignia15LTaa.fnt"));
@@ -386,7 +480,19 @@ public final class RuntimeCheck {
         h.put("getSize", a -> f.size);
         h.put("getStabilityValue", a -> f.stability);
         h.put("getHazardValue", a -> f.hazard);
-        h.put("hasCondition", a -> ("habitable".equals(a[0]) && f.habitable) || ("mild_climate".equals(a[0]) && f.mild));
+        h.put("hasCondition", a -> ("habitable".equals(a[0]) && f.habitable) || ("mild_climate".equals(a[0]) && f.mild)
+                || f.conditions.contains(a[0]));
+        h.put("getConditions", a -> {
+            List<com.fs.starfarer.api.campaign.econ.MarketConditionAPI> out = new ArrayList<>();
+            for (String c : f.conditions) {
+                out.add(mock(com.fs.starfarer.api.campaign.econ.MarketConditionAPI.class, Map.of("getId", b -> c)));
+            }
+            return out;
+        });
+        CargoAPI openCargo = specialsCargo(f.openStock, Map.of());
+        com.fs.starfarer.api.campaign.econ.SubmarketAPI open = mock(com.fs.starfarer.api.campaign.econ.SubmarketAPI.class,
+                Map.of("getCargo", a -> openCargo));
+        h.put("getSubmarket", a -> "open_market".equals(a[0]) ? open : null);
         h.put("getFaction", a -> fac);
         h.put("getFactionId", a -> f.factionId);
         h.put("isInEconomy", a -> true);
@@ -404,6 +510,22 @@ public final class RuntimeCheck {
         MarketAPI m = mock(MarketAPI.class, h);
         markets.put(f.id, m);
         return m;
+    }
+
+    /** A cargo that holds special items by id (0.4.0 furniture). */
+    private static CargoAPI specialsCargo(Map<String, Float> items, Map<String, Function<Object[], Object>> more) {
+        Map<String, Function<Object[], Object>> h = new HashMap<>(more);
+        h.put("addSpecial", a -> items.merge(((com.fs.starfarer.api.campaign.SpecialItemData) a[0]).getId(),
+                (Float) a[1], Float::sum));
+        h.put("getQuantity", a -> a[1] instanceof com.fs.starfarer.api.campaign.SpecialItemData
+                ? items.getOrDefault(((com.fs.starfarer.api.campaign.SpecialItemData) a[1]).getId(), 0f) : 0f);
+        h.put("removeItems", a -> {
+            if (a[1] instanceof com.fs.starfarer.api.campaign.SpecialItemData) {
+                items.merge(((com.fs.starfarer.api.campaign.SpecialItemData) a[1]).getId(), -(Float) a[2], Float::sum);
+            }
+            return null;
+        });
+        return mock(CargoAPI.class, h);
     }
 
     @SuppressWarnings("unchecked")

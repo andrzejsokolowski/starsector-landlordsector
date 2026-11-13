@@ -39,6 +39,12 @@ public final class TenantTraits {
         public int homeShift;
         /** Security makes them unhappy instead of happy. */
         public boolean criminal;
+        /** 0.4.0: multiplies what each home level costs them, {"heat":0} does not mind heat. */
+        public Map<String, Float> levels = Collections.emptyMap();
+        /** 0.4.0: multiplies every health cost (Hardy 0.5). */
+        public float healthCost = 1f;
+        /** 0.4.0: they have kids, so upgrades' "kids" effects count for them. */
+        public boolean kids;
     }
 
     private static Map<String, Def> defs = Collections.emptyMap();
@@ -70,6 +76,9 @@ public final class TenantTraits {
                 d.loyal = t.optBoolean("loyal", false);
                 d.homeShift = t.optInt("homeShift", 0);
                 d.criminal = t.optBoolean("criminal", false);
+                d.levels = floats(t.optJSONObject("levels"));
+                d.healthCost = (float) t.optDouble("healthCost", 1);
+                d.kids = t.optBoolean("kids", false);
                 d.conflicts = HouseTraits.strings(t.optJSONArray("conflicts"));
                 map.put(d.id, d);
             }

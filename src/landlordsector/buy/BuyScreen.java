@@ -147,7 +147,7 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
             s.valueLine = Misc.getDGSCredits(full);
             if (t != null) {
                 s.valueLines = PropertyStats.valueLines(t, l.basePrice, st.grade, st.marketMult, 1f,
-                        MarketRules.traitPrice(l.traits, market), t.decor, 1f, false, full);
+                        MarketRules.traitPrice(l.features(), market), st.decor, 1f, false, full);
                 float pay = MarketRules.buyPrice(market, l);
                 s.valueLines.add(new String[] {(own ? "Your colony: you pay half, " : "With the tariff you pay ")
                         + Misc.getDGSCredits(pay) + ".", null});
@@ -157,6 +157,7 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
             s.occupancy = "For sale";
             s.stats = st;
             s.traits.addAll(houseTraits(l.traits));
+            s.upgrades.addAll(upgradeNames(l.upgrades));
             float maxImg = height - TOP - sheetTextHeight(s) - 56f;
             sheet(s, rx, TOP, rw, maxImg);
 

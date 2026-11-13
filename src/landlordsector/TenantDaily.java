@@ -11,7 +11,10 @@ import com.fs.starfarer.api.EveryFrameScript;
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 
+import landlordsector.data.HouseTraits;
+import landlordsector.data.Levels;
 import landlordsector.data.TenantEvents;
+import landlordsector.data.Upgrades;
 
 /**
  * Once a game day: tenant moods settle, advertised homes get applicants, tenants have their events
@@ -56,6 +59,7 @@ public class TenantDaily implements EveryFrameScript {
         for (Property p : new ArrayList<>(portfolio.properties())) {
             MarketAPI m = p.market();
             if (m == null) continue;
+            finishWork(p);
             if (p.tenant != null) {
                 p.tenant.mood = settle(p.tenant.mood);
                 if (p.condemned) {
@@ -66,6 +70,7 @@ public class TenantDaily implements EveryFrameScript {
                 }
                 rollEvent(p, m, random);
                 if (p.tenant != null) maybeMoveOut(p, random);
+                if (p.tenant != null) maybeTreatment(p, random);
             } else {
                 applicants(p, m, random);
             }
@@ -95,7 +100,7 @@ public class TenantDaily implements EveryFrameScript {
         Tenant a = null;
         for (int i = 0; i < 6 && a == null; i++) {
             Tenant c = Tenants.create(m.getFactionId(), m, bad, false, "advert", random, 0,
-                    Tenants.fitBoost(p.traits()), p.tier().index);
+                    Tenants.fitBoost(p.features()), p.tier().index);
             if (TenantRules.fits(p.tier().index, p.setting(), c.wealth, c.homeShift())) a = c;
         }
         if (a == null) return;
@@ -108,6 +113,7 @@ public class TenantDaily implements EveryFrameScript {
         if (Global.getSector().getClock().getElapsedDaysSince(p.lastEventAt) < TenantEvents.minDaysBetween()) return;
         if (random.nextFloat() >= TenantEvents.dailyChance()) return;
         PropertyStats st = p.stats();
+        List<String> features = p.features();
         List<TenantEvents.Def> pool = new ArrayList<>();
         List<Float> weights = new ArrayList<>();
         float total = 0f;
@@ -120,6 +126,9 @@ public class TenantDaily implements EveryFrameScript {
             }
             float w = TenantRules.eventWeight(d.good, d.damage, d.crime, d.weight, p.tenant.eventMult(d.id),
                     st.happiness, p.setting(), p.tier().index, st.security);
+            // 0.4.0: sick tenants fall sick and miss rent more; traits and upgrades change the odds (Sprinklers).
+            w *= TenantRules.sickWeight(d.sickOnly, d.sickMult, st.health, Levels.sickBelow());
+            w *= featureMult(features, d.id);
             if (w <= 0f) continue;
             pool.add(d);
             weights.add(w);
@@ -164,6 +173,46 @@ public class TenantDaily implements EveryFrameScript {
                 : null;
         Notify.event(p, text, e.good, e.big, t != null ? t.name : null, said);
         if (e.leave && t != null) p.tenant = null;
+    }
+
+    /** House traits and upgrades multiply an event's odds: a fire extinguisher halves small fires. */
+    public static float featureMult(List<String> features, String eventId) {
+        float m = 1f;
+        for (String id : features) {
+            HouseTraits.Def d = HouseTraits.get(id);
+            if (d == null) continue;
+            Float f = d.events.get(eventId);
+            if (f != null) m *= f;
+        }
+        return m;
+    }
+
+    /** Renovations whose work is done: logged, and one-time jobs fix their traits and leave (0.4.0). */
+    public static void finishWork(Property p) {
+        Iterator<Installed> it = p.upgrades().iterator();
+        while (it.hasNext()) {
+            Installed i = it.next();
+            if (i.furniture || i.days <= 0f || !i.ready()) continue;
+            Upgrades.Def d = i.def();
+            i.days = 0f;
+            String name = d != null ? d.name : i.id;
+            if (d != null && !d.fixes.isEmpty()) {
+                p.traits().removeAll(d.fixes);
+            }
+            if (d != null && d.oneTime) it.remove();
+            Notify.event(p, name + " at " + p.displayName() + " is done.", true, false);
+        }
+    }
+
+    /** A very sick tenant may move out to get treatment (0.4.0: no deaths). */
+    private static void maybeTreatment(Property p, Random random) {
+        PropertyStats st = p.stats();
+        if (random.nextFloat() >= TenantRules.treatmentChance(st.health, Levels.treatmentBelow(), p.tenant.loyal())) {
+            return;
+        }
+        Notify.event(p, p.tenant.name + " moved out of " + p.displayName() + " to get treatment.", false, true);
+        p.tenant = null;
+        p.advertising = true;
     }
 
     private static void maybeMoveOut(Property p, Random random) {

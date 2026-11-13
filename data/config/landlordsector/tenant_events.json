@@ -10,12 +10,15 @@
 	# rentMult (this month's rent), tip (share of a month's rent paid now), decor (added to the home),
 	# rep (reputation points with the market's owners), leave (the tenant moves out).
 	# requires: only tenants with one of these traits have the event.
+	# Health (0.4.0): sickOnly events only happen below the "sickBelow" health (levels.json), more often the sicker
+	#   the tenant is (3 times the weight at health 0). sickMult: the weight at health 0, rising from 1 at "sickBelow".
+	# House traits and upgrades can multiply an event's weight too ("events" in upgrades.json).
 	# kind: what the event is about. Trait tooltips name the kind (from "kinds"), never the event.
 	# big: also sent to the intel screen. Every event goes into the home's log and the fleet log.
 	# $tenant and $home are filled in.
 	"minDaysBetween":5,
 	"dailyChance":0.06,
-	"kinds":{"money":"money", "damage":"damage to the home", "upkeep":"cleaning and repairs", "neighbors":"the neighbors", "crime":"crime and safety", "decor":"decorating the home"},
+	"kinds":{"money":"money", "damage":"damage to the home", "upkeep":"cleaning and repairs", "neighbors":"the neighbors", "crime":"crime and safety", "decor":"decorating the home", "health":"health"},
 	# messages: what the tenant says to you about a big event (0.3.9), shown under it in the log and the intel
 	# message. Each group has lines and may name traits or factions. Lines for one of the tenant's traits come
 	# first, then lines for their faction, then the group with neither. One line is picked at random.
@@ -64,8 +67,8 @@
 		{"id":"trashed", "kind":"damage", "good":false, "weight":0.3, "damage":true, "condition":-0.15, "big":true, "text":"$tenant trashed $home."},
 		{"id":"graffiti", "kind":"damage", "good":false, "weight":1, "damage":true, "condition":-0.02, "decor":-2, "text":"$tenant painted graffiti all over $home."},
 		{"id":"mess", "kind":"upkeep", "good":false, "weight":1.5, "condition":-0.04, "text":"$tenant left $home a filthy mess."},
-		{"id":"late_rent", "kind":"money", "good":false, "weight":1, "rentMult":0.5, "text":"$tenant paid the rent for $home late and short."},
-		{"id":"skipped_rent", "kind":"money", "good":false, "weight":0.4, "rentMult":0, "big":true, "text":"$tenant skipped this month's rent at $home."},
+		{"id":"late_rent", "kind":"money", "good":false, "weight":1, "sickMult":2, "rentMult":0.5, "text":"$tenant paid the rent for $home late and short."},
+		{"id":"skipped_rent", "kind":"money", "good":false, "weight":0.4, "sickMult":2, "rentMult":0, "big":true, "text":"$tenant skipped this month's rent at $home."},
 		{"id":"noise_complaint", "kind":"neighbors", "good":false, "weight":1, "rep":-0.5, "mood":-3, "text":"The neighbors complained about $tenant at $home."},
 		{"id":"burglary", "kind":"crime", "good":false, "weight":1, "crime":true, "condition":-0.05, "mood":-10, "text":"Burglars broke into $home."},
 		{"id":"small_fire", "kind":"damage", "good":false, "weight":0.2, "damage":true, "condition":-0.2, "mood":-10, "big":true, "text":"A small fire damaged $home."},
@@ -77,6 +80,7 @@
 		{"id":"tip", "kind":"money", "good":true, "weight":1, "tip":0.1, "requires":["generous"], "text":"$tenant left a tip with the rent for $home."},
 		{"id":"housewarming", "kind":"neighbors", "good":true, "weight":0.5, "mood":10, "text":"$tenant threw a party at $home."},
 		{"id":"recommended", "kind":"neighbors", "good":true, "weight":0.5, "rep":0.5, "text":"$tenant told the neighbors you are a good landlord."},
-		{"id":"chased_burglars", "kind":"crime", "good":true, "weight":0.3, "mood":5, "condition":0.01, "text":"$tenant chased burglars away from $home."}
+		{"id":"chased_burglars", "kind":"crime", "good":true, "weight":0.3, "mood":5, "condition":0.01, "text":"$tenant chased burglars away from $home."},
+		{"id":"fell_sick", "kind":"health", "good":false, "weight":1.5, "sickOnly":true, "rentMult":0.75, "mood":-5, "text":"$tenant fell sick at $home and missed work."}
 	]
 }

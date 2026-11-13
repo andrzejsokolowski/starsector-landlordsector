@@ -13,6 +13,16 @@ public class Listing {
     public java.util.List<String> traits;
     /** The home's name, for example "Leafy Cottage". Null on older listings until named on load. */
     public String name;
+    /** 0.4.0: renovations the home already has (ids in upgrades.json). Null on older listings. */
+    public java.util.List<String> upgrades;
+
+    /** House traits and the renovations it comes with: everything that counts like a trait. */
+    public java.util.List<String> features() {
+        java.util.List<String> out = new java.util.ArrayList<>();
+        if (traits != null) out.addAll(traits);
+        if (upgrades != null) out.addAll(upgrades);
+        return out;
+    }
 
     public Listing() {
     }

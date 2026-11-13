@@ -1,0 +1,91 @@
+{
+	# Home upgrades (0.4.0). Two kinds for now:
+	#   furniture: a cargo item (special_items.csv row "lls_<id>", tag lls_furniture). You place it in a home and
+	#     can take it back. It uses the home's furniture slots ("slots" in tiers.json).
+	#   renovation: built with credits from the Manage page. It takes "days" to build and stays with the home.
+	#     It uses renovation slots (renovationSlots below). cost: share of the home's full value, at least minCost.
+	#
+	# Effects, the same words house traits use (house_traits.json):
+	#   comfort, decor, happiness, health, security (added), price, wear (multiplied)
+	#   levels: home levels it changes, {"heat":-1} cooler, {"air":1} cleaner air (levels.json)
+	#   kids: effects only for tenants with kids ("Family with kids"), {"happiness":4}
+	#   events: multiplies the chance of tenant events (tenant_events.json), {"small_fire":0.5}
+	#   tags: what tenants can like or hate (tenant_traits.json)
+	#   cancels: market conditions it takes off this one home, with the hazard each adds
+	# Where it can go: minTier, maxTier (0 shack to 5 estate), station (true stations only, false planets only),
+	#   needs (house traits: only homes with one of them).
+	# fixes: house traits the renovation removes when it is done. oneTime: the renovation is a job, not a part of
+	#   the home: it takes no slot and is gone once done.
+	# roll: renovations a home for sale may already have, like house traits: weight, anyCondition, climates.
+	"renovationSlots":{"shack":1, "studio":1, "small_house":2, "house":2, "villa":3, "estate":4},
+	# Chance a home for sale comes with one renovation already done.
+	"listingChance":0.3,
+	# Furniture pieces each market with a property agent stocks in its open market, and how often it restocks.
+	"shopStock":[1, 3],
+	"shopDays":30,
+	# Chance that salvage or battle loot holds one piece of furniture.
+	"lootChance":0.12,
+	"upgrades":[
+		{"id":"sofa", "kind":"furniture", "name":"Sofa", "decor":4, "happiness":2},
+		{"id":"cast_iron_pans", "kind":"furniture", "name":"Cast-iron pans", "health":5, "happiness":-1},
+		{"id":"air_purifier", "kind":"furniture", "name":"Air purifier", "levels":{"air":1}},
+		{"id":"space_heater", "kind":"furniture", "name":"Space heater", "levels":{"cold":-1}},
+		{"id":"fans", "kind":"furniture", "name":"Fans", "levels":{"heat":-1}},
+		{"id":"heavy_curtains", "kind":"furniture", "name":"Heavy curtains", "levels":{"noise":-1, "light":-1}},
+		{"id":"grow_lamps", "kind":"furniture", "name":"Grow lamps", "levels":{"light":1}, "tags":["plants"]},
+		{"id":"potted_plants", "kind":"furniture", "name":"Potted plants", "decor":2, "tags":["plants"]},
+		{"id":"first_aid_kit", "kind":"furniture", "name":"First aid kit", "health":3},
+		{"id":"fire_extinguisher", "kind":"furniture", "name":"Fire extinguisher", "events":{"small_fire":0.5}},
+		{"id":"safe", "kind":"furniture", "name":"Safe", "events":{"burglary":0.5}},
+		{"id":"toy_chest", "kind":"furniture", "name":"Toy chest", "kids":{"happiness":4}},
+		{"id":"crib", "kind":"furniture", "name":"Crib", "kids":{"health":4}},
+		{"id":"bookshelf", "kind":"furniture", "name":"Bookshelf", "decor":2, "tags":["history"]},
+		{"id":"antique_clock", "kind":"furniture", "name":"Antique clock", "decor":4, "tags":["history"]},
+		{"id":"wine_rack", "kind":"furniture", "name":"Wine rack", "decor":1, "happiness":3, "health":-2},
+		{"id":"aquarium", "kind":"furniture", "name":"Aquarium", "decor":3, "tags":["pets", "water"]},
+		{"id":"holo_projector", "kind":"furniture", "name":"Holo-projector", "decor":3, "happiness":1, "tags":["tech"]},
+		{"id":"luddic_shrine", "kind":"furniture", "name":"Luddic shrine", "decor":1, "tags":["faith"]},
+		{"id":"massage_chair", "kind":"furniture", "name":"Massage chair", "decor":1, "happiness":4, "health":1},
+		{"id":"grand_piano", "kind":"furniture", "name":"Grand piano", "decor":8, "happiness":1, "tags":["music"]},
+
+		{"id":"air_conditioned", "kind":"renovation", "name":"Air conditioning", "cost":0.04, "minCost":2000, "days":20, "price":1.02,
+			"levels":{"heat":-1}, "cancels":{"hot":0.25, "very_hot":0.5},
+			"roll":{"weight":2, "anyCondition":["hot", "very_hot"], "minTier":1}},
+		{"id":"heated_floors", "kind":"renovation", "name":"Heated floors", "cost":0.03, "minCost":1500, "days":15, "price":1.02,
+			"comfort":5, "levels":{"cold":-1},
+			"roll":{"weight":2, "anyCondition":["cold", "very_cold"], "minTier":2}},
+		{"id":"insulation", "kind":"renovation", "name":"Insulation", "cost":0.03, "minCost":1500, "days":15, "price":1.01,
+			"comfort":2, "levels":{"cold":-1}},
+		{"id":"new_plumbing", "kind":"renovation", "name":"New plumbing", "cost":0.03, "minCost":1000, "days":15, "price":1.02,
+			"wear":0.85, "health":3,
+			"roll":{"weight":2}},
+		{"id":"soundproofing", "kind":"renovation", "name":"Soundproofing", "cost":0.03, "minCost":1500, "days":15, "price":1.01,
+			"levels":{"noise":-1}},
+		{"id":"skylights", "kind":"renovation", "name":"Skylights", "station":false, "cost":0.03, "minCost":1500, "days":15, "price":1.01,
+			"comfort":2, "levels":{"light":1}},
+		{"id":"reinforced", "kind":"renovation", "name":"Reinforced doors", "cost":0.03, "minCost":1500, "days":10, "price":1.01,
+			"security":10,
+			"roll":{"weight":2}},
+		{"id":"bars", "kind":"renovation", "name":"Window bars", "cost":0.01, "minCost":500, "days":5,
+			"comfort":-4, "security":8,
+			"roll":{"weight":4, "anyCondition":["pirate_activity", "organized_crime", "IndEvo_pirate_subpop", "ix_cartel_activity"]}},
+		{"id":"alarm", "kind":"renovation", "name":"Alarm system", "cost":0.02, "minCost":2000, "days":7, "price":1.01,
+			"security":6, "events":{"burglary":0.5}},
+		{"id":"sprinklers", "kind":"renovation", "name":"Sprinklers", "cost":0.02, "minCost":1000, "days":7, "price":1.01,
+			"events":{"small_fire":0.25}},
+		{"id":"lead_lined", "kind":"renovation", "name":"Lead lining", "cost":0.05, "minCost":3000, "days":25, "price":1.02,
+			"comfort":4, "security":5, "health":4,
+			"roll":{"weight":3, "anyCondition":["irradiated", "bbplus_sigmairradiated"]}},
+		{"id":"garden_beds", "kind":"renovation", "name":"Garden", "station":false, "minTier":1, "cost":0.02, "minCost":1000, "days":20, "price":1.02,
+			"comfort":3, "tags":["garden", "plants"]},
+		{"id":"pool", "kind":"renovation", "name":"Pool", "minTier":4, "cost":0.06, "minCost":20000, "days":40, "price":1.04,
+			"comfort":5, "tags":["water"],
+			"roll":{"weight":3}},
+		{"id":"new_roof", "kind":"renovation", "name":"New roof", "needs":["leaky_roof"], "fixes":["leaky_roof"], "oneTime":true,
+			"cost":0.03, "minCost":1500, "days":15},
+		{"id":"mold_removal", "kind":"renovation", "name":"Mold removal", "needs":["damp"], "fixes":["damp"], "oneTime":true,
+			"cost":0.02, "minCost":1000, "days":10},
+		{"id":"pipe_lagging", "kind":"renovation", "name":"Pipe lagging", "needs":["frozen_pipes"], "fixes":["frozen_pipes"], "oneTime":true,
+			"cost":0.02, "minCost":1000, "days":10}
+	]
+}

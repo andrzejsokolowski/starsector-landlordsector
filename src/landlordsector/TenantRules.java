@@ -241,4 +241,39 @@ public final class TenantRules {
     }
 
     public static final float SCREENED_BAD_MULT = 0.5f;
+
+    // ---- Health (0.4.0). The thresholds and base come from levels.json. ----
+
+    /** 0 at or above {@code sickBelow}, 1 at health 0. */
+    public static float sickness(float health, float sickBelow) {
+        if (sickBelow <= 0f) return 0f;
+        return Pricing.clamp((sickBelow - health) / sickBelow, 0f, 1f);
+    }
+
+    /**
+     * How sickness changes an event's weight: sick-only events (falling sick) are 0 for healthy tenants and up to 3
+     * times their weight at health 0; others go from 1 to {@code sickMult} (missed rent: 2).
+     */
+    public static float sickWeight(boolean sickOnly, float sickMult, float health, float sickBelow) {
+        float s = sickness(health, sickBelow);
+        if (sickOnly) return 3f * s;
+        return 1f + (sickMult - 1f) * s;
+    }
+
+    /** Health lost in a worn home: none from 50% condition up, all of {@code wornHealth} at 0%. */
+    public static float wornHealth(float condition, float wornHealth) {
+        float c = Pricing.clamp(condition, 0f, 1f);
+        return c >= 0.5f ? 0f : -(0.5f - c) / 0.5f * wornHealth;
+    }
+
+    /** Daily chance a very sick tenant moves out to get treatment: one in 30 below the line, never loyal ones. */
+    public static float treatmentChance(float health, float treatmentBelow, boolean loyal) {
+        if (loyal) return 0f;
+        return health < treatmentBelow ? 1f / 30f : 0f;
+    }
+
+    /** What one home level costs: per step, times the level, times the tenant's multiplier. */
+    public static float levelCost(float perStep, int level, float mult) {
+        return perStep * Math.max(0, level) * Math.max(0f, mult);
+    }
 }

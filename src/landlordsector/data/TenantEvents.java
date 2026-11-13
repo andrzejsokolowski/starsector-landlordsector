@@ -25,6 +25,10 @@ public final class TenantEvents {
         public float condition, mood, decor, rep, tip;
         /** This month's rent multiplier, or -1 when the event leaves the rent alone. */
         public float rentMult = -1f;
+        /** 0.4.0: only for sick tenants, more often the sicker they are. */
+        public boolean sickOnly;
+        /** 0.4.0: the weight at health 0, rising from 1 at the "sickBelow" health. */
+        public float sickMult = 1f;
         public String text = "";
     }
 
@@ -95,6 +99,8 @@ public final class TenantEvents {
                 d.tip = (float) e.optDouble("tip", 0);
                 d.rentMult = e.has("rentMult") && !e.isNull("rentMult") ? (float) e.optDouble("rentMult", 1) : -1f;
                 d.text = e.optString("text", "");
+                d.sickOnly = e.optBoolean("sickOnly", false);
+                d.sickMult = (float) e.optDouble("sickMult", 1);
                 list.add(d);
             }
         }

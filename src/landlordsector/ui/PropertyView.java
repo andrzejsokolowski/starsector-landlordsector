@@ -34,6 +34,51 @@ public abstract class PropertyView extends Canvas {
         public final List<String[]> extra = new ArrayList<>();
         /** House traits: name and good (green), bad (red). */
         public final List<Object[]> traits = new ArrayList<>();
+        /** 0.4.0: installed upgrades, the same shape as traits. */
+        public final List<Object[]> upgrades = new ArrayList<>();
+    }
+
+    /** Upgrade names for a sheet: {name, good, tooltip title, tooltip lines} (0.4.0). */
+    public static List<Object[]> upgradeNames(List<String> ids) {
+        List<Object[]> out = new ArrayList<>();
+        if (ids == null) return out;
+        for (String id : ids) {
+            landlordsector.data.Upgrades.Def d = landlordsector.data.Upgrades.get(id);
+            if (d != null) out.add(new Object[] {d.name, true, d.name, Tips.upgrade(d)});
+        }
+        return out;
+    }
+
+    /** A home's upgrades for its sheet; renovations still being built read "Pool (12 days)" in plain white. */
+    public static List<Object[]> upgradeItems(landlordsector.Property p) {
+        List<Object[]> out = new ArrayList<>();
+        for (landlordsector.Installed i : p.upgrades()) {
+            landlordsector.data.Upgrades.Def d = i.def();
+            if (d == null) continue;
+            boolean done = i.ready();
+            String name = done ? d.name : d.name + " (" + Math.max(1, Math.round(i.daysLeft())) + " days)";
+            out.add(new Object[] {name, done ? Boolean.TRUE : null, d.name, Tips.upgrade(d)});
+        }
+        return out;
+    }
+
+    /** Home levels for a sheet: only the ones that are a problem, or "All fine" (0.4.0). */
+    public static List<Object[]> levelItems(PropertyStats st) {
+        List<Object[]> out = new ArrayList<>();
+        List<String[]> all = new ArrayList<>();
+        for (landlordsector.data.Levels.Def ld : landlordsector.data.Levels.all()) {
+            int lvl = st.levels.getOrDefault(ld.id, 0);
+            String label = landlordsector.data.Levels.label(ld, lvl);
+            all.add(new String[] {label, lvl == 0 ? "+" : "-"});
+            if (lvl == 0) continue;
+            out.add(new Object[] {label, Boolean.FALSE, label, st.levelLines.get(ld.id)});
+        }
+        if (out.isEmpty()) {
+            all.add(new String[] {"Heat, cold, bad air, noise and darkness each cost tenants happiness and health.",
+                    null});
+            out.add(new Object[] {"All fine", Boolean.TRUE, "Home levels", all});
+        }
+        return out;
     }
 
     /** House trait names, colors and tooltips for a sheet: {name, good, tooltip title, tooltip lines}. */
@@ -177,7 +222,8 @@ public abstract class PropertyView extends Canvas {
 
     /** Height the sheet needs under its picture. */
     protected static float sheetTextHeight(Sheet s) {
-        return 8f + 26f + 24f + 5 * ROW + (s.traits.isEmpty() ? 0f : ROW) + s.extra.size() * ROW;
+        return 8f + 26f + 24f + 5 * ROW + (s.traits.isEmpty() ? 0f : ROW) + (s.stats != null ? ROW : 0f)
+                + (s.upgrades.isEmpty() ? 0f : ROW) + s.extra.size() * ROW;
     }
 
     /** Width the sheet's text uses: the left column, then the right column up to the end of its numbers. */
@@ -235,6 +281,11 @@ public abstract class PropertyView extends Canvas {
             tipColored(rx, r + 2 * ROW, 280f, ROW, "Tenant happiness " + Math.round(st.happiness), st.happinessLines);
             stat("Security", st.security, SECURITY, rx, r + 3 * ROW);
             tipColored(rx, r + 3 * ROW, 280f, ROW, "Security " + Math.round(st.security), st.securityLines);
+            Color healthy = st.health >= landlordsector.data.Levels.sickBelow() ? Misc.getPositiveHighlightColor()
+                    : (st.health >= landlordsector.data.Levels.treatmentBelow() ? Misc.getHighlightColor()
+                            : Misc.getNegativeHighlightColor());
+            stat("Tenant health", st.health, healthy, rx, r + 4 * ROW);
+            tipColored(rx, r + 4 * ROW, 280f, ROW, "Tenant health " + Math.round(st.health), st.healthLines);
             text("Location", Misc.getGrayColor(), lx, r + 4 * ROW, 120f);
             text("[" + st.grade + "]", Misc.getHighlightColor(), lx + 120f, r + 4 * ROW, 50f);
             List<String[]> gl = st.gradeLines;
@@ -248,6 +299,16 @@ public abstract class PropertyView extends Canvas {
         if (!s.traits.isEmpty()) {
             text("Traits", Misc.getGrayColor(), lx, er, 120f);
             coloredRow(s.traits, lx + 120f, er, contentWidth(w) - 120f);
+            er += ROW;
+        }
+        if (st != null) {
+            text("Home levels", Misc.getGrayColor(), lx, er, 120f);
+            coloredRow(levelItems(st), lx + 120f, er, contentWidth(w) - 120f);
+            er += ROW;
+        }
+        if (!s.upgrades.isEmpty()) {
+            text("Upgrades", Misc.getGrayColor(), lx, er, 120f);
+            coloredRow(s.upgrades, lx + 120f, er, contentWidth(w) - 120f);
             er += ROW;
         }
         for (String[] pair : s.extra) {

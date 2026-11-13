@@ -55,6 +55,71 @@ public class Property {
     /** Share of this month's rent lost to late or skipped payments (0 to 1). */
     public float rentCut;
 
+    // ---- 0.4.0 ----
+
+    /** Placed furniture and renovations, built or being built. Null on older saves. */
+    public List<Installed> upgrades;
+
+    public List<Installed> upgrades() {
+        if (upgrades == null) upgrades = new ArrayList<>();
+        return upgrades;
+    }
+
+    /** House traits and finished upgrades: everything whose effects count (0.4.0). */
+    public List<String> features() {
+        return features(true);
+    }
+
+    public List<String> features(boolean withFurniture) {
+        List<String> out = new ArrayList<>(traits());
+        for (Installed i : upgrades()) {
+            if (!i.ready() || (i.furniture && !withFurniture)) continue;
+            out.add(i.id);
+        }
+        return out;
+    }
+
+    public int furnitureCount() {
+        int n = 0;
+        for (Installed i : upgrades()) if (i.furniture) n++;
+        return n;
+    }
+
+    /** Renovations built or being built, not counting one-time jobs. */
+    public int renovationCount() {
+        int n = 0;
+        for (Installed i : upgrades()) {
+            landlordsector.data.Upgrades.Def d = i.def();
+            if (!i.furniture && (d == null || !d.oneTime)) n++;
+        }
+        return n;
+    }
+
+    public boolean has(String upgradeId) {
+        for (Installed i : upgrades()) if (i.id.equals(upgradeId)) return true;
+        return false;
+    }
+
+    /** True for a home on a station. */
+    public boolean onStation() {
+        return Climate.STATION.id.equals(climateId);
+    }
+
+    /** What the furniture in it would sell for, at the items' base prices. */
+    public float furnitureValue() {
+        float v = 0f;
+        for (Installed i : upgrades()) {
+            if (!i.furniture) continue;
+            try {
+                v += Global.getSettings().getSpecialItemSpec(landlordsector.data.Upgrades.ITEM_PREFIX + i.id)
+                        .getBasePrice();
+            } catch (Throwable ignored) {
+                // An item from a mod that is gone is worth nothing.
+            }
+        }
+        return v;
+    }
+
     public List<String> traits() {
         if (traits == null) traits = new ArrayList<>();
         return traits;
@@ -75,18 +140,28 @@ public class Property {
     }
 
     public float decor() {
-        return Pricing.clamp(tier().decor + decorBonus, 0f, 100f);
+        return decor(true);
     }
 
-    /** Price multiplier of the house traits. */
+    /** Decor with or without the furniture (a home sold empty is valued without it). */
+    public float decor(boolean withFurniture) {
+        float d = tier().decor + decorBonus;
+        for (String id : features(withFurniture)) {
+            HouseTraits.Def def = HouseTraits.get(id);
+            if (def != null) d += def.decor;
+        }
+        return Pricing.clamp(d, 0f, 100f);
+    }
+
+    /** Price multiplier of the house traits and finished renovations. */
     public float traitPrice() {
-        return MarketRules.traitPrice(traits(), market());
+        return MarketRules.traitPrice(features(false), market());
     }
 
-    /** Wear multiplier of the house traits and the tenant. */
+    /** Wear multiplier of the house traits, upgrades and the tenant. */
     public float wearMult() {
         float m = 1f;
-        for (String id : traits()) {
+        for (String id : features()) {
             HouseTraits.Def d = HouseTraits.get(id);
             if (d != null) m *= d.wear;
         }
@@ -142,9 +217,13 @@ public class Property {
 
     /** Value at full condition, at today's market, with the decor bonus. */
     public float fullValue() {
+        return fullValue(true);
+    }
+
+    public float fullValue(boolean withFurniture) {
         MarketAPI m = market();
         float mult = m != null ? MarketRules.mult(m) : Pricing.MULT_MIN;
-        return basePrice * mult * drift * Pricing.decorValueMult(decor()) * traitPrice();
+        return basePrice * mult * drift * Pricing.decorValueMult(decor(withFurniture)) * traitPrice();
     }
 
     public PropertyStats stats() {
@@ -168,10 +247,20 @@ public class Property {
         return Pricing.repairCost(fullValue(), condition, TierTable.economy().repairFullCost);
     }
 
-    /** What a sale pays after the broker fee and the tariff. */
+    /** What a sale pays after the broker fee and the tariff, furniture left in. */
     public float saleValue() {
+        return saleValue(true);
+    }
+
+    /**
+     * What a sale pays after the broker fee and the tariff. Sold empty, the furniture comes back to the player and
+     * its decor no longer counts; sold furnished, the buyer also pays for the furniture (0.4.0).
+     */
+    public float saleValue(boolean furnished) {
         MarketAPI m = market();
         float tariff = m != null ? MarketRules.tariff(m) : 0f;
-        return value() * Math.max(0f, 1f - TierTable.economy().brokerFee - tariff);
+        float v = Pricing.value(fullValue(furnished), condition, condemned, TierTable.economy().landValue);
+        float pay = v * Math.max(0f, 1f - TierTable.economy().brokerFee - tariff);
+        return furnished ? pay + furnitureValue() : pay;
     }
 }

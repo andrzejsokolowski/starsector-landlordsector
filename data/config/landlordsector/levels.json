@@ -1,0 +1,29 @@
+{
+	# Home levels (0.4.0): how hot, cold, stuffy, loud and dark one home is, from 0 (fine) to 3.
+	# words: what each level is called, 0 to 3. "Heat: Hot (1)".
+	# better: true when a plus is good for this level (Air +1 is cleaner air, Heat -1 is cooler). House traits and
+	#   upgrades write their level changes this way round: "levels":{"heat":-1} cools, "levels":{"air":1} cleans.
+	# conditions: market conditions and the level each adds. industries: the same for buildings on the market.
+	# marketSize: from this market size up, this much more (the highest size that fits counts). All added up, at most 3.
+	# happiness, health: what each level costs a tenant per step. Tenant traits can multiply them
+	#   ("levels" in tenant_traits.json), and "healthCost" multiplies every health cost.
+	"levels":[
+		{"id":"heat", "name":"Heat", "words":["None", "Hot", "Very hot", "Scorching"], "happiness":-3, "health":-3,
+			"conditions":{"hot":1, "very_hot":2}},
+		{"id":"cold", "name":"Cold", "words":["None", "Cold", "Very cold", "Freezing"], "happiness":-3, "health":-3,
+			"conditions":{"cold":1, "very_cold":2}},
+		{"id":"air", "name":"Air", "better":true, "words":["Clean", "Stale", "Bad", "Toxic"], "happiness":-1, "health":-6,
+			"conditions":{"pollution":1, "toxic_atmosphere":2, "no_atmosphere":1}},
+		{"id":"noise", "name":"Noise", "words":["Quiet", "Noisy", "Loud", "Deafening"], "happiness":-4, "health":0,
+			"industries":{"heavyindustry":1, "orbitalworks":1, "megaport":1}, "marketSize":{"7":1, "9":2}},
+		{"id":"light", "name":"Light", "better":true, "words":["Bright", "Dim", "Dark", "Pitch dark"], "happiness":-3, "health":-1,
+			"conditions":{"poor_light":1, "dark":2}}
+	],
+	# Health (0.4.0). Every tenant starts at baseHealth, then home levels, a worn home, traits and upgrades move it.
+	# Below sickBelow they can fall sick and miss rent more often. Below treatmentBelow they may move out to get
+	# treatment. wornHealth: health lost in a home at 0% condition (half of it at 25%, none from 50% up).
+	"baseHealth":70,
+	"sickBelow":60,
+	"treatmentBelow":20,
+	"wornHealth":20
+}

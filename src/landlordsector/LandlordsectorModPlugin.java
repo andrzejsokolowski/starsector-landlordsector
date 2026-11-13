@@ -28,6 +28,8 @@ public class LandlordsectorModPlugin extends BaseModPlugin {
         TenantEvents.load(Global.getSettings().getMergedJSON(TenantEvents.PATH));
         FinderDefs.load(Global.getSettings().getMergedJSON(FinderDefs.PATH));
         landlordsector.data.Names.load(Global.getSettings().getMergedJSON(landlordsector.data.Names.PATH));
+        landlordsector.data.Upgrades.load(Global.getSettings().getMergedJSON(landlordsector.data.Upgrades.PATH));
+        landlordsector.data.Levels.load(Global.getSettings().getMergedJSON(landlordsector.data.Levels.PATH));
         Manage.addPage(Settings.MOD_ID, "Real estate", new Color(200, 170, 80), new RealEstatePage());
     }
 
@@ -36,6 +38,7 @@ public class LandlordsectorModPlugin extends BaseModPlugin {
         Global.getSector().getListenerManager().addListener(new MonthlyTick(), true);
         HomeownerScript.install();
         Global.getSector().addTransientScript(new TenantDaily());
+        FurnitureSources.install();
         repairArtPaths();
         Portfolio p = Portfolio.get();
         Random random = new Random();
@@ -44,6 +47,37 @@ public class LandlordsectorModPlugin extends BaseModPlugin {
         Finders.place(random);
         p.findersSeeded = true;
         upgradeTo030(p, random);
+        upgradeTo040(p);
+    }
+
+    /**
+     * 0.4.0: house traits that became renovations (Toasty, Air-conditioned, Renovated, Fortified, Barred, Shielded,
+     * Poolside) move from a home's traits to its installed upgrades, same id, already built. Works for any id that is
+     * no longer a trait but is an upgrade, so later moves need no new code. Public for the headless check.
+     */
+    public static void upgradeTo040(Portfolio p) {
+        for (Property pr : p.properties()) {
+            java.util.Iterator<String> it = pr.traits().iterator();
+            while (it.hasNext()) {
+                String id = it.next();
+                if (HouseTraits.isTrait(id) || landlordsector.data.Upgrades.get(id) == null) continue;
+                it.remove();
+                if (!pr.has(id)) pr.upgrades().add(Installed.done(id));
+            }
+        }
+        for (MarketListings ml : p.listings().values()) {
+            for (Listing l : ml.list()) {
+                if (l.traits == null) continue;
+                java.util.Iterator<String> it = l.traits.iterator();
+                while (it.hasNext()) {
+                    String id = it.next();
+                    if (HouseTraits.isTrait(id) || landlordsector.data.Upgrades.get(id) == null) continue;
+                    it.remove();
+                    if (l.upgrades == null) l.upgrades = new java.util.ArrayList<>();
+                    if (!l.upgrades.contains(id)) l.upgrades.add(id);
+                }
+            }
+        }
     }
 
     @Override
