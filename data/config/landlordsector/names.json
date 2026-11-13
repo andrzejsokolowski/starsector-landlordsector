@@ -23,6 +23,8 @@
 		"lava_lake":["Ember", "Cinder", "Ashen", "Molten"],
 		"frozen_pipes":["Frost", "Icy", "Frozen"],
 		"heated_floors":["Warm", "Snug", "Cozy"],
+		"geothermal":["Hot Spring", "Steamy", "Warm"],
+		"air_conditioned":["Cool", "Breezy", "Shady"],
 		"damp":["Misty", "Mossy", "Dewy"],
 		"smog":["Smoky", "Sooty", "Grey"],
 		"dust":["Dune", "Sandy", "Dusty"],

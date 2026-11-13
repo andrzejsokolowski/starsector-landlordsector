@@ -35,6 +35,11 @@ public final class HouseTraits {
         public float wear = 1f;
         public Set<String> tags = Collections.emptySet();
         public Set<String> conflicts = Collections.emptySet();
+        /**
+         * Market conditions this trait cancels for its one home, with the hazard each adds (Geothermal: the
+         * cold, 25% hazard). Comfort and the home's price use the hazard without them.
+         */
+        public Map<String, Float> cancels = Collections.emptyMap();
     }
 
     private static Map<String, Def> defs = Collections.emptyMap();
@@ -66,6 +71,14 @@ public final class HouseTraits {
                 d.wear = (float) t.optDouble("wear", 1);
                 d.tags = strings(t.optJSONArray("tags"));
                 d.conflicts = strings(t.optJSONArray("conflicts"));
+                JSONObject c = t.optJSONObject("cancels");
+                if (c != null && c.length() > 0) {
+                    d.cancels = new LinkedHashMap<>();
+                    for (java.util.Iterator<?> it = c.keys(); it.hasNext();) {
+                        String k = String.valueOf(it.next());
+                        d.cancels.put(k, (float) c.optDouble(k, 0));
+                    }
+                }
                 map.put(d.id, d);
             }
         }
@@ -80,6 +93,12 @@ public final class HouseTraits {
             if (!v.isEmpty()) s.add(v);
         }
         return s;
+    }
+
+    /** Whether the trait with this display name is good (true), bad (false) or unknown (null). */
+    public static Boolean byName(String name) {
+        for (Def d : defs.values()) if (d.name.equals(name)) return d.good;
+        return null;
     }
 
     public static Def get(String id) {
@@ -134,6 +153,20 @@ public final class HouseTraits {
             }
         }
         return out;
+    }
+
+    /** Hazard these traits take off one home on a market with these conditions. */
+    public static float hazardOffset(List<String> traitIds, Set<String> conditions) {
+        float off = 0f;
+        if (traitIds == null) return off;
+        for (String id : traitIds) {
+            Def d = defs.get(id);
+            if (d == null) continue;
+            for (Map.Entry<String, Float> e : d.cancels.entrySet()) {
+                if (conditions.contains(e.getKey())) off += e.getValue();
+            }
+        }
+        return off;
     }
 
     /** Every tag of these traits. */

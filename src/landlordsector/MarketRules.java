@@ -57,6 +57,27 @@ public final class MarketRules {
                 c.contains(Conditions.PIRATE_ACTIVITY), c.contains(Conditions.PATHER_CELLS));
     }
 
+    /**
+     * Price multiplier of a home's traits on this market: each trait's own price, and a trait that cancels the
+     * cold or the heat (Geothermal) prices the home as if the world had that much less hazard.
+     */
+    public static float traitPrice(java.util.List<String> traits, MarketAPI market) {
+        float m = 1f;
+        if (traits == null) return m;
+        for (String id : traits) {
+            HouseTraits.Def d = HouseTraits.get(id);
+            if (d != null) m *= d.price;
+        }
+        if (market == null) return m;
+        java.util.Set<String> c = Tenants.conditions(market);
+        float off = HouseTraits.hazardOffset(traits, c);
+        if (off > 0.001f) {
+            float h = market.getHazardValue();
+            m *= Pricing.planetMult(h - off, false, false, false) / Pricing.planetMult(h, false, false, false);
+        }
+        return m;
+    }
+
     /** The tariff the player pays here, 0 on their own colonies. */
     public static float tariff(MarketAPI market) {
         if (isOwn(market)) return 0f;
@@ -67,14 +88,7 @@ public final class MarketRules {
     public static float listingValue(MarketAPI market, Listing listing) {
         Tier t = TierTable.get(listing.tierId);
         float decor = t != null ? t.decor : 0f;
-        float traitPrice = 1f;
-        if (listing.traits != null) {
-            for (String id : listing.traits) {
-                HouseTraits.Def d = HouseTraits.get(id);
-                if (d != null) traitPrice *= d.price;
-            }
-        }
-        return listing.basePrice * mult(market) * Pricing.decorValueMult(decor) * traitPrice;
+        return listing.basePrice * mult(market) * Pricing.decorValueMult(decor) * traitPrice(listing.traits, market);
     }
 
     /** Price to buy a listing right now, tariff and own-colony discount included. */

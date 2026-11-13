@@ -7,6 +7,8 @@
 	#   station: true for stations only, false for planets only
 	#   minTier, maxTier: 0 shack, 1 studio, 2 small house, 3 house, 4 villa, 5 estate
 	# Effects: comfort, happiness, security (added), price, wear (multiplied).
+	# cancels: market conditions this trait takes away for its one home, with the hazard each adds
+	#   (0.25 is 25%). Comfort and the home's price then use the hazard without them.
 	# tags: what tenants can like or dislike (see tenant_traits.json). conflicts: traits it never rolls with.
 	"traits":[
 		{"id":"flowers", "name":"Blooming", "good":true, "weight":3, "anyCondition":["habitable","US_sakura","rat_bionic_plantlife"], "comfort":5, "happiness":3, "tags":["flowers"]},
@@ -16,9 +18,11 @@
 		{"id":"mountain_view", "name":"Panoramic", "good":true, "weight":2, "station":false, "comfort":3, "tags":["view"]},
 		{"id":"starview", "name":"Starlit", "good":true, "weight":3, "station":true, "comfort":4, "tags":["view"]},
 		{"id":"recycled_air", "name":"Stale", "good":false, "weight":3, "station":true, "comfort":-4, "tags":["stale_air"]},
-		{"id":"lava_lake", "name":"Scorched", "good":false, "weight":4, "anyCondition":["very_hot","extreme_tectonic_activity","tectonic_activity"], "price":0.92, "comfort":-6, "tags":["heat"]},
-		{"id":"frozen_pipes", "name":"Freezing", "good":false, "weight":3, "anyCondition":["cold","very_cold"], "wear":1.15, "tags":["cold"]},
-		{"id":"heated_floors", "name":"Toasty", "good":true, "weight":2, "anyCondition":["cold","very_cold"], "minTier":2, "comfort":5},
+		{"id":"lava_lake", "name":"Scorched", "good":false, "weight":4, "anyCondition":["very_hot","extreme_tectonic_activity","tectonic_activity"], "price":0.92, "comfort":-6, "tags":["heat"], "conflicts":["air_conditioned"]},
+		{"id":"frozen_pipes", "name":"Freezing", "good":false, "weight":3, "anyCondition":["cold","very_cold"], "wear":1.15, "tags":["cold"], "conflicts":["geothermal"]},
+		{"id":"heated_floors", "name":"Toasty", "good":true, "weight":2, "anyCondition":["cold","very_cold"], "minTier":2, "comfort":5, "conflicts":["geothermal"]},
+		{"id":"geothermal", "name":"Geothermal", "good":true, "weight":2, "anyCondition":["cold","very_cold"], "station":false, "cancels":{"cold":0.25,"very_cold":0.5}, "conflicts":["frozen_pipes","heated_floors"]},
+		{"id":"air_conditioned", "name":"Air-conditioned", "good":true, "weight":2, "anyCondition":["hot","very_hot"], "minTier":1, "cancels":{"hot":0.25,"very_hot":0.5}, "conflicts":["lava_lake"]},
 		{"id":"damp", "name":"Musty", "good":false, "weight":3, "climates":["ocean","jungle"], "comfort":-4, "wear":1.1, "tags":["damp"]},
 		{"id":"smog", "name":"Smoggy", "good":false, "weight":4, "anyCondition":["pollution","industrial_polity"], "comfort":-5, "tags":["smog"]},
 		{"id":"dust", "name":"Dusty", "good":false, "weight":3, "climates":["arid"], "comfort":-3, "wear":1.1, "tags":["dust"]},

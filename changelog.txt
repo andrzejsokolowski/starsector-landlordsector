@@ -1,3 +1,14 @@
+Version 0.3.6 (2026-11-13)
+- The agent's Real estate screen now nearly fills the screen
+- Comfort, Decor, Tenant happiness and Security show what makes up their number when you hover over the bar
+- The location tooltip lists only what sets the price; security, comfort and happiness effects of buildings and conditions moved to those bars
+- Tenant names show in their faction's color instead of "From Hegemony"; hover the name for the faction
+- Trait tooltips color only "Likes" or "Hates" and each trait name, each name by whether that trait is good or bad
+- Tenants say what home size they want: "Desired home size: Villa. Matteo thinks a shack is too small"
+- A rich tenant next to a cheap home says "Too rich for a home this cheap"
+- The tenant pool no longer shows days left; "Send away" is now "Dismiss"
+- New house traits Geothermal (cold worlds) and Air-conditioned (hot worlds): the home ignores the cold or the heat, so it is more comfortable and worth more
+
 Version 0.3.5 (2026-11-12)
 - Plain words in game text: "dearer", "a stretch" and "beneath them" are gone from the wealth tooltip and happiness notes
 - House traits renamed to common words: Frostbitten is Freezing, Paper-walled is Thin-walled, Storied is Historic, Sporous is Mushroomy, Tidepooled is Pondside, Petal-strewn is Blossoming, Verdant is Leafy

@@ -68,6 +68,12 @@ public class Tenant {
         return m;
     }
 
+    /** "Matteo" from "Matteo Zaniah". */
+    public String firstName() {
+        if (name == null || name.trim().isEmpty()) return "They";
+        return name.trim().split("\s+")[0];
+    }
+
     public float traitHappiness() {
         float h = 0f;
         for (String id : traits()) {

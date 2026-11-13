@@ -80,12 +80,7 @@ public class Property {
 
     /** Price multiplier of the house traits. */
     public float traitPrice() {
-        float m = 1f;
-        for (String id : traits()) {
-            HouseTraits.Def d = HouseTraits.get(id);
-            if (d != null) m *= d.price;
-        }
-        return m;
+        return MarketRules.traitPrice(traits(), market());
     }
 
     /** Wear multiplier of the house traits and the tenant. */

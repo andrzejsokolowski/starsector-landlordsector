@@ -207,6 +207,44 @@ public final class RulesCheck {
         boolean damage = false;
         for (String[] line : vandalTip) if (line[0].equals("More likely to have bad house events about damage to the home") && "-".equals(line[1])) damage = true;
         expect(damage, "Vandal: more likely to have bad house events about damage to the home, in red");
+        // 0.3.6 (Andrzej): only the verb and the trait names are colored, each name by its own good or bad.
+        int verbLines = 0;
+        for (landlordsector.data.TenantTraits.Def d : landlordsector.data.TenantTraits.all()) {
+            for (String[] line : landlordsector.ui.Tips.tenantTrait(d)) {
+                boolean likes = line[0].startsWith("Likes homes"), hates = line[0].startsWith("Hates homes");
+                if (!likes && !hates) continue;
+                verbLines++;
+                expect(line[1] == null && line.length >= 6, d.id + ": the likes/hates line itself is plain");
+                expect((likes ? "Likes" : "Hates").equals(line[2]) && (likes ? "+" : "-").equals(line[3]),
+                        d.id + ": the verb is colored green or red");
+                for (int i = 4; i + 1 < line.length; i += 2) {
+                    Boolean g = landlordsector.data.HouseTraits.byName(line[i]);
+                    expect(g != null && (g ? "+" : "-").equals(line[i + 1]), d.id + ": " + line[i] + " has its own color");
+                }
+            }
+        }
+        expect(verbLines > 5, "tenant traits show likes and hates lines");
+        java.util.Set<String> cold = new java.util.HashSet<>(java.util.Arrays.asList("cold"));
+        java.util.Set<String> veryCold = new java.util.HashSet<>(java.util.Arrays.asList("very_cold", "habitable"));
+        java.util.List<String> geo = java.util.Collections.singletonList("geothermal");
+        expect(Math.abs(landlordsector.data.HouseTraits.hazardOffset(geo, cold) - 0.25f) < 0.001f
+                && Math.abs(landlordsector.data.HouseTraits.hazardOffset(geo, veryCold) - 0.5f) < 0.001f,
+                "Geothermal takes the cold's 25% (extreme cold 50%) hazard off its home");
+        expect(landlordsector.data.HouseTraits.hazardOffset(geo, new java.util.HashSet<>()) == 0f,
+                "Geothermal does nothing on a world that is not cold");
+        expect(landlordsector.data.HouseTraits.get("geothermal").conflicts.contains("frozen_pipes")
+                && landlordsector.data.HouseTraits.get("frozen_pipes").conflicts.contains("geothermal"),
+                "a Geothermal home is never also Freezing");
+        expect(Math.abs(landlordsector.data.HouseTraits.hazardOffset(
+                java.util.Collections.singletonList("air_conditioned"),
+                new java.util.HashSet<>(java.util.Arrays.asList("very_hot"))) - 0.5f) < 0.001f,
+                "Air-conditioned takes the extreme heat's 50% hazard off its home");
+        java.util.Random geoRoll = new java.util.Random(7);
+        for (int i = 0; i < 2000; i++) {
+            java.util.List<String> r = landlordsector.data.HouseTraits.roll(cold, "cold", false, 3, geoRoll);
+            expect(!(r.contains("geothermal") && (r.contains("frozen_pipes") || r.contains("heated_floors"))),
+                    "Geothermal never rolls with Freezing or Toasty");
+        }
         for (landlordsector.data.TenantTraits.Def d : landlordsector.data.TenantTraits.all()) {
             for (String t : d.likes) expect(houseTags.contains(t), d.id + " likes " + t + ", which no house trait has");
             for (String t : d.dislikes) expect(houseTags.contains(t), d.id + " dislikes " + t + ", which no house trait has");

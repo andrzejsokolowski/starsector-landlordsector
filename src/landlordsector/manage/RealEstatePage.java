@@ -297,11 +297,13 @@ public class RealEstatePage implements ManagePage {
             box(x, y, w, 66f);
             portrait(a.portrait, x + 6f, y + 6f, 54f);
             float tx = x + 68f;
-            String head = a.name + ", from " + Tenants.factionName(a.factionId) + ", wealth "
-                    + TenantRules.wealthLetter(a.wealth);
-            text(head, Misc.getHighlightColor(), tx, y + 4f, w - 80f - 330f);
-            tip(tx, y + 4f, w - 80f - 330f, 18f, "Wealth " + TenantRules.wealthLetter(a.wealth),
-                    landlordsector.ui.Tips.wealth(a.wealth));
+            float hw = w - 80f - 330f;
+            com.fs.starfarer.api.ui.LabelAPI nl = text(a.name, Tenants.factionColor(a.factionId), tx, y + 4f, hw);
+            float nw = Math.min(hw, nl.computeTextWidth(a.name) + 4f);
+            tip(tx, y + 4f, nw, 18f, Tenants.factionName(a.factionId));
+            String wl = "Wealth " + TenantRules.wealthLetter(a.wealth);
+            text(wl, Misc.getHighlightColor(), tx + nw + 12f, y + 4f, Math.max(40f, hw - nw - 12f));
+            tip(tx + nw + 12f, y + 4f, 90f, 18f, wl, landlordsector.ui.Tips.wealth(a.wealth));
             coloredRow(tenantTraits(a), tx, y + 22f, w - 80f - 330f);
             float h = PropertyStats.withTenant(p, a).happiness;
             String no = Actions.refusal(p, a);
@@ -368,15 +370,14 @@ public class RealEstatePage implements ManagePage {
                 Tenant t = pool.get(i);
                 float y = rowY(i, range[0]);
                 area("pool:" + t.id, 8f, y, LIST_W, ROW_H, t == chosen);
-                text(t.name, Misc.getHighlightColor(), 18f, y + 5f, LIST_W - 20f);
-                float days = TenantRules.POOL_DAYS - Global.getSector().getClock().getElapsedDaysSince(t.since);
-                text("From " + Tenants.factionName(t.factionId) + ", waits " + Math.max(1, Math.round(days)) + " days",
+                text(t.name, Tenants.factionColor(t.factionId), 18f, y + 5f, LIST_W - 20f);
+                text("Wealth " + TenantRules.wealthLetter(t.wealth) + ", wants " + landlordsector.ui.Tips.aTier(t.wealth),
                         Misc.getGrayColor(), 18f, y + 25f, LIST_W - 20f);
             }
             float rx = rightX();
             float cw = contentWidth(rightW());
             float y = tenantCard(chosen, null, rx, TOP, cw);
-            button("dismiss:" + chosen.id, "Send away", rx + cw - 150f, TOP, 150f, 28f, true);
+            button("dismiss:" + chosen.id, "Dismiss", rx + cw - 150f, TOP, 150f, 28f, true);
             text("Move into", Misc.getGrayColor(), rx, y + 4f, cw);
             y += 28f;
             List<Property> empty = new ArrayList<>();

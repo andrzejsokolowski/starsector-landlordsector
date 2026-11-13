@@ -94,8 +94,11 @@ public abstract class PropertyView extends Canvas {
         portrait(t.portrait, x, y, size);
         float tx = x + size + 12f;
         float tw = w - size - 12f;
-        title(t.name, tx, y, tw);
-        String origin = "From " + landlordsector.Tenants.factionName(t.factionId) + ".  Wealth ";
+        com.fs.starfarer.api.ui.LabelAPI nl = title(t.name, tx, y, tw);
+        nl.setColor(landlordsector.Tenants.factionColor(t.factionId));
+        tip(tx, y, Math.min(tw, nl.computeTextWidth(t.name) + 10f), 26f,
+                landlordsector.Tenants.factionName(t.factionId));
+        String origin = "Wealth ";
         com.fs.starfarer.api.ui.LabelAPI o = text(origin, Misc.getGrayColor(), tx, y + 28f, tw);
         float ow = o.computeTextWidth(origin);
         String letter = landlordsector.TenantRules.wealthLetter(t.wealth);
@@ -113,22 +116,23 @@ public abstract class PropertyView extends Canvas {
             text(String.valueOf(Math.round(st.happiness)), x + 238f, ny, 40f);
             ny += ROW;
             for (landlordsector.PropertyStats.Note n : st.notes) {
-                if (!t.screened && n.text.contains(":")) {
+                if (n.text.contains(":") && hiddenTraitName(t, n.text.substring(0, n.text.indexOf(':')))) {
                     // Hidden traits keep their likes and dislikes hidden too.
-                    String trait = n.text.substring(0, n.text.indexOf(':'));
-                    if (!shownTraitName(t, trait)) continue;
+                    continue;
                 }
-                text(n.text, traitColor(n.good), x + 12f, ny, w - 12f);
+                com.fs.starfarer.api.ui.LabelAPI nl2 = text(n.text, traitColor(n.good), x + 12f, ny, w - 12f);
+                Canvas.highlight(nl2, n.text, n.line());
                 ny += 18f;
             }
         }
         return ny;
     }
 
-    private static boolean shownTraitName(landlordsector.Tenant t, String name) {
+    /** True when {@code name} is one of the tenant's traits that is still hidden. */
+    public static boolean hiddenTraitName(landlordsector.Tenant t, String name) {
         for (int i = 0; i < t.traits().size(); i++) {
             landlordsector.data.TenantTraits.Def d = landlordsector.data.TenantTraits.get(t.traits().get(i));
-            if (d != null && d.name.equals(name)) return t.isShown(i);
+            if (d != null && d.name.equals(name)) return !t.isShown(i);
         }
         return false;
     }
@@ -194,20 +198,15 @@ public abstract class PropertyView extends Canvas {
         PropertyStats st = s.stats;
         if (st != null) {
             stat("Comfort", st.comfort, GOLD, rx, r);
-            tip(rx, r, 280f, ROW, "Comfort", Tips.COMFORT);
+            tipColored(rx, r, 280f, ROW, "Comfort " + Math.round(st.comfort), st.comfortLines);
             stat("Decor", st.decor, GOLD, rx, r + ROW);
-            tip(rx, r + ROW, 280f, ROW, "Decor", Tips.DECOR);
+            tipColored(rx, r + ROW, 280f, ROW, "Decor " + Math.round(st.decor), st.decorLines);
             Color happy = st.happiness >= 50f ? Misc.getPositiveHighlightColor()
                     : (st.happiness >= 25f ? Misc.getHighlightColor() : Misc.getNegativeHighlightColor());
             stat("Tenant happiness", st.happiness, happy, rx, r + 2 * ROW);
-            List<String[]> hl = new ArrayList<>();
-            hl.add(new String[] {Tips.HAPPINESS[0], null});
-            for (landlordsector.PropertyStats.Note n : st.notes) {
-                hl.add(new String[] {n.text, n.good == null ? null : (n.good ? "+" : "-")});
-            }
-            tipColored(rx, r + 2 * ROW, 280f, ROW, "Tenant happiness", hl);
+            tipColored(rx, r + 2 * ROW, 280f, ROW, "Tenant happiness " + Math.round(st.happiness), st.happinessLines);
             stat("Security", st.security, SECURITY, rx, r + 3 * ROW);
-            tip(rx, r + 3 * ROW, 280f, ROW, "Security", Tips.SECURITY);
+            tipColored(rx, r + 3 * ROW, 280f, ROW, "Security " + Math.round(st.security), st.securityLines);
             text("Location", Misc.getGrayColor(), lx, r + 4 * ROW, 120f);
             text(st.grade, Misc.getHighlightColor(), lx + 120f, r + 4 * ROW, 30f);
             List<String[]> gl = st.gradeLines;

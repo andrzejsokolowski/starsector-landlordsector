@@ -137,6 +137,14 @@ public abstract class Canvas implements CustomUIPanelPlugin {
         this.height = height;
     }
 
+    public float width() {
+        return width;
+    }
+
+    public float height() {
+        return height;
+    }
+
     /** Hands the panel over and builds the contents. */
     public void attach(CustomPanelAPI panel) {
         this.panel = panel;
@@ -245,6 +253,44 @@ public abstract class Canvas implements CustomUIPanelPlugin {
         tips.add(new Tip(x, y, w, h, title, lines));
     }
 
+    /** "+" green, "-" red, "g" gold, anything else the plain text color. */
+    public static Color colorOf(String code) {
+        if ("+".equals(code)) return Misc.getPositiveHighlightColor();
+        if ("-".equals(code)) return Misc.getNegativeHighlightColor();
+        if ("g".equals(code)) return Misc.getHighlightColor();
+        return Misc.getTextColor();
+    }
+
+    /**
+     * Colors parts of a label: {@code line} is {text, color, part, color, part, color, ...} (Andrzej, 0.3.6: in
+     * "Likes homes that are Tranquil" only "Likes" and "Tranquil" are colored, each by its own good or bad). Only
+     * parts found in {@code shown} (one wrapped row of the line) are colored, in the order they appear.
+     */
+    public static void highlight(LabelAPI label, String shown, String[] line) {
+        if (line == null || line.length < 4 || shown == null) return;
+        List<Object[]> found = new ArrayList<>();
+        int from = 0;
+        for (int i = 2; i + 1 < line.length; i += 2) {
+            String part = line[i];
+            if (part == null || part.isEmpty()) continue;
+            int at = shown.indexOf(part, from);
+            if (at < 0) at = shown.indexOf(part);
+            if (at < 0) continue;
+            found.add(new Object[] {at, part, colorOf(line[i + 1])});
+            from = at + part.length();
+        }
+        if (found.isEmpty()) return;
+        found.sort((a, b) -> Integer.compare((Integer) a[0], (Integer) b[0]));
+        String[] parts = new String[found.size()];
+        Color[] colors = new Color[found.size()];
+        for (int i = 0; i < found.size(); i++) {
+            parts[i] = (String) found.get(i)[1];
+            colors[i] = (Color) found.get(i)[2];
+        }
+        label.setHighlight(parts);
+        label.setHighlightColors(colors);
+    }
+
     private void hideTip() {
         if (tipPanel != null && panel != null) panel.removeComponent(tipPanel);
         tipPanel = null;
@@ -254,8 +300,12 @@ public abstract class Canvas implements CustomUIPanelPlugin {
     private void showTip(Tip t, float mx, float my) {
         hideTip();
         List<String[]> rows = new ArrayList<>();
+        List<String[]> rowLines = new ArrayList<>();
         for (String[] line : t.lines) {
-            for (String part : wrap(line[0], TIP_W - 20f)) rows.add(new String[] {part, line[1]});
+            for (String part : wrap(line[0], TIP_W - 20f)) {
+                rows.add(new String[] {part, line[1]});
+                rowLines.add(line);
+            }
         }
         float h = 12f + (t.title == null ? 0f : 22f) + rows.size() * 18f + 6f;
         tipPanel = panel.createCustomPanel(TIP_W, h, new TipPlugin());
@@ -266,11 +316,11 @@ public abstract class Canvas implements CustomUIPanelPlugin {
             tipPanel.addComponent((UIComponentAPI) l).inTL(10f, y).setSize(TIP_W - 20f, 20f);
             y += 22f;
         }
-        for (String[] r : rows) {
+        for (int i = 0; i < rows.size(); i++) {
+            String[] r = rows.get(i);
             LabelAPI l = Global.getSettings().createLabel(r[0], Fonts.DEFAULT_SMALL);
-            Color c = "+".equals(r[1]) ? Misc.getPositiveHighlightColor()
-                    : ("-".equals(r[1]) ? Misc.getNegativeHighlightColor() : Misc.getTextColor());
-            l.setColor(c);
+            l.setColor(colorOf(r[1]));
+            highlight(l, r[0], rowLines.get(i));
             tipPanel.addComponent((UIComponentAPI) l).inTL(10f, y).setSize(TIP_W - 20f, 18f);
             y += 18f;
         }

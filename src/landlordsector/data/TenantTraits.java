@@ -92,6 +92,12 @@ public final class TenantTraits {
         return m;
     }
 
+    /** Whether the trait with this display name is good (true), bad (false) or unknown (null). */
+    public static Boolean byName(String name) {
+        for (Def d : defs.values()) if (d.name.equals(name)) return d.good;
+        return null;
+    }
+
     public static Def get(String id) {
         return defs.get(id);
     }

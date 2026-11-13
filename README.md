@@ -37,7 +37,8 @@ Requires LunaLib and OddiszCommons.
   one tier more expensive, Low and High half as much. Applicants for an advert fit the home; the market's faction tilts their wealth.
 - You see one trait of an applicant until you pay to screen them. A monthly screening service makes bad
   traits rarer.
-- Homes roll 0 to 3 traits of their own (house_traits.json). Tenants like (+8 happiness) or hate (-15)
+- Homes roll 0 to 3 traits of their own (house_traits.json). Geothermal (cold worlds) and Air-conditioned (hot
+  worlds) take the cold or the heat off one home: its comfort and price use the hazard without it. Tenants like (+8 happiness) or hate (-15)
   some of them. Hover over a trait to see what it does. Tenant traits tell which kind of house event
   (money, damage, crime and safety, the neighbors, cleaning and repairs, decorating) they make likelier, not the events themselves.
 - Tenant events (tenant_events.json): at most one per home every 5 days. Bad ones get likelier with
@@ -59,8 +60,8 @@ Requires LunaLib and OddiszCommons.
 - **Tenant happiness** (0 to 100): from comfort, decor, condition and the rent setting. Happy tenants wear
   a home slower and tip more often. Unhappy ones wear it up to 1.5 times as fast.
 - **Location** (S+, S, A, B, C, D, E, F): the market's price grade. A standard world is C, an Earth-like
-  one S, a high-hazard world with pirates F. Hovering over the grade lists every price factor and market
-  condition with its effects.
+  one S, a high-hazard world with pirates F. Hovering over the grade lists every price factor and the market
+  conditions that change the price. Hovering over a stat bar lists what makes up that stat.
 - Market conditions from the base game and installed mods (conditions.json) change price, comfort,
   tenant happiness and security, from what each condition really does in the game. A condition's own
   stability and hazard changes already count through the market, so they are not repeated. Some only

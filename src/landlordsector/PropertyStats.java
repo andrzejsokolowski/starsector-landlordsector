@@ -21,10 +21,22 @@ public final class PropertyStats {
     public static final class Note {
         public final String text;
         public final Boolean good;
+        /** Parts of the text in their own color: {part, "+" / "-" / null, part, color, ...}. */
+        public final String[] hl;
 
-        Note(String text, Boolean good) {
+        Note(String text, Boolean good, String... hl) {
             this.text = text;
             this.good = good;
+            this.hl = hl;
+        }
+
+        /** As a tooltip line: {text, color, part, color, ...}. */
+        public String[] line() {
+            String[] out = new String[2 + hl.length];
+            out[0] = text;
+            out[1] = good == null ? null : (good ? "+" : "-");
+            System.arraycopy(hl, 0, out, 2, hl.length);
+            return out;
         }
     }
 
@@ -43,6 +55,11 @@ public final class PropertyStats {
      * condition with its effects (Andrzej, 0.3.3: the conditions with details in a tooltip on the grade letter).
      */
     public final List<String[]> gradeLines = new ArrayList<>();
+    /** What makes up each stat, for the tooltips on their bars: {text, "+" / "-" / null}. */
+    public final List<String[]> comfortLines = new ArrayList<>();
+    public final List<String[]> decorLines = new ArrayList<>();
+    public final List<String[]> happinessLines = new ArrayList<>();
+    public final List<String[]> securityLines = new ArrayList<>();
     /** The world, for example "Arid world" or "Station". */
     public String world = "";
     /** Likes, dislikes and rent the tenant cannot afford. Empty without a tenant. */
@@ -74,13 +91,24 @@ public final class PropertyStats {
             List<String> houseTraits, float decor, Tenant tenant) {
         PropertyStats s = new PropertyStats();
         s.decor = Pricing.clamp(decor, 0f, 100f);
+        float tierDecor = Pricing.clamp(tier.decor, 0f, 100f);
+        s.decorLines.add(new String[] {"Comes with " + article(tier.name.toLowerCase()) + ": " + Math.round(tierDecor),
+                null});
+        float extra = s.decor - tierDecor;
+        if (Math.abs(extra) >= 0.5f) s.decorLines.add(effect("Added since", extra, null));
+        s.decorLines.add(new String[] {"Raises the value (up to a quarter) and the reputation rent earns or costs.", null});
         float traitComfort = 0f, traitHappy = 0f, traitSecurity = 0f;
+        List<String[]> traitComfortLines = new ArrayList<>(), traitHappyLines = new ArrayList<>(),
+                traitSecurityLines = new ArrayList<>();
         for (String id : houseTraits) {
             HouseTraits.Def d = HouseTraits.get(id);
             if (d == null) continue;
             traitComfort += d.comfort;
             traitHappy += d.happiness;
             traitSecurity += d.security;
+            if (d.comfort != 0f) traitComfortLines.add(effect(d.name, d.comfort, d.good));
+            if (d.happiness != 0f) traitHappyLines.add(effect(d.name, d.happiness, d.good));
+            if (d.security != 0f) traitSecurityLines.add(effect(d.name, d.security, d.good));
         }
         if (m == null) {
             s.comfort = Pricing.clamp(tier.comfort * 0.5f + traitComfort, 0f, 100f);
@@ -91,14 +119,19 @@ public final class PropertyStats {
         }
         Set<String> conds = Tenants.conditions(m);
         float condComfort = 0f, condHappy = 0f, condSecurity = 0f;
-        List<String[]> condLines = new ArrayList<>();
+        List<String[]> condComfortLines = new ArrayList<>(), condHappyLines = new ArrayList<>(),
+                condSecurityLines = new ArrayList<>(), condPriceLines = new ArrayList<>();
         for (ConditionTable.Effect e : ConditionTable.matching(conds, m.getFactionId())) {
             condComfort += e.comfort;
             condHappy += e.happiness;
             condSecurity += e.security;
-            MarketConditionAPI mc = m.getCondition(e.id);
-            String name = mc != null && mc.getName() != null ? mc.getName() : e.id;
-            condLines.add(conditionLine(name, e));
+            String name = conditionName(m, e.id);
+            if (Math.abs(e.price - 1f) > 0.001f) {
+                condPriceLines.add(new String[] {name + ": price x" + two(e.price), e.price > 1f ? "+" : "-"});
+            }
+            if (Math.abs(e.comfort) >= 0.5f) condComfortLines.add(effect(name, e.comfort, null));
+            if (Math.abs(e.happiness) >= 0.5f) condHappyLines.add(effect(name, e.happiness, null));
+            if (Math.abs(e.security) >= 0.5f) condSecurityLines.add(effect(name, e.security, null));
         }
 
         boolean habitable = conds.contains(Conditions.HABITABLE);
@@ -106,27 +139,83 @@ public final class PropertyStats {
         boolean pollution = conds.contains(Conditions.POLLUTION);
         boolean pirates = conds.contains(Conditions.PIRATE_ACTIVITY);
         boolean pathers = conds.contains(Conditions.PATHER_CELLS);
-        s.comfort = Pricing.clamp(Pricing.comfort(tier.comfort, climate, habitable, mild, pollution,
-                m.getHazardValue(), condition) + condComfort + traitComfort, 0f, 100f);
-        s.security = Pricing.clamp(Pricing.security(m.getStabilityValue(), military(m), defenses(m), pirates, pathers)
-                + condSecurity + traitSecurity, 0f, 100f);
+        float hazard = m.getHazardValue();
+
+        // Comfort. A trait like Geothermal takes the cold (or the heat) of the world off this one home.
+        float offset = HouseTraits.hazardOffset(houseTraits, conds);
+        float homeHazard = hazard - offset;
+        float unworn = Pricing.comfort(tier.comfort, climate, habitable, mild, pollution, homeHazard, 1f);
+        float worn = Pricing.comfort(tier.comfort, climate, habitable, mild, pollution, homeHazard, condition);
+        s.comfort = Pricing.clamp(worn + condComfort + traitComfort, 0f, 100f);
+        s.comfortLines.add(new String[] {tier.name + ": " + Math.round(tier.comfort), null});
+        float hz = Pricing.clamp((1f - homeHazard) * 20f, -40f, 12f);
+        if (Math.abs(hz) >= 0.5f) s.comfortLines.add(effect("Hazard " + Math.round(homeHazard * 100f) + "%", hz, null));
+        for (String id : houseTraits) {
+            HouseTraits.Def d = HouseTraits.get(id);
+            if (d == null) continue;
+            for (java.util.Map.Entry<String, Float> c : d.cancels.entrySet()) {
+                if (!conds.contains(c.getKey())) continue;
+                String cn = conditionName(m, c.getKey());
+                s.comfortLines.add(new String[] {d.name + ": no " + cn + " in this home (hazard -"
+                        + Math.round(c.getValue() * 100f) + "%)", null, d.name, d.good ? "+" : "-"});
+            }
+        }
+        if (mild) s.comfortLines.add(effect("Mild climate", 5f, null));
+        if (habitable) s.comfortLines.add(effect("Breathable world", 5f, null));
+        if (pollution) s.comfortLines.add(effect("Pollution", -10f, null));
+        if (climate == Climate.STATION) s.comfortLines.add(effect("Station life", -5f, null));
+        if (unworn - worn >= 0.5f) {
+            s.comfortLines.add(effect("Wear (condition " + Math.round(condition * 100f) + "%)", worn - unworn, null));
+        }
+        s.comfortLines.addAll(condComfortLines);
+        s.comfortLines.addAll(traitComfortLines);
+        s.comfortLines.add(new String[] {"Raises tenant happiness.", null});
+
+        // Security.
+        float stab = m.getStabilityValue();
+        float mil = military(m), def = defenses(m);
+        s.security = Pricing.clamp(Pricing.security(stab, mil, def, pirates, pathers) + condSecurity + traitSecurity,
+                0f, 100f);
+        s.securityLines.add(effect("Stability " + Math.round(stab), Pricing.clamp(stab, 0f, 10f) * 6f, null));
+        if (mil > 0f) s.securityLines.add(effect(industryName(m, MILITARY), mil, null));
+        if (def > 0f) s.securityLines.add(effect(industryName(m, DEFENSES), def, null));
+        if (pirates) s.securityLines.add(effect(conditionName(m, Conditions.PIRATE_ACTIVITY), -15f, null));
+        if (pathers) s.securityLines.add(effect(conditionName(m, Conditions.PATHER_CELLS), -10f, null));
+        s.securityLines.addAll(condSecurityLines);
+        s.securityLines.addAll(traitSecurityLines);
+        s.securityLines.add(new String[] {"Cuts burglaries, police raids and raid damage.", null});
+
+        // Happiness of the home, then the tenant's own part.
         float home = Pricing.happiness(s.comfort, s.decor, setting.happiness, condition) + condHappy + traitHappy;
         s.happiness = Pricing.clamp(home, 0f, 100f);
-        if (tenant != null) s.happiness = tenantHappiness(s, home, tenant, setting, houseTraits, tier.index);
+        s.happinessLines.add(new String[] {"Base: 50", null});
+        s.happinessLines.add(effect("Comfort " + Math.round(s.comfort), (s.comfort - 50f) * 0.4f, null));
+        s.happinessLines.add(effect("Decor " + Math.round(s.decor), s.decor * 0.1f, null));
+        if (setting.happiness != 0f) s.happinessLines.add(effect(setting.label + " rent", setting.happiness, null));
+        s.happinessLines.add(effect("Condition " + Math.round(condition * 100f) + "%",
+                (Pricing.clamp(condition, 0f, 1f) - 0.5f) * 40f, null));
+        s.happinessLines.addAll(condHappyLines);
+        s.happinessLines.addAll(traitHappyLines);
+        if (tenant != null) {
+            s.happiness = tenantHappiness(s, home, tenant, setting, houseTraits, tier);
+            for (Note n : s.notes) s.happinessLines.add(n.line());
+        }
+        s.happinessLines.add(new String[] {"Happy tenants wear the home slower, tip more and cause less trouble."
+                + " Below " + Math.round(TenantRules.MOVE_OUT_BELOW) + " they may move out.", null});
 
+        // Location: only what sets the price (Andrzej, 0.3.6: security and the rest have their own tooltips).
         s.marketMult = MarketRules.mult(m);
         s.grade = Pricing.grade(s.marketMult);
-        float hazard = m.getHazardValue();
         float bare = Pricing.planetMult(hazard, false, false, false);
         factor(s, "Market size " + m.getSize(), Pricing.sizeMult(m.getSize()));
-        factor(s, "Stability " + Math.round(m.getStabilityValue()), Pricing.stabilityMult(m.getStabilityValue()));
+        factor(s, "Stability " + Math.round(stab), Pricing.stabilityMult(stab));
         factor(s, "Hazard " + Math.round(hazard * 100f) + "%", bare);
         if (habitable) factor(s, "Breathable world", Pricing.planetMult(hazard, true, false, false) / bare);
         if (mild) factor(s, "Mild climate", Pricing.planetMult(hazard, false, true, false) / bare);
         if (pollution) factor(s, "Pollution", Pricing.planetMult(hazard, false, false, true) / bare);
-        if (pirates) factor(s, "Pirate activity", Pricing.dangerMult(true, false));
-        if (pathers) factor(s, "Pather cells", Pricing.dangerMult(false, true));
-        s.gradeLines.addAll(condLines);
+        if (pirates) factor(s, conditionName(m, Conditions.PIRATE_ACTIVITY), Pricing.dangerMult(true, false));
+        if (pathers) factor(s, conditionName(m, Conditions.PATHER_CELLS), Pricing.dangerMult(false, true));
+        s.gradeLines.addAll(condPriceLines);
         String total = "Price x" + two(s.marketMult);
         if (s.marketMult <= Pricing.MULT_MIN + 0.001f || s.marketMult >= Pricing.MULT_MAX - 0.001f) {
             total += " (the limit)";
@@ -144,40 +233,117 @@ public final class PropertyStats {
     }
 
     private static float tenantHappiness(PropertyStats s, float home, Tenant t, RentSetting setting,
-            List<String> houseTraits, int tier) {
+            List<String> houseTraits, Tier tier) {
         Set<String> tags = HouseTraits.tags(houseTraits);
         int liked = 0, disliked = 0;
         for (String id : t.traits()) {
             TenantTraits.Def d = TenantTraits.get(id);
             if (d == null) continue;
+            String dc = d.good == null ? null : (d.good ? "+" : "-");
+            if (d.happiness != 0f) {
+                String num = signed(d.happiness);
+                s.notes.add(new Note(d.name + ": " + num, null, d.name, dc, num, d.happiness > 0f ? "+" : "-"));
+            }
             for (String tag : d.likes) {
                 if (!tags.contains(tag)) continue;
                 liked++;
-                s.notes.add(new Note(d.name + ": likes the home being " + tagName(tag, houseTraits) + " (+" + Math.round(TenantRules.LIKE) + ")", true));
+                HouseTraits.Def h = traitWithTag(tag, houseTraits);
+                String hn = h != null ? h.name : tag;
+                s.notes.add(new Note(d.name + ": likes " + hn + " homes (+" + Math.round(TenantRules.LIKE) + ")", null,
+                        d.name, dc, "likes", "+", hn, h == null ? null : (h.good ? "+" : "-")));
             }
             for (String tag : d.dislikes) {
                 if (!tags.contains(tag)) continue;
                 disliked++;
-                s.notes.add(new Note(d.name + ": hates the home being " + tagName(tag, houseTraits) + " (-" + Math.round(TenantRules.DISLIKE) + ")", false));
+                HouseTraits.Def h = traitWithTag(tag, houseTraits);
+                String hn = h != null ? h.name : tag;
+                s.notes.add(new Note(d.name + ": hates " + hn + " homes (-" + Math.round(TenantRules.DISLIKE) + ")",
+                        null, d.name, dc, "hates", "-", hn, h == null ? null : (h.good ? "+" : "-")));
             }
         }
-        float price = TenantRules.pricePenalty(tier, setting, t.wealth);
-        float beneath = TenantRules.beneathPenalty(tier, t.wealth);
-        String letter = TenantRules.wealthLetter(t.wealth);
-        if (price >= TenantRules.CANT_AFFORD) {
-            s.notes.add(new Note("Wealth " + letter + " can't pay for this home at " + setting.label + " rent (-"
-                    + Math.round(price) + ")", false));
-        } else if (price > 0f) {
-            s.notes.add(new Note("Wealth " + letter + " has trouble paying for this home at " + setting.label + " rent (-"
-                    + Math.round(price) + ")", false));
+        float price = TenantRules.pricePenalty(tier.index, setting, t.wealth);
+        float beneath = TenantRules.beneathPenalty(tier.index, t.wealth);
+        String first = t.firstName();
+        String want = "Desired home size: " + desiredTier(t.wealth) + ". ";
+        String here = article(tier.name.toLowerCase());
+        if (price > 0f) {
+            String text;
+            if (tier.index > TenantRules.fitTier(t.wealth)) {
+                text = want + first + " thinks " + here + " is too big"
+                        + (TenantRules.settingShift(setting) > 0f ? " at " + setting.label + " rent" : "")
+                        + (price >= TenantRules.CANT_AFFORD ? " and can't pay for it" : "");
+            } else {
+                text = first + " thinks " + setting.label + " rent is too high";
+            }
+            s.notes.add(new Note(text + " (-" + Math.round(price) + ")", false));
         }
         if (beneath > 0f) {
-            s.notes.add(new Note("Wealth " + letter + " thinks this home is not good enough for them (-" + Math.round(beneath) + ")",
+            s.notes.add(new Note(want + first + " thinks " + here + " is too small (-" + Math.round(beneath) + ")",
                     false));
         }
-        if (t.mood >= 5f) s.notes.add(new Note("In a good mood", true));
-        if (t.mood <= -5f) s.notes.add(new Note("In a bad mood", false));
+        if (t.mood >= 5f) s.notes.add(new Note("In a good mood (+" + Math.round(t.mood) + ")", true));
+        if (t.mood <= -5f) s.notes.add(new Note("In a bad mood (" + Math.round(t.mood) + ")", false));
         return TenantRules.tenantHappiness(home, t.traitHappiness(), liked, disliked, price + beneath, t.mood);
+    }
+
+    /** The tier a tenant of this wealth wants, capitalized ("Villa", "Small house"). */
+    public static String desiredTier(int wealth) {
+        List<Tier> tiers = TierTable.all();
+        return tiers.get(Math.min(tiers.size() - 1, TenantRules.fitTier(wealth))).name;
+    }
+
+    /** "a shack", "an estate". */
+    public static String article(String word) {
+        return ("aeiou".indexOf(Character.toLowerCase(word.charAt(0))) >= 0 ? "an " : "a ") + word;
+    }
+
+    /** "Fortified: +10", the number green or red; the name in its own color when it has one. */
+    private static String[] effect(String name, float v, Boolean nameGood) {
+        String num = signed(v);
+        String c = v > 0.001f ? "+" : (v < -0.001f ? "-" : null);
+        if (nameGood == null) return new String[] {name + ": " + num, null, num, c};
+        return new String[] {name + ": " + num, null, name, nameGood ? "+" : "-", num, c};
+    }
+
+    private static String signed(float v) {
+        int r = Math.round(v);
+        return (r > 0 ? "+" : "") + r;
+    }
+
+    private static final String[] MILITARY = {Industries.HIGHCOMMAND, Industries.MILITARYBASE, Industries.PATROLHQ};
+    private static final String[] DEFENSES = {Industries.HEAVYBATTERIES, Industries.GROUNDDEFENSES};
+
+    private static String industryName(MarketAPI m, String[] ids) {
+        for (String id : ids) {
+            if (!m.hasIndustry(id)) continue;
+            try {
+                String n = m.getIndustry(id).getCurrentName();
+                if (n != null && !n.isEmpty()) return n;
+            } catch (Throwable ignored) {
+                // A stand-in market without industry objects.
+            }
+            return id;
+        }
+        return "";
+    }
+
+    private static String conditionName(MarketAPI m, String id) {
+        try {
+            MarketConditionAPI mc = m.getCondition(id);
+            if (mc != null && mc.getName() != null) return mc.getName();
+        } catch (Throwable ignored) {
+            // A stand-in market without condition objects.
+        }
+        return id;
+    }
+
+    /** The house trait that carries this tag. */
+    private static HouseTraits.Def traitWithTag(String tag, List<String> houseTraits) {
+        for (String id : houseTraits) {
+            HouseTraits.Def d = HouseTraits.get(id);
+            if (d != null && d.tags.contains(tag)) return d;
+        }
+        return null;
     }
 
     private static void factor(PropertyStats s, String what, float mult) {
@@ -185,36 +351,8 @@ public final class PropertyStats {
         s.gradeLines.add(new String[] {what + ": price x" + two(mult), sign});
     }
 
-    /** "Rogue AI Core: price x0.8, comfort -5, security -10", green when all good, red when all bad. */
-    private static String[] conditionLine(String name, ConditionTable.Effect e) {
-        List<String> parts = new ArrayList<>();
-        int good = 0, bad = 0;
-        if (Math.abs(e.price - 1f) > 0.001f) {
-            parts.add("price x" + two(e.price));
-            if (e.price > 1f) good++; else bad++;
-        }
-        float[] v = {e.comfort, e.happiness, e.security};
-        String[] n = {"comfort", "happiness", "security"};
-        for (int i = 0; i < v.length; i++) {
-            if (Math.abs(v[i]) < 0.5f) continue;
-            parts.add(n[i] + " " + (v[i] > 0f ? "+" : "") + Math.round(v[i]));
-            if (v[i] > 0f) good++; else bad++;
-        }
-        String sign = good > 0 && bad == 0 ? "+" : (bad > 0 && good == 0 ? "-" : null);
-        return new String[] {name + ": " + (parts.isEmpty() ? "no effect" : String.join(", ", parts)), sign};
-    }
-
     private static String two(float v) {
         return String.valueOf(Math.round(v * 100f) / 100f);
-    }
-
-    /** The name of the house trait that carries this tag, lower case ("field of flowers"). */
-    private static String tagName(String tag, List<String> houseTraits) {
-        for (String id : houseTraits) {
-            HouseTraits.Def d = HouseTraits.get(id);
-            if (d != null && d.tags.contains(tag)) return d.name;
-        }
-        return tag;
     }
 
     private static float military(MarketAPI m) {

@@ -100,3 +100,11 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
 - 0.3.5 (Andrzej: "use normal english words"): every name and line the player reads uses common everyday words.
   No "dearer", "a stretch", "beneath them", no rare words in trait names (Sporous, Storied, Mycophile) or home
   names (Hovel, Grange, Rime). Trait ids stay the same (saves keep ids), only the names changed.
+
+- 0.3.6 (Andrzej's notes after 0.3.5): the buy screen sizes itself to the screen (`BuyScreen.screenW/screenH`).
+  `PropertyStats` keeps a breakdown per stat (`comfortLines`, `decorLines`, `happinessLines`, `securityLines`);
+  `gradeLines` holds only price factors. Tooltip lines may carry colored parts: {text, color, part, color, ...}
+  (`Canvas.highlight`); trait likes/hates lines color only the verb and each trait name by its own good/bad.
+  Tenant names use `Tenants.factionColor` (the faction's base UI color) instead of "From X". House traits may
+  `cancel` conditions with their hazard (Geothermal, Air-conditioned): `HouseTraits.hazardOffset`,
+  `MarketRules.traitPrice`. Wealth notes read "Desired home size: Villa. Matteo thinks a shack is too small".

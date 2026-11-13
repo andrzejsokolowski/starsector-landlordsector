@@ -42,10 +42,47 @@ public final class Tips {
                 if (t.dislikes.contains(tag) && !hates.contains(t.name)) hates.add(t.name);
             }
         }
-        if (!likes.isEmpty()) add(out, "Liked by: " + String.join(", ", likes) + " (+" + Math.round(TenantRules.LIKE) + ")", "+");
-        if (!hates.isEmpty()) add(out, "Hated by: " + String.join(", ", hates) + " (-" + Math.round(TenantRules.DISLIKE) + ")", "-");
+        for (java.util.Map.Entry<String, Float> e : d.cancels.entrySet()) {
+            add(out, "No " + conditionName(e.getKey()).toLowerCase() + " in this home (hazard -"
+                    + Math.round(e.getValue() * 100f) + "%)", "+");
+        }
+        List<Boolean> likeGood = new ArrayList<>(), hateGood = new ArrayList<>();
+        for (String n : likes) likeGood.add(TenantTraits.byName(n));
+        for (String n : hates) hateGood.add(TenantTraits.byName(n));
+        if (!likes.isEmpty()) out.add(named("Liked by", "+", likes, likeGood, " (+" + Math.round(TenantRules.LIKE) + ")"));
+        if (!hates.isEmpty()) out.add(named("Hated by", "-", hates, hateGood, " (-" + Math.round(TenantRules.DISLIKE) + ")"));
         if (out.isEmpty()) add(out, "No effect on its own.", null);
         return out;
+    }
+
+    /**
+     * "Likes homes that are Tranquil, Smoggy (+8)": the plain line with only the verb and each trait name
+     * colored, each name by its own good or bad, so a tenant who likes a bad trait shows a green verb and a red
+     * name (Andrzej, 0.3.6).
+     */
+    static String[] named(String verb, String verbColor, List<String> names, List<Boolean> good, String tail) {
+        String text = verb + (verb.endsWith("by") ? ": " : " homes that are ") + String.join(", ", names) + tail;
+        String[] line = new String[4 + names.size() * 2];
+        line[0] = text;
+        line[1] = null;
+        line[2] = verb;
+        line[3] = verbColor;
+        for (int i = 0; i < names.size(); i++) {
+            Boolean g = good.get(i);
+            line[4 + i * 2] = names.get(i);
+            line[5 + i * 2] = g == null ? null : (g ? "+" : "-");
+        }
+        return line;
+    }
+
+    private static String conditionName(String id) {
+        try {
+            String n = com.fs.starfarer.api.Global.getSettings().getMarketConditionSpec(id).getName();
+            if (n != null && !n.isEmpty()) return n;
+        } catch (Throwable ignored) {
+            // Not in this game, or no game (checks).
+        }
+        return id.replace('_', ' ');
     }
 
     /** What a tenant trait does. */
@@ -67,8 +104,11 @@ public final class Tips {
                 if (d.dislikes.contains(tag) && !hates.contains(h.name)) hates.add(h.name);
             }
         }
-        if (!likes.isEmpty()) add(out, "Likes homes that are " + String.join(", ", likes) + " (+" + Math.round(TenantRules.LIKE) + ")", "+");
-        if (!hates.isEmpty()) add(out, "Hates homes that are " + String.join(", ", hates) + " (-" + Math.round(TenantRules.DISLIKE) + ")", "-");
+        List<Boolean> likeGood = new ArrayList<>(), hateGood = new ArrayList<>();
+        for (String n : likes) likeGood.add(HouseTraits.byName(n));
+        for (String n : hates) hateGood.add(HouseTraits.byName(n));
+        if (!likes.isEmpty()) out.add(named("Likes", "+", likes, likeGood, " (+" + Math.round(TenantRules.LIKE) + ")"));
+        if (!hates.isEmpty()) out.add(named("Hates", "-", hates, hateGood, " (-" + Math.round(TenantRules.DISLIKE) + ")"));
         if (out.isEmpty()) add(out, "No effect on its own.", null);
         return out;
     }
@@ -144,15 +184,6 @@ public final class Tips {
         }
         return out;
     }
-
-    public static final String[] COMFORT = {"How pleasant the home is to live in: its size, the planet's hazard, a breathable"
-            + " world and a mild climate, pollution, station life, market conditions and traits. Worn homes lose some."};
-    public static final String[] DECOR = {"Furnishing. Raises the value (up to a quarter) and the reputation rent earns or costs."};
-    public static final String[] HAPPINESS = {"From comfort, decor, condition, the rent setting and the tenant's traits."
-            + " Happy tenants wear the home slower, tip more and cause less trouble. Below 15 they may move out."};
-    public static final String[] SECURITY = {"From stability, military buildings, ground defenses and market conditions."
-            + " Cuts burglaries, police raids and raid damage."};
-
 
     private static String round2(float v) {
         return String.valueOf(Math.round(v * 100f) / 100f);

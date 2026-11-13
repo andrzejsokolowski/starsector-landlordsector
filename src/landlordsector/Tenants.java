@@ -106,6 +106,19 @@ public final class Tenants {
         }
     }
 
+    /**
+     * The faction's own interface color (Hegemony orange, Tri-Tachyon light blue, pirates red...), shown on a
+     * tenant's name instead of "From Hegemony" (Andrzej, 0.3.6).
+     */
+    public static java.awt.Color factionColor(String factionId) {
+        try {
+            FactionAPI f = Global.getSector().getFaction(factionId);
+            if (f != null && f.getBaseUIColor() != null) return f.getBaseUIColor();
+        } catch (Throwable ignored) {
+        }
+        return com.fs.starfarer.api.util.Misc.getHighlightColor();
+    }
+
     /** The faction's display name, or the id when the faction is not in this game. */
     public static String factionName(String factionId) {
         try {

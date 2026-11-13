@@ -19,7 +19,8 @@ public class LLS_OpenBuyScreen extends BaseCommandPlugin {
             Map<String, MemoryAPI> memoryMap) {
         MarketAPI market = LLS_CanBuy.marketOf(dialog);
         if (!MarketRules.isEligible(market)) return false;
-        dialog.showCustomVisualDialog(BuyScreen.W, BuyScreen.H, new BuyScreen(market, null));
+        BuyScreen screen = new BuyScreen(market, null);
+        dialog.showCustomVisualDialog(screen.width(), screen.height(), screen);
         return true;
     }
 }

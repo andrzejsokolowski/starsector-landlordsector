@@ -25,8 +25,14 @@ import landlordsector.ui.PropertyView;
 /** The property agent's screen: homes for sale on the left, the chosen one large on the right. */
 public class BuyScreen extends PropertyView implements CustomVisualDialogDelegate {
 
-    public static final float W = 1060f;
-    public static final float H = 720f;
+    /** Nearly the whole screen, like the Manage page (Andrzej, 0.3.6: the old 1060 by 720 was too small). */
+    public static float screenW() {
+        return Math.max(1000f, Global.getSettings().getScreenWidth() - 80f);
+    }
+
+    public static float screenH() {
+        return Math.max(680f, Global.getSettings().getScreenHeight() - 80f);
+    }
     private static final float MARGIN = 14f;
     private static final float LIST_W = 240f;
     private static final float ROW_H = 52f;
@@ -43,7 +49,7 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
     private boolean closed;
 
     public BuyScreen(MarketAPI market, Runnable onClose) {
-        super(W, H);
+        super(screenW(), screenH());
         this.market = market;
         this.onClose = onClose;
     }
@@ -78,8 +84,8 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
 
     @Override
     protected void drawBackground(float alpha) {
-        quad(0f, 0f, W, H, BG, alpha);
-        frame(0f, 0f, W, H, GOLD, alpha * 0.5f);
+        quad(0f, 0f, width, height, BG, alpha);
+        frame(0f, 0f, width, height, GOLD, alpha * 0.5f);
     }
 
     @Override
@@ -89,10 +95,10 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
         boolean own = MarketRules.isOwn(market);
         float tariff = MarketRules.tariff(market);
 
-        title("Real estate on " + market.getName(), MARGIN, 12f, W - 2 * MARGIN);
+        title("Real estate on " + market.getName(), MARGIN, 12f, width - 2 * MARGIN);
         String terms = own ? "Your colony: homes cost half, with no tariff."
                 : "Prices include the " + Math.round(tariff * 100f) + "% tariff. Rent pays the same tariff.";
-        text("Credits: " + Misc.getDGSCredits(Actions.credits()) + ".   " + terms, MARGIN, 42f, W - 2 * MARGIN);
+        text("Credits: " + Misc.getDGSCredits(Actions.credits()) + ".   " + terms, MARGIN, 42f, width - 2 * MARGIN);
 
         // The list.
         if (shown.isEmpty()) {
@@ -103,7 +109,8 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
                     TOP + 26f, LIST_W);
         }
         selected = Math.max(0, Math.min(selected, shown.size() - 1));
-        for (int i = 0; i < shown.size() && i < 8; i++) {
+        int rows = Math.max(4, (int) ((height - TOP - 110f) / (ROW_H + 4f)));
+        for (int i = 0; i < shown.size() && i < rows; i++) {
             Listing l = shown.get(i);
             Tier t = TierTable.get(l.tierId);
             float y = TOP + i * (ROW_H + 4f);
@@ -115,7 +122,7 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
         }
         int ownedHere = Portfolio.get().countAt(market.getId());
         int cap = Settings.maxProperties();
-        float oy = TOP + 8 * (ROW_H + 4f) + 6f;
+        float oy = TOP + Math.min(shown.size(), rows) * (ROW_H + 4f) + 6f;
         text("You own " + ownedHere + (ownedHere == 1 ? " home" : " homes") + " here,", Misc.getGrayColor(),
                 MARGIN, oy, LIST_W);
         text(Portfolio.get().properties().size() + " in all" + (cap > 0 ? " (most allowed " + cap + ")." : "."),
@@ -123,7 +130,7 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
 
         // The chosen home.
         float rx = MARGIN + LIST_W + 16f;
-        float rw = W - rx - MARGIN;
+        float rw = width - rx - MARGIN;
         String blocked = Actions.cannotBuy(market, null);
         if (!shown.isEmpty()) {
             Listing l = shown.get(selected);
@@ -142,12 +149,12 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
             s.occupancy = "For sale";
             s.stats = st;
             s.traits.addAll(houseTraits(l.traits));
-            float maxImg = H - TOP - sheetTextHeight(s) - 56f;
+            float maxImg = height - TOP - sheetTextHeight(s) - 56f;
             sheet(s, rx, TOP, rw, maxImg);
 
             float price = MarketRules.buyPrice(market, l);
             boolean afford = Actions.credits() >= price;
-            button(BUY, "Buy for " + Misc.getDGSCredits(price), W - MARGIN - 150f - 12f - 230f, H - 46f, 230f,
+            button(BUY, "Buy for " + Misc.getDGSCredits(price), width - MARGIN - 150f - 12f - 230f, height - 46f, 230f,
                     30f, blocked == null && afford);
             if (blocked == null && !afford && message.isEmpty()) {
                 message = "Not enough credits for this one.";
@@ -158,8 +165,8 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
             message = blocked;
             messageColor = Misc.getNegativeHighlightColor();
         }
-        text(message, messageColor, MARGIN, H - 42f, W - 2 * MARGIN - 410f);
-        button(LEAVE, "Leave", W - MARGIN - 150f, H - 46f, 150f, 30f, true);
+        text(message, messageColor, MARGIN, height - 42f, width - 2 * MARGIN - 410f);
+        button(LEAVE, "Leave", width - MARGIN - 150f, height - 46f, 150f, 30f, true);
     }
 
     @Override
