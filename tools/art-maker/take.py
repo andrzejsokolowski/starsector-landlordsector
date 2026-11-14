@@ -33,6 +33,23 @@ def main():
                         if not f.endswith(('.crdownload', '.tmp'))), key=os.path.getmtime)
         if files:
             break
+        # Sometimes the browser pane leaves a finished download as <guid>.tmp: take it once it
+        # has stopped growing and opens as a picture.
+        from PIL import Image
+        for t in glob.glob(os.path.join(DOWNLOADS, '*.tmp')):
+            try:
+                if time.time() - os.path.getmtime(t) < 3:
+                    continue
+                with Image.open(t) as probe:
+                    probe.load()
+                fixed = os.path.join(DOWNLOADS, 'Gemini_Generated_Image_from_tmp_' + str(int(time.time())) + '.jpg')
+                os.replace(t, fixed)
+                files = [fixed]
+                break
+            except Exception:
+                pass
+        if files:
+            break
         time.sleep(1)
     if not files:
         sys.exit('No Gemini picture in Downloads.')

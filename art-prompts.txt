@@ -981,7 +981,6 @@ HOW BIG (the six homes of this set from smallest to biggest, all seen from the s
 5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
 6. Estate: three floors and several wings, the biggest buildings in the colony.
 THIS PICTURE IS NUMBER 2, THE STUDIO. In this world's style it is one single unit (one pod, dome, module or box), never a cluster or a row of units.
-This is the first home of this size: the Jungle and Water pictures will copy this building later.
 
 THE SCENE:
 Foreground: a cracked asphalt street with a concrete curb and sidewalk curves along the left and across the bottom-left corner, with one lamp post on the left.
@@ -1027,8 +1026,6 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
 - The top third is sky (on a station: the ceiling and the big window). Leave open space above the roof.
 
-Keep to the attached picture where this prompt says so.
-
 THE WORLD: A hot, wet jungle world.
 
 THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about as big as one long shipping container, one floor, one room, the roof a little above the door. Shape: one plain box, pod or dome with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door. It stands alone: not joined to other units, not a cluster, no second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
@@ -1042,7 +1039,6 @@ HOW BIG (the six homes of this set from smallest to biggest, all seen from the s
 5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
 6. Estate: three floors and several wings, the biggest buildings in the colony.
 THIS PICTURE IS NUMBER 2, THE STUDIO. In this world's style it is one single unit (one pod, dome, module or box), never a cluster or a row of units.
-The attached picture is the Terran home of this size: keep exactly the same building, art style and camera. Only the surroundings and a few small touches on the building change for this world.
 
 THE SCENE:
 Foreground: a cracked asphalt street with a concrete curb, plants pushing through the cracks, curving along the left and across the bottom-left corner, with one lamp post on the left.
@@ -1088,8 +1084,6 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
 - The top third is sky (on a station: the ceiling and the big window). Leave open space above the roof.
 
-Keep to the attached picture where this prompt says so.
-
 THE WORLD: An ocean world: almost all water, with homes on the coast and on piers.
 
 THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about as big as one long shipping container, one floor, one room, the roof a little above the door. Shape: one plain box, pod or dome with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door. It stands alone: not joined to other units, not a cluster, no second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
@@ -1103,7 +1097,6 @@ HOW BIG (the six homes of this set from smallest to biggest, all seen from the s
 5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
 6. Estate: three floors and several wings, the biggest buildings in the colony.
 THIS PICTURE IS NUMBER 2, THE STUDIO. In this world's style it is one single unit (one pod, dome, module or box), never a cluster or a row of units.
-The attached picture is the Terran home of this size: keep exactly the same building, art style and camera. Only the surroundings and a few small touches on the building change for this world.
 
 THE SCENE:
 Foreground: a wooden boardwalk along the sea instead of a street, curving along the left and across the bottom-left corner, with one lamp post on the boardwalk.
@@ -1838,7 +1831,6 @@ HOW BIG (the six homes of this set from smallest to biggest, all seen from the s
 5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
 6. Estate: three floors and several wings, the biggest buildings in the colony.
 THIS PICTURE IS NUMBER 3, THE SMALL HOUSE. In this world's style it is three or four units (pods, domes, modules or boxes) joined side by side in one long row, each unit as big as a whole studio; where the style is one building, it is one long one-floor building twice as wide as a studio. It must look clearly bigger than a studio.
-This is the first home of this size: the Jungle and Water pictures will copy this building later.
 
 THE SCENE:
 Foreground: a cracked asphalt street with a concrete curb and sidewalk curves along the left and across the bottom-left corner, with one lamp post on the left.
@@ -1884,8 +1876,6 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
 - The top third is sky (on a station: the ceiling and the big window). Leave open space above the roof.
 
-Keep to the attached picture where this prompt says so.
-
 THE WORLD: A hot, wet jungle world.
 
 THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms: about twice as wide and twice as deep as a one-room studio. The front wall is about eight doors wide, so the door is only a small part of it. Shape: a long, deep box with a low pitched roof (a flat roof with a raised edge only where this world needs one), plain but cared for. Front: one door under a small awning, one big living-room window and two smaller bedroom windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look clearly bigger than a studio (one room with one or two small windows) and clearly smaller than a two-floor house.
@@ -1899,7 +1889,6 @@ HOW BIG (the six homes of this set from smallest to biggest, all seen from the s
 5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
 6. Estate: three floors and several wings, the biggest buildings in the colony.
 THIS PICTURE IS NUMBER 3, THE SMALL HOUSE. In this world's style it is three or four units (pods, domes, modules or boxes) joined side by side in one long row, each unit as big as a whole studio; where the style is one building, it is one long one-floor building twice as wide as a studio. It must look clearly bigger than a studio.
-The attached picture is the Terran home of this size: keep exactly the same building, art style and camera. Only the surroundings and a few small touches on the building change for this world.
 
 THE SCENE:
 Foreground: a cracked asphalt street with a concrete curb, plants pushing through the cracks, curving along the left and across the bottom-left corner, with one lamp post on the left.
@@ -1945,8 +1934,6 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
 - The top third is sky (on a station: the ceiling and the big window). Leave open space above the roof.
 
-Keep to the attached picture where this prompt says so.
-
 THE WORLD: An ocean world: almost all water, with homes on the coast and on piers.
 
 THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms: about twice as wide and twice as deep as a one-room studio. The front wall is about eight doors wide, so the door is only a small part of it. Shape: a long, deep box with a low pitched roof (a flat roof with a raised edge only where this world needs one), plain but cared for. Front: one door under a small awning, one big living-room window and two smaller bedroom windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look clearly bigger than a studio (one room with one or two small windows) and clearly smaller than a two-floor house.
@@ -1960,7 +1947,6 @@ HOW BIG (the six homes of this set from smallest to biggest, all seen from the s
 5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
 6. Estate: three floors and several wings, the biggest buildings in the colony.
 THIS PICTURE IS NUMBER 3, THE SMALL HOUSE. In this world's style it is three or four units (pods, domes, modules or boxes) joined side by side in one long row, each unit as big as a whole studio; where the style is one building, it is one long one-floor building twice as wide as a studio. It must look clearly bigger than a studio.
-The attached picture is the Terran home of this size: keep exactly the same building, art style and camera. Only the surroundings and a few small touches on the building change for this world.
 
 THE SCENE:
 Foreground: a wooden boardwalk along the sea instead of a street, curving along the left and across the bottom-left corner, with one lamp post on the boardwalk.
@@ -2695,7 +2681,6 @@ HOW BIG (the six homes of this set from smallest to biggest, all seen from the s
 5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
 6. Estate: three floors and several wings, the biggest buildings in the colony.
 THIS PICTURE IS NUMBER 4, THE HOUSE. In this world's style it is units stacked two levels high, or one building with two full floors, at least six units in all, with windows on both floors. It must look clearly bigger than a small house.
-This is the first home of this size: the Jungle and Water pictures will copy this building later.
 
 THE SCENE:
 Foreground: a cracked asphalt street with a concrete curb and sidewalk curves along the left and across the bottom-left corner, with one lamp post on the left.
@@ -2741,8 +2726,6 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
 - The top third is sky (on a station: the ceiling and the big window). Leave open space above the roof.
 
-Keep to the attached picture where this prompt says so.
-
 THE WORLD: A hot, wet jungle world.
 
 THE HOME (House): a proper family home, built in this world's style. Size: like an ordinary two-floor family house, six to eight rooms. Shape: a solid box or L-shape with a pitched or flat roof, comfortable but not luxurious. Front: a front door under a small porch or canopy, windows on both floors with warm light inside. Around it: a path to the door and a small vehicle parked beside it. It must look clearly bigger than a small house and clearly smaller than a villa.
@@ -2756,7 +2739,6 @@ HOW BIG (the six homes of this set from smallest to biggest, all seen from the s
 5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
 6. Estate: three floors and several wings, the biggest buildings in the colony.
 THIS PICTURE IS NUMBER 4, THE HOUSE. In this world's style it is units stacked two levels high, or one building with two full floors, at least six units in all, with windows on both floors. It must look clearly bigger than a small house.
-The attached picture is the Terran home of this size: keep exactly the same building, art style and camera. Only the surroundings and a few small touches on the building change for this world.
 
 THE SCENE:
 Foreground: a cracked asphalt street with a concrete curb, plants pushing through the cracks, curving along the left and across the bottom-left corner, with one lamp post on the left.
@@ -2802,8 +2784,6 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
 - The top third is sky (on a station: the ceiling and the big window). Leave open space above the roof.
 
-Keep to the attached picture where this prompt says so.
-
 THE WORLD: An ocean world: almost all water, with homes on the coast and on piers.
 
 THE HOME (House): a proper family home, built in this world's style. Size: like an ordinary two-floor family house, six to eight rooms. Shape: a solid box or L-shape with a pitched or flat roof, comfortable but not luxurious. Front: a front door under a small porch or canopy, windows on both floors with warm light inside. Around it: a path to the door and a small vehicle parked beside it. It must look clearly bigger than a small house and clearly smaller than a villa.
@@ -2817,7 +2797,6 @@ HOW BIG (the six homes of this set from smallest to biggest, all seen from the s
 5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
 6. Estate: three floors and several wings, the biggest buildings in the colony.
 THIS PICTURE IS NUMBER 4, THE HOUSE. In this world's style it is units stacked two levels high, or one building with two full floors, at least six units in all, with windows on both floors. It must look clearly bigger than a small house.
-The attached picture is the Terran home of this size: keep exactly the same building, art style and camera. Only the surroundings and a few small touches on the building change for this world.
 
 THE SCENE:
 Foreground: a wooden boardwalk along the sea instead of a street, curving along the left and across the bottom-left corner, with one lamp post on the boardwalk.
@@ -3552,7 +3531,6 @@ HOW BIG (the six homes of this set from smallest to biggest, all seen from the s
 5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
 6. Estate: three floors and several wings, the biggest buildings in the colony.
 THIS PICTURE IS NUMBER 5, THE VILLA. In this world's style it is a large two-floor main building plus a wing or a second block, ten or more units in all. It must look clearly bigger than a house.
-This is the first home of this size: the Jungle and Water pictures will copy this building later.
 
 THE SCENE:
 Foreground: a cracked asphalt street with a concrete curb and sidewalk curves along the left and across the bottom-left corner, with one lamp post on the left.
@@ -3598,8 +3576,6 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
 - The top third is sky (on a station: the ceiling and the big window). Leave open space above the roof.
 
-Keep to the attached picture where this prompt says so.
-
 THE WORLD: A hot, wet jungle world.
 
 THE HOME (Villa): a large, wealthy home, built in this world's style. Size: like a big modern villa, two floors, wide and spacious, about twice as wide as a house. Shape: a main building with one wing or a second block joined to it, clean lines and expensive materials. Front: the biggest windows this world allows, a terrace or wide balcony, an impressive front door. Around it: private grounds and a small private shuttle on its own pad beside it. It must look clearly bigger and richer than a house, but still one home, not a compound.
@@ -3613,7 +3589,6 @@ HOW BIG (the six homes of this set from smallest to biggest, all seen from the s
 5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
 6. Estate: three floors and several wings, the biggest buildings in the colony.
 THIS PICTURE IS NUMBER 5, THE VILLA. In this world's style it is a large two-floor main building plus a wing or a second block, ten or more units in all. It must look clearly bigger than a house.
-The attached picture is the Terran home of this size: keep exactly the same building, art style and camera. Only the surroundings and a few small touches on the building change for this world.
 
 THE SCENE:
 Foreground: a cracked asphalt street with a concrete curb, plants pushing through the cracks, curving along the left and across the bottom-left corner, with one lamp post on the left.
@@ -3659,8 +3634,6 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
 - The top third is sky (on a station: the ceiling and the big window). Leave open space above the roof.
 
-Keep to the attached picture where this prompt says so.
-
 THE WORLD: An ocean world: almost all water, with homes on the coast and on piers.
 
 THE HOME (Villa): a large, wealthy home, built in this world's style. Size: like a big modern villa, two floors, wide and spacious, about twice as wide as a house. Shape: a main building with one wing or a second block joined to it, clean lines and expensive materials. Front: the biggest windows this world allows, a terrace or wide balcony, an impressive front door. Around it: private grounds and a small private shuttle on its own pad beside it. It must look clearly bigger and richer than a house, but still one home, not a compound.
@@ -3674,7 +3647,6 @@ HOW BIG (the six homes of this set from smallest to biggest, all seen from the s
 5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
 6. Estate: three floors and several wings, the biggest buildings in the colony.
 THIS PICTURE IS NUMBER 5, THE VILLA. In this world's style it is a large two-floor main building plus a wing or a second block, ten or more units in all. It must look clearly bigger than a house.
-The attached picture is the Terran home of this size: keep exactly the same building, art style and camera. Only the surroundings and a few small touches on the building change for this world.
 
 THE SCENE:
 Foreground: a wooden boardwalk along the sea instead of a street, curving along the left and across the bottom-left corner, with one lamp post on the boardwalk.
@@ -4409,7 +4381,6 @@ HOW BIG (the six homes of this set from smallest to biggest, all seen from the s
 5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
 6. Estate: three floors and several wings, the biggest buildings in the colony.
 THIS PICTURE IS NUMBER 6, THE ESTATE. In this world's style it is a big three-floor main building with several wings, the largest group of buildings in the colony.
-This is the first home of this size: the Jungle and Water pictures will copy this building later.
 
 THE SCENE:
 Foreground: a cracked asphalt street with a concrete curb and sidewalk curves along the left and across the bottom-left corner, with one lamp post on the left.
@@ -4455,8 +4426,6 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
 - The top third is sky (on a station: the ceiling and the big window). Leave open space above the roof.
 
-Keep to the attached picture where this prompt says so.
-
 THE WORLD: A hot, wet jungle world.
 
 THE HOME (Estate): the richest home in the colony, a mansion built in this world's style. Size: like a mansion, two or three floors, several wings or modules around a grand entrance, the biggest building in the picture. Shape: a symmetric or sprawling group of joined buildings, the finest materials this world has. Front: a grand entrance with wide steps or a covered drive. Around it: a wall or barrier with a gate and a guard post around large private grounds, and a private shuttle pad. Seen a little further away so the grounds fit in the picture. It must look like the biggest and grandest home of this world.
@@ -4470,7 +4439,6 @@ HOW BIG (the six homes of this set from smallest to biggest, all seen from the s
 5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
 6. Estate: three floors and several wings, the biggest buildings in the colony.
 THIS PICTURE IS NUMBER 6, THE ESTATE. In this world's style it is a big three-floor main building with several wings, the largest group of buildings in the colony.
-The attached picture is the Terran home of this size: keep exactly the same building, art style and camera. Only the surroundings and a few small touches on the building change for this world.
 
 THE SCENE:
 Foreground: a cracked asphalt street with a concrete curb, plants pushing through the cracks, curving along the left and across the bottom-left corner, with one lamp post on the left.
@@ -4516,8 +4484,6 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
 - The top third is sky (on a station: the ceiling and the big window). Leave open space above the roof.
 
-Keep to the attached picture where this prompt says so.
-
 THE WORLD: An ocean world: almost all water, with homes on the coast and on piers.
 
 THE HOME (Estate): the richest home in the colony, a mansion built in this world's style. Size: like a mansion, two or three floors, several wings or modules around a grand entrance, the biggest building in the picture. Shape: a symmetric or sprawling group of joined buildings, the finest materials this world has. Front: a grand entrance with wide steps or a covered drive. Around it: a wall or barrier with a gate and a guard post around large private grounds, and a private shuttle pad. Seen a little further away so the grounds fit in the picture. It must look like the biggest and grandest home of this world.
@@ -4531,7 +4497,6 @@ HOW BIG (the six homes of this set from smallest to biggest, all seen from the s
 5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
 6. Estate: three floors and several wings, the biggest buildings in the colony.
 THIS PICTURE IS NUMBER 6, THE ESTATE. In this world's style it is a big three-floor main building with several wings, the largest group of buildings in the colony.
-The attached picture is the Terran home of this size: keep exactly the same building, art style and camera. Only the surroundings and a few small touches on the building change for this world.
 
 THE SCENE:
 Foreground: a wooden boardwalk along the sea instead of a street, curving along the left and across the bottom-left corner, with one lamp post on the boardwalk.
