@@ -128,18 +128,31 @@ public class LandlordsectorModPlugin extends BaseModPlugin {
         }
     }
 
-    /** A picture dropped from art.json since the save was made gets a fresh one from the same tier. */
+    /**
+     * A picture dropped from art.json since the save was made gets a fresh one from the same tier, and a home
+     * still showing the tier's placeholder gets its planet type's own picture once one exists (0.4.2).
+     */
     private static void repairArtPaths() {
         Random random = new Random();
         Portfolio p = Portfolio.get();
         for (Property pr : p.properties()) {
-            if (!Art.isKnown(pr.artPath)) pr.artPath = Art.pick(pr.tierId, climate(pr.climateId), random);
+            PlanetType type = pr.market() != null ? PlanetType.of(pr.market()) : PlanetType.fromClimate(pr.climateId);
+            pr.artPath = repairedArt(pr.tierId, pr.artPath, type, random);
         }
-        for (MarketListings ml : p.listings().values()) {
-            for (Listing l : ml.list()) {
-                if (!Art.isKnown(l.artPath)) l.artPath = Art.pick(l.tierId, climate(l.climateId), random);
+        for (Map.Entry<String, MarketListings> e : p.listings().entrySet()) {
+            com.fs.starfarer.api.campaign.econ.MarketAPI m = Global.getSector().getEconomy().getMarket(e.getKey());
+            for (Listing l : e.getValue().list()) {
+                PlanetType type = m != null ? PlanetType.of(m) : PlanetType.fromClimate(l.climateId);
+                l.artPath = repairedArt(l.tierId, l.artPath, type, random);
             }
         }
+    }
+
+    static String repairedArt(String tierId, String path, PlanetType type, Random random) {
+        if (!Art.isKnown(path) || (Art.isDefault(tierId, path) && Art.hasOwn(tierId, type))) {
+            return Art.pick(tierId, type, random);
+        }
+        return path;
     }
 
     private static Climate climate(String id) {

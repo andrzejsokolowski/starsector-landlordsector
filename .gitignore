@@ -28,3 +28,6 @@ jars/
 /tools/conditions/api/
 /tools/conditions/cond_index.json
 /tools/conditions/batch*.txt
+
+# Andrzej's full-size picture originals; the trimmed copies go to graphics/.
+/art-source/

@@ -1,11 +1,29 @@
 {
-	# Exterior pictures for the buy screen and the Manage page, by tier and planet climate.
-	# Climates: station, temperate, arid, cold, ocean, jungle, hostile.
-	# A climate with an empty list uses the tier's "default" pictures. Each list may hold one or two
+	# Exterior pictures for the buy screen and the Manage page, by tier and planet type.
+	# Planet types (PlanetType.java): station, terran, jungle, water, arid, desert, tundra, frozen,
+	# cryovolcanic, barren, toxic, volcanic, irradiated, gas_giant.
+	# A planet type with no list uses the tier's "default" pictures. Each list may hold one or two
 	# pictures, and a listing picks one at random. Pictures are 1024 x 640 PNG (16 by 10),
-	# shown large on the property screens.
+	# shown large on the property screens. Homes still showing a default picture switch to their
+	# planet type's own picture on the next load once it exists.
 	"exteriors":{
-		"shack":{"default":["graphics/landlordsector/exteriors/shack.png"]},
+		"shack":{
+			"default":["graphics/landlordsector/exteriors/shack.png"],
+			"station":["graphics/landlordsector/exteriors/shack_station.png"],
+			"terran":["graphics/landlordsector/exteriors/shack_terran.png"],
+			"jungle":["graphics/landlordsector/exteriors/shack_jungle.png"],
+			"water":["graphics/landlordsector/exteriors/shack_water.png"],
+			"arid":["graphics/landlordsector/exteriors/shack_arid.png"],
+			"desert":["graphics/landlordsector/exteriors/shack_desert.png"],
+			"tundra":["graphics/landlordsector/exteriors/shack_tundra.png"],
+			"frozen":["graphics/landlordsector/exteriors/shack_frozen.png"],
+			"cryovolcanic":["graphics/landlordsector/exteriors/shack_cryovolcanic.png"],
+			"barren":["graphics/landlordsector/exteriors/shack_barren.png"],
+			"toxic":["graphics/landlordsector/exteriors/shack_toxic.png"],
+			"volcanic":["graphics/landlordsector/exteriors/shack_volcanic.png"],
+			"irradiated":["graphics/landlordsector/exteriors/shack_irradiated.png"],
+			"gas_giant":["graphics/landlordsector/exteriors/shack_gas_giant.png"]
+		},
 		"studio":{"default":["graphics/landlordsector/exteriors/studio.png"]},
 		"small_house":{"default":["graphics/landlordsector/exteriors/small_house.png"]},
 		"house":{"default":["graphics/landlordsector/exteriors/house.png"]},

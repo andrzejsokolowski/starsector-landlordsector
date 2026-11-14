@@ -125,13 +125,14 @@ chosen one large on the right with its stat sheet, rent setting, Repair and Sell
 ## Compatibility
 
 - Can be added to a game in progress. Removing it from a game in progress breaks that save.
-- The pictures are placeholders for now.
+- Shacks have their own picture for each planet type; the bigger homes still use placeholders.
 
 ## For modders
 
 `data/config/landlordsector/tiers.json` holds the tiers (with base comfort and decor) and every economy
-number, agents included. `art.json` lists the pictures per tier and climate (station, temperate, arid,
-cold, ocean, jungle, hostile), 1024 x 640. Both are read with
+number, agents included. `art.json` lists the pictures per tier and planet type (station, terran, jungle,
+water, arid, desert, tundra, frozen, cryovolcanic, barren, toxic, volcanic, irradiated, gas_giant), 1024 x 640,
+with a "default" list for the rest. Both are read with
 `getMergedJSON`, so other mods can add to them.
 
 ## Building

@@ -27,8 +27,12 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
 
 - `data/config/landlordsector/tiers.json` - tiers (price range, monthly rent share, smallest market
   size, furniture slots, roll weight) and the "economy" numbers. `TierTable` reads it with getMergedJSON.
-- `data/config/landlordsector/art.json` - exterior pictures per tier and climate, with a "default" list.
-  `Art` loads each texture at startup and drops paths that fail. Placeholders until Andrzej's art.
+- `data/config/landlordsector/art.json` - exterior pictures per tier and planet type (`PlanetType`, 14 types,
+  pictures only; traits, upgrades and comfort keep the 7 `Climate`s), with a "default" list. `Art` loads each
+  texture at startup and drops paths that fail. 0.4.2: Andrzej's shacks for all 14 types; other tiers still
+  placeholders. His originals go in `art-source/` (gitignored); trim to 1024x640 (centered 16:10 crop) into
+  `graphics/landlordsector/exteriors/<tier>_<type>.png`. On load, `repairArtPaths` swaps a default picture for
+  the planet type's own once one exists. Gemini prompts: `art-prompts.txt` / `.html` (not packaged).
 - `MarketRules` - the hidden rule. Eligible: in economy, not hidden, size 3+, not pirate (also
   `Misc.isPirateFaction`) and not Luddic Path. `Pricing` holds the math as plain numbers: market multiplier
   0.25 to 4 from size, stability, hazard, habitable, mild climate and pollution.

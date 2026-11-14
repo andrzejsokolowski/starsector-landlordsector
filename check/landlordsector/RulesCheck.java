@@ -378,6 +378,7 @@ public final class RulesCheck {
         expect(Climate.ofType("barren") == Climate.HOSTILE && Climate.ofType("toxic") == Climate.HOSTILE
                 && Climate.ofType("lava") == Climate.HOSTILE && Climate.ofType("rocky_metallic") == Climate.HOSTILE,
                 "barren, toxic, lava and rocky worlds are hostile");
+        checkPlanetTypes042(java.nio.file.Paths.get(args[0]).getParent());
 
         if (!problems.isEmpty()) {
             for (String p : problems) System.err.println("FAIL: " + p);
@@ -411,6 +412,44 @@ public final class RulesCheck {
         landlordsector.data.Names.load(json(dir.resolve("names.json")));
         landlordsector.data.Upgrades.load(json(dir.resolve("upgrades.json")));
         landlordsector.data.Levels.load(json(dir.resolve("levels.json")));
+    }
+
+    /**
+     * 0.4.2: every vanilla planet type maps to the picture type Andrzej drew it as, and art.json names only real
+     * planet types and tiers (a typo would quietly fall back to the placeholder).
+     */
+    private static void checkPlanetTypes042(java.nio.file.Path dir) throws Exception {
+        String[][] vanilla = {
+                {"terran", "terran"}, {"terran-eccentric", "terran"}, {"jungle", "jungle"}, {"water", "water"},
+                {"arid", "arid"}, {"desert", "desert"}, {"desert1", "desert"}, {"barren-desert", "desert"},
+                {"tundra", "tundra"}, {"frozen", "frozen"}, {"frozen1", "frozen"}, {"frozen2", "frozen"},
+                {"frozen3", "frozen"}, {"rocky_ice", "frozen"}, {"cryovolcanic", "cryovolcanic"},
+                {"barren", "barren"}, {"barren2", "barren"}, {"barren3", "barren"}, {"barren_castiron", "barren"},
+                {"barren-bombarded", "barren"}, {"rocky_metallic", "barren"}, {"rocky_unstable", "barren"},
+                {"barren_venuslike", "toxic"}, {"toxic", "toxic"}, {"toxic_cold", "toxic"}, {"lava", "volcanic"},
+                {"lava_minor", "volcanic"}, {"irradiated", "irradiated"}, {"gas_giant", "gas_giant"},
+                {"ice_giant", "gas_giant"}};
+        for (String[] v : vanilla) {
+            expect(PlanetType.ofType(v[0]).id.equals(v[1]), "planet type " + v[0] + " shows the " + v[1] + " picture");
+        }
+        JSONObject ext = json(dir.resolve("art.json")).getJSONObject("exteriors");
+        java.util.Set<String> types = new java.util.HashSet<>();
+        for (PlanetType t : PlanetType.values()) types.add(t.id);
+        types.add("default");
+        java.util.Iterator<?> tiers = ext.keys();
+        while (tiers.hasNext()) {
+            String tier = String.valueOf(tiers.next());
+            expect(TierTable.get(tier) != null, "art.json: " + tier + " is a tier");
+            JSONObject byType = ext.getJSONObject(tier);
+            expect(byType.has("default"), "art.json: " + tier + " has a default picture");
+            java.util.Iterator<?> keys = byType.keys();
+            while (keys.hasNext()) {
+                String k = String.valueOf(keys.next());
+                expect(types.contains(k), "art.json: " + tier + "." + k + " is a planet type");
+            }
+        }
+        expect(ext.getJSONObject("shack").length() == PlanetType.values().length + 1,
+                "art.json: a shack picture for every planet type");
     }
 
     /** 0.4.0: upgrades, home levels and health: every entry names real things, and the health math holds. */

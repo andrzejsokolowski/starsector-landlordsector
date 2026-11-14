@@ -134,7 +134,8 @@ public final class MarketRules {
         for (int i = 0; i < count; i++) {
             Tier t = picker.pick();
             float base = t.min + (t.max - t.min) * random.nextFloat();
-            Listing l = new Listing(Portfolio.get().newId(), t.id, climate.id, Art.pick(t.id, climate, random), base);
+            Listing l = new Listing(Portfolio.get().newId(), t.id, climate.id,
+                    Art.pick(t.id, PlanetType.of(market), random), base);
             l.traits = HouseTraits.roll(Tenants.conditions(market), climate.id, climate == Climate.STATION, t.index,
                     random);
             l.upgrades = landlordsector.data.Upgrades.roll(Tenants.conditions(market), climate.id,

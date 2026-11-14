@@ -1,3 +1,7 @@
+Version 0.4.2 (2026-11-14)
+- Shacks have real pictures: a different one for each of 14 planet types, from Terran, Jungle and Water to Tundra, Frozen, Barren, Toxic, Volcanic, Irradiated, gas giants and stations
+- Shacks you already own or see for sale switch to the new picture for their planet
+
 Version 0.4.1 (2026-11-13)
 - Every piece of furniture has its own icon
 

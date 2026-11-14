@@ -275,6 +275,10 @@ public final class RuntimeCheck {
         // Three years of Greedy rent wore the home down again: fix it up first.
         home.condition = 1f;
         home.condemned = false;
+        // The home came from random listings: clear what it rolled (traits like Thin-walled change the levels, a
+        // renovation from the listing fills the slot), so these numbers are the same on every run.
+        home.traits = new java.util.ArrayList<>();
+        home.upgrades().clear();
         heg.conditions.add("hot");
         heg.conditions.add("pollution");
         PropertyStats hot = home.stats();

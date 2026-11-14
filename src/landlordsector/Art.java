@@ -15,7 +15,7 @@ import org.json.JSONObject;
 
 import com.fs.starfarer.api.Global;
 
-/** Exterior pictures by tier and climate, from data/config/landlordsector/art.json. */
+/** Exterior pictures by tier and planet type ({@link PlanetType}), from data/config/landlordsector/art.json. */
 public final class Art {
 
     public static final String PATH = "data/config/landlordsector/art.json";
@@ -67,14 +67,28 @@ public final class Art {
         }
     }
 
-    /** A picture for this tier and climate, or null when there is none at all. */
-    public static String pick(String tierId, Climate climate, Random random) {
+    /** A picture for this tier and planet type, or the tier's default; null when there is none at all. */
+    public static String pick(String tierId, PlanetType type, Random random) {
         Map<String, List<String>> map = exteriors.get(tierId);
         if (map == null) return null;
-        List<String> list = map.get(climate.id);
+        List<String> list = map.get(type.id);
         if (list == null || list.isEmpty()) list = map.get("default");
         if (list == null || list.isEmpty()) return null;
         return list.get(random.nextInt(list.size()));
+    }
+
+    /** True when this tier has a picture drawn for this planet type (not only the default one). */
+    public static boolean hasOwn(String tierId, PlanetType type) {
+        Map<String, List<String>> map = exteriors.get(tierId);
+        List<String> list = map == null ? null : map.get(type.id);
+        return list != null && !list.isEmpty();
+    }
+
+    /** True when the path is one of the tier's default (placeholder) pictures. */
+    public static boolean isDefault(String tierId, String path) {
+        Map<String, List<String>> map = exteriors.get(tierId);
+        List<String> list = map == null ? null : map.get("default");
+        return list != null && list.contains(path);
     }
 
     /** True when the picture is still listed and loaded (art.json can change between versions). */
