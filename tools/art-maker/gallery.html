@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Landlordsector pictures</title>
+<style>
+:root {
+  --bg: #f4f1ea; --panel: #fffdf8; --text: #23201a; --muted: #6b6455; --line: #ddd5c4;
+  --accent: #96690a; --ok: #2f7d4f; --ok-bg: #dcefe3; --bad: #b3361f; --bad-bg: #f7ddd6;
+  --new: #2a5db0; --new-bg: #dde7f7; --chip: #ece6d9; color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #12151c; --panel: #1b2029; --text: #e9e4d8; --muted: #9a9384; --line: #2e3542;
+    --accent: #e2b54e; --ok: #7fd3a0; --ok-bg: #183626; --bad: #ff9a85; --bad-bg: #42201a;
+    --new: #9dbcf2; --new-bg: #1c2a44; --chip: #262c38; color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.4 system-ui, "Segoe UI", sans-serif; }
+header { position: sticky; top: 0; z-index: 5; background: var(--panel); border-bottom: 1px solid var(--line);
+  padding: 10px 16px; display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; }
+h1 { font-size: 17px; margin: 0 8px 0 0; }
+.tabs, .sizes { display: flex; flex-wrap: wrap; gap: 6px; }
+button { font: inherit; cursor: pointer; border: 1px solid var(--line); background: var(--chip); color: var(--text);
+  border-radius: 6px; padding: 5px 11px; }
+button:hover { border-color: var(--accent); }
+button.on { background: var(--accent); color: var(--panel); border-color: var(--accent); }
+button.ok { background: var(--ok-bg); color: var(--ok); border-color: var(--ok); }
+button.bad { background: var(--bad-bg); color: var(--bad); border-color: var(--bad); }
+.log { flex-basis: 100%; color: var(--muted); font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+main { padding: 16px; display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 440px), 1fr)); }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; }
+.card img, .card .empty { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; cursor: zoom-in; background: var(--chip); }
+.card .empty { display: grid; place-items: center; color: var(--muted); cursor: default; }
+.meta { padding: 8px 10px 0; display: flex; justify-content: space-between; gap: 8px; align-items: center; }
+.chip { font-size: 12px; padding: 2px 8px; border-radius: 99px; background: var(--chip); color: var(--muted); white-space: nowrap; }
+.chip.approved { background: var(--ok-bg); color: var(--ok); }
+.chip.rejected { background: var(--bad-bg); color: var(--bad); }
+.chip.new { background: var(--new-bg); color: var(--new); }
+.actions { padding: 8px 10px 10px; display: flex; gap: 6px; flex-wrap: wrap; }
+.comment { margin: 6px 10px 0; padding: 6px 8px; border-left: 3px solid var(--bad); background: var(--bad-bg); font-size: 13px; }
+.rejectbox { padding: 0 10px 10px; display: grid; gap: 6px; }
+textarea { font: inherit; width: 100%; min-height: 70px; padding: 6px 8px; border-radius: 6px; border: 1px solid var(--line);
+  background: var(--bg); color: var(--text); resize: vertical; }
+label.fresh { font-size: 13px; color: var(--muted); display: flex; gap: 6px; align-items: center; }
+.none { padding: 40px; color: var(--muted); grid-column: 1 / -1; text-align: center; }
+#lb { position: fixed; inset: 0; background: rgba(0,0,0,.92); z-index: 10; display: none; flex-direction: column; }
+#lb.open { display: flex; }
+#lb .pic { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 10px; overflow: hidden; }
+#lb img { max-width: 100%; max-height: 100%; object-fit: contain; }
+#lb .bar { background: var(--panel); padding: 10px 16px; display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; }
+#lb .bar .title { font-weight: 600; margin-right: auto; }
+#lb .bar .keys { color: var(--muted); font-size: 12px; flex-basis: 100%; }
+#lb .rejectbox { flex-basis: 100%; padding: 0; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Landlordsector pictures</h1>
+  <div class="tabs" id="tabs"></div>
+  <div class="sizes" id="sizes"></div>
+  <div class="log" id="log"></div>
+</header>
+<main id="grid"></main>
+<div id="lb">
+  <div class="pic"><img id="lbimg" alt=""></div>
+  <div class="bar" id="lbbar"></div>
+</div>
+<script>
+const TABS = [['new', 'To review'], ['rejected', 'Rejected'], ['approved', 'Approved'], ['missing', 'Not made yet'], ['all', 'All']];
+let items = [], last = '', tab = null, size = 'all', openStem = null, rejecting = null;
+try { tab = localStorage.getItem('lls-gal-tab'); size = localStorage.getItem('lls-gal-size') || 'all'; } catch (e) {}
+
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c])); }
+function shown() { return items.filter(i => (tab === 'all' || i.status === tab) && (size === 'all' || i.size === size)); }
+function find(stem) { return items.find(i => i.stem === stem); }
+
+async function load(force) {
+  const r = await fetch('/api/state'); const s = await r.json();
+  document.getElementById('log').textContent = s.log ? 'Picture maker: ' + s.log : '';
+  const key = JSON.stringify(s.items);
+  if (!force && key === last) return;
+  if (!force && document.activeElement && document.activeElement.tagName === 'TEXTAREA') return;
+  last = key; items = s.items;
+  if (!tab) tab = items.some(i => i.status === 'new') ? 'new' : 'all';
+  render();
+}
+
+function render() {
+  const count = k => k === 'all' ? items.length : items.filter(i => i.status === k).length;
+  document.getElementById('tabs').innerHTML = TABS.map(([k, n]) =>
+    `<button class="${tab === k ? 'on' : ''}" data-tab="${k}">${n} (${count(k)})</button>`).join('');
+  const sizes = [['all', 'All sizes']].concat([...new Map(items.map(i => [i.size, i.sizeName])).entries()]);
+  document.getElementById('sizes').innerHTML = sizes.map(([k, n]) =>
+    `<button class="${size === k ? 'on' : ''}" data-size="${k}">${esc(n)}</button>`).join('');
+  const list = shown();
+  document.getElementById('grid').innerHTML = list.length ? list.map(card).join('') : '<div class="none">Nothing here.</div>';
+  if (openStem) showLb(openStem);
+}
+
+function rejectBox(i) {
+  return `<div class="rejectbox">
+    <textarea data-comment="${i.stem}" placeholder="What is wrong, and what should change?">${esc(i.comment)}</textarea>
+    <label class="fresh"><input type="checkbox" data-fresh="${i.stem}" ${i.fresh ? 'checked' : ''}> Start over (a new picture instead of fixing this one)</label>
+    <div><button class="bad" data-save="${i.stem}">Save rejection</button> <button data-cancel="1">Cancel</button></div>
+  </div>`;
+}
+
+function buttons(i) {
+  if (!i.exists) return '';
+  return `<button class="${i.status === 'approved' ? 'ok' : ''}" data-approve="${i.stem}">Approve</button>
+    <button class="${i.status === 'rejected' ? 'bad' : ''}" data-reject="${i.stem}">Reject...</button>
+    <button data-flip="${i.stem}" title="Mirror left to right">Flip</button>
+    ${i.status !== 'new' ? `<button data-reset="${i.stem}">Back to review</button>` : ''}`;
+}
+
+function card(i) {
+  const pic = i.exists ? `<img loading="lazy" src="/thumb/${i.stem}?v=${i.v}" data-open="${i.stem}" alt="${esc(i.label)}">`
+                       : '<div class="empty">Not made yet</div>';
+  const label = { new: 'to review', approved: 'approved', rejected: i.fresh ? 'rejected, start over' : 'rejected', missing: 'not made' }[i.status];
+  return `<div class="card">${pic}
+    <div class="meta"><b>${esc(i.label)}</b><span class="chip ${i.status}">${label}</span></div>
+    ${i.status === 'rejected' && i.comment && rejecting !== i.stem ? `<div class="comment">${esc(i.comment)}</div>` : ''}
+    ${rejecting === i.stem ? rejectBox(i) : `<div class="actions">${buttons(i)}</div>`}
+  </div>`;
+}
+
+async function post(url, body) {
+  await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+}
+
+function nextAfter(stem) {
+  const list = shown().filter(i => i.exists); const ix = list.findIndex(i => i.stem === stem);
+  const rest = list.filter(i => i.stem !== stem);
+  return rest.length ? rest[Math.min(Math.max(ix, 0), rest.length - 1)].stem : null;
+}
+
+async function review(stem, status, comment, fresh) {
+  const going = openStem === stem && tab !== 'all' && tab !== status ? nextAfter(stem) : openStem;
+  await post('/api/review', { stem, status, comment: comment || '', fresh: !!fresh });
+  rejecting = null; openStem = going;
+  if (!openStem) closeLb();
+  await load(true);
+}
+
+async function flip(stem) { await post('/api/flip', { stem }); await load(true); }
+
+function showLb(stem) {
+  const i = find(stem); if (!i || !i.exists) { closeLb(); return; }
+  openStem = stem;
+  document.getElementById('lb').classList.add('open');
+  const img = document.getElementById('lbimg'); const src = `/full/${i.stem}?v=${i.v}`;
+  if (img.getAttribute('src') !== src) img.src = src;
+  const ix = shown().filter(x => x.exists).findIndex(x => x.stem === stem);
+  document.getElementById('lbbar').innerHTML = `<span class="title">${esc(i.label)}
+      <span class="chip ${i.status}">${i.status === 'new' ? 'to review' : i.status}</span></span>
+    ${rejecting === stem ? rejectBox(i) : buttons(i) + '<button data-close="1">Close</button>'}
+    ${i.status === 'rejected' && i.comment && rejecting !== stem ? `<div class="comment" style="flex-basis:100%;margin:0">${esc(i.comment)}</div>` : ''}
+    <span class="keys">${ix + 1} of ${shown().filter(x => x.exists).length}. Keys: left/right arrows to move, A approve, R reject, F flip, Esc close.</span>`;
+  if (rejecting === stem) setTimeout(() => { const t = document.querySelector('#lbbar textarea'); if (t) t.focus(); }, 0);
+}
+function closeLb() { openStem = null; rejecting = null; document.getElementById('lb').classList.remove('open'); render(); }
+function move(d) {
+  const list = shown().filter(i => i.exists); if (!list.length) return;
+  const ix = list.findIndex(i => i.stem === openStem);
+  rejecting = null; showLb(list[(ix + d + list.length) % list.length].stem);
+}
+
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-tab],[data-size],[data-open],[data-approve],[data-reject],[data-flip],[data-reset],[data-save],[data-cancel],[data-close]');
+  if (!t) return;
+  const d = t.dataset;
+  if (d.tab) { tab = d.tab; try { localStorage.setItem('lls-gal-tab', tab); } catch (x) {} render(); }
+  else if (d.size) { size = d.size; try { localStorage.setItem('lls-gal-size', size); } catch (x) {} render(); }
+  else if (d.open) { rejecting = null; showLb(d.open); }
+  else if (d.approve) review(d.approve, 'approved');
+  else if (d.reject) { rejecting = d.reject; openStem ? showLb(openStem) : render(); }
+  else if (d.flip) flip(d.flip);
+  else if (d.reset) review(d.reset, 'new');
+  else if (d.cancel) { rejecting = null; openStem ? showLb(openStem) : render(); }
+  else if (d.close) closeLb();
+  else if (d.save) {
+    const box = t.closest('.rejectbox');
+    const comment = box.querySelector('textarea').value.trim();
+    if (!comment) { box.querySelector('textarea').focus(); return; }
+    review(d.save, 'rejected', comment, box.querySelector('input[type=checkbox]').checked);
+  }
+});
+
+document.addEventListener('keydown', e => {
+  if (!openStem) return;
+  if (e.target.tagName === 'TEXTAREA') {
+    if (e.key === 'Escape') { rejecting = null; showLb(openStem); }
+    if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) document.querySelector('#lbbar [data-save]').click();
+    return;
+  }
+  if (e.key === 'ArrowRight') move(1);
+  else if (e.key === 'ArrowLeft') move(-1);
+  else if (e.key === 'Escape') closeLb();
+  else if (e.key === 'a' || e.key === 'A') review(openStem, 'approved');
+  else if (e.key === 'r' || e.key === 'R') { e.preventDefault(); rejecting = openStem; showLb(openStem); }
+  else if (e.key === 'f' || e.key === 'F') flip(openStem);
+});
+
+load(true);
+setInterval(() => load(false), 8000);
+</script>
+</body>
+</html>

@@ -33,6 +33,11 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   placeholders. His originals go in `art-source/` (gitignored); trim to 1024x640 (centered 16:10 crop) into
   `graphics/landlordsector/exteriors/<tier>_<type>.png`. On load, `repairArtPaths` swaps a default picture for
   the planet type's own once one exists. Gemini prompts: `art-prompts.txt` / `.html` (not packaged).
+  Picture maker (LLS ticket "Picture maker"): `tools/art-maker/make_art.py` runs Andrzej's own method through
+  the Gemini API (variant 1 in a new chat, then only the VARIANT 2 text in the same chat, alt flipped left to
+  right) into `art-source/` under his names (`shouse_`, `gasgiant`, `_alt`, .jpg). `gallery.py` (launch config
+  `lls-art-gallery`, port 8765) reviews them into `art-source/review.json`; `make_art.py redo` remakes rejected
+  ones from the comment (fix = edit that picture, start over = new picture). Key: GEMINI_API_KEY, his to set.
 - `MarketRules` - the hidden rule. Eligible: in economy, not hidden, size 3+, not pirate (also
   `Misc.isPirateFaction`) and not Luddic Path. `Pricing` holds the math as plain numbers: market multiplier
   0.25 to 4 from size, stability, hazard, habitable, mild climate and pollution.
