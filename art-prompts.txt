@@ -55,6 +55,15 @@ THE WORLD: The home is INSIDE a large orbital space station, on a wide habitat d
 THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: a cramped, bare bit of space with a few scraps. It must look like the smallest and cheapest home of this world.
 Building style: boxy modular habitat units bolted to the deck, smooth painted metal panels in pale grey and teal, round porthole windows, ribbed vents, pipes and cable trays running along the walls, a sliding door.
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 1, THE SHACK. In this world's style it is one single tiny unit (one small pod, dome, module or box), never a cluster or a row of units.
+
 THE SCENE:
 Foreground: smooth metal deck plates with painted stripes and arrows (no writing); a metal railing runs along the front edge of a lower deck. Light comes from long white ceiling light strips, not from a lamp post. Near the left edge: a tall steel support pillar from deck to ceiling.
 Floor: metal deck plates, a few scuffs and oil stains, a drain grate.
@@ -106,6 +115,15 @@ THE WORLD: An Earth-like colony world with a mild climate.
 
 THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: a cramped, bare bit of space with a few scraps. It must look like the smallest and cheapest home of this world.
 Building style: off-white and pale grey prefab panels with rounded corners on a concrete base, a boxy climate unit on the wall, a small dish antenna, rounded-rectangle windows, a door with a keypad.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 1, THE SHACK. In this world's style it is one single tiny unit (one small pod, dome, module or box), never a cluster or a row of units.
 This shack uses the shared basic colony design: wooden planks patched with rusty corrugated metal sheets, a blue and a brown tarp over the roof, a crooked rusty stovepipe, a small solar panel and a TV antenna on the roof, a board nailed across the door.
 
 THE SCENE:
@@ -158,6 +176,15 @@ THE WORLD: A hot, wet jungle world.
 
 THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: a cramped, bare bit of space with a few scraps. It must look like the smallest and cheapest home of this world.
 Building style: prefab panels and metal plating like the Terran homes, raised on a low concrete base against the mud, moss on the lower walls, vines starting to climb it, a humming dehumidifier unit.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 1, THE SHACK. In this world's style it is one single tiny unit (one small pod, dome, module or box), never a cluster or a row of units.
 This shack uses the shared basic colony design: wooden planks patched with rusty corrugated metal sheets, a blue and a brown tarp over the roof, a crooked rusty stovepipe, a small solar panel and a TV antenna on the roof, a board nailed across the door.
 
 THE SCENE:
@@ -210,6 +237,15 @@ THE WORLD: An ocean world: almost all water, with homes on the coast and on pier
 
 THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: a cramped, bare bit of space with a few scraps. It must look like the smallest and cheapest home of this world.
 Building style: prefab panels and metal plating like the Terran homes, standing on steel and concrete pilings above the water, salt stains and rust streaks, a water purifier unit with pipes into the sea.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 1, THE SHACK. In this world's style it is one single tiny unit (one small pod, dome, module or box), never a cluster or a row of units.
 This shack uses the shared basic colony design: wooden planks patched with rusty corrugated metal sheets, a blue and a brown tarp over the roof, a crooked rusty stovepipe, a small solar panel and a TV antenna on the roof, a board nailed across the door.
 
 THE SCENE:
@@ -263,6 +299,15 @@ THE WORLD: A hot, dry savanna world: not a sand desert, but dry steppe.
 THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: a cramped, bare bit of space with a few scraps. It must look like the smallest and cheapest home of this world.
 Building style: low, boxy prefab modules painted sand and ochre, shaded by a big slatted metal sun-screen on posts, thick insulated walls, narrow tinted windows, a large roof-mounted cooling unit with a spinning fan, a white water tank and a row of solar panels.
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 1, THE SHACK. In this world's style it is one single tiny unit (one small pod, dome, module or box), never a cluster or a row of units.
+
 THE SCENE:
 Foreground: a dusty dirt track with deep tire ruts runs diagonally from the bottom-left corner toward the home, lined with a few rocks and short reflector posts. No lamp post: harsh sunlight only. Near the left edge: a tall lattice radio mast with a red warning light.
 Ground: cracked dry red-brown earth, clumps of dry yellow grass, a few thorny bushes, dust.
@@ -314,6 +359,15 @@ THE WORLD: A sand desert world.
 
 THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: a cramped, bare bit of space with a few scraps. It must look like the smallest and cheapest home of this world.
 Building style: smooth domed shells of sand-colored ceramic plating, half buried in the dunes on purpose for cooling, a round airlock-style door against the sand, small round tinted windows, sand louvers over every vent, a big dish-shaped water condenser and a tall cooling tower with fins.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 1, THE SHACK. In this world's style it is one single tiny unit (one small pod, dome, module or box), never a cluster or a row of units.
 
 THE SCENE:
 Foreground: rippled sand dunes fill the front of the picture; a path of metal grating plates half covered in sand leads from the bottom-left corner to the door. Light: a strong low sun from the upper left, long shadows. Near the left edge: a tall navigation beacon mast with a blinking light.
@@ -367,6 +421,15 @@ THE WORLD: A cold tundra world: cold and bleak, but with some life.
 THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: a cramped, bare bit of space with a few scraps. It must look like the smallest and cheapest home of this world.
 Building style: a long, low insulated prefab module in olive drab and off-white, half sunk into the permafrost behind a gravel berm, heavy insulated panels with rounded corners, a chunky heat-exchanger box with radiator fins, small double-glazed windows with a warm amber glow, an exhaust stack venting steam.
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 1, THE SHACK. In this world's style it is one single tiny unit (one small pod, dome, module or box), never a cluster or a row of units.
+
 THE SCENE:
 Foreground: a path of metal grating plates laid over wet, half-frozen ground leads from the bottom-left corner toward the door. Light: a boxy wall light with a cage over it beside the door. Near the left edge: a tall weather mast with instruments and a spinning anemometer.
 Ground: flat cold ground with brown and grey-green moss and lichen, patches of old snow, puddles with thin ice, no trees.
@@ -418,6 +481,15 @@ THE WORLD: A frozen ice world: deep, permanent cold.
 
 THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: a cramped, bare bit of space with a few scraps. It must look like the smallest and cheapest home of this world.
 Building style: rounded insulated prefab pods raised on stilts above the snow, bright orange and white panels so they can be seen in a blizzard, a thick round airlock-style door, small triple-glazed windows with frost, steam rising from a heating vent, icicles along the edges.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 1, THE SHACK. In this world's style it is one single tiny unit (one small pod, dome, module or box), never a cluster or a row of units.
 
 THE SCENE:
 Foreground: a deep trench cut through waist-high snow leads from the bottom-left to a short metal stair up to the door. Light: a cold blue-white floodlight mounted on the pod itself. Near the left edge: a tall red and white striped snow marker pole.
@@ -471,6 +543,15 @@ THE WORLD: An icy world with ice volcanoes that erupt cold water vapor instead o
 THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: a cramped, bare bit of space with a few scraps. It must look like the smallest and cheapest home of this world.
 Building style: a pressurized geodesic dome or cluster of domes made of white triangular panels crusted with ice, anchored to the ground with cables, a boxy airlock entrance, round windows glowing warm yellow.
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 1, THE SHACK. In this world's style it is one single tiny unit (one small pod, dome, module or box), never a cluster or a row of units.
+
 THE SCENE:
 Foreground: cracked plates of blue and grey ice with dark frozen rock between them; a line of short metal marker posts with blinking red tips leads to the airlock. Light: the warm glow from the dome windows. Near the left edge: a tall thin radio mast with a blinking light.
 Ground: cracked blue and grey ice and frozen rock, frost crystals, no plants at all.
@@ -522,6 +603,15 @@ THE WORLD: An airless rock world, like a moon: no air, no water, no life.
 
 THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: a cramped, bare bit of space with a few scraps. It must look like the smallest and cheapest home of this world.
 Building style: grey metal cylindrical pressure modules lying on their sides, partly buried under piled grey rock and gravel for shielding, a round airlock hatch with a small porthole, air tanks and pipes on the outside, a blinking beacon on top.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 1, THE SHACK. In this world's style it is one single tiny unit (one small pod, dome, module or box), never a cluster or a row of units.
 
 THE SCENE:
 Foreground: grey dust and rock with a rover track of tire marks leading to the airlock, marked by short reflective posts. Light: one bright white floodlight on a short mast, and the harsh sun. Near the left edge: a tall floodlight mast.
@@ -575,6 +665,15 @@ THE WORLD: A world with a poisonous atmosphere: nobody goes outside without a ma
 THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: a cramped, bare bit of space with a few scraps. It must look like the smallest and cheapest home of this world.
 Building style: a sealed box of grimy corrugated metal and riveted plates, everything stained with yellow residue, a heavy bulkhead door, two tall filter stacks humming on the roof, small sealed windows, yellow and black hazard stripes (no writing).
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 1, THE SHACK. In this world's style it is one single tiny unit (one small pod, dome, module or box), never a cluster or a row of units.
+
 THE SCENE:
 Foreground: a raised metal grating walkway on short legs crosses sickly green-yellow puddles toward the door. Light: amber warning lights on the walls, glowing in the haze. Near the left edge: a tall air-sampling mast with a spinning vane.
 Ground: stained yellow-brown rock and mud, dead black stumps, no living plants.
@@ -626,6 +725,15 @@ THE WORLD: A volcanic world with lava and constant eruptions.
 
 THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: a cramped, bare bit of space with a few scraps. It must look like the smallest and cheapest home of this world.
 Building style: an angular, wedge-shaped home of dark heat-shield ceramic tiles, raised on thick pillars above the hot ground, sloped walls, narrow shielded windows glowing orange, cooling fins and vents.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 1, THE SHACK. In this world's style it is one single tiny unit (one small pod, dome, module or box), never a cluster or a row of units.
 
 THE SCENE:
 Foreground: black basalt slabs with glowing orange cracks; a metal bridge with railings crosses a small lava channel toward the home. Light: the red-orange glow of the lava from below. Near the left edge: a tall black heat-sensor pylon.
@@ -679,6 +787,15 @@ THE WORLD: A world bathed in deadly radiation: dead land, harsh light.
 THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: a cramped, bare bit of space with a few scraps. It must look like the smallest and cheapest home of this world.
 Building style: a squat concrete bunker half sunk into an earth mound, a thick slab roof, very small thick windows, a heavy steel door at the bottom of a short ramp, lead-lined plates bolted on, no symbols painted on the walls.
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 1, THE SHACK. In this world's style it is one single tiny unit (one small pod, dome, module or box), never a cluster or a row of units.
+
 THE SCENE:
 Foreground: bleached cracked ground; a sloped concrete ramp leads down to the door, with a radiation meter post beside it. Light: harsh white glare from the sun, flat and pale. Near the left edge: a tall warning mast with one small radiation warning sign at its top (the only warning symbol in the picture).
 Ground: dead grey-brown rock and dust, bleached and cracked, no plants at all.
@@ -730,6 +847,15 @@ THE WORLD: A gas giant: there is no ground at all. The home is on a floating hab
 
 THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: a cramped, bare bit of space with a few scraps. It must look like the smallest and cheapest home of this world.
 Building style: light, rounded pods of white and copper panels, round windows, anchored to the deck with cables against the wind, windsocks, small gas balloons tied above the roof.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 1, THE SHACK. In this world's style it is one single tiny unit (one small pod, dome, module or box), never a cluster or a row of units.
 
 THE SCENE:
 Foreground: the edge of a big floating metal deck with a railing along it; beyond the railing, a deep drop into clouds. Light: warm, dim, diffuse light filtered through thick clouds, no direct sun. Near the left edge: a tall mooring mast with a windsock.
@@ -786,6 +912,15 @@ THE WORLD: The home is INSIDE a large orbital space station, on a wide habitat d
 THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: boxy modular habitat units bolted to the deck, smooth painted metal panels in pale grey and teal, round porthole windows, ribbed vents, pipes and cable trays running along the walls, a sliding door.
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 2, THE STUDIO. In this world's style it is one single unit (one pod, dome, module or box), never a cluster or a row of units.
+
 THE SCENE:
 Foreground: smooth metal deck plates with painted stripes and arrows (no writing); a metal railing runs along the front edge of a lower deck. Light comes from long white ceiling light strips, not from a lamp post. Near the left edge: a tall steel support pillar from deck to ceiling.
 Floor: metal deck plates, a few scuffs and oil stains, a drain grate.
@@ -837,6 +972,15 @@ THE WORLD: An Earth-like colony world with a mild climate.
 
 THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: off-white and pale grey prefab panels with rounded corners on a concrete base, a boxy climate unit on the wall, a small dish antenna, rounded-rectangle windows, a door with a keypad.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 2, THE STUDIO. In this world's style it is one single unit (one pod, dome, module or box), never a cluster or a row of units.
 This is the first home of this size: the Jungle and Water pictures will copy this building later.
 
 THE SCENE:
@@ -889,6 +1033,15 @@ THE WORLD: A hot, wet jungle world.
 
 THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: prefab panels and metal plating like the Terran homes, raised on a low concrete base against the mud, moss on the lower walls, vines starting to climb it, a humming dehumidifier unit.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 2, THE STUDIO. In this world's style it is one single unit (one pod, dome, module or box), never a cluster or a row of units.
 The attached picture is the Terran home of this size: keep exactly the same building, art style and camera. Only the surroundings and a few small touches on the building change for this world.
 
 THE SCENE:
@@ -941,6 +1094,15 @@ THE WORLD: An ocean world: almost all water, with homes on the coast and on pier
 
 THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: prefab panels and metal plating like the Terran homes, standing on steel and concrete pilings above the water, salt stains and rust streaks, a water purifier unit with pipes into the sea.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 2, THE STUDIO. In this world's style it is one single unit (one pod, dome, module or box), never a cluster or a row of units.
 The attached picture is the Terran home of this size: keep exactly the same building, art style and camera. Only the surroundings and a few small touches on the building change for this world.
 
 THE SCENE:
@@ -994,6 +1156,15 @@ THE WORLD: A hot, dry savanna world: not a sand desert, but dry steppe.
 THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: low, boxy prefab modules painted sand and ochre, shaded by a big slatted metal sun-screen on posts, thick insulated walls, narrow tinted windows, a large roof-mounted cooling unit with a spinning fan, a white water tank and a row of solar panels.
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 2, THE STUDIO. In this world's style it is one single unit (one pod, dome, module or box), never a cluster or a row of units.
+
 THE SCENE:
 Foreground: a dusty dirt track with deep tire ruts runs diagonally from the bottom-left corner toward the home, lined with a few rocks and short reflector posts. No lamp post: harsh sunlight only. Near the left edge: a tall lattice radio mast with a red warning light.
 Ground: cracked dry red-brown earth, clumps of dry yellow grass, a few thorny bushes, dust.
@@ -1045,6 +1216,15 @@ THE WORLD: A sand desert world.
 
 THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: smooth domed shells of sand-colored ceramic plating, half buried in the dunes on purpose for cooling, a round airlock-style door against the sand, small round tinted windows, sand louvers over every vent, a big dish-shaped water condenser and a tall cooling tower with fins.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 2, THE STUDIO. In this world's style it is one single unit (one pod, dome, module or box), never a cluster or a row of units.
 
 THE SCENE:
 Foreground: rippled sand dunes fill the front of the picture; a path of metal grating plates half covered in sand leads from the bottom-left corner to the door. Light: a strong low sun from the upper left, long shadows. Near the left edge: a tall navigation beacon mast with a blinking light.
@@ -1098,6 +1278,15 @@ THE WORLD: A cold tundra world: cold and bleak, but with some life.
 THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: a long, low insulated prefab module in olive drab and off-white, half sunk into the permafrost behind a gravel berm, heavy insulated panels with rounded corners, a chunky heat-exchanger box with radiator fins, small double-glazed windows with a warm amber glow, an exhaust stack venting steam.
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 2, THE STUDIO. In this world's style it is one single unit (one pod, dome, module or box), never a cluster or a row of units.
+
 THE SCENE:
 Foreground: a path of metal grating plates laid over wet, half-frozen ground leads from the bottom-left corner toward the door. Light: a boxy wall light with a cage over it beside the door. Near the left edge: a tall weather mast with instruments and a spinning anemometer.
 Ground: flat cold ground with brown and grey-green moss and lichen, patches of old snow, puddles with thin ice, no trees.
@@ -1149,6 +1338,15 @@ THE WORLD: A frozen ice world: deep, permanent cold.
 
 THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: rounded insulated prefab pods raised on stilts above the snow, bright orange and white panels so they can be seen in a blizzard, a thick round airlock-style door, small triple-glazed windows with frost, steam rising from a heating vent, icicles along the edges.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 2, THE STUDIO. In this world's style it is one single unit (one pod, dome, module or box), never a cluster or a row of units.
 
 THE SCENE:
 Foreground: a deep trench cut through waist-high snow leads from the bottom-left to a short metal stair up to the door. Light: a cold blue-white floodlight mounted on the pod itself. Near the left edge: a tall red and white striped snow marker pole.
@@ -1202,6 +1400,15 @@ THE WORLD: An icy world with ice volcanoes that erupt cold water vapor instead o
 THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: a pressurized geodesic dome or cluster of domes made of white triangular panels crusted with ice, anchored to the ground with cables, a boxy airlock entrance, round windows glowing warm yellow.
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 2, THE STUDIO. In this world's style it is one single unit (one pod, dome, module or box), never a cluster or a row of units.
+
 THE SCENE:
 Foreground: cracked plates of blue and grey ice with dark frozen rock between them; a line of short metal marker posts with blinking red tips leads to the airlock. Light: the warm glow from the dome windows. Near the left edge: a tall thin radio mast with a blinking light.
 Ground: cracked blue and grey ice and frozen rock, frost crystals, no plants at all.
@@ -1253,6 +1460,15 @@ THE WORLD: An airless rock world, like a moon: no air, no water, no life.
 
 THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: grey metal cylindrical pressure modules lying on their sides, partly buried under piled grey rock and gravel for shielding, a round airlock hatch with a small porthole, air tanks and pipes on the outside, a blinking beacon on top.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 2, THE STUDIO. In this world's style it is one single unit (one pod, dome, module or box), never a cluster or a row of units.
 
 THE SCENE:
 Foreground: grey dust and rock with a rover track of tire marks leading to the airlock, marked by short reflective posts. Light: one bright white floodlight on a short mast, and the harsh sun. Near the left edge: a tall floodlight mast.
@@ -1306,6 +1522,15 @@ THE WORLD: A world with a poisonous atmosphere: nobody goes outside without a ma
 THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: a sealed box of grimy corrugated metal and riveted plates, everything stained with yellow residue, a heavy bulkhead door, two tall filter stacks humming on the roof, small sealed windows, yellow and black hazard stripes (no writing).
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 2, THE STUDIO. In this world's style it is one single unit (one pod, dome, module or box), never a cluster or a row of units.
+
 THE SCENE:
 Foreground: a raised metal grating walkway on short legs crosses sickly green-yellow puddles toward the door. Light: amber warning lights on the walls, glowing in the haze. Near the left edge: a tall air-sampling mast with a spinning vane.
 Ground: stained yellow-brown rock and mud, dead black stumps, no living plants.
@@ -1357,6 +1582,15 @@ THE WORLD: A volcanic world with lava and constant eruptions.
 
 THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: an angular, wedge-shaped home of dark heat-shield ceramic tiles, raised on thick pillars above the hot ground, sloped walls, narrow shielded windows glowing orange, cooling fins and vents.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 2, THE STUDIO. In this world's style it is one single unit (one pod, dome, module or box), never a cluster or a row of units.
 
 THE SCENE:
 Foreground: black basalt slabs with glowing orange cracks; a metal bridge with railings crosses a small lava channel toward the home. Light: the red-orange glow of the lava from below. Near the left edge: a tall black heat-sensor pylon.
@@ -1410,6 +1644,15 @@ THE WORLD: A world bathed in deadly radiation: dead land, harsh light.
 THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: a squat concrete bunker half sunk into an earth mound, a thick slab roof, very small thick windows, a heavy steel door at the bottom of a short ramp, lead-lined plates bolted on, no symbols painted on the walls.
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 2, THE STUDIO. In this world's style it is one single unit (one pod, dome, module or box), never a cluster or a row of units.
+
 THE SCENE:
 Foreground: bleached cracked ground; a sloped concrete ramp leads down to the door, with a radiation meter post beside it. Light: harsh white glare from the sun, flat and pale. Near the left edge: a tall warning mast with one small radiation warning sign at its top (the only warning symbol in the picture).
 Ground: dead grey-brown rock and dust, bleached and cracked, no plants at all.
@@ -1461,6 +1704,15 @@ THE WORLD: A gas giant: there is no ground at all. The home is on a floating hab
 
 THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: light, rounded pods of white and copper panels, round windows, anchored to the deck with cables against the wind, windsocks, small gas balloons tied above the roof.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 2, THE STUDIO. In this world's style it is one single unit (one pod, dome, module or box), never a cluster or a row of units.
 
 THE SCENE:
 Foreground: the edge of a big floating metal deck with a railing along it; beyond the railing, a deep drop into clouds. Light: warm, dim, diffuse light filtered through thick clouds, no direct sun. Near the left edge: a tall mooring mast with a windsock.
@@ -1517,6 +1769,15 @@ THE WORLD: The home is INSIDE a large orbital space station, on a wide habitat d
 THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms: about twice as wide and twice as deep as a one-room studio. The front wall is about eight doors wide, so the door is only a small part of it. Shape: a long, deep box with a low pitched roof (a flat roof with a raised edge only where this world needs one), plain but cared for. Front: one door under a small awning, one big living-room window and two smaller bedroom windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look clearly bigger than a studio (one room with one or two small windows) and clearly smaller than a two-floor house.
 Building style: boxy modular habitat units bolted to the deck, smooth painted metal panels in pale grey and teal, round porthole windows, ribbed vents, pipes and cable trays running along the walls, a sliding door.
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 3, THE SMALL HOUSE. In this world's style it is three or four units (pods, domes, modules or boxes) joined side by side in one long row, each unit as big as a whole studio; where the style is one building, it is one long one-floor building twice as wide as a studio. It must look clearly bigger than a studio.
+
 THE SCENE:
 Foreground: smooth metal deck plates with painted stripes and arrows (no writing); a metal railing runs along the front edge of a lower deck. Light comes from long white ceiling light strips, not from a lamp post. Near the left edge: a tall steel support pillar from deck to ceiling.
 Floor: metal deck plates, a few scuffs and oil stains, a drain grate.
@@ -1568,6 +1829,15 @@ THE WORLD: An Earth-like colony world with a mild climate.
 
 THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms: about twice as wide and twice as deep as a one-room studio. The front wall is about eight doors wide, so the door is only a small part of it. Shape: a long, deep box with a low pitched roof (a flat roof with a raised edge only where this world needs one), plain but cared for. Front: one door under a small awning, one big living-room window and two smaller bedroom windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look clearly bigger than a studio (one room with one or two small windows) and clearly smaller than a two-floor house.
 Building style: off-white and pale grey prefab panels with rounded corners on a concrete base, a boxy climate unit on the wall, a small dish antenna, rounded-rectangle windows, a door with a keypad.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 3, THE SMALL HOUSE. In this world's style it is three or four units (pods, domes, modules or boxes) joined side by side in one long row, each unit as big as a whole studio; where the style is one building, it is one long one-floor building twice as wide as a studio. It must look clearly bigger than a studio.
 This is the first home of this size: the Jungle and Water pictures will copy this building later.
 
 THE SCENE:
@@ -1620,6 +1890,15 @@ THE WORLD: A hot, wet jungle world.
 
 THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms: about twice as wide and twice as deep as a one-room studio. The front wall is about eight doors wide, so the door is only a small part of it. Shape: a long, deep box with a low pitched roof (a flat roof with a raised edge only where this world needs one), plain but cared for. Front: one door under a small awning, one big living-room window and two smaller bedroom windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look clearly bigger than a studio (one room with one or two small windows) and clearly smaller than a two-floor house.
 Building style: prefab panels and metal plating like the Terran homes, raised on a low concrete base against the mud, moss on the lower walls, vines starting to climb it, a humming dehumidifier unit.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 3, THE SMALL HOUSE. In this world's style it is three or four units (pods, domes, modules or boxes) joined side by side in one long row, each unit as big as a whole studio; where the style is one building, it is one long one-floor building twice as wide as a studio. It must look clearly bigger than a studio.
 The attached picture is the Terran home of this size: keep exactly the same building, art style and camera. Only the surroundings and a few small touches on the building change for this world.
 
 THE SCENE:
@@ -1672,6 +1951,15 @@ THE WORLD: An ocean world: almost all water, with homes on the coast and on pier
 
 THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms: about twice as wide and twice as deep as a one-room studio. The front wall is about eight doors wide, so the door is only a small part of it. Shape: a long, deep box with a low pitched roof (a flat roof with a raised edge only where this world needs one), plain but cared for. Front: one door under a small awning, one big living-room window and two smaller bedroom windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look clearly bigger than a studio (one room with one or two small windows) and clearly smaller than a two-floor house.
 Building style: prefab panels and metal plating like the Terran homes, standing on steel and concrete pilings above the water, salt stains and rust streaks, a water purifier unit with pipes into the sea.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 3, THE SMALL HOUSE. In this world's style it is three or four units (pods, domes, modules or boxes) joined side by side in one long row, each unit as big as a whole studio; where the style is one building, it is one long one-floor building twice as wide as a studio. It must look clearly bigger than a studio.
 The attached picture is the Terran home of this size: keep exactly the same building, art style and camera. Only the surroundings and a few small touches on the building change for this world.
 
 THE SCENE:
@@ -1725,6 +2013,15 @@ THE WORLD: A hot, dry savanna world: not a sand desert, but dry steppe.
 THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms: about twice as wide and twice as deep as a one-room studio. The front wall is about eight doors wide, so the door is only a small part of it. Shape: a long, deep box with a low pitched roof (a flat roof with a raised edge only where this world needs one), plain but cared for. Front: one door under a small awning, one big living-room window and two smaller bedroom windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look clearly bigger than a studio (one room with one or two small windows) and clearly smaller than a two-floor house.
 Building style: low, boxy prefab modules painted sand and ochre, shaded by a big slatted metal sun-screen on posts, thick insulated walls, narrow tinted windows, a large roof-mounted cooling unit with a spinning fan, a white water tank and a row of solar panels.
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 3, THE SMALL HOUSE. In this world's style it is three or four units (pods, domes, modules or boxes) joined side by side in one long row, each unit as big as a whole studio; where the style is one building, it is one long one-floor building twice as wide as a studio. It must look clearly bigger than a studio.
+
 THE SCENE:
 Foreground: a dusty dirt track with deep tire ruts runs diagonally from the bottom-left corner toward the home, lined with a few rocks and short reflector posts. No lamp post: harsh sunlight only. Near the left edge: a tall lattice radio mast with a red warning light.
 Ground: cracked dry red-brown earth, clumps of dry yellow grass, a few thorny bushes, dust.
@@ -1776,6 +2073,15 @@ THE WORLD: A sand desert world.
 
 THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms: about twice as wide and twice as deep as a one-room studio. The front wall is about eight doors wide, so the door is only a small part of it. Shape: a long, deep box with a low pitched roof (a flat roof with a raised edge only where this world needs one), plain but cared for. Front: one door under a small awning, one big living-room window and two smaller bedroom windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look clearly bigger than a studio (one room with one or two small windows) and clearly smaller than a two-floor house.
 Building style: smooth domed shells of sand-colored ceramic plating, half buried in the dunes on purpose for cooling, a round airlock-style door against the sand, small round tinted windows, sand louvers over every vent, a big dish-shaped water condenser and a tall cooling tower with fins.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 3, THE SMALL HOUSE. In this world's style it is three or four units (pods, domes, modules or boxes) joined side by side in one long row, each unit as big as a whole studio; where the style is one building, it is one long one-floor building twice as wide as a studio. It must look clearly bigger than a studio.
 
 THE SCENE:
 Foreground: rippled sand dunes fill the front of the picture; a path of metal grating plates half covered in sand leads from the bottom-left corner to the door. Light: a strong low sun from the upper left, long shadows. Near the left edge: a tall navigation beacon mast with a blinking light.
@@ -1829,6 +2135,15 @@ THE WORLD: A cold tundra world: cold and bleak, but with some life.
 THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms: about twice as wide and twice as deep as a one-room studio. The front wall is about eight doors wide, so the door is only a small part of it. Shape: a long, deep box with a low pitched roof (a flat roof with a raised edge only where this world needs one), plain but cared for. Front: one door under a small awning, one big living-room window and two smaller bedroom windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look clearly bigger than a studio (one room with one or two small windows) and clearly smaller than a two-floor house.
 Building style: a long, low insulated prefab module in olive drab and off-white, half sunk into the permafrost behind a gravel berm, heavy insulated panels with rounded corners, a chunky heat-exchanger box with radiator fins, small double-glazed windows with a warm amber glow, an exhaust stack venting steam.
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 3, THE SMALL HOUSE. In this world's style it is three or four units (pods, domes, modules or boxes) joined side by side in one long row, each unit as big as a whole studio; where the style is one building, it is one long one-floor building twice as wide as a studio. It must look clearly bigger than a studio.
+
 THE SCENE:
 Foreground: a path of metal grating plates laid over wet, half-frozen ground leads from the bottom-left corner toward the door. Light: a boxy wall light with a cage over it beside the door. Near the left edge: a tall weather mast with instruments and a spinning anemometer.
 Ground: flat cold ground with brown and grey-green moss and lichen, patches of old snow, puddles with thin ice, no trees.
@@ -1880,6 +2195,15 @@ THE WORLD: A frozen ice world: deep, permanent cold.
 
 THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms: about twice as wide and twice as deep as a one-room studio. The front wall is about eight doors wide, so the door is only a small part of it. Shape: a long, deep box with a low pitched roof (a flat roof with a raised edge only where this world needs one), plain but cared for. Front: one door under a small awning, one big living-room window and two smaller bedroom windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look clearly bigger than a studio (one room with one or two small windows) and clearly smaller than a two-floor house.
 Building style: rounded insulated prefab pods raised on stilts above the snow, bright orange and white panels so they can be seen in a blizzard, a thick round airlock-style door, small triple-glazed windows with frost, steam rising from a heating vent, icicles along the edges.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 3, THE SMALL HOUSE. In this world's style it is three or four units (pods, domes, modules or boxes) joined side by side in one long row, each unit as big as a whole studio; where the style is one building, it is one long one-floor building twice as wide as a studio. It must look clearly bigger than a studio.
 
 THE SCENE:
 Foreground: a deep trench cut through waist-high snow leads from the bottom-left to a short metal stair up to the door. Light: a cold blue-white floodlight mounted on the pod itself. Near the left edge: a tall red and white striped snow marker pole.
@@ -1933,6 +2257,15 @@ THE WORLD: An icy world with ice volcanoes that erupt cold water vapor instead o
 THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms: about twice as wide and twice as deep as a one-room studio. The front wall is about eight doors wide, so the door is only a small part of it. Shape: a long, deep box with a low pitched roof (a flat roof with a raised edge only where this world needs one), plain but cared for. Front: one door under a small awning, one big living-room window and two smaller bedroom windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look clearly bigger than a studio (one room with one or two small windows) and clearly smaller than a two-floor house.
 Building style: a pressurized geodesic dome or cluster of domes made of white triangular panels crusted with ice, anchored to the ground with cables, a boxy airlock entrance, round windows glowing warm yellow.
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 3, THE SMALL HOUSE. In this world's style it is three or four units (pods, domes, modules or boxes) joined side by side in one long row, each unit as big as a whole studio; where the style is one building, it is one long one-floor building twice as wide as a studio. It must look clearly bigger than a studio.
+
 THE SCENE:
 Foreground: cracked plates of blue and grey ice with dark frozen rock between them; a line of short metal marker posts with blinking red tips leads to the airlock. Light: the warm glow from the dome windows. Near the left edge: a tall thin radio mast with a blinking light.
 Ground: cracked blue and grey ice and frozen rock, frost crystals, no plants at all.
@@ -1984,6 +2317,15 @@ THE WORLD: An airless rock world, like a moon: no air, no water, no life.
 
 THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms: about twice as wide and twice as deep as a one-room studio. The front wall is about eight doors wide, so the door is only a small part of it. Shape: a long, deep box with a low pitched roof (a flat roof with a raised edge only where this world needs one), plain but cared for. Front: one door under a small awning, one big living-room window and two smaller bedroom windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look clearly bigger than a studio (one room with one or two small windows) and clearly smaller than a two-floor house.
 Building style: grey metal cylindrical pressure modules lying on their sides, partly buried under piled grey rock and gravel for shielding, a round airlock hatch with a small porthole, air tanks and pipes on the outside, a blinking beacon on top.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 3, THE SMALL HOUSE. In this world's style it is three or four units (pods, domes, modules or boxes) joined side by side in one long row, each unit as big as a whole studio; where the style is one building, it is one long one-floor building twice as wide as a studio. It must look clearly bigger than a studio.
 
 THE SCENE:
 Foreground: grey dust and rock with a rover track of tire marks leading to the airlock, marked by short reflective posts. Light: one bright white floodlight on a short mast, and the harsh sun. Near the left edge: a tall floodlight mast.
@@ -2037,6 +2379,15 @@ THE WORLD: A world with a poisonous atmosphere: nobody goes outside without a ma
 THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms: about twice as wide and twice as deep as a one-room studio. The front wall is about eight doors wide, so the door is only a small part of it. Shape: a long, deep box with a low pitched roof (a flat roof with a raised edge only where this world needs one), plain but cared for. Front: one door under a small awning, one big living-room window and two smaller bedroom windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look clearly bigger than a studio (one room with one or two small windows) and clearly smaller than a two-floor house.
 Building style: a sealed box of grimy corrugated metal and riveted plates, everything stained with yellow residue, a heavy bulkhead door, two tall filter stacks humming on the roof, small sealed windows, yellow and black hazard stripes (no writing).
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 3, THE SMALL HOUSE. In this world's style it is three or four units (pods, domes, modules or boxes) joined side by side in one long row, each unit as big as a whole studio; where the style is one building, it is one long one-floor building twice as wide as a studio. It must look clearly bigger than a studio.
+
 THE SCENE:
 Foreground: a raised metal grating walkway on short legs crosses sickly green-yellow puddles toward the door. Light: amber warning lights on the walls, glowing in the haze. Near the left edge: a tall air-sampling mast with a spinning vane.
 Ground: stained yellow-brown rock and mud, dead black stumps, no living plants.
@@ -2088,6 +2439,15 @@ THE WORLD: A volcanic world with lava and constant eruptions.
 
 THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms: about twice as wide and twice as deep as a one-room studio. The front wall is about eight doors wide, so the door is only a small part of it. Shape: a long, deep box with a low pitched roof (a flat roof with a raised edge only where this world needs one), plain but cared for. Front: one door under a small awning, one big living-room window and two smaller bedroom windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look clearly bigger than a studio (one room with one or two small windows) and clearly smaller than a two-floor house.
 Building style: an angular, wedge-shaped home of dark heat-shield ceramic tiles, raised on thick pillars above the hot ground, sloped walls, narrow shielded windows glowing orange, cooling fins and vents.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 3, THE SMALL HOUSE. In this world's style it is three or four units (pods, domes, modules or boxes) joined side by side in one long row, each unit as big as a whole studio; where the style is one building, it is one long one-floor building twice as wide as a studio. It must look clearly bigger than a studio.
 
 THE SCENE:
 Foreground: black basalt slabs with glowing orange cracks; a metal bridge with railings crosses a small lava channel toward the home. Light: the red-orange glow of the lava from below. Near the left edge: a tall black heat-sensor pylon.
@@ -2141,6 +2501,15 @@ THE WORLD: A world bathed in deadly radiation: dead land, harsh light.
 THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms: about twice as wide and twice as deep as a one-room studio. The front wall is about eight doors wide, so the door is only a small part of it. Shape: a long, deep box with a low pitched roof (a flat roof with a raised edge only where this world needs one), plain but cared for. Front: one door under a small awning, one big living-room window and two smaller bedroom windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look clearly bigger than a studio (one room with one or two small windows) and clearly smaller than a two-floor house.
 Building style: a squat concrete bunker half sunk into an earth mound, a thick slab roof, very small thick windows, a heavy steel door at the bottom of a short ramp, lead-lined plates bolted on, no symbols painted on the walls.
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 3, THE SMALL HOUSE. In this world's style it is three or four units (pods, domes, modules or boxes) joined side by side in one long row, each unit as big as a whole studio; where the style is one building, it is one long one-floor building twice as wide as a studio. It must look clearly bigger than a studio.
+
 THE SCENE:
 Foreground: bleached cracked ground; a sloped concrete ramp leads down to the door, with a radiation meter post beside it. Light: harsh white glare from the sun, flat and pale. Near the left edge: a tall warning mast with one small radiation warning sign at its top (the only warning symbol in the picture).
 Ground: dead grey-brown rock and dust, bleached and cracked, no plants at all.
@@ -2192,6 +2561,15 @@ THE WORLD: A gas giant: there is no ground at all. The home is on a floating hab
 
 THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms: about twice as wide and twice as deep as a one-room studio. The front wall is about eight doors wide, so the door is only a small part of it. Shape: a long, deep box with a low pitched roof (a flat roof with a raised edge only where this world needs one), plain but cared for. Front: one door under a small awning, one big living-room window and two smaller bedroom windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look clearly bigger than a studio (one room with one or two small windows) and clearly smaller than a two-floor house.
 Building style: light, rounded pods of white and copper panels, round windows, anchored to the deck with cables against the wind, windsocks, small gas balloons tied above the roof.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 3, THE SMALL HOUSE. In this world's style it is three or four units (pods, domes, modules or boxes) joined side by side in one long row, each unit as big as a whole studio; where the style is one building, it is one long one-floor building twice as wide as a studio. It must look clearly bigger than a studio.
 
 THE SCENE:
 Foreground: the edge of a big floating metal deck with a railing along it; beyond the railing, a deep drop into clouds. Light: warm, dim, diffuse light filtered through thick clouds, no direct sun. Near the left edge: a tall mooring mast with a windsock.
@@ -2248,6 +2626,15 @@ THE WORLD: The home is INSIDE a large orbital space station, on a wide habitat d
 THE HOME (House): a proper family home, built in this world's style. Size: like an ordinary two-floor family house, six to eight rooms. Shape: a solid box or L-shape with a pitched or flat roof, comfortable but not luxurious. Front: a front door under a small porch or canopy, windows on both floors with warm light inside. Around it: a path to the door and a small vehicle parked beside it. It must look clearly bigger than a small house and clearly smaller than a villa.
 Building style: boxy modular habitat units bolted to the deck, smooth painted metal panels in pale grey and teal, round porthole windows, ribbed vents, pipes and cable trays running along the walls, a sliding door.
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 4, THE HOUSE. In this world's style it is units stacked two levels high, or one building with two full floors, at least six units in all, with windows on both floors. It must look clearly bigger than a small house.
+
 THE SCENE:
 Foreground: smooth metal deck plates with painted stripes and arrows (no writing); a metal railing runs along the front edge of a lower deck. Light comes from long white ceiling light strips, not from a lamp post. Near the left edge: a tall steel support pillar from deck to ceiling.
 Floor: metal deck plates, a few scuffs and oil stains, a drain grate.
@@ -2299,6 +2686,15 @@ THE WORLD: An Earth-like colony world with a mild climate.
 
 THE HOME (House): a proper family home, built in this world's style. Size: like an ordinary two-floor family house, six to eight rooms. Shape: a solid box or L-shape with a pitched or flat roof, comfortable but not luxurious. Front: a front door under a small porch or canopy, windows on both floors with warm light inside. Around it: a path to the door and a small vehicle parked beside it. It must look clearly bigger than a small house and clearly smaller than a villa.
 Building style: off-white and pale grey prefab panels with rounded corners on a concrete base, a boxy climate unit on the wall, a small dish antenna, rounded-rectangle windows, a door with a keypad.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 4, THE HOUSE. In this world's style it is units stacked two levels high, or one building with two full floors, at least six units in all, with windows on both floors. It must look clearly bigger than a small house.
 This is the first home of this size: the Jungle and Water pictures will copy this building later.
 
 THE SCENE:
@@ -2351,6 +2747,15 @@ THE WORLD: A hot, wet jungle world.
 
 THE HOME (House): a proper family home, built in this world's style. Size: like an ordinary two-floor family house, six to eight rooms. Shape: a solid box or L-shape with a pitched or flat roof, comfortable but not luxurious. Front: a front door under a small porch or canopy, windows on both floors with warm light inside. Around it: a path to the door and a small vehicle parked beside it. It must look clearly bigger than a small house and clearly smaller than a villa.
 Building style: prefab panels and metal plating like the Terran homes, raised on a low concrete base against the mud, moss on the lower walls, vines starting to climb it, a humming dehumidifier unit.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 4, THE HOUSE. In this world's style it is units stacked two levels high, or one building with two full floors, at least six units in all, with windows on both floors. It must look clearly bigger than a small house.
 The attached picture is the Terran home of this size: keep exactly the same building, art style and camera. Only the surroundings and a few small touches on the building change for this world.
 
 THE SCENE:
@@ -2403,6 +2808,15 @@ THE WORLD: An ocean world: almost all water, with homes on the coast and on pier
 
 THE HOME (House): a proper family home, built in this world's style. Size: like an ordinary two-floor family house, six to eight rooms. Shape: a solid box or L-shape with a pitched or flat roof, comfortable but not luxurious. Front: a front door under a small porch or canopy, windows on both floors with warm light inside. Around it: a path to the door and a small vehicle parked beside it. It must look clearly bigger than a small house and clearly smaller than a villa.
 Building style: prefab panels and metal plating like the Terran homes, standing on steel and concrete pilings above the water, salt stains and rust streaks, a water purifier unit with pipes into the sea.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 4, THE HOUSE. In this world's style it is units stacked two levels high, or one building with two full floors, at least six units in all, with windows on both floors. It must look clearly bigger than a small house.
 The attached picture is the Terran home of this size: keep exactly the same building, art style and camera. Only the surroundings and a few small touches on the building change for this world.
 
 THE SCENE:
@@ -2456,6 +2870,15 @@ THE WORLD: A hot, dry savanna world: not a sand desert, but dry steppe.
 THE HOME (House): a proper family home, built in this world's style. Size: like an ordinary two-floor family house, six to eight rooms. Shape: a solid box or L-shape with a pitched or flat roof, comfortable but not luxurious. Front: a front door under a small porch or canopy, windows on both floors with warm light inside. Around it: a path to the door and a small vehicle parked beside it. It must look clearly bigger than a small house and clearly smaller than a villa.
 Building style: low, boxy prefab modules painted sand and ochre, shaded by a big slatted metal sun-screen on posts, thick insulated walls, narrow tinted windows, a large roof-mounted cooling unit with a spinning fan, a white water tank and a row of solar panels.
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 4, THE HOUSE. In this world's style it is units stacked two levels high, or one building with two full floors, at least six units in all, with windows on both floors. It must look clearly bigger than a small house.
+
 THE SCENE:
 Foreground: a dusty dirt track with deep tire ruts runs diagonally from the bottom-left corner toward the home, lined with a few rocks and short reflector posts. No lamp post: harsh sunlight only. Near the left edge: a tall lattice radio mast with a red warning light.
 Ground: cracked dry red-brown earth, clumps of dry yellow grass, a few thorny bushes, dust.
@@ -2507,6 +2930,15 @@ THE WORLD: A sand desert world.
 
 THE HOME (House): a proper family home, built in this world's style. Size: like an ordinary two-floor family house, six to eight rooms. Shape: a solid box or L-shape with a pitched or flat roof, comfortable but not luxurious. Front: a front door under a small porch or canopy, windows on both floors with warm light inside. Around it: a path to the door and a small vehicle parked beside it. It must look clearly bigger than a small house and clearly smaller than a villa.
 Building style: smooth domed shells of sand-colored ceramic plating, half buried in the dunes on purpose for cooling, a round airlock-style door against the sand, small round tinted windows, sand louvers over every vent, a big dish-shaped water condenser and a tall cooling tower with fins.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 4, THE HOUSE. In this world's style it is units stacked two levels high, or one building with two full floors, at least six units in all, with windows on both floors. It must look clearly bigger than a small house.
 
 THE SCENE:
 Foreground: rippled sand dunes fill the front of the picture; a path of metal grating plates half covered in sand leads from the bottom-left corner to the door. Light: a strong low sun from the upper left, long shadows. Near the left edge: a tall navigation beacon mast with a blinking light.
@@ -2560,6 +2992,15 @@ THE WORLD: A cold tundra world: cold and bleak, but with some life.
 THE HOME (House): a proper family home, built in this world's style. Size: like an ordinary two-floor family house, six to eight rooms. Shape: a solid box or L-shape with a pitched or flat roof, comfortable but not luxurious. Front: a front door under a small porch or canopy, windows on both floors with warm light inside. Around it: a path to the door and a small vehicle parked beside it. It must look clearly bigger than a small house and clearly smaller than a villa.
 Building style: a long, low insulated prefab module in olive drab and off-white, half sunk into the permafrost behind a gravel berm, heavy insulated panels with rounded corners, a chunky heat-exchanger box with radiator fins, small double-glazed windows with a warm amber glow, an exhaust stack venting steam.
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 4, THE HOUSE. In this world's style it is units stacked two levels high, or one building with two full floors, at least six units in all, with windows on both floors. It must look clearly bigger than a small house.
+
 THE SCENE:
 Foreground: a path of metal grating plates laid over wet, half-frozen ground leads from the bottom-left corner toward the door. Light: a boxy wall light with a cage over it beside the door. Near the left edge: a tall weather mast with instruments and a spinning anemometer.
 Ground: flat cold ground with brown and grey-green moss and lichen, patches of old snow, puddles with thin ice, no trees.
@@ -2611,6 +3052,15 @@ THE WORLD: A frozen ice world: deep, permanent cold.
 
 THE HOME (House): a proper family home, built in this world's style. Size: like an ordinary two-floor family house, six to eight rooms. Shape: a solid box or L-shape with a pitched or flat roof, comfortable but not luxurious. Front: a front door under a small porch or canopy, windows on both floors with warm light inside. Around it: a path to the door and a small vehicle parked beside it. It must look clearly bigger than a small house and clearly smaller than a villa.
 Building style: rounded insulated prefab pods raised on stilts above the snow, bright orange and white panels so they can be seen in a blizzard, a thick round airlock-style door, small triple-glazed windows with frost, steam rising from a heating vent, icicles along the edges.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 4, THE HOUSE. In this world's style it is units stacked two levels high, or one building with two full floors, at least six units in all, with windows on both floors. It must look clearly bigger than a small house.
 
 THE SCENE:
 Foreground: a deep trench cut through waist-high snow leads from the bottom-left to a short metal stair up to the door. Light: a cold blue-white floodlight mounted on the pod itself. Near the left edge: a tall red and white striped snow marker pole.
@@ -2664,6 +3114,15 @@ THE WORLD: An icy world with ice volcanoes that erupt cold water vapor instead o
 THE HOME (House): a proper family home, built in this world's style. Size: like an ordinary two-floor family house, six to eight rooms. Shape: a solid box or L-shape with a pitched or flat roof, comfortable but not luxurious. Front: a front door under a small porch or canopy, windows on both floors with warm light inside. Around it: a path to the door and a small vehicle parked beside it. It must look clearly bigger than a small house and clearly smaller than a villa.
 Building style: a pressurized geodesic dome or cluster of domes made of white triangular panels crusted with ice, anchored to the ground with cables, a boxy airlock entrance, round windows glowing warm yellow.
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 4, THE HOUSE. In this world's style it is units stacked two levels high, or one building with two full floors, at least six units in all, with windows on both floors. It must look clearly bigger than a small house.
+
 THE SCENE:
 Foreground: cracked plates of blue and grey ice with dark frozen rock between them; a line of short metal marker posts with blinking red tips leads to the airlock. Light: the warm glow from the dome windows. Near the left edge: a tall thin radio mast with a blinking light.
 Ground: cracked blue and grey ice and frozen rock, frost crystals, no plants at all.
@@ -2715,6 +3174,15 @@ THE WORLD: An airless rock world, like a moon: no air, no water, no life.
 
 THE HOME (House): a proper family home, built in this world's style. Size: like an ordinary two-floor family house, six to eight rooms. Shape: a solid box or L-shape with a pitched or flat roof, comfortable but not luxurious. Front: a front door under a small porch or canopy, windows on both floors with warm light inside. Around it: a path to the door and a small vehicle parked beside it. It must look clearly bigger than a small house and clearly smaller than a villa.
 Building style: grey metal cylindrical pressure modules lying on their sides, partly buried under piled grey rock and gravel for shielding, a round airlock hatch with a small porthole, air tanks and pipes on the outside, a blinking beacon on top.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 4, THE HOUSE. In this world's style it is units stacked two levels high, or one building with two full floors, at least six units in all, with windows on both floors. It must look clearly bigger than a small house.
 
 THE SCENE:
 Foreground: grey dust and rock with a rover track of tire marks leading to the airlock, marked by short reflective posts. Light: one bright white floodlight on a short mast, and the harsh sun. Near the left edge: a tall floodlight mast.
@@ -2768,6 +3236,15 @@ THE WORLD: A world with a poisonous atmosphere: nobody goes outside without a ma
 THE HOME (House): a proper family home, built in this world's style. Size: like an ordinary two-floor family house, six to eight rooms. Shape: a solid box or L-shape with a pitched or flat roof, comfortable but not luxurious. Front: a front door under a small porch or canopy, windows on both floors with warm light inside. Around it: a path to the door and a small vehicle parked beside it. It must look clearly bigger than a small house and clearly smaller than a villa.
 Building style: a sealed box of grimy corrugated metal and riveted plates, everything stained with yellow residue, a heavy bulkhead door, two tall filter stacks humming on the roof, small sealed windows, yellow and black hazard stripes (no writing).
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 4, THE HOUSE. In this world's style it is units stacked two levels high, or one building with two full floors, at least six units in all, with windows on both floors. It must look clearly bigger than a small house.
+
 THE SCENE:
 Foreground: a raised metal grating walkway on short legs crosses sickly green-yellow puddles toward the door. Light: amber warning lights on the walls, glowing in the haze. Near the left edge: a tall air-sampling mast with a spinning vane.
 Ground: stained yellow-brown rock and mud, dead black stumps, no living plants.
@@ -2819,6 +3296,15 @@ THE WORLD: A volcanic world with lava and constant eruptions.
 
 THE HOME (House): a proper family home, built in this world's style. Size: like an ordinary two-floor family house, six to eight rooms. Shape: a solid box or L-shape with a pitched or flat roof, comfortable but not luxurious. Front: a front door under a small porch or canopy, windows on both floors with warm light inside. Around it: a path to the door and a small vehicle parked beside it. It must look clearly bigger than a small house and clearly smaller than a villa.
 Building style: an angular, wedge-shaped home of dark heat-shield ceramic tiles, raised on thick pillars above the hot ground, sloped walls, narrow shielded windows glowing orange, cooling fins and vents.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 4, THE HOUSE. In this world's style it is units stacked two levels high, or one building with two full floors, at least six units in all, with windows on both floors. It must look clearly bigger than a small house.
 
 THE SCENE:
 Foreground: black basalt slabs with glowing orange cracks; a metal bridge with railings crosses a small lava channel toward the home. Light: the red-orange glow of the lava from below. Near the left edge: a tall black heat-sensor pylon.
@@ -2872,6 +3358,15 @@ THE WORLD: A world bathed in deadly radiation: dead land, harsh light.
 THE HOME (House): a proper family home, built in this world's style. Size: like an ordinary two-floor family house, six to eight rooms. Shape: a solid box or L-shape with a pitched or flat roof, comfortable but not luxurious. Front: a front door under a small porch or canopy, windows on both floors with warm light inside. Around it: a path to the door and a small vehicle parked beside it. It must look clearly bigger than a small house and clearly smaller than a villa.
 Building style: a squat concrete bunker half sunk into an earth mound, a thick slab roof, very small thick windows, a heavy steel door at the bottom of a short ramp, lead-lined plates bolted on, no symbols painted on the walls.
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 4, THE HOUSE. In this world's style it is units stacked two levels high, or one building with two full floors, at least six units in all, with windows on both floors. It must look clearly bigger than a small house.
+
 THE SCENE:
 Foreground: bleached cracked ground; a sloped concrete ramp leads down to the door, with a radiation meter post beside it. Light: harsh white glare from the sun, flat and pale. Near the left edge: a tall warning mast with one small radiation warning sign at its top (the only warning symbol in the picture).
 Ground: dead grey-brown rock and dust, bleached and cracked, no plants at all.
@@ -2923,6 +3418,15 @@ THE WORLD: A gas giant: there is no ground at all. The home is on a floating hab
 
 THE HOME (House): a proper family home, built in this world's style. Size: like an ordinary two-floor family house, six to eight rooms. Shape: a solid box or L-shape with a pitched or flat roof, comfortable but not luxurious. Front: a front door under a small porch or canopy, windows on both floors with warm light inside. Around it: a path to the door and a small vehicle parked beside it. It must look clearly bigger than a small house and clearly smaller than a villa.
 Building style: light, rounded pods of white and copper panels, round windows, anchored to the deck with cables against the wind, windsocks, small gas balloons tied above the roof.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 4, THE HOUSE. In this world's style it is units stacked two levels high, or one building with two full floors, at least six units in all, with windows on both floors. It must look clearly bigger than a small house.
 
 THE SCENE:
 Foreground: the edge of a big floating metal deck with a railing along it; beyond the railing, a deep drop into clouds. Light: warm, dim, diffuse light filtered through thick clouds, no direct sun. Near the left edge: a tall mooring mast with a windsock.
@@ -2979,6 +3483,15 @@ THE WORLD: The home is INSIDE a large orbital space station, on a wide habitat d
 THE HOME (Villa): a large, wealthy home, built in this world's style. Size: like a big modern villa, two floors, wide and spacious, about twice as wide as a house. Shape: a main building with one wing or a second block joined to it, clean lines and expensive materials. Front: the biggest windows this world allows, a terrace or wide balcony, an impressive front door. Around it: private grounds and a small private shuttle on its own pad beside it. It must look clearly bigger and richer than a house, but still one home, not a compound.
 Building style: boxy modular habitat units bolted to the deck, smooth painted metal panels in pale grey and teal, round porthole windows, ribbed vents, pipes and cable trays running along the walls, a sliding door.
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 5, THE VILLA. In this world's style it is a large two-floor main building plus a wing or a second block, ten or more units in all. It must look clearly bigger than a house.
+
 THE SCENE:
 Foreground: smooth metal deck plates with painted stripes and arrows (no writing); a metal railing runs along the front edge of a lower deck. Light comes from long white ceiling light strips, not from a lamp post. Near the left edge: a tall steel support pillar from deck to ceiling.
 Floor: metal deck plates, a few scuffs and oil stains, a drain grate.
@@ -3030,6 +3543,15 @@ THE WORLD: An Earth-like colony world with a mild climate.
 
 THE HOME (Villa): a large, wealthy home, built in this world's style. Size: like a big modern villa, two floors, wide and spacious, about twice as wide as a house. Shape: a main building with one wing or a second block joined to it, clean lines and expensive materials. Front: the biggest windows this world allows, a terrace or wide balcony, an impressive front door. Around it: private grounds and a small private shuttle on its own pad beside it. It must look clearly bigger and richer than a house, but still one home, not a compound.
 Building style: off-white and pale grey prefab panels with rounded corners on a concrete base, a boxy climate unit on the wall, a small dish antenna, rounded-rectangle windows, a door with a keypad.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 5, THE VILLA. In this world's style it is a large two-floor main building plus a wing or a second block, ten or more units in all. It must look clearly bigger than a house.
 This is the first home of this size: the Jungle and Water pictures will copy this building later.
 
 THE SCENE:
@@ -3082,6 +3604,15 @@ THE WORLD: A hot, wet jungle world.
 
 THE HOME (Villa): a large, wealthy home, built in this world's style. Size: like a big modern villa, two floors, wide and spacious, about twice as wide as a house. Shape: a main building with one wing or a second block joined to it, clean lines and expensive materials. Front: the biggest windows this world allows, a terrace or wide balcony, an impressive front door. Around it: private grounds and a small private shuttle on its own pad beside it. It must look clearly bigger and richer than a house, but still one home, not a compound.
 Building style: prefab panels and metal plating like the Terran homes, raised on a low concrete base against the mud, moss on the lower walls, vines starting to climb it, a humming dehumidifier unit.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 5, THE VILLA. In this world's style it is a large two-floor main building plus a wing or a second block, ten or more units in all. It must look clearly bigger than a house.
 The attached picture is the Terran home of this size: keep exactly the same building, art style and camera. Only the surroundings and a few small touches on the building change for this world.
 
 THE SCENE:
@@ -3134,6 +3665,15 @@ THE WORLD: An ocean world: almost all water, with homes on the coast and on pier
 
 THE HOME (Villa): a large, wealthy home, built in this world's style. Size: like a big modern villa, two floors, wide and spacious, about twice as wide as a house. Shape: a main building with one wing or a second block joined to it, clean lines and expensive materials. Front: the biggest windows this world allows, a terrace or wide balcony, an impressive front door. Around it: private grounds and a small private shuttle on its own pad beside it. It must look clearly bigger and richer than a house, but still one home, not a compound.
 Building style: prefab panels and metal plating like the Terran homes, standing on steel and concrete pilings above the water, salt stains and rust streaks, a water purifier unit with pipes into the sea.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 5, THE VILLA. In this world's style it is a large two-floor main building plus a wing or a second block, ten or more units in all. It must look clearly bigger than a house.
 The attached picture is the Terran home of this size: keep exactly the same building, art style and camera. Only the surroundings and a few small touches on the building change for this world.
 
 THE SCENE:
@@ -3187,6 +3727,15 @@ THE WORLD: A hot, dry savanna world: not a sand desert, but dry steppe.
 THE HOME (Villa): a large, wealthy home, built in this world's style. Size: like a big modern villa, two floors, wide and spacious, about twice as wide as a house. Shape: a main building with one wing or a second block joined to it, clean lines and expensive materials. Front: the biggest windows this world allows, a terrace or wide balcony, an impressive front door. Around it: private grounds and a small private shuttle on its own pad beside it. It must look clearly bigger and richer than a house, but still one home, not a compound.
 Building style: low, boxy prefab modules painted sand and ochre, shaded by a big slatted metal sun-screen on posts, thick insulated walls, narrow tinted windows, a large roof-mounted cooling unit with a spinning fan, a white water tank and a row of solar panels.
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 5, THE VILLA. In this world's style it is a large two-floor main building plus a wing or a second block, ten or more units in all. It must look clearly bigger than a house.
+
 THE SCENE:
 Foreground: a dusty dirt track with deep tire ruts runs diagonally from the bottom-left corner toward the home, lined with a few rocks and short reflector posts. No lamp post: harsh sunlight only. Near the left edge: a tall lattice radio mast with a red warning light.
 Ground: cracked dry red-brown earth, clumps of dry yellow grass, a few thorny bushes, dust.
@@ -3238,6 +3787,15 @@ THE WORLD: A sand desert world.
 
 THE HOME (Villa): a large, wealthy home, built in this world's style. Size: like a big modern villa, two floors, wide and spacious, about twice as wide as a house. Shape: a main building with one wing or a second block joined to it, clean lines and expensive materials. Front: the biggest windows this world allows, a terrace or wide balcony, an impressive front door. Around it: private grounds and a small private shuttle on its own pad beside it. It must look clearly bigger and richer than a house, but still one home, not a compound.
 Building style: smooth domed shells of sand-colored ceramic plating, half buried in the dunes on purpose for cooling, a round airlock-style door against the sand, small round tinted windows, sand louvers over every vent, a big dish-shaped water condenser and a tall cooling tower with fins.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 5, THE VILLA. In this world's style it is a large two-floor main building plus a wing or a second block, ten or more units in all. It must look clearly bigger than a house.
 
 THE SCENE:
 Foreground: rippled sand dunes fill the front of the picture; a path of metal grating plates half covered in sand leads from the bottom-left corner to the door. Light: a strong low sun from the upper left, long shadows. Near the left edge: a tall navigation beacon mast with a blinking light.
@@ -3291,6 +3849,15 @@ THE WORLD: A cold tundra world: cold and bleak, but with some life.
 THE HOME (Villa): a large, wealthy home, built in this world's style. Size: like a big modern villa, two floors, wide and spacious, about twice as wide as a house. Shape: a main building with one wing or a second block joined to it, clean lines and expensive materials. Front: the biggest windows this world allows, a terrace or wide balcony, an impressive front door. Around it: private grounds and a small private shuttle on its own pad beside it. It must look clearly bigger and richer than a house, but still one home, not a compound.
 Building style: a long, low insulated prefab module in olive drab and off-white, half sunk into the permafrost behind a gravel berm, heavy insulated panels with rounded corners, a chunky heat-exchanger box with radiator fins, small double-glazed windows with a warm amber glow, an exhaust stack venting steam.
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 5, THE VILLA. In this world's style it is a large two-floor main building plus a wing or a second block, ten or more units in all. It must look clearly bigger than a house.
+
 THE SCENE:
 Foreground: a path of metal grating plates laid over wet, half-frozen ground leads from the bottom-left corner toward the door. Light: a boxy wall light with a cage over it beside the door. Near the left edge: a tall weather mast with instruments and a spinning anemometer.
 Ground: flat cold ground with brown and grey-green moss and lichen, patches of old snow, puddles with thin ice, no trees.
@@ -3342,6 +3909,15 @@ THE WORLD: A frozen ice world: deep, permanent cold.
 
 THE HOME (Villa): a large, wealthy home, built in this world's style. Size: like a big modern villa, two floors, wide and spacious, about twice as wide as a house. Shape: a main building with one wing or a second block joined to it, clean lines and expensive materials. Front: the biggest windows this world allows, a terrace or wide balcony, an impressive front door. Around it: private grounds and a small private shuttle on its own pad beside it. It must look clearly bigger and richer than a house, but still one home, not a compound.
 Building style: rounded insulated prefab pods raised on stilts above the snow, bright orange and white panels so they can be seen in a blizzard, a thick round airlock-style door, small triple-glazed windows with frost, steam rising from a heating vent, icicles along the edges.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 5, THE VILLA. In this world's style it is a large two-floor main building plus a wing or a second block, ten or more units in all. It must look clearly bigger than a house.
 
 THE SCENE:
 Foreground: a deep trench cut through waist-high snow leads from the bottom-left to a short metal stair up to the door. Light: a cold blue-white floodlight mounted on the pod itself. Near the left edge: a tall red and white striped snow marker pole.
@@ -3395,6 +3971,15 @@ THE WORLD: An icy world with ice volcanoes that erupt cold water vapor instead o
 THE HOME (Villa): a large, wealthy home, built in this world's style. Size: like a big modern villa, two floors, wide and spacious, about twice as wide as a house. Shape: a main building with one wing or a second block joined to it, clean lines and expensive materials. Front: the biggest windows this world allows, a terrace or wide balcony, an impressive front door. Around it: private grounds and a small private shuttle on its own pad beside it. It must look clearly bigger and richer than a house, but still one home, not a compound.
 Building style: a pressurized geodesic dome or cluster of domes made of white triangular panels crusted with ice, anchored to the ground with cables, a boxy airlock entrance, round windows glowing warm yellow.
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 5, THE VILLA. In this world's style it is a large two-floor main building plus a wing or a second block, ten or more units in all. It must look clearly bigger than a house.
+
 THE SCENE:
 Foreground: cracked plates of blue and grey ice with dark frozen rock between them; a line of short metal marker posts with blinking red tips leads to the airlock. Light: the warm glow from the dome windows. Near the left edge: a tall thin radio mast with a blinking light.
 Ground: cracked blue and grey ice and frozen rock, frost crystals, no plants at all.
@@ -3446,6 +4031,15 @@ THE WORLD: An airless rock world, like a moon: no air, no water, no life.
 
 THE HOME (Villa): a large, wealthy home, built in this world's style. Size: like a big modern villa, two floors, wide and spacious, about twice as wide as a house. Shape: a main building with one wing or a second block joined to it, clean lines and expensive materials. Front: the biggest windows this world allows, a terrace or wide balcony, an impressive front door. Around it: private grounds and a small private shuttle on its own pad beside it. It must look clearly bigger and richer than a house, but still one home, not a compound.
 Building style: grey metal cylindrical pressure modules lying on their sides, partly buried under piled grey rock and gravel for shielding, a round airlock hatch with a small porthole, air tanks and pipes on the outside, a blinking beacon on top.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 5, THE VILLA. In this world's style it is a large two-floor main building plus a wing or a second block, ten or more units in all. It must look clearly bigger than a house.
 
 THE SCENE:
 Foreground: grey dust and rock with a rover track of tire marks leading to the airlock, marked by short reflective posts. Light: one bright white floodlight on a short mast, and the harsh sun. Near the left edge: a tall floodlight mast.
@@ -3499,6 +4093,15 @@ THE WORLD: A world with a poisonous atmosphere: nobody goes outside without a ma
 THE HOME (Villa): a large, wealthy home, built in this world's style. Size: like a big modern villa, two floors, wide and spacious, about twice as wide as a house. Shape: a main building with one wing or a second block joined to it, clean lines and expensive materials. Front: the biggest windows this world allows, a terrace or wide balcony, an impressive front door. Around it: private grounds and a small private shuttle on its own pad beside it. It must look clearly bigger and richer than a house, but still one home, not a compound.
 Building style: a sealed box of grimy corrugated metal and riveted plates, everything stained with yellow residue, a heavy bulkhead door, two tall filter stacks humming on the roof, small sealed windows, yellow and black hazard stripes (no writing).
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 5, THE VILLA. In this world's style it is a large two-floor main building plus a wing or a second block, ten or more units in all. It must look clearly bigger than a house.
+
 THE SCENE:
 Foreground: a raised metal grating walkway on short legs crosses sickly green-yellow puddles toward the door. Light: amber warning lights on the walls, glowing in the haze. Near the left edge: a tall air-sampling mast with a spinning vane.
 Ground: stained yellow-brown rock and mud, dead black stumps, no living plants.
@@ -3550,6 +4153,15 @@ THE WORLD: A volcanic world with lava and constant eruptions.
 
 THE HOME (Villa): a large, wealthy home, built in this world's style. Size: like a big modern villa, two floors, wide and spacious, about twice as wide as a house. Shape: a main building with one wing or a second block joined to it, clean lines and expensive materials. Front: the biggest windows this world allows, a terrace or wide balcony, an impressive front door. Around it: private grounds and a small private shuttle on its own pad beside it. It must look clearly bigger and richer than a house, but still one home, not a compound.
 Building style: an angular, wedge-shaped home of dark heat-shield ceramic tiles, raised on thick pillars above the hot ground, sloped walls, narrow shielded windows glowing orange, cooling fins and vents.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 5, THE VILLA. In this world's style it is a large two-floor main building plus a wing or a second block, ten or more units in all. It must look clearly bigger than a house.
 
 THE SCENE:
 Foreground: black basalt slabs with glowing orange cracks; a metal bridge with railings crosses a small lava channel toward the home. Light: the red-orange glow of the lava from below. Near the left edge: a tall black heat-sensor pylon.
@@ -3603,6 +4215,15 @@ THE WORLD: A world bathed in deadly radiation: dead land, harsh light.
 THE HOME (Villa): a large, wealthy home, built in this world's style. Size: like a big modern villa, two floors, wide and spacious, about twice as wide as a house. Shape: a main building with one wing or a second block joined to it, clean lines and expensive materials. Front: the biggest windows this world allows, a terrace or wide balcony, an impressive front door. Around it: private grounds and a small private shuttle on its own pad beside it. It must look clearly bigger and richer than a house, but still one home, not a compound.
 Building style: a squat concrete bunker half sunk into an earth mound, a thick slab roof, very small thick windows, a heavy steel door at the bottom of a short ramp, lead-lined plates bolted on, no symbols painted on the walls.
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 5, THE VILLA. In this world's style it is a large two-floor main building plus a wing or a second block, ten or more units in all. It must look clearly bigger than a house.
+
 THE SCENE:
 Foreground: bleached cracked ground; a sloped concrete ramp leads down to the door, with a radiation meter post beside it. Light: harsh white glare from the sun, flat and pale. Near the left edge: a tall warning mast with one small radiation warning sign at its top (the only warning symbol in the picture).
 Ground: dead grey-brown rock and dust, bleached and cracked, no plants at all.
@@ -3654,6 +4275,15 @@ THE WORLD: A gas giant: there is no ground at all. The home is on a floating hab
 
 THE HOME (Villa): a large, wealthy home, built in this world's style. Size: like a big modern villa, two floors, wide and spacious, about twice as wide as a house. Shape: a main building with one wing or a second block joined to it, clean lines and expensive materials. Front: the biggest windows this world allows, a terrace or wide balcony, an impressive front door. Around it: private grounds and a small private shuttle on its own pad beside it. It must look clearly bigger and richer than a house, but still one home, not a compound.
 Building style: light, rounded pods of white and copper panels, round windows, anchored to the deck with cables against the wind, windsocks, small gas balloons tied above the roof.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 5, THE VILLA. In this world's style it is a large two-floor main building plus a wing or a second block, ten or more units in all. It must look clearly bigger than a house.
 
 THE SCENE:
 Foreground: the edge of a big floating metal deck with a railing along it; beyond the railing, a deep drop into clouds. Light: warm, dim, diffuse light filtered through thick clouds, no direct sun. Near the left edge: a tall mooring mast with a windsock.
@@ -3710,6 +4340,15 @@ THE WORLD: The home is INSIDE a large orbital space station, on a wide habitat d
 THE HOME (Estate): the richest home in the colony, a mansion built in this world's style. Size: like a mansion, two or three floors, several wings or modules around a grand entrance, the biggest building in the picture. Shape: a symmetric or sprawling group of joined buildings, the finest materials this world has. Front: a grand entrance with wide steps or a covered drive. Around it: a wall or barrier with a gate and a guard post around large private grounds, and a private shuttle pad. Seen a little further away so the grounds fit in the picture. It must look like the biggest and grandest home of this world.
 Building style: boxy modular habitat units bolted to the deck, smooth painted metal panels in pale grey and teal, round porthole windows, ribbed vents, pipes and cable trays running along the walls, a sliding door.
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 6, THE ESTATE. In this world's style it is a big three-floor main building with several wings, the largest group of buildings in the colony.
+
 THE SCENE:
 Foreground: smooth metal deck plates with painted stripes and arrows (no writing); a metal railing runs along the front edge of a lower deck. Light comes from long white ceiling light strips, not from a lamp post. Near the left edge: a tall steel support pillar from deck to ceiling.
 Floor: metal deck plates, a few scuffs and oil stains, a drain grate.
@@ -3761,6 +4400,15 @@ THE WORLD: An Earth-like colony world with a mild climate.
 
 THE HOME (Estate): the richest home in the colony, a mansion built in this world's style. Size: like a mansion, two or three floors, several wings or modules around a grand entrance, the biggest building in the picture. Shape: a symmetric or sprawling group of joined buildings, the finest materials this world has. Front: a grand entrance with wide steps or a covered drive. Around it: a wall or barrier with a gate and a guard post around large private grounds, and a private shuttle pad. Seen a little further away so the grounds fit in the picture. It must look like the biggest and grandest home of this world.
 Building style: off-white and pale grey prefab panels with rounded corners on a concrete base, a boxy climate unit on the wall, a small dish antenna, rounded-rectangle windows, a door with a keypad.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 6, THE ESTATE. In this world's style it is a big three-floor main building with several wings, the largest group of buildings in the colony.
 This is the first home of this size: the Jungle and Water pictures will copy this building later.
 
 THE SCENE:
@@ -3813,6 +4461,15 @@ THE WORLD: A hot, wet jungle world.
 
 THE HOME (Estate): the richest home in the colony, a mansion built in this world's style. Size: like a mansion, two or three floors, several wings or modules around a grand entrance, the biggest building in the picture. Shape: a symmetric or sprawling group of joined buildings, the finest materials this world has. Front: a grand entrance with wide steps or a covered drive. Around it: a wall or barrier with a gate and a guard post around large private grounds, and a private shuttle pad. Seen a little further away so the grounds fit in the picture. It must look like the biggest and grandest home of this world.
 Building style: prefab panels and metal plating like the Terran homes, raised on a low concrete base against the mud, moss on the lower walls, vines starting to climb it, a humming dehumidifier unit.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 6, THE ESTATE. In this world's style it is a big three-floor main building with several wings, the largest group of buildings in the colony.
 The attached picture is the Terran home of this size: keep exactly the same building, art style and camera. Only the surroundings and a few small touches on the building change for this world.
 
 THE SCENE:
@@ -3865,6 +4522,15 @@ THE WORLD: An ocean world: almost all water, with homes on the coast and on pier
 
 THE HOME (Estate): the richest home in the colony, a mansion built in this world's style. Size: like a mansion, two or three floors, several wings or modules around a grand entrance, the biggest building in the picture. Shape: a symmetric or sprawling group of joined buildings, the finest materials this world has. Front: a grand entrance with wide steps or a covered drive. Around it: a wall or barrier with a gate and a guard post around large private grounds, and a private shuttle pad. Seen a little further away so the grounds fit in the picture. It must look like the biggest and grandest home of this world.
 Building style: prefab panels and metal plating like the Terran homes, standing on steel and concrete pilings above the water, salt stains and rust streaks, a water purifier unit with pipes into the sea.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 6, THE ESTATE. In this world's style it is a big three-floor main building with several wings, the largest group of buildings in the colony.
 The attached picture is the Terran home of this size: keep exactly the same building, art style and camera. Only the surroundings and a few small touches on the building change for this world.
 
 THE SCENE:
@@ -3918,6 +4584,15 @@ THE WORLD: A hot, dry savanna world: not a sand desert, but dry steppe.
 THE HOME (Estate): the richest home in the colony, a mansion built in this world's style. Size: like a mansion, two or three floors, several wings or modules around a grand entrance, the biggest building in the picture. Shape: a symmetric or sprawling group of joined buildings, the finest materials this world has. Front: a grand entrance with wide steps or a covered drive. Around it: a wall or barrier with a gate and a guard post around large private grounds, and a private shuttle pad. Seen a little further away so the grounds fit in the picture. It must look like the biggest and grandest home of this world.
 Building style: low, boxy prefab modules painted sand and ochre, shaded by a big slatted metal sun-screen on posts, thick insulated walls, narrow tinted windows, a large roof-mounted cooling unit with a spinning fan, a white water tank and a row of solar panels.
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 6, THE ESTATE. In this world's style it is a big three-floor main building with several wings, the largest group of buildings in the colony.
+
 THE SCENE:
 Foreground: a dusty dirt track with deep tire ruts runs diagonally from the bottom-left corner toward the home, lined with a few rocks and short reflector posts. No lamp post: harsh sunlight only. Near the left edge: a tall lattice radio mast with a red warning light.
 Ground: cracked dry red-brown earth, clumps of dry yellow grass, a few thorny bushes, dust.
@@ -3969,6 +4644,15 @@ THE WORLD: A sand desert world.
 
 THE HOME (Estate): the richest home in the colony, a mansion built in this world's style. Size: like a mansion, two or three floors, several wings or modules around a grand entrance, the biggest building in the picture. Shape: a symmetric or sprawling group of joined buildings, the finest materials this world has. Front: a grand entrance with wide steps or a covered drive. Around it: a wall or barrier with a gate and a guard post around large private grounds, and a private shuttle pad. Seen a little further away so the grounds fit in the picture. It must look like the biggest and grandest home of this world.
 Building style: smooth domed shells of sand-colored ceramic plating, half buried in the dunes on purpose for cooling, a round airlock-style door against the sand, small round tinted windows, sand louvers over every vent, a big dish-shaped water condenser and a tall cooling tower with fins.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 6, THE ESTATE. In this world's style it is a big three-floor main building with several wings, the largest group of buildings in the colony.
 
 THE SCENE:
 Foreground: rippled sand dunes fill the front of the picture; a path of metal grating plates half covered in sand leads from the bottom-left corner to the door. Light: a strong low sun from the upper left, long shadows. Near the left edge: a tall navigation beacon mast with a blinking light.
@@ -4022,6 +4706,15 @@ THE WORLD: A cold tundra world: cold and bleak, but with some life.
 THE HOME (Estate): the richest home in the colony, a mansion built in this world's style. Size: like a mansion, two or three floors, several wings or modules around a grand entrance, the biggest building in the picture. Shape: a symmetric or sprawling group of joined buildings, the finest materials this world has. Front: a grand entrance with wide steps or a covered drive. Around it: a wall or barrier with a gate and a guard post around large private grounds, and a private shuttle pad. Seen a little further away so the grounds fit in the picture. It must look like the biggest and grandest home of this world.
 Building style: a long, low insulated prefab module in olive drab and off-white, half sunk into the permafrost behind a gravel berm, heavy insulated panels with rounded corners, a chunky heat-exchanger box with radiator fins, small double-glazed windows with a warm amber glow, an exhaust stack venting steam.
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 6, THE ESTATE. In this world's style it is a big three-floor main building with several wings, the largest group of buildings in the colony.
+
 THE SCENE:
 Foreground: a path of metal grating plates laid over wet, half-frozen ground leads from the bottom-left corner toward the door. Light: a boxy wall light with a cage over it beside the door. Near the left edge: a tall weather mast with instruments and a spinning anemometer.
 Ground: flat cold ground with brown and grey-green moss and lichen, patches of old snow, puddles with thin ice, no trees.
@@ -4073,6 +4766,15 @@ THE WORLD: A frozen ice world: deep, permanent cold.
 
 THE HOME (Estate): the richest home in the colony, a mansion built in this world's style. Size: like a mansion, two or three floors, several wings or modules around a grand entrance, the biggest building in the picture. Shape: a symmetric or sprawling group of joined buildings, the finest materials this world has. Front: a grand entrance with wide steps or a covered drive. Around it: a wall or barrier with a gate and a guard post around large private grounds, and a private shuttle pad. Seen a little further away so the grounds fit in the picture. It must look like the biggest and grandest home of this world.
 Building style: rounded insulated prefab pods raised on stilts above the snow, bright orange and white panels so they can be seen in a blizzard, a thick round airlock-style door, small triple-glazed windows with frost, steam rising from a heating vent, icicles along the edges.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 6, THE ESTATE. In this world's style it is a big three-floor main building with several wings, the largest group of buildings in the colony.
 
 THE SCENE:
 Foreground: a deep trench cut through waist-high snow leads from the bottom-left to a short metal stair up to the door. Light: a cold blue-white floodlight mounted on the pod itself. Near the left edge: a tall red and white striped snow marker pole.
@@ -4126,6 +4828,15 @@ THE WORLD: An icy world with ice volcanoes that erupt cold water vapor instead o
 THE HOME (Estate): the richest home in the colony, a mansion built in this world's style. Size: like a mansion, two or three floors, several wings or modules around a grand entrance, the biggest building in the picture. Shape: a symmetric or sprawling group of joined buildings, the finest materials this world has. Front: a grand entrance with wide steps or a covered drive. Around it: a wall or barrier with a gate and a guard post around large private grounds, and a private shuttle pad. Seen a little further away so the grounds fit in the picture. It must look like the biggest and grandest home of this world.
 Building style: a pressurized geodesic dome or cluster of domes made of white triangular panels crusted with ice, anchored to the ground with cables, a boxy airlock entrance, round windows glowing warm yellow.
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 6, THE ESTATE. In this world's style it is a big three-floor main building with several wings, the largest group of buildings in the colony.
+
 THE SCENE:
 Foreground: cracked plates of blue and grey ice with dark frozen rock between them; a line of short metal marker posts with blinking red tips leads to the airlock. Light: the warm glow from the dome windows. Near the left edge: a tall thin radio mast with a blinking light.
 Ground: cracked blue and grey ice and frozen rock, frost crystals, no plants at all.
@@ -4177,6 +4888,15 @@ THE WORLD: An airless rock world, like a moon: no air, no water, no life.
 
 THE HOME (Estate): the richest home in the colony, a mansion built in this world's style. Size: like a mansion, two or three floors, several wings or modules around a grand entrance, the biggest building in the picture. Shape: a symmetric or sprawling group of joined buildings, the finest materials this world has. Front: a grand entrance with wide steps or a covered drive. Around it: a wall or barrier with a gate and a guard post around large private grounds, and a private shuttle pad. Seen a little further away so the grounds fit in the picture. It must look like the biggest and grandest home of this world.
 Building style: grey metal cylindrical pressure modules lying on their sides, partly buried under piled grey rock and gravel for shielding, a round airlock hatch with a small porthole, air tanks and pipes on the outside, a blinking beacon on top.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 6, THE ESTATE. In this world's style it is a big three-floor main building with several wings, the largest group of buildings in the colony.
 
 THE SCENE:
 Foreground: grey dust and rock with a rover track of tire marks leading to the airlock, marked by short reflective posts. Light: one bright white floodlight on a short mast, and the harsh sun. Near the left edge: a tall floodlight mast.
@@ -4230,6 +4950,15 @@ THE WORLD: A world with a poisonous atmosphere: nobody goes outside without a ma
 THE HOME (Estate): the richest home in the colony, a mansion built in this world's style. Size: like a mansion, two or three floors, several wings or modules around a grand entrance, the biggest building in the picture. Shape: a symmetric or sprawling group of joined buildings, the finest materials this world has. Front: a grand entrance with wide steps or a covered drive. Around it: a wall or barrier with a gate and a guard post around large private grounds, and a private shuttle pad. Seen a little further away so the grounds fit in the picture. It must look like the biggest and grandest home of this world.
 Building style: a sealed box of grimy corrugated metal and riveted plates, everything stained with yellow residue, a heavy bulkhead door, two tall filter stacks humming on the roof, small sealed windows, yellow and black hazard stripes (no writing).
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 6, THE ESTATE. In this world's style it is a big three-floor main building with several wings, the largest group of buildings in the colony.
+
 THE SCENE:
 Foreground: a raised metal grating walkway on short legs crosses sickly green-yellow puddles toward the door. Light: amber warning lights on the walls, glowing in the haze. Near the left edge: a tall air-sampling mast with a spinning vane.
 Ground: stained yellow-brown rock and mud, dead black stumps, no living plants.
@@ -4281,6 +5010,15 @@ THE WORLD: A volcanic world with lava and constant eruptions.
 
 THE HOME (Estate): the richest home in the colony, a mansion built in this world's style. Size: like a mansion, two or three floors, several wings or modules around a grand entrance, the biggest building in the picture. Shape: a symmetric or sprawling group of joined buildings, the finest materials this world has. Front: a grand entrance with wide steps or a covered drive. Around it: a wall or barrier with a gate and a guard post around large private grounds, and a private shuttle pad. Seen a little further away so the grounds fit in the picture. It must look like the biggest and grandest home of this world.
 Building style: an angular, wedge-shaped home of dark heat-shield ceramic tiles, raised on thick pillars above the hot ground, sloped walls, narrow shielded windows glowing orange, cooling fins and vents.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 6, THE ESTATE. In this world's style it is a big three-floor main building with several wings, the largest group of buildings in the colony.
 
 THE SCENE:
 Foreground: black basalt slabs with glowing orange cracks; a metal bridge with railings crosses a small lava channel toward the home. Light: the red-orange glow of the lava from below. Near the left edge: a tall black heat-sensor pylon.
@@ -4334,6 +5072,15 @@ THE WORLD: A world bathed in deadly radiation: dead land, harsh light.
 THE HOME (Estate): the richest home in the colony, a mansion built in this world's style. Size: like a mansion, two or three floors, several wings or modules around a grand entrance, the biggest building in the picture. Shape: a symmetric or sprawling group of joined buildings, the finest materials this world has. Front: a grand entrance with wide steps or a covered drive. Around it: a wall or barrier with a gate and a guard post around large private grounds, and a private shuttle pad. Seen a little further away so the grounds fit in the picture. It must look like the biggest and grandest home of this world.
 Building style: a squat concrete bunker half sunk into an earth mound, a thick slab roof, very small thick windows, a heavy steel door at the bottom of a short ramp, lead-lined plates bolted on, no symbols painted on the walls.
 
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 6, THE ESTATE. In this world's style it is a big three-floor main building with several wings, the largest group of buildings in the colony.
+
 THE SCENE:
 Foreground: bleached cracked ground; a sloped concrete ramp leads down to the door, with a radiation meter post beside it. Light: harsh white glare from the sun, flat and pale. Near the left edge: a tall warning mast with one small radiation warning sign at its top (the only warning symbol in the picture).
 Ground: dead grey-brown rock and dust, bleached and cracked, no plants at all.
@@ -4385,6 +5132,15 @@ THE WORLD: A gas giant: there is no ground at all. The home is on a floating hab
 
 THE HOME (Estate): the richest home in the colony, a mansion built in this world's style. Size: like a mansion, two or three floors, several wings or modules around a grand entrance, the biggest building in the picture. Shape: a symmetric or sprawling group of joined buildings, the finest materials this world has. Front: a grand entrance with wide steps or a covered drive. Around it: a wall or barrier with a gate and a guard post around large private grounds, and a private shuttle pad. Seen a little further away so the grounds fit in the picture. It must look like the biggest and grandest home of this world.
 Building style: light, rounded pods of white and copper panels, round windows, anchored to the deck with cables against the wind, windsocks, small gas balloons tied above the roof.
+
+HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
+1. Shack: one tiny room, front wall about two doors wide, roof just above the door.
+2. Studio: one room, one floor, front wall about four doors wide, one or two small windows.
+3. Small house: one floor, front wall about eight doors wide, three or four windows; about twice the size of the studio.
+4. House: two full floors, front wall about eight doors wide, windows on both floors.
+5. Villa: two floors, front wall about fourteen doors wide, plus a wing.
+6. Estate: three floors and several wings, the biggest buildings in the colony.
+THIS PICTURE IS NUMBER 6, THE ESTATE. In this world's style it is a big three-floor main building with several wings, the largest group of buildings in the colony.
 
 THE SCENE:
 Foreground: the edge of a big floating metal deck with a railing along it; beyond the railing, a deep drop into clouds. Light: warm, dim, diffuse light filtered through thick clouds, no direct sun. Near the left edge: a tall mooring mast with a windsock.
