@@ -665,17 +665,17 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 THE WORLD: A world bathed in deadly radiation: dead land, harsh light.
 
 THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: bare ground, a few scraps. It must look like the smallest and cheapest home of this world.
-Building style: a squat concrete bunker half sunk into an earth mound, a thick slab roof, very small thick windows, a heavy steel door at the bottom of a short ramp, lead-lined plates bolted on, radiation trefoil symbols (the symbol only, no writing).
+Building style: a squat concrete bunker half sunk into an earth mound, a thick slab roof, very small thick windows, a heavy steel door at the bottom of a short ramp, lead-lined plates bolted on, no symbols painted on the walls.
 
 THE SCENE:
-Foreground: bleached cracked ground; a sloped concrete ramp leads down to the door, with a radiation meter post beside it. Light: harsh white glare from the sun, flat and pale. Near the left edge: a tall warning mast with a radiation trefoil sign.
+Foreground: bleached cracked ground; a sloped concrete ramp leads down to the door, with a radiation meter post beside it. Light: harsh white glare from the sun, flat and pale. Near the left edge: a tall warning mast with one small radiation warning sign at its top (the only warning symbol in the picture).
 Ground: dead grey-brown rock and dust, bleached and cracked, no plants at all.
 Sky: thin and harsh, pale yellow-white glare near the sun fading to dark above, a few stars visible.
 Yard details: sealed barrels, a dusty rover, a decontamination shower frame.
 Background: dead flat land, a distant colony bunker and landing pad.
 
-The picture MUST show: dead grey land, a half-buried concrete bunker home, radiation trefoil symbols.
-The picture must NOT show: grass, any plant, trees, water, snow, blue sky, white clouds.
+The picture MUST show: dead grey land, a half-buried concrete bunker home, lead plates bolted to the walls.
+The picture must NOT show: grass, any plant, trees, water, snow, blue sky, white clouds, radiation trefoil symbols on the home, the ground, barrels or anywhere else (only the one small sign on the mast).
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
@@ -713,26 +713,25 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 
 Do not imitate any earlier picture from this chat or anything attached: this world looks completely different, with its own building style, ground, foreground and color scheme. Only the art style and the camera stay the same.
 
-THE WORLD: A gas giant: there is no ground at all. The home is on a floating habitat platform high in the clouds.
+THE WORLD: A gas giant: there is no ground at all. The home is on a floating habitat platform deep INSIDE the gas giant's atmosphere, not in orbit and not in space: thick clouds and storms surround it on every side, above and below.
 
 THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: bare ground, a few scraps. It must look like the smallest and cheapest home of this world.
 Building style: light, rounded pods of white and copper panels, round windows, anchored to the deck with cables against the wind, windsocks, small gas balloons tied above the roof.
 
 THE SCENE:
-Foreground: the edge of a big floating metal deck with a railing along it; beyond the railing, a deep drop into clouds. Light: warm sunlight through the cloud bands. Near the left edge: a tall mooring mast with a windsock.
+Foreground: the edge of a big floating metal deck with a railing along it; beyond the railing, a deep drop into clouds. Light: warm, dim, diffuse light filtered through thick clouds, no direct sun. Near the left edge: a tall mooring mast with a windsock.
 Ground: the metal deck of the platform, no soil or rock.
-Sky: huge, with endless bands of orange, cream and brown clouds below and around, a curved horizon, moons.
+Sky: no open sky and no space: thick layers of orange, cream and brown clouds above, below and on every side, towering storm clouds with flashes of lightning in the distance, haze that softens everything farther away.
 Yard details: tie-down cables, crates, a small shuttle on the deck.
-Background: other floating platforms and balloon habitats in the distance among the clouds.
+Background: other floating platforms and balloon habitats half-hidden in the clouds and haze.
 
-The picture MUST show: a floating metal platform, clouds below, a railing at the deck edge.
-The picture must NOT show: grass, soil, rocks, ground, trees, mountains, sea, land on the horizon.
+The picture MUST show: a floating metal platform, thick clouds all around it (above and below), a storm in the distance, a railing at the deck edge.
+The picture must NOT show: grass, soil, rocks, ground, trees, mountains, sea, land on the horizon, outer space, stars, moons, planet rings, a curved planet horizon, the planet seen from orbit.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
-
 ====================================================================================================
 STUDIO
 ====================================================================================================
@@ -1383,17 +1382,17 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 THE WORLD: A world bathed in deadly radiation: dead land, harsh light.
 
 THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small patch of ground by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
-Building style: a squat concrete bunker half sunk into an earth mound, a thick slab roof, very small thick windows, a heavy steel door at the bottom of a short ramp, lead-lined plates bolted on, radiation trefoil symbols (the symbol only, no writing).
+Building style: a squat concrete bunker half sunk into an earth mound, a thick slab roof, very small thick windows, a heavy steel door at the bottom of a short ramp, lead-lined plates bolted on, no symbols painted on the walls.
 
 THE SCENE:
-Foreground: bleached cracked ground; a sloped concrete ramp leads down to the door, with a radiation meter post beside it. Light: harsh white glare from the sun, flat and pale. Near the left edge: a tall warning mast with a radiation trefoil sign.
+Foreground: bleached cracked ground; a sloped concrete ramp leads down to the door, with a radiation meter post beside it. Light: harsh white glare from the sun, flat and pale. Near the left edge: a tall warning mast with one small radiation warning sign at its top (the only warning symbol in the picture).
 Ground: dead grey-brown rock and dust, bleached and cracked, no plants at all.
 Sky: thin and harsh, pale yellow-white glare near the sun fading to dark above, a few stars visible.
 Yard details: sealed barrels, a dusty rover, a decontamination shower frame.
 Background: dead flat land, a distant colony bunker and landing pad.
 
-The picture MUST show: dead grey land, a half-buried concrete bunker home, radiation trefoil symbols.
-The picture must NOT show: grass, any plant, trees, water, snow, blue sky, white clouds.
+The picture MUST show: dead grey land, a half-buried concrete bunker home, lead plates bolted to the walls.
+The picture must NOT show: grass, any plant, trees, water, snow, blue sky, white clouds, radiation trefoil symbols on the home, the ground, barrels or anywhere else (only the one small sign on the mast).
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
@@ -1431,26 +1430,25 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 
 Do not imitate any earlier picture from this chat or anything attached: this world looks completely different, with its own building style, ground, foreground and color scheme. Only the art style and the camera stay the same.
 
-THE WORLD: A gas giant: there is no ground at all. The home is on a floating habitat platform high in the clouds.
+THE WORLD: A gas giant: there is no ground at all. The home is on a floating habitat platform deep INSIDE the gas giant's atmosphere, not in orbit and not in space: thick clouds and storms surround it on every side, above and below.
 
 THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small patch of ground by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: light, rounded pods of white and copper panels, round windows, anchored to the deck with cables against the wind, windsocks, small gas balloons tied above the roof.
 
 THE SCENE:
-Foreground: the edge of a big floating metal deck with a railing along it; beyond the railing, a deep drop into clouds. Light: warm sunlight through the cloud bands. Near the left edge: a tall mooring mast with a windsock.
+Foreground: the edge of a big floating metal deck with a railing along it; beyond the railing, a deep drop into clouds. Light: warm, dim, diffuse light filtered through thick clouds, no direct sun. Near the left edge: a tall mooring mast with a windsock.
 Ground: the metal deck of the platform, no soil or rock.
-Sky: huge, with endless bands of orange, cream and brown clouds below and around, a curved horizon, moons.
+Sky: no open sky and no space: thick layers of orange, cream and brown clouds above, below and on every side, towering storm clouds with flashes of lightning in the distance, haze that softens everything farther away.
 Yard details: tie-down cables, crates, a small shuttle on the deck.
-Background: other floating platforms and balloon habitats in the distance among the clouds.
+Background: other floating platforms and balloon habitats half-hidden in the clouds and haze.
 
-The picture MUST show: a floating metal platform, clouds below, a railing at the deck edge.
-The picture must NOT show: grass, soil, rocks, ground, trees, mountains, sea, land on the horizon.
+The picture MUST show: a floating metal platform, thick clouds all around it (above and below), a storm in the distance, a railing at the deck edge.
+The picture must NOT show: grass, soil, rocks, ground, trees, mountains, sea, land on the horizon, outer space, stars, moons, planet rings, a curved planet horizon, the planet seen from orbit.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
-
 ====================================================================================================
 SMALL HOUSE
 ====================================================================================================
@@ -2101,17 +2099,17 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 THE WORLD: A world bathed in deadly radiation: dead land, harsh light.
 
 THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms. Shape: a simple long box with a low pitched or flat roof, plain but cared for. Front: one door and three or four windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look bigger than a studio and clearly smaller than a two-floor house.
-Building style: a squat concrete bunker half sunk into an earth mound, a thick slab roof, very small thick windows, a heavy steel door at the bottom of a short ramp, lead-lined plates bolted on, radiation trefoil symbols (the symbol only, no writing).
+Building style: a squat concrete bunker half sunk into an earth mound, a thick slab roof, very small thick windows, a heavy steel door at the bottom of a short ramp, lead-lined plates bolted on, no symbols painted on the walls.
 
 THE SCENE:
-Foreground: bleached cracked ground; a sloped concrete ramp leads down to the door, with a radiation meter post beside it. Light: harsh white glare from the sun, flat and pale. Near the left edge: a tall warning mast with a radiation trefoil sign.
+Foreground: bleached cracked ground; a sloped concrete ramp leads down to the door, with a radiation meter post beside it. Light: harsh white glare from the sun, flat and pale. Near the left edge: a tall warning mast with one small radiation warning sign at its top (the only warning symbol in the picture).
 Ground: dead grey-brown rock and dust, bleached and cracked, no plants at all.
 Sky: thin and harsh, pale yellow-white glare near the sun fading to dark above, a few stars visible.
 Yard details: sealed barrels, a dusty rover, a decontamination shower frame.
 Background: dead flat land, a distant colony bunker and landing pad.
 
-The picture MUST show: dead grey land, a half-buried concrete bunker home, radiation trefoil symbols.
-The picture must NOT show: grass, any plant, trees, water, snow, blue sky, white clouds.
+The picture MUST show: dead grey land, a half-buried concrete bunker home, lead plates bolted to the walls.
+The picture must NOT show: grass, any plant, trees, water, snow, blue sky, white clouds, radiation trefoil symbols on the home, the ground, barrels or anywhere else (only the one small sign on the mast).
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
@@ -2149,26 +2147,25 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 
 Do not imitate any earlier picture from this chat or anything attached: this world looks completely different, with its own building style, ground, foreground and color scheme. Only the art style and the camera stay the same.
 
-THE WORLD: A gas giant: there is no ground at all. The home is on a floating habitat platform high in the clouds.
+THE WORLD: A gas giant: there is no ground at all. The home is on a floating habitat platform deep INSIDE the gas giant's atmosphere, not in orbit and not in space: thick clouds and storms surround it on every side, above and below.
 
 THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms. Shape: a simple long box with a low pitched or flat roof, plain but cared for. Front: one door and three or four windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look bigger than a studio and clearly smaller than a two-floor house.
 Building style: light, rounded pods of white and copper panels, round windows, anchored to the deck with cables against the wind, windsocks, small gas balloons tied above the roof.
 
 THE SCENE:
-Foreground: the edge of a big floating metal deck with a railing along it; beyond the railing, a deep drop into clouds. Light: warm sunlight through the cloud bands. Near the left edge: a tall mooring mast with a windsock.
+Foreground: the edge of a big floating metal deck with a railing along it; beyond the railing, a deep drop into clouds. Light: warm, dim, diffuse light filtered through thick clouds, no direct sun. Near the left edge: a tall mooring mast with a windsock.
 Ground: the metal deck of the platform, no soil or rock.
-Sky: huge, with endless bands of orange, cream and brown clouds below and around, a curved horizon, moons.
+Sky: no open sky and no space: thick layers of orange, cream and brown clouds above, below and on every side, towering storm clouds with flashes of lightning in the distance, haze that softens everything farther away.
 Yard details: tie-down cables, crates, a small shuttle on the deck.
-Background: other floating platforms and balloon habitats in the distance among the clouds.
+Background: other floating platforms and balloon habitats half-hidden in the clouds and haze.
 
-The picture MUST show: a floating metal platform, clouds below, a railing at the deck edge.
-The picture must NOT show: grass, soil, rocks, ground, trees, mountains, sea, land on the horizon.
+The picture MUST show: a floating metal platform, thick clouds all around it (above and below), a storm in the distance, a railing at the deck edge.
+The picture must NOT show: grass, soil, rocks, ground, trees, mountains, sea, land on the horizon, outer space, stars, moons, planet rings, a curved planet horizon, the planet seen from orbit.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
-
 ====================================================================================================
 HOUSE
 ====================================================================================================
@@ -2819,17 +2816,17 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 THE WORLD: A world bathed in deadly radiation: dead land, harsh light.
 
 THE HOME (House): a proper family home, built in this world's style. Size: like an ordinary two-floor family house, six to eight rooms. Shape: a solid box or L-shape with a pitched or flat roof, comfortable but not luxurious. Front: a front door under a small porch or canopy, windows on both floors with warm light inside. Around it: a path to the door and a small vehicle parked beside it. It must look clearly bigger than a small house and clearly smaller than a villa.
-Building style: a squat concrete bunker half sunk into an earth mound, a thick slab roof, very small thick windows, a heavy steel door at the bottom of a short ramp, lead-lined plates bolted on, radiation trefoil symbols (the symbol only, no writing).
+Building style: a squat concrete bunker half sunk into an earth mound, a thick slab roof, very small thick windows, a heavy steel door at the bottom of a short ramp, lead-lined plates bolted on, no symbols painted on the walls.
 
 THE SCENE:
-Foreground: bleached cracked ground; a sloped concrete ramp leads down to the door, with a radiation meter post beside it. Light: harsh white glare from the sun, flat and pale. Near the left edge: a tall warning mast with a radiation trefoil sign.
+Foreground: bleached cracked ground; a sloped concrete ramp leads down to the door, with a radiation meter post beside it. Light: harsh white glare from the sun, flat and pale. Near the left edge: a tall warning mast with one small radiation warning sign at its top (the only warning symbol in the picture).
 Ground: dead grey-brown rock and dust, bleached and cracked, no plants at all.
 Sky: thin and harsh, pale yellow-white glare near the sun fading to dark above, a few stars visible.
 Yard details: sealed barrels, a dusty rover, a decontamination shower frame.
 Background: dead flat land, a distant colony bunker and landing pad.
 
-The picture MUST show: dead grey land, a half-buried concrete bunker home, radiation trefoil symbols.
-The picture must NOT show: grass, any plant, trees, water, snow, blue sky, white clouds.
+The picture MUST show: dead grey land, a half-buried concrete bunker home, lead plates bolted to the walls.
+The picture must NOT show: grass, any plant, trees, water, snow, blue sky, white clouds, radiation trefoil symbols on the home, the ground, barrels or anywhere else (only the one small sign on the mast).
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
@@ -2867,26 +2864,25 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 
 Do not imitate any earlier picture from this chat or anything attached: this world looks completely different, with its own building style, ground, foreground and color scheme. Only the art style and the camera stay the same.
 
-THE WORLD: A gas giant: there is no ground at all. The home is on a floating habitat platform high in the clouds.
+THE WORLD: A gas giant: there is no ground at all. The home is on a floating habitat platform deep INSIDE the gas giant's atmosphere, not in orbit and not in space: thick clouds and storms surround it on every side, above and below.
 
 THE HOME (House): a proper family home, built in this world's style. Size: like an ordinary two-floor family house, six to eight rooms. Shape: a solid box or L-shape with a pitched or flat roof, comfortable but not luxurious. Front: a front door under a small porch or canopy, windows on both floors with warm light inside. Around it: a path to the door and a small vehicle parked beside it. It must look clearly bigger than a small house and clearly smaller than a villa.
 Building style: light, rounded pods of white and copper panels, round windows, anchored to the deck with cables against the wind, windsocks, small gas balloons tied above the roof.
 
 THE SCENE:
-Foreground: the edge of a big floating metal deck with a railing along it; beyond the railing, a deep drop into clouds. Light: warm sunlight through the cloud bands. Near the left edge: a tall mooring mast with a windsock.
+Foreground: the edge of a big floating metal deck with a railing along it; beyond the railing, a deep drop into clouds. Light: warm, dim, diffuse light filtered through thick clouds, no direct sun. Near the left edge: a tall mooring mast with a windsock.
 Ground: the metal deck of the platform, no soil or rock.
-Sky: huge, with endless bands of orange, cream and brown clouds below and around, a curved horizon, moons.
+Sky: no open sky and no space: thick layers of orange, cream and brown clouds above, below and on every side, towering storm clouds with flashes of lightning in the distance, haze that softens everything farther away.
 Yard details: tie-down cables, crates, a small shuttle on the deck.
-Background: other floating platforms and balloon habitats in the distance among the clouds.
+Background: other floating platforms and balloon habitats half-hidden in the clouds and haze.
 
-The picture MUST show: a floating metal platform, clouds below, a railing at the deck edge.
-The picture must NOT show: grass, soil, rocks, ground, trees, mountains, sea, land on the horizon.
+The picture MUST show: a floating metal platform, thick clouds all around it (above and below), a storm in the distance, a railing at the deck edge.
+The picture must NOT show: grass, soil, rocks, ground, trees, mountains, sea, land on the horizon, outer space, stars, moons, planet rings, a curved planet horizon, the planet seen from orbit.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
-
 ====================================================================================================
 VILLA
 ====================================================================================================
@@ -3537,17 +3533,17 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 THE WORLD: A world bathed in deadly radiation: dead land, harsh light.
 
 THE HOME (Villa): a large, wealthy home, built in this world's style. Size: like a big modern villa, two floors, wide and spacious, about twice as wide as a house. Shape: a main building with one wing or a second block joined to it, clean lines and expensive materials. Front: the biggest windows this world allows, a terrace or wide balcony, an impressive front door. Around it: private grounds and a small private shuttle on its own pad beside it. It must look clearly bigger and richer than a house, but still one home, not a compound.
-Building style: a squat concrete bunker half sunk into an earth mound, a thick slab roof, very small thick windows, a heavy steel door at the bottom of a short ramp, lead-lined plates bolted on, radiation trefoil symbols (the symbol only, no writing).
+Building style: a squat concrete bunker half sunk into an earth mound, a thick slab roof, very small thick windows, a heavy steel door at the bottom of a short ramp, lead-lined plates bolted on, no symbols painted on the walls.
 
 THE SCENE:
-Foreground: bleached cracked ground; a sloped concrete ramp leads down to the door, with a radiation meter post beside it. Light: harsh white glare from the sun, flat and pale. Near the left edge: a tall warning mast with a radiation trefoil sign.
+Foreground: bleached cracked ground; a sloped concrete ramp leads down to the door, with a radiation meter post beside it. Light: harsh white glare from the sun, flat and pale. Near the left edge: a tall warning mast with one small radiation warning sign at its top (the only warning symbol in the picture).
 Ground: dead grey-brown rock and dust, bleached and cracked, no plants at all.
 Sky: thin and harsh, pale yellow-white glare near the sun fading to dark above, a few stars visible.
 Yard details: sealed barrels, a dusty rover, a decontamination shower frame.
 Background: dead flat land, a distant colony bunker and landing pad.
 
-The picture MUST show: dead grey land, a half-buried concrete bunker home, radiation trefoil symbols.
-The picture must NOT show: grass, any plant, trees, water, snow, blue sky, white clouds.
+The picture MUST show: dead grey land, a half-buried concrete bunker home, lead plates bolted to the walls.
+The picture must NOT show: grass, any plant, trees, water, snow, blue sky, white clouds, radiation trefoil symbols on the home, the ground, barrels or anywhere else (only the one small sign on the mast).
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
@@ -3585,26 +3581,25 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 
 Do not imitate any earlier picture from this chat or anything attached: this world looks completely different, with its own building style, ground, foreground and color scheme. Only the art style and the camera stay the same.
 
-THE WORLD: A gas giant: there is no ground at all. The home is on a floating habitat platform high in the clouds.
+THE WORLD: A gas giant: there is no ground at all. The home is on a floating habitat platform deep INSIDE the gas giant's atmosphere, not in orbit and not in space: thick clouds and storms surround it on every side, above and below.
 
 THE HOME (Villa): a large, wealthy home, built in this world's style. Size: like a big modern villa, two floors, wide and spacious, about twice as wide as a house. Shape: a main building with one wing or a second block joined to it, clean lines and expensive materials. Front: the biggest windows this world allows, a terrace or wide balcony, an impressive front door. Around it: private grounds and a small private shuttle on its own pad beside it. It must look clearly bigger and richer than a house, but still one home, not a compound.
 Building style: light, rounded pods of white and copper panels, round windows, anchored to the deck with cables against the wind, windsocks, small gas balloons tied above the roof.
 
 THE SCENE:
-Foreground: the edge of a big floating metal deck with a railing along it; beyond the railing, a deep drop into clouds. Light: warm sunlight through the cloud bands. Near the left edge: a tall mooring mast with a windsock.
+Foreground: the edge of a big floating metal deck with a railing along it; beyond the railing, a deep drop into clouds. Light: warm, dim, diffuse light filtered through thick clouds, no direct sun. Near the left edge: a tall mooring mast with a windsock.
 Ground: the metal deck of the platform, no soil or rock.
-Sky: huge, with endless bands of orange, cream and brown clouds below and around, a curved horizon, moons.
+Sky: no open sky and no space: thick layers of orange, cream and brown clouds above, below and on every side, towering storm clouds with flashes of lightning in the distance, haze that softens everything farther away.
 Yard details: tie-down cables, crates, a small shuttle on the deck.
-Background: other floating platforms and balloon habitats in the distance among the clouds.
+Background: other floating platforms and balloon habitats half-hidden in the clouds and haze.
 
-The picture MUST show: a floating metal platform, clouds below, a railing at the deck edge.
-The picture must NOT show: grass, soil, rocks, ground, trees, mountains, sea, land on the horizon.
+The picture MUST show: a floating metal platform, thick clouds all around it (above and below), a storm in the distance, a railing at the deck edge.
+The picture must NOT show: grass, soil, rocks, ground, trees, mountains, sea, land on the horizon, outer space, stars, moons, planet rings, a curved planet horizon, the planet seen from orbit.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
-
 ====================================================================================================
 ESTATE
 ====================================================================================================
@@ -4255,17 +4250,17 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 THE WORLD: A world bathed in deadly radiation: dead land, harsh light.
 
 THE HOME (Estate): the richest home in the colony, a mansion built in this world's style. Size: like a mansion, two or three floors, several wings or modules around a grand entrance, the biggest building in the picture. Shape: a symmetric or sprawling group of joined buildings, the finest materials this world has. Front: a grand entrance with wide steps or a covered drive. Around it: a wall or barrier with a gate and a guard post around large private grounds, and a private shuttle pad. Seen a little further away so the grounds fit in the picture. It must look like the biggest and grandest home of this world.
-Building style: a squat concrete bunker half sunk into an earth mound, a thick slab roof, very small thick windows, a heavy steel door at the bottom of a short ramp, lead-lined plates bolted on, radiation trefoil symbols (the symbol only, no writing).
+Building style: a squat concrete bunker half sunk into an earth mound, a thick slab roof, very small thick windows, a heavy steel door at the bottom of a short ramp, lead-lined plates bolted on, no symbols painted on the walls.
 
 THE SCENE:
-Foreground: bleached cracked ground; a sloped concrete ramp leads down to the door, with a radiation meter post beside it. Light: harsh white glare from the sun, flat and pale. Near the left edge: a tall warning mast with a radiation trefoil sign.
+Foreground: bleached cracked ground; a sloped concrete ramp leads down to the door, with a radiation meter post beside it. Light: harsh white glare from the sun, flat and pale. Near the left edge: a tall warning mast with one small radiation warning sign at its top (the only warning symbol in the picture).
 Ground: dead grey-brown rock and dust, bleached and cracked, no plants at all.
 Sky: thin and harsh, pale yellow-white glare near the sun fading to dark above, a few stars visible.
 Yard details: sealed barrels, a dusty rover, a decontamination shower frame.
 Background: dead flat land, a distant colony bunker and landing pad.
 
-The picture MUST show: dead grey land, a half-buried concrete bunker home, radiation trefoil symbols.
-The picture must NOT show: grass, any plant, trees, water, snow, blue sky, white clouds.
+The picture MUST show: dead grey land, a half-buried concrete bunker home, lead plates bolted to the walls.
+The picture must NOT show: grass, any plant, trees, water, snow, blue sky, white clouds, radiation trefoil symbols on the home, the ground, barrels or anywhere else (only the one small sign on the mast).
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
@@ -4303,20 +4298,20 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 
 Do not imitate any earlier picture from this chat or anything attached: this world looks completely different, with its own building style, ground, foreground and color scheme. Only the art style and the camera stay the same.
 
-THE WORLD: A gas giant: there is no ground at all. The home is on a floating habitat platform high in the clouds.
+THE WORLD: A gas giant: there is no ground at all. The home is on a floating habitat platform deep INSIDE the gas giant's atmosphere, not in orbit and not in space: thick clouds and storms surround it on every side, above and below.
 
 THE HOME (Estate): the richest home in the colony, a mansion built in this world's style. Size: like a mansion, two or three floors, several wings or modules around a grand entrance, the biggest building in the picture. Shape: a symmetric or sprawling group of joined buildings, the finest materials this world has. Front: a grand entrance with wide steps or a covered drive. Around it: a wall or barrier with a gate and a guard post around large private grounds, and a private shuttle pad. Seen a little further away so the grounds fit in the picture. It must look like the biggest and grandest home of this world.
 Building style: light, rounded pods of white and copper panels, round windows, anchored to the deck with cables against the wind, windsocks, small gas balloons tied above the roof.
 
 THE SCENE:
-Foreground: the edge of a big floating metal deck with a railing along it; beyond the railing, a deep drop into clouds. Light: warm sunlight through the cloud bands. Near the left edge: a tall mooring mast with a windsock.
+Foreground: the edge of a big floating metal deck with a railing along it; beyond the railing, a deep drop into clouds. Light: warm, dim, diffuse light filtered through thick clouds, no direct sun. Near the left edge: a tall mooring mast with a windsock.
 Ground: the metal deck of the platform, no soil or rock.
-Sky: huge, with endless bands of orange, cream and brown clouds below and around, a curved horizon, moons.
+Sky: no open sky and no space: thick layers of orange, cream and brown clouds above, below and on every side, towering storm clouds with flashes of lightning in the distance, haze that softens everything farther away.
 Yard details: tie-down cables, crates, a small shuttle on the deck.
-Background: other floating platforms and balloon habitats in the distance among the clouds.
+Background: other floating platforms and balloon habitats half-hidden in the clouds and haze.
 
-The picture MUST show: a floating metal platform, clouds below, a railing at the deck edge.
-The picture must NOT show: grass, soil, rocks, ground, trees, mountains, sea, land on the horizon.
+The picture MUST show: a floating metal platform, thick clouds all around it (above and below), a storm in the distance, a railing at the deck edge.
+The picture must NOT show: grass, soil, rocks, ground, trees, mountains, sea, land on the horizon, outer space, stars, moons, planet rings, a curved planet horizon, the planet seen from orbit.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
