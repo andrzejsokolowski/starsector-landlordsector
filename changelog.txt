@@ -1,3 +1,6 @@
+Version 0.6.1 (2026-11-14)
+- Upgrade and house trait tooltips show the value change as "Multiplies base home value by 1.05x"
+
 Version 0.6.0 (2026-11-14)
 - Services: a new Services tab (S) on each home. Hire a security patrol, cleaning crew, maintenance contract, gardener, concierge, night watchman or pest control plan for a share of the rent each month. The screening service moved there
 - House flipping: about a third of homes for sale come worn, some dirty or covered in graffiti, and cost less. Repaired, they are worth more than you paid

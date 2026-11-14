@@ -597,7 +597,7 @@ public final class RulesCheck {
         }
         // Tooltips (Andrzej, 0.6.0): a percent upgrade ends with its value line, a flat one has none.
         java.util.List<String[]> plumbing = landlordsector.ui.Tips.upgrade(landlordsector.data.Upgrades.get("new_plumbing"));
-        expect(plumbing.get(plumbing.size() - 1)[0].equals("Multiplies base home value by 105%"),
+        expect(plumbing.get(plumbing.size() - 1)[0].equals("Multiplies base home value by 1.05x"),
                 "the value line is last: " + plumbing.get(plumbing.size() - 1)[0]);
         for (String[] l : landlordsector.ui.Tips.upgrade(landlordsector.data.Upgrades.get("air_conditioned"))) {
             expect(!l[0].contains("value"), "no value line on a flat upgrade: " + l[0]);

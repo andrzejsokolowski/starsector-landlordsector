@@ -34,10 +34,10 @@ public final class Tips {
         return out;
     }
 
-    /** Andrzej, 0.6.0: "Multiplies base home value by 105%", always the last line. Null when it does not. */
+    /** Andrzej, 0.6.1: "Multiplies base home value by 1.05x", always the last line. Null when it does not. */
     static String[] valueLine(HouseTraits.Def d) {
         if (Math.abs(d.price - 1f) < 0.0005f) return null;
-        return new String[] {"Multiplies base home value by " + Math.round(d.price * 100f) + "%", d.price > 1f ? "+" : "-"};
+        return new String[] {"Multiplies base home value by " + round2(d.price) + "x", d.price > 1f ? "+" : "-"};
     }
 
     private static List<String[]> houseTraitEffects(HouseTraits.Def d) {
