@@ -735,7 +735,7 @@ THE SCENE:
 Foreground: the edge of a big floating metal deck with a railing along it; beyond the railing, a deep drop into clouds. Light: warm, dim, diffuse light filtered through thick clouds, no direct sun. Near the left edge: a tall mooring mast with a windsock.
 Ground: the metal deck of the platform, no soil or rock.
 Sky: no open sky and no space: thick layers of orange, cream and brown clouds above, below and on every side, towering storm clouds with flashes of lightning in the distance, haze that softens everything farther away.
-Yard details: tie-down cables, crates, and a personal shuttle parked on the deck, full size: its cabin taller than the door and about as long as the home is wide.
+Yard details: tie-down cables, crates, and a passenger drone parked on a painted landing circle on the deck: a rounded white two-seat cabin pod with a big curved glass canopy, held up by four ducted rotors on short arms above it (it flies in the thick air like a helicopter). Full size: the cabin pod is taller than the door.
 Background: other floating platforms and balloon habitats half-hidden in the clouds and haze.
 
 The picture MUST show: a floating metal platform, thick clouds all around it (above and below), a storm in the distance, a railing at the deck edge.
@@ -1466,7 +1466,7 @@ THE SCENE:
 Foreground: the edge of a big floating metal deck with a railing along it; beyond the railing, a deep drop into clouds. Light: warm, dim, diffuse light filtered through thick clouds, no direct sun. Near the left edge: a tall mooring mast with a windsock.
 Ground: the metal deck of the platform, no soil or rock.
 Sky: no open sky and no space: thick layers of orange, cream and brown clouds above, below and on every side, towering storm clouds with flashes of lightning in the distance, haze that softens everything farther away.
-Yard details: tie-down cables, crates, and a personal shuttle parked on the deck, full size: its cabin taller than the door and about as long as the home is wide.
+Yard details: tie-down cables, crates, and a passenger drone parked on a painted landing circle on the deck: a rounded white two-seat cabin pod with a big curved glass canopy, held up by four ducted rotors on short arms above it (it flies in the thick air like a helicopter). Full size: the cabin pod is taller than the door.
 Background: other floating platforms and balloon habitats half-hidden in the clouds and haze.
 
 The picture MUST show: a floating metal platform, thick clouds all around it (above and below), a storm in the distance, a railing at the deck edge.
@@ -2197,7 +2197,7 @@ THE SCENE:
 Foreground: the edge of a big floating metal deck with a railing along it; beyond the railing, a deep drop into clouds. Light: warm, dim, diffuse light filtered through thick clouds, no direct sun. Near the left edge: a tall mooring mast with a windsock.
 Ground: the metal deck of the platform, no soil or rock.
 Sky: no open sky and no space: thick layers of orange, cream and brown clouds above, below and on every side, towering storm clouds with flashes of lightning in the distance, haze that softens everything farther away.
-Yard details: tie-down cables, crates, and a personal shuttle parked on the deck, full size: its cabin taller than the door and about as long as the home is wide.
+Yard details: tie-down cables, crates, and a passenger drone parked on a painted landing circle on the deck: a rounded white two-seat cabin pod with a big curved glass canopy, held up by four ducted rotors on short arms above it (it flies in the thick air like a helicopter). Full size: the cabin pod is taller than the door.
 Background: other floating platforms and balloon habitats half-hidden in the clouds and haze.
 
 The picture MUST show: a floating metal platform, thick clouds all around it (above and below), a storm in the distance, a railing at the deck edge.
@@ -2928,7 +2928,7 @@ THE SCENE:
 Foreground: the edge of a big floating metal deck with a railing along it; beyond the railing, a deep drop into clouds. Light: warm, dim, diffuse light filtered through thick clouds, no direct sun. Near the left edge: a tall mooring mast with a windsock.
 Ground: the metal deck of the platform, no soil or rock.
 Sky: no open sky and no space: thick layers of orange, cream and brown clouds above, below and on every side, towering storm clouds with flashes of lightning in the distance, haze that softens everything farther away.
-Yard details: tie-down cables, crates, and a personal shuttle parked on the deck, full size: its cabin taller than the door and about as long as the home is wide.
+Yard details: tie-down cables, crates, and a passenger drone parked on a painted landing circle on the deck: a rounded white two-seat cabin pod with a big curved glass canopy, held up by four ducted rotors on short arms above it (it flies in the thick air like a helicopter). Full size: the cabin pod is taller than the door.
 Background: other floating platforms and balloon habitats half-hidden in the clouds and haze.
 
 The picture MUST show: a floating metal platform, thick clouds all around it (above and below), a storm in the distance, a railing at the deck edge.
@@ -3659,7 +3659,7 @@ THE SCENE:
 Foreground: the edge of a big floating metal deck with a railing along it; beyond the railing, a deep drop into clouds. Light: warm, dim, diffuse light filtered through thick clouds, no direct sun. Near the left edge: a tall mooring mast with a windsock.
 Ground: the metal deck of the platform, no soil or rock.
 Sky: no open sky and no space: thick layers of orange, cream and brown clouds above, below and on every side, towering storm clouds with flashes of lightning in the distance, haze that softens everything farther away.
-Yard details: tie-down cables, crates, and a personal shuttle parked on the deck, full size: its cabin taller than the door and about as long as the home is wide.
+Yard details: tie-down cables, crates, and a passenger drone parked on a painted landing circle on the deck: a rounded white two-seat cabin pod with a big curved glass canopy, held up by four ducted rotors on short arms above it (it flies in the thick air like a helicopter). Full size: the cabin pod is taller than the door.
 Background: other floating platforms and balloon habitats half-hidden in the clouds and haze.
 
 The picture MUST show: a floating metal platform, thick clouds all around it (above and below), a storm in the distance, a railing at the deck edge.
@@ -4390,7 +4390,7 @@ THE SCENE:
 Foreground: the edge of a big floating metal deck with a railing along it; beyond the railing, a deep drop into clouds. Light: warm, dim, diffuse light filtered through thick clouds, no direct sun. Near the left edge: a tall mooring mast with a windsock.
 Ground: the metal deck of the platform, no soil or rock.
 Sky: no open sky and no space: thick layers of orange, cream and brown clouds above, below and on every side, towering storm clouds with flashes of lightning in the distance, haze that softens everything farther away.
-Yard details: tie-down cables, crates, and a personal shuttle parked on the deck, full size: its cabin taller than the door and about as long as the home is wide.
+Yard details: tie-down cables, crates, and a passenger drone parked on a painted landing circle on the deck: a rounded white two-seat cabin pod with a big curved glass canopy, held up by four ducted rotors on short arms above it (it flies in the thick air like a helicopter). Full size: the cabin pod is taller than the door.
 Background: other floating platforms and balloon habitats half-hidden in the clouds and haze.
 
 The picture MUST show: a floating metal platform, thick clouds all around it (above and below), a storm in the distance, a railing at the deck edge.
