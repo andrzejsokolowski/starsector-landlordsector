@@ -50,9 +50,9 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 
 Do not imitate any earlier picture from this chat or anything attached: this world looks completely different, with its own building style, ground, foreground and color scheme. Only the art style and the camera stay the same.
 
-THE WORLD: The home is INSIDE a large orbital space station, on a wide habitat deck. There is no outdoors at all.
+THE WORLD: The home is INSIDE a large orbital space station, on a wide habitat deck. There is no outdoors at all. Where the camera rules say horizon, use the far end of the deck; where they say sky, use the ceiling and the big window.
 
-THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: bare ground, a few scraps. It must look like the smallest and cheapest home of this world.
+THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: a cramped, bare bit of space with a few scraps. It must look like the smallest and cheapest home of this world.
 Building style: boxy modular habitat units bolted to the deck, smooth painted metal panels in pale grey and teal, round porthole windows, ribbed vents, pipes and cable trays running along the walls, a sliding door.
 
 THE SCENE:
@@ -66,6 +66,7 @@ The picture MUST show: metal deck, ceiling with light strips, the big window ont
 The picture must NOT show: sky, clouds, sun, grass, dirt, soil, trees, mountains, rain.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -103,7 +104,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: An Earth-like colony world with a mild climate.
 
-THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: bare ground, a few scraps. It must look like the smallest and cheapest home of this world.
+THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: a cramped, bare bit of space with a few scraps. It must look like the smallest and cheapest home of this world.
 Building style: off-white and pale grey prefab panels with rounded corners on a concrete base, a boxy climate unit on the wall, a small dish antenna, rounded-rectangle windows, a door with a keypad.
 This shack uses the shared basic colony design: wooden planks patched with rusty corrugated metal sheets, a blue and a brown tarp over the roof, a crooked rusty stovepipe, a small solar panel and a TV antenna on the roof, a board nailed across the door.
 
@@ -117,6 +118,7 @@ Background: green plains and blue mountains on the horizon, a distant colony tow
 The picture MUST show: green grass, blue sky with clouds, mountains.
 The picture must NOT show: snow, sand dunes, lava, alien haze.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -154,7 +156,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: A hot, wet jungle world.
 
-THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: bare ground, a few scraps. It must look like the smallest and cheapest home of this world.
+THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: a cramped, bare bit of space with a few scraps. It must look like the smallest and cheapest home of this world.
 Building style: prefab panels and metal plating like the Terran homes, raised on a low concrete base against the mud, moss on the lower walls, vines starting to climb it, a humming dehumidifier unit.
 This shack uses the shared basic colony design: wooden planks patched with rusty corrugated metal sheets, a blue and a brown tarp over the roof, a crooked rusty stovepipe, a small solar panel and a TV antenna on the roof, a board nailed across the door.
 
@@ -168,6 +170,7 @@ Background: tall jungle trees with hanging vines on both sides, the distant colo
 The picture MUST show: tall jungle trees, big tropical leaves, flowers.
 The picture must NOT show: snow, sand dunes, lava, dead land.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -205,7 +208,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: An ocean world: almost all water, with homes on the coast and on piers.
 
-THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: bare ground, a few scraps. It must look like the smallest and cheapest home of this world.
+THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: a cramped, bare bit of space with a few scraps. It must look like the smallest and cheapest home of this world.
 Building style: prefab panels and metal plating like the Terran homes, standing on steel and concrete pilings above the water, salt stains and rust streaks, a water purifier unit with pipes into the sea.
 This shack uses the shared basic colony design: wooden planks patched with rusty corrugated metal sheets, a blue and a brown tarp over the roof, a crooked rusty stovepipe, a small solar panel and a TV antenna on the roof, a board nailed across the door.
 
@@ -219,6 +222,7 @@ Background: open sea to the horizon, small waves, a distant colony tower on a ro
 The picture MUST show: sea water around and under the home, the pier.
 The picture must NOT show: snow, sand dunes, lava, mountains, forest.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -256,7 +260,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: A hot, dry savanna world: not a sand desert, but dry steppe.
 
-THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: bare ground, a few scraps. It must look like the smallest and cheapest home of this world.
+THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: a cramped, bare bit of space with a few scraps. It must look like the smallest and cheapest home of this world.
 Building style: low, boxy prefab modules painted sand and ochre, shaded by a big slatted metal sun-screen on posts, thick insulated walls, narrow tinted windows, a large roof-mounted cooling unit with a spinning fan, a white water tank and a row of solar panels.
 
 THE SCENE:
@@ -270,6 +274,7 @@ The picture MUST show: red-brown cracked earth, dry yellow grass, boxy sand-colo
 The picture must NOT show: green grass, lush plants, a paved road, snow, lava, rain clouds.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -307,7 +312,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: A sand desert world.
 
-THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: bare ground, a few scraps. It must look like the smallest and cheapest home of this world.
+THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: a cramped, bare bit of space with a few scraps. It must look like the smallest and cheapest home of this world.
 Building style: smooth domed shells of sand-colored ceramic plating, half buried in the dunes on purpose for cooling, a round airlock-style door against the sand, small round tinted windows, sand louvers over every vent, a big dish-shaped water condenser and a tall cooling tower with fins.
 
 THE SCENE:
@@ -321,6 +326,7 @@ The picture MUST show: sand dunes, domed ceramic shells, a water condenser, a co
 The picture must NOT show: grass, any green plant, trees, a paved road, puddles, snow, lava, mud brick.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -358,7 +364,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: A cold tundra world: cold and bleak, but with some life.
 
-THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: bare ground, a few scraps. It must look like the smallest and cheapest home of this world.
+THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: a cramped, bare bit of space with a few scraps. It must look like the smallest and cheapest home of this world.
 Building style: a long, low insulated prefab module in olive drab and off-white, half sunk into the permafrost behind a gravel berm, heavy insulated panels with rounded corners, a chunky heat-exchanger box with radiator fins, small double-glazed windows with a warm amber glow, an exhaust stack venting steam.
 
 THE SCENE:
@@ -372,6 +378,7 @@ The picture MUST show: brown moss and lichen, patches of snow, grey sky, an insu
 The picture must NOT show: trees, green grass, flowers, blue sunny sky, sand dunes, lava, a paved road, logs, turf, furs, firewood.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -409,7 +416,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: A frozen ice world: deep, permanent cold.
 
-THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: bare ground, a few scraps. It must look like the smallest and cheapest home of this world.
+THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: a cramped, bare bit of space with a few scraps. It must look like the smallest and cheapest home of this world.
 Building style: rounded insulated prefab pods raised on stilts above the snow, bright orange and white panels so they can be seen in a blizzard, a thick round airlock-style door, small triple-glazed windows with frost, steam rising from a heating vent, icicles along the edges.
 
 THE SCENE:
@@ -423,6 +430,7 @@ The picture MUST show: deep snow, blue ice, a raised orange pod home, steam from
 The picture must NOT show: grass, any plant, trees, sand, liquid water, lava.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -460,7 +468,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: An icy world with ice volcanoes that erupt cold water vapor instead of lava. The air is very thin.
 
-THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: bare ground, a few scraps. It must look like the smallest and cheapest home of this world.
+THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: a cramped, bare bit of space with a few scraps. It must look like the smallest and cheapest home of this world.
 Building style: a pressurized geodesic dome or cluster of domes made of white triangular panels crusted with ice, anchored to the ground with cables, a boxy airlock entrance, round windows glowing warm yellow.
 
 THE SCENE:
@@ -474,6 +482,7 @@ The picture MUST show: ice volcanoes with white vapor plumes, dark starry sky, a
 The picture must NOT show: grass, any plant, trees, blue sky with white clouds, red lava, sand.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -511,7 +520,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: An airless rock world, like a moon: no air, no water, no life.
 
-THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: bare ground, a few scraps. It must look like the smallest and cheapest home of this world.
+THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: a cramped, bare bit of space with a few scraps. It must look like the smallest and cheapest home of this world.
 Building style: grey metal cylindrical pressure modules lying on their sides, partly buried under piled grey rock and gravel for shielding, a round airlock hatch with a small porthole, air tanks and pipes on the outside, a blinking beacon on top.
 
 THE SCENE:
@@ -525,6 +534,7 @@ The picture MUST show: black starry sky, grey rock and craters, half-buried cyli
 The picture must NOT show: grass, ANY plant or green color on the ground, trees, water, puddles, clouds, blue sky, snow, a ship trail (there is no air to leave one).
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -562,20 +572,21 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: A world with a poisonous atmosphere: nobody goes outside without a mask.
 
-THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: bare ground, a few scraps. It must look like the smallest and cheapest home of this world.
+THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: a cramped, bare bit of space with a few scraps. It must look like the smallest and cheapest home of this world.
 Building style: a sealed box of grimy corrugated metal and riveted plates, everything stained with yellow residue, a heavy bulkhead door, two tall filter stacks humming on the roof, small sealed windows, yellow and black hazard stripes (no writing).
 
 THE SCENE:
 Foreground: a raised metal grating walkway on short legs crosses sickly green-yellow puddles toward the door. Light: amber warning lights on the walls, glowing in the haze. Near the left edge: a tall air-sampling mast with a spinning vane.
 Ground: stained yellow-brown rock and mud, dead black stumps, no living plants.
 Sky: thick yellow-green haze, the sun a dim smudge, poor visibility.
-Yard details: spare filter canisters, a gas mask hanging by the door.
+Yard details: spare filter canisters, a small sealed entry porch at the door with a spare gas mask behind its window.
 Background: a distant colony tower barely visible through the haze, red landing pad lights.
 
 The picture MUST show: yellow-green haze, filter stacks on the roof, toxic puddles, a raised grating walkway.
 The picture must NOT show: green grass, healthy plants, trees with leaves, blue sky, white clouds, snow.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -613,7 +624,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: A volcanic world with lava and constant eruptions.
 
-THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: bare ground, a few scraps. It must look like the smallest and cheapest home of this world.
+THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: a cramped, bare bit of space with a few scraps. It must look like the smallest and cheapest home of this world.
 Building style: an angular, wedge-shaped home of dark heat-shield ceramic tiles, raised on thick pillars above the hot ground, sloped walls, narrow shielded windows glowing orange, cooling fins and vents.
 
 THE SCENE:
@@ -627,6 +638,7 @@ The picture MUST show: black rock, glowing lava, a red ash-filled sky, the home 
 The picture must NOT show: grass, any plant, trees, water, snow, blue sky, white clouds.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -664,7 +676,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: A world bathed in deadly radiation: dead land, harsh light.
 
-THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: bare ground, a few scraps. It must look like the smallest and cheapest home of this world.
+THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: a cramped, bare bit of space with a few scraps. It must look like the smallest and cheapest home of this world.
 Building style: a squat concrete bunker half sunk into an earth mound, a thick slab roof, very small thick windows, a heavy steel door at the bottom of a short ramp, lead-lined plates bolted on, no symbols painted on the walls.
 
 THE SCENE:
@@ -678,6 +690,7 @@ The picture MUST show: dead grey land, a half-buried concrete bunker home, lead 
 The picture must NOT show: grass, any plant, trees, water, snow, blue sky, white clouds, radiation trefoil symbols on the home, the ground, barrels or anywhere else (only the one small sign on the mast).
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -713,22 +726,23 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 
 Do not imitate any earlier picture from this chat or anything attached: this world looks completely different, with its own building style, ground, foreground and color scheme. Only the art style and the camera stay the same.
 
-THE WORLD: A gas giant: there is no ground at all. The home is on a floating habitat platform deep INSIDE the gas giant's atmosphere, not in orbit and not in space: thick clouds and storms surround it on every side, above and below.
+THE WORLD: A gas giant: there is no ground at all. The home is on a floating habitat platform deep INSIDE the gas giant's atmosphere, not in orbit and not in space: thick clouds and storms surround it on every side, above and below. There is no horizon line: the cloud layers fade into haze in every direction, so where the camera rules say horizon, use the far edge of the deck and the cloud layer at that height.
 
-THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: bare ground, a few scraps. It must look like the smallest and cheapest home of this world.
+THE HOME (Shack): the poorest home in the colony, built in this world's style. Size: about as big as a garden shed, one floor, one small room, the roof only a little higher than a person. Shape: a plain box or lean-to with a flat or single-slope roof, slightly run-down and patched. Front: one small door and one small window. Around it: a cramped, bare bit of space with a few scraps. It must look like the smallest and cheapest home of this world.
 Building style: light, rounded pods of white and copper panels, round windows, anchored to the deck with cables against the wind, windsocks, small gas balloons tied above the roof.
 
 THE SCENE:
 Foreground: the edge of a big floating metal deck with a railing along it; beyond the railing, a deep drop into clouds. Light: warm, dim, diffuse light filtered through thick clouds, no direct sun. Near the left edge: a tall mooring mast with a windsock.
 Ground: the metal deck of the platform, no soil or rock.
 Sky: no open sky and no space: thick layers of orange, cream and brown clouds above, below and on every side, towering storm clouds with flashes of lightning in the distance, haze that softens everything farther away.
-Yard details: tie-down cables, crates, a small shuttle on the deck.
+Yard details: tie-down cables, crates, and a personal shuttle parked on the deck, full size: its cabin taller than the door and about as long as the home is wide.
 Background: other floating platforms and balloon habitats half-hidden in the clouds and haze.
 
 The picture MUST show: a floating metal platform, thick clouds all around it (above and below), a storm in the distance, a railing at the deck edge.
-The picture must NOT show: grass, soil, rocks, ground, trees, mountains, sea, land on the horizon, outer space, stars, moons, planet rings, a curved planet horizon, the planet seen from orbit.
+The picture must NOT show: grass, soil, rocks, ground, trees, mountains, sea, land on the horizon, outer space, stars, moons, planet rings, a curved planet horizon, the planet seen from orbit, floating rocks, floating islands or cliffs (there is no solid ground anywhere).
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -767,9 +781,9 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 
 Do not imitate any earlier picture from this chat or anything attached: this world looks completely different, with its own building style, ground, foreground and color scheme. Only the art style and the camera stay the same.
 
-THE WORLD: The home is INSIDE a large orbital space station, on a wide habitat deck. There is no outdoors at all.
+THE WORLD: The home is INSIDE a large orbital space station, on a wide habitat deck. There is no outdoors at all. Where the camera rules say horizon, use the far end of the deck; where they say sky, use the ceiling and the big window.
 
-THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small patch of ground by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
+THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: boxy modular habitat units bolted to the deck, smooth painted metal panels in pale grey and teal, round porthole windows, ribbed vents, pipes and cable trays running along the walls, a sliding door.
 
 THE SCENE:
@@ -783,6 +797,7 @@ The picture MUST show: metal deck, ceiling with light strips, the big window ont
 The picture must NOT show: sky, clouds, sun, grass, dirt, soil, trees, mountains, rain.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -820,7 +835,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: An Earth-like colony world with a mild climate.
 
-THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small patch of ground by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
+THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: off-white and pale grey prefab panels with rounded corners on a concrete base, a boxy climate unit on the wall, a small dish antenna, rounded-rectangle windows, a door with a keypad.
 This is the first home of this size: the Jungle and Water pictures will copy this building later.
 
@@ -834,6 +849,7 @@ Background: green plains and blue mountains on the horizon, a distant colony tow
 The picture MUST show: green grass, blue sky with clouds, mountains.
 The picture must NOT show: snow, sand dunes, lava, alien haze.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -871,7 +887,7 @@ Keep to the attached picture where this prompt says so.
 
 THE WORLD: A hot, wet jungle world.
 
-THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small patch of ground by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
+THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: prefab panels and metal plating like the Terran homes, raised on a low concrete base against the mud, moss on the lower walls, vines starting to climb it, a humming dehumidifier unit.
 The attached picture is the Terran home of this size: keep exactly the same building, art style and camera. Only the surroundings and a few small touches on the building change for this world.
 
@@ -885,6 +901,7 @@ Background: tall jungle trees with hanging vines on both sides, the distant colo
 The picture MUST show: tall jungle trees, big tropical leaves, flowers.
 The picture must NOT show: snow, sand dunes, lava, dead land.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -922,7 +939,7 @@ Keep to the attached picture where this prompt says so.
 
 THE WORLD: An ocean world: almost all water, with homes on the coast and on piers.
 
-THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small patch of ground by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
+THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: prefab panels and metal plating like the Terran homes, standing on steel and concrete pilings above the water, salt stains and rust streaks, a water purifier unit with pipes into the sea.
 The attached picture is the Terran home of this size: keep exactly the same building, art style and camera. Only the surroundings and a few small touches on the building change for this world.
 
@@ -936,6 +953,7 @@ Background: open sea to the horizon, small waves, a distant colony tower on a ro
 The picture MUST show: sea water around and under the home, the pier.
 The picture must NOT show: snow, sand dunes, lava, mountains, forest.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -973,7 +991,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: A hot, dry savanna world: not a sand desert, but dry steppe.
 
-THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small patch of ground by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
+THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: low, boxy prefab modules painted sand and ochre, shaded by a big slatted metal sun-screen on posts, thick insulated walls, narrow tinted windows, a large roof-mounted cooling unit with a spinning fan, a white water tank and a row of solar panels.
 
 THE SCENE:
@@ -987,6 +1005,7 @@ The picture MUST show: red-brown cracked earth, dry yellow grass, boxy sand-colo
 The picture must NOT show: green grass, lush plants, a paved road, snow, lava, rain clouds.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -1024,7 +1043,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: A sand desert world.
 
-THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small patch of ground by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
+THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: smooth domed shells of sand-colored ceramic plating, half buried in the dunes on purpose for cooling, a round airlock-style door against the sand, small round tinted windows, sand louvers over every vent, a big dish-shaped water condenser and a tall cooling tower with fins.
 
 THE SCENE:
@@ -1038,6 +1057,7 @@ The picture MUST show: sand dunes, domed ceramic shells, a water condenser, a co
 The picture must NOT show: grass, any green plant, trees, a paved road, puddles, snow, lava, mud brick.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -1075,7 +1095,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: A cold tundra world: cold and bleak, but with some life.
 
-THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small patch of ground by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
+THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: a long, low insulated prefab module in olive drab and off-white, half sunk into the permafrost behind a gravel berm, heavy insulated panels with rounded corners, a chunky heat-exchanger box with radiator fins, small double-glazed windows with a warm amber glow, an exhaust stack venting steam.
 
 THE SCENE:
@@ -1089,6 +1109,7 @@ The picture MUST show: brown moss and lichen, patches of snow, grey sky, an insu
 The picture must NOT show: trees, green grass, flowers, blue sunny sky, sand dunes, lava, a paved road, logs, turf, furs, firewood.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -1126,7 +1147,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: A frozen ice world: deep, permanent cold.
 
-THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small patch of ground by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
+THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: rounded insulated prefab pods raised on stilts above the snow, bright orange and white panels so they can be seen in a blizzard, a thick round airlock-style door, small triple-glazed windows with frost, steam rising from a heating vent, icicles along the edges.
 
 THE SCENE:
@@ -1140,6 +1161,7 @@ The picture MUST show: deep snow, blue ice, a raised orange pod home, steam from
 The picture must NOT show: grass, any plant, trees, sand, liquid water, lava.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -1177,7 +1199,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: An icy world with ice volcanoes that erupt cold water vapor instead of lava. The air is very thin.
 
-THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small patch of ground by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
+THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: a pressurized geodesic dome or cluster of domes made of white triangular panels crusted with ice, anchored to the ground with cables, a boxy airlock entrance, round windows glowing warm yellow.
 
 THE SCENE:
@@ -1191,6 +1213,7 @@ The picture MUST show: ice volcanoes with white vapor plumes, dark starry sky, a
 The picture must NOT show: grass, any plant, trees, blue sky with white clouds, red lava, sand.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -1228,7 +1251,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: An airless rock world, like a moon: no air, no water, no life.
 
-THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small patch of ground by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
+THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: grey metal cylindrical pressure modules lying on their sides, partly buried under piled grey rock and gravel for shielding, a round airlock hatch with a small porthole, air tanks and pipes on the outside, a blinking beacon on top.
 
 THE SCENE:
@@ -1242,6 +1265,7 @@ The picture MUST show: black starry sky, grey rock and craters, half-buried cyli
 The picture must NOT show: grass, ANY plant or green color on the ground, trees, water, puddles, clouds, blue sky, snow, a ship trail (there is no air to leave one).
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -1279,20 +1303,21 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: A world with a poisonous atmosphere: nobody goes outside without a mask.
 
-THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small patch of ground by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
+THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: a sealed box of grimy corrugated metal and riveted plates, everything stained with yellow residue, a heavy bulkhead door, two tall filter stacks humming on the roof, small sealed windows, yellow and black hazard stripes (no writing).
 
 THE SCENE:
 Foreground: a raised metal grating walkway on short legs crosses sickly green-yellow puddles toward the door. Light: amber warning lights on the walls, glowing in the haze. Near the left edge: a tall air-sampling mast with a spinning vane.
 Ground: stained yellow-brown rock and mud, dead black stumps, no living plants.
 Sky: thick yellow-green haze, the sun a dim smudge, poor visibility.
-Yard details: spare filter canisters, a gas mask hanging by the door.
+Yard details: spare filter canisters, a small sealed entry porch at the door with a spare gas mask behind its window.
 Background: a distant colony tower barely visible through the haze, red landing pad lights.
 
 The picture MUST show: yellow-green haze, filter stacks on the roof, toxic puddles, a raised grating walkway.
 The picture must NOT show: green grass, healthy plants, trees with leaves, blue sky, white clouds, snow.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -1330,7 +1355,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: A volcanic world with lava and constant eruptions.
 
-THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small patch of ground by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
+THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: an angular, wedge-shaped home of dark heat-shield ceramic tiles, raised on thick pillars above the hot ground, sloped walls, narrow shielded windows glowing orange, cooling fins and vents.
 
 THE SCENE:
@@ -1344,6 +1369,7 @@ The picture MUST show: black rock, glowing lava, a red ash-filled sky, the home 
 The picture must NOT show: grass, any plant, trees, water, snow, blue sky, white clouds.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -1381,7 +1407,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: A world bathed in deadly radiation: dead land, harsh light.
 
-THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small patch of ground by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
+THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: a squat concrete bunker half sunk into an earth mound, a thick slab roof, very small thick windows, a heavy steel door at the bottom of a short ramp, lead-lined plates bolted on, no symbols painted on the walls.
 
 THE SCENE:
@@ -1395,6 +1421,7 @@ The picture MUST show: dead grey land, a half-buried concrete bunker home, lead 
 The picture must NOT show: grass, any plant, trees, water, snow, blue sky, white clouds, radiation trefoil symbols on the home, the ground, barrels or anywhere else (only the one small sign on the mast).
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -1430,22 +1457,23 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 
 Do not imitate any earlier picture from this chat or anything attached: this world looks completely different, with its own building style, ground, foreground and color scheme. Only the art style and the camera stay the same.
 
-THE WORLD: A gas giant: there is no ground at all. The home is on a floating habitat platform deep INSIDE the gas giant's atmosphere, not in orbit and not in space: thick clouds and storms surround it on every side, above and below.
+THE WORLD: A gas giant: there is no ground at all. The home is on a floating habitat platform deep INSIDE the gas giant's atmosphere, not in orbit and not in space: thick clouds and storms surround it on every side, above and below. There is no horizon line: the cloud layers fade into haze in every direction, so where the camera rules say horizon, use the far edge of the deck and the cloud layer at that height.
 
-THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small patch of ground by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
+THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: light, rounded pods of white and copper panels, round windows, anchored to the deck with cables against the wind, windsocks, small gas balloons tied above the roof.
 
 THE SCENE:
 Foreground: the edge of a big floating metal deck with a railing along it; beyond the railing, a deep drop into clouds. Light: warm, dim, diffuse light filtered through thick clouds, no direct sun. Near the left edge: a tall mooring mast with a windsock.
 Ground: the metal deck of the platform, no soil or rock.
 Sky: no open sky and no space: thick layers of orange, cream and brown clouds above, below and on every side, towering storm clouds with flashes of lightning in the distance, haze that softens everything farther away.
-Yard details: tie-down cables, crates, a small shuttle on the deck.
+Yard details: tie-down cables, crates, and a personal shuttle parked on the deck, full size: its cabin taller than the door and about as long as the home is wide.
 Background: other floating platforms and balloon habitats half-hidden in the clouds and haze.
 
 The picture MUST show: a floating metal platform, thick clouds all around it (above and below), a storm in the distance, a railing at the deck edge.
-The picture must NOT show: grass, soil, rocks, ground, trees, mountains, sea, land on the horizon, outer space, stars, moons, planet rings, a curved planet horizon, the planet seen from orbit.
+The picture must NOT show: grass, soil, rocks, ground, trees, mountains, sea, land on the horizon, outer space, stars, moons, planet rings, a curved planet horizon, the planet seen from orbit, floating rocks, floating islands or cliffs (there is no solid ground anywhere).
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -1484,7 +1512,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 
 Do not imitate any earlier picture from this chat or anything attached: this world looks completely different, with its own building style, ground, foreground and color scheme. Only the art style and the camera stay the same.
 
-THE WORLD: The home is INSIDE a large orbital space station, on a wide habitat deck. There is no outdoors at all.
+THE WORLD: The home is INSIDE a large orbital space station, on a wide habitat deck. There is no outdoors at all. Where the camera rules say horizon, use the far end of the deck; where they say sky, use the ceiling and the big window.
 
 THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms. Shape: a simple long box with a low pitched or flat roof, plain but cared for. Front: one door and three or four windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look bigger than a studio and clearly smaller than a two-floor house.
 Building style: boxy modular habitat units bolted to the deck, smooth painted metal panels in pale grey and teal, round porthole windows, ribbed vents, pipes and cable trays running along the walls, a sliding door.
@@ -1500,6 +1528,7 @@ The picture MUST show: metal deck, ceiling with light strips, the big window ont
 The picture must NOT show: sky, clouds, sun, grass, dirt, soil, trees, mountains, rain.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -1551,6 +1580,7 @@ Background: green plains and blue mountains on the horizon, a distant colony tow
 The picture MUST show: green grass, blue sky with clouds, mountains.
 The picture must NOT show: snow, sand dunes, lava, alien haze.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -1602,6 +1632,7 @@ Background: tall jungle trees with hanging vines on both sides, the distant colo
 The picture MUST show: tall jungle trees, big tropical leaves, flowers.
 The picture must NOT show: snow, sand dunes, lava, dead land.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -1653,6 +1684,7 @@ Background: open sea to the horizon, small waves, a distant colony tower on a ro
 The picture MUST show: sea water around and under the home, the pier.
 The picture must NOT show: snow, sand dunes, lava, mountains, forest.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -1704,6 +1736,7 @@ The picture MUST show: red-brown cracked earth, dry yellow grass, boxy sand-colo
 The picture must NOT show: green grass, lush plants, a paved road, snow, lava, rain clouds.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -1755,6 +1788,7 @@ The picture MUST show: sand dunes, domed ceramic shells, a water condenser, a co
 The picture must NOT show: grass, any green plant, trees, a paved road, puddles, snow, lava, mud brick.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -1806,6 +1840,7 @@ The picture MUST show: brown moss and lichen, patches of snow, grey sky, an insu
 The picture must NOT show: trees, green grass, flowers, blue sunny sky, sand dunes, lava, a paved road, logs, turf, furs, firewood.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -1857,6 +1892,7 @@ The picture MUST show: deep snow, blue ice, a raised orange pod home, steam from
 The picture must NOT show: grass, any plant, trees, sand, liquid water, lava.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -1908,6 +1944,7 @@ The picture MUST show: ice volcanoes with white vapor plumes, dark starry sky, a
 The picture must NOT show: grass, any plant, trees, blue sky with white clouds, red lava, sand.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -1959,6 +1996,7 @@ The picture MUST show: black starry sky, grey rock and craters, half-buried cyli
 The picture must NOT show: grass, ANY plant or green color on the ground, trees, water, puddles, clouds, blue sky, snow, a ship trail (there is no air to leave one).
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -2003,13 +2041,14 @@ THE SCENE:
 Foreground: a raised metal grating walkway on short legs crosses sickly green-yellow puddles toward the door. Light: amber warning lights on the walls, glowing in the haze. Near the left edge: a tall air-sampling mast with a spinning vane.
 Ground: stained yellow-brown rock and mud, dead black stumps, no living plants.
 Sky: thick yellow-green haze, the sun a dim smudge, poor visibility.
-Yard details: spare filter canisters, a gas mask hanging by the door.
+Yard details: spare filter canisters, a small sealed entry porch at the door with a spare gas mask behind its window.
 Background: a distant colony tower barely visible through the haze, red landing pad lights.
 
 The picture MUST show: yellow-green haze, filter stacks on the roof, toxic puddles, a raised grating walkway.
 The picture must NOT show: green grass, healthy plants, trees with leaves, blue sky, white clouds, snow.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -2061,6 +2100,7 @@ The picture MUST show: black rock, glowing lava, a red ash-filled sky, the home 
 The picture must NOT show: grass, any plant, trees, water, snow, blue sky, white clouds.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -2112,6 +2152,7 @@ The picture MUST show: dead grey land, a half-buried concrete bunker home, lead 
 The picture must NOT show: grass, any plant, trees, water, snow, blue sky, white clouds, radiation trefoil symbols on the home, the ground, barrels or anywhere else (only the one small sign on the mast).
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -2147,7 +2188,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 
 Do not imitate any earlier picture from this chat or anything attached: this world looks completely different, with its own building style, ground, foreground and color scheme. Only the art style and the camera stay the same.
 
-THE WORLD: A gas giant: there is no ground at all. The home is on a floating habitat platform deep INSIDE the gas giant's atmosphere, not in orbit and not in space: thick clouds and storms surround it on every side, above and below.
+THE WORLD: A gas giant: there is no ground at all. The home is on a floating habitat platform deep INSIDE the gas giant's atmosphere, not in orbit and not in space: thick clouds and storms surround it on every side, above and below. There is no horizon line: the cloud layers fade into haze in every direction, so where the camera rules say horizon, use the far edge of the deck and the cloud layer at that height.
 
 THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms. Shape: a simple long box with a low pitched or flat roof, plain but cared for. Front: one door and three or four windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look bigger than a studio and clearly smaller than a two-floor house.
 Building style: light, rounded pods of white and copper panels, round windows, anchored to the deck with cables against the wind, windsocks, small gas balloons tied above the roof.
@@ -2156,13 +2197,14 @@ THE SCENE:
 Foreground: the edge of a big floating metal deck with a railing along it; beyond the railing, a deep drop into clouds. Light: warm, dim, diffuse light filtered through thick clouds, no direct sun. Near the left edge: a tall mooring mast with a windsock.
 Ground: the metal deck of the platform, no soil or rock.
 Sky: no open sky and no space: thick layers of orange, cream and brown clouds above, below and on every side, towering storm clouds with flashes of lightning in the distance, haze that softens everything farther away.
-Yard details: tie-down cables, crates, a small shuttle on the deck.
+Yard details: tie-down cables, crates, and a personal shuttle parked on the deck, full size: its cabin taller than the door and about as long as the home is wide.
 Background: other floating platforms and balloon habitats half-hidden in the clouds and haze.
 
 The picture MUST show: a floating metal platform, thick clouds all around it (above and below), a storm in the distance, a railing at the deck edge.
-The picture must NOT show: grass, soil, rocks, ground, trees, mountains, sea, land on the horizon, outer space, stars, moons, planet rings, a curved planet horizon, the planet seen from orbit.
+The picture must NOT show: grass, soil, rocks, ground, trees, mountains, sea, land on the horizon, outer space, stars, moons, planet rings, a curved planet horizon, the planet seen from orbit, floating rocks, floating islands or cliffs (there is no solid ground anywhere).
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -2201,7 +2243,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 
 Do not imitate any earlier picture from this chat or anything attached: this world looks completely different, with its own building style, ground, foreground and color scheme. Only the art style and the camera stay the same.
 
-THE WORLD: The home is INSIDE a large orbital space station, on a wide habitat deck. There is no outdoors at all.
+THE WORLD: The home is INSIDE a large orbital space station, on a wide habitat deck. There is no outdoors at all. Where the camera rules say horizon, use the far end of the deck; where they say sky, use the ceiling and the big window.
 
 THE HOME (House): a proper family home, built in this world's style. Size: like an ordinary two-floor family house, six to eight rooms. Shape: a solid box or L-shape with a pitched or flat roof, comfortable but not luxurious. Front: a front door under a small porch or canopy, windows on both floors with warm light inside. Around it: a path to the door and a small vehicle parked beside it. It must look clearly bigger than a small house and clearly smaller than a villa.
 Building style: boxy modular habitat units bolted to the deck, smooth painted metal panels in pale grey and teal, round porthole windows, ribbed vents, pipes and cable trays running along the walls, a sliding door.
@@ -2217,6 +2259,7 @@ The picture MUST show: metal deck, ceiling with light strips, the big window ont
 The picture must NOT show: sky, clouds, sun, grass, dirt, soil, trees, mountains, rain.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -2268,6 +2311,7 @@ Background: green plains and blue mountains on the horizon, a distant colony tow
 The picture MUST show: green grass, blue sky with clouds, mountains.
 The picture must NOT show: snow, sand dunes, lava, alien haze.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -2319,6 +2363,7 @@ Background: tall jungle trees with hanging vines on both sides, the distant colo
 The picture MUST show: tall jungle trees, big tropical leaves, flowers.
 The picture must NOT show: snow, sand dunes, lava, dead land.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -2370,6 +2415,7 @@ Background: open sea to the horizon, small waves, a distant colony tower on a ro
 The picture MUST show: sea water around and under the home, the pier.
 The picture must NOT show: snow, sand dunes, lava, mountains, forest.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -2421,6 +2467,7 @@ The picture MUST show: red-brown cracked earth, dry yellow grass, boxy sand-colo
 The picture must NOT show: green grass, lush plants, a paved road, snow, lava, rain clouds.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -2472,6 +2519,7 @@ The picture MUST show: sand dunes, domed ceramic shells, a water condenser, a co
 The picture must NOT show: grass, any green plant, trees, a paved road, puddles, snow, lava, mud brick.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -2523,6 +2571,7 @@ The picture MUST show: brown moss and lichen, patches of snow, grey sky, an insu
 The picture must NOT show: trees, green grass, flowers, blue sunny sky, sand dunes, lava, a paved road, logs, turf, furs, firewood.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -2574,6 +2623,7 @@ The picture MUST show: deep snow, blue ice, a raised orange pod home, steam from
 The picture must NOT show: grass, any plant, trees, sand, liquid water, lava.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -2625,6 +2675,7 @@ The picture MUST show: ice volcanoes with white vapor plumes, dark starry sky, a
 The picture must NOT show: grass, any plant, trees, blue sky with white clouds, red lava, sand.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -2676,6 +2727,7 @@ The picture MUST show: black starry sky, grey rock and craters, half-buried cyli
 The picture must NOT show: grass, ANY plant or green color on the ground, trees, water, puddles, clouds, blue sky, snow, a ship trail (there is no air to leave one).
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -2720,13 +2772,14 @@ THE SCENE:
 Foreground: a raised metal grating walkway on short legs crosses sickly green-yellow puddles toward the door. Light: amber warning lights on the walls, glowing in the haze. Near the left edge: a tall air-sampling mast with a spinning vane.
 Ground: stained yellow-brown rock and mud, dead black stumps, no living plants.
 Sky: thick yellow-green haze, the sun a dim smudge, poor visibility.
-Yard details: spare filter canisters, a gas mask hanging by the door.
+Yard details: spare filter canisters, a small sealed entry porch at the door with a spare gas mask behind its window.
 Background: a distant colony tower barely visible through the haze, red landing pad lights.
 
 The picture MUST show: yellow-green haze, filter stacks on the roof, toxic puddles, a raised grating walkway.
 The picture must NOT show: green grass, healthy plants, trees with leaves, blue sky, white clouds, snow.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -2778,6 +2831,7 @@ The picture MUST show: black rock, glowing lava, a red ash-filled sky, the home 
 The picture must NOT show: grass, any plant, trees, water, snow, blue sky, white clouds.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -2829,6 +2883,7 @@ The picture MUST show: dead grey land, a half-buried concrete bunker home, lead 
 The picture must NOT show: grass, any plant, trees, water, snow, blue sky, white clouds, radiation trefoil symbols on the home, the ground, barrels or anywhere else (only the one small sign on the mast).
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -2864,7 +2919,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 
 Do not imitate any earlier picture from this chat or anything attached: this world looks completely different, with its own building style, ground, foreground and color scheme. Only the art style and the camera stay the same.
 
-THE WORLD: A gas giant: there is no ground at all. The home is on a floating habitat platform deep INSIDE the gas giant's atmosphere, not in orbit and not in space: thick clouds and storms surround it on every side, above and below.
+THE WORLD: A gas giant: there is no ground at all. The home is on a floating habitat platform deep INSIDE the gas giant's atmosphere, not in orbit and not in space: thick clouds and storms surround it on every side, above and below. There is no horizon line: the cloud layers fade into haze in every direction, so where the camera rules say horizon, use the far edge of the deck and the cloud layer at that height.
 
 THE HOME (House): a proper family home, built in this world's style. Size: like an ordinary two-floor family house, six to eight rooms. Shape: a solid box or L-shape with a pitched or flat roof, comfortable but not luxurious. Front: a front door under a small porch or canopy, windows on both floors with warm light inside. Around it: a path to the door and a small vehicle parked beside it. It must look clearly bigger than a small house and clearly smaller than a villa.
 Building style: light, rounded pods of white and copper panels, round windows, anchored to the deck with cables against the wind, windsocks, small gas balloons tied above the roof.
@@ -2873,13 +2928,14 @@ THE SCENE:
 Foreground: the edge of a big floating metal deck with a railing along it; beyond the railing, a deep drop into clouds. Light: warm, dim, diffuse light filtered through thick clouds, no direct sun. Near the left edge: a tall mooring mast with a windsock.
 Ground: the metal deck of the platform, no soil or rock.
 Sky: no open sky and no space: thick layers of orange, cream and brown clouds above, below and on every side, towering storm clouds with flashes of lightning in the distance, haze that softens everything farther away.
-Yard details: tie-down cables, crates, a small shuttle on the deck.
+Yard details: tie-down cables, crates, and a personal shuttle parked on the deck, full size: its cabin taller than the door and about as long as the home is wide.
 Background: other floating platforms and balloon habitats half-hidden in the clouds and haze.
 
 The picture MUST show: a floating metal platform, thick clouds all around it (above and below), a storm in the distance, a railing at the deck edge.
-The picture must NOT show: grass, soil, rocks, ground, trees, mountains, sea, land on the horizon, outer space, stars, moons, planet rings, a curved planet horizon, the planet seen from orbit.
+The picture must NOT show: grass, soil, rocks, ground, trees, mountains, sea, land on the horizon, outer space, stars, moons, planet rings, a curved planet horizon, the planet seen from orbit, floating rocks, floating islands or cliffs (there is no solid ground anywhere).
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -2918,7 +2974,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 
 Do not imitate any earlier picture from this chat or anything attached: this world looks completely different, with its own building style, ground, foreground and color scheme. Only the art style and the camera stay the same.
 
-THE WORLD: The home is INSIDE a large orbital space station, on a wide habitat deck. There is no outdoors at all.
+THE WORLD: The home is INSIDE a large orbital space station, on a wide habitat deck. There is no outdoors at all. Where the camera rules say horizon, use the far end of the deck; where they say sky, use the ceiling and the big window.
 
 THE HOME (Villa): a large, wealthy home, built in this world's style. Size: like a big modern villa, two floors, wide and spacious, about twice as wide as a house. Shape: a main building with one wing or a second block joined to it, clean lines and expensive materials. Front: the biggest windows this world allows, a terrace or wide balcony, an impressive front door. Around it: private grounds and a small private shuttle on its own pad beside it. It must look clearly bigger and richer than a house, but still one home, not a compound.
 Building style: boxy modular habitat units bolted to the deck, smooth painted metal panels in pale grey and teal, round porthole windows, ribbed vents, pipes and cable trays running along the walls, a sliding door.
@@ -2934,6 +2990,7 @@ The picture MUST show: metal deck, ceiling with light strips, the big window ont
 The picture must NOT show: sky, clouds, sun, grass, dirt, soil, trees, mountains, rain.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -2985,6 +3042,7 @@ Background: green plains and blue mountains on the horizon, a distant colony tow
 The picture MUST show: green grass, blue sky with clouds, mountains.
 The picture must NOT show: snow, sand dunes, lava, alien haze.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -3036,6 +3094,7 @@ Background: tall jungle trees with hanging vines on both sides, the distant colo
 The picture MUST show: tall jungle trees, big tropical leaves, flowers.
 The picture must NOT show: snow, sand dunes, lava, dead land.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -3087,6 +3146,7 @@ Background: open sea to the horizon, small waves, a distant colony tower on a ro
 The picture MUST show: sea water around and under the home, the pier.
 The picture must NOT show: snow, sand dunes, lava, mountains, forest.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -3138,6 +3198,7 @@ The picture MUST show: red-brown cracked earth, dry yellow grass, boxy sand-colo
 The picture must NOT show: green grass, lush plants, a paved road, snow, lava, rain clouds.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -3189,6 +3250,7 @@ The picture MUST show: sand dunes, domed ceramic shells, a water condenser, a co
 The picture must NOT show: grass, any green plant, trees, a paved road, puddles, snow, lava, mud brick.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -3240,6 +3302,7 @@ The picture MUST show: brown moss and lichen, patches of snow, grey sky, an insu
 The picture must NOT show: trees, green grass, flowers, blue sunny sky, sand dunes, lava, a paved road, logs, turf, furs, firewood.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -3291,6 +3354,7 @@ The picture MUST show: deep snow, blue ice, a raised orange pod home, steam from
 The picture must NOT show: grass, any plant, trees, sand, liquid water, lava.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -3342,6 +3406,7 @@ The picture MUST show: ice volcanoes with white vapor plumes, dark starry sky, a
 The picture must NOT show: grass, any plant, trees, blue sky with white clouds, red lava, sand.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -3393,6 +3458,7 @@ The picture MUST show: black starry sky, grey rock and craters, half-buried cyli
 The picture must NOT show: grass, ANY plant or green color on the ground, trees, water, puddles, clouds, blue sky, snow, a ship trail (there is no air to leave one).
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -3437,13 +3503,14 @@ THE SCENE:
 Foreground: a raised metal grating walkway on short legs crosses sickly green-yellow puddles toward the door. Light: amber warning lights on the walls, glowing in the haze. Near the left edge: a tall air-sampling mast with a spinning vane.
 Ground: stained yellow-brown rock and mud, dead black stumps, no living plants.
 Sky: thick yellow-green haze, the sun a dim smudge, poor visibility.
-Yard details: spare filter canisters, a gas mask hanging by the door.
+Yard details: spare filter canisters, a small sealed entry porch at the door with a spare gas mask behind its window.
 Background: a distant colony tower barely visible through the haze, red landing pad lights.
 
 The picture MUST show: yellow-green haze, filter stacks on the roof, toxic puddles, a raised grating walkway.
 The picture must NOT show: green grass, healthy plants, trees with leaves, blue sky, white clouds, snow.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -3495,6 +3562,7 @@ The picture MUST show: black rock, glowing lava, a red ash-filled sky, the home 
 The picture must NOT show: grass, any plant, trees, water, snow, blue sky, white clouds.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -3546,6 +3614,7 @@ The picture MUST show: dead grey land, a half-buried concrete bunker home, lead 
 The picture must NOT show: grass, any plant, trees, water, snow, blue sky, white clouds, radiation trefoil symbols on the home, the ground, barrels or anywhere else (only the one small sign on the mast).
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -3581,7 +3650,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 
 Do not imitate any earlier picture from this chat or anything attached: this world looks completely different, with its own building style, ground, foreground and color scheme. Only the art style and the camera stay the same.
 
-THE WORLD: A gas giant: there is no ground at all. The home is on a floating habitat platform deep INSIDE the gas giant's atmosphere, not in orbit and not in space: thick clouds and storms surround it on every side, above and below.
+THE WORLD: A gas giant: there is no ground at all. The home is on a floating habitat platform deep INSIDE the gas giant's atmosphere, not in orbit and not in space: thick clouds and storms surround it on every side, above and below. There is no horizon line: the cloud layers fade into haze in every direction, so where the camera rules say horizon, use the far edge of the deck and the cloud layer at that height.
 
 THE HOME (Villa): a large, wealthy home, built in this world's style. Size: like a big modern villa, two floors, wide and spacious, about twice as wide as a house. Shape: a main building with one wing or a second block joined to it, clean lines and expensive materials. Front: the biggest windows this world allows, a terrace or wide balcony, an impressive front door. Around it: private grounds and a small private shuttle on its own pad beside it. It must look clearly bigger and richer than a house, but still one home, not a compound.
 Building style: light, rounded pods of white and copper panels, round windows, anchored to the deck with cables against the wind, windsocks, small gas balloons tied above the roof.
@@ -3590,13 +3659,14 @@ THE SCENE:
 Foreground: the edge of a big floating metal deck with a railing along it; beyond the railing, a deep drop into clouds. Light: warm, dim, diffuse light filtered through thick clouds, no direct sun. Near the left edge: a tall mooring mast with a windsock.
 Ground: the metal deck of the platform, no soil or rock.
 Sky: no open sky and no space: thick layers of orange, cream and brown clouds above, below and on every side, towering storm clouds with flashes of lightning in the distance, haze that softens everything farther away.
-Yard details: tie-down cables, crates, a small shuttle on the deck.
+Yard details: tie-down cables, crates, and a personal shuttle parked on the deck, full size: its cabin taller than the door and about as long as the home is wide.
 Background: other floating platforms and balloon habitats half-hidden in the clouds and haze.
 
 The picture MUST show: a floating metal platform, thick clouds all around it (above and below), a storm in the distance, a railing at the deck edge.
-The picture must NOT show: grass, soil, rocks, ground, trees, mountains, sea, land on the horizon, outer space, stars, moons, planet rings, a curved planet horizon, the planet seen from orbit.
+The picture must NOT show: grass, soil, rocks, ground, trees, mountains, sea, land on the horizon, outer space, stars, moons, planet rings, a curved planet horizon, the planet seen from orbit, floating rocks, floating islands or cliffs (there is no solid ground anywhere).
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -3635,7 +3705,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 
 Do not imitate any earlier picture from this chat or anything attached: this world looks completely different, with its own building style, ground, foreground and color scheme. Only the art style and the camera stay the same.
 
-THE WORLD: The home is INSIDE a large orbital space station, on a wide habitat deck. There is no outdoors at all.
+THE WORLD: The home is INSIDE a large orbital space station, on a wide habitat deck. There is no outdoors at all. Where the camera rules say horizon, use the far end of the deck; where they say sky, use the ceiling and the big window.
 
 THE HOME (Estate): the richest home in the colony, a mansion built in this world's style. Size: like a mansion, two or three floors, several wings or modules around a grand entrance, the biggest building in the picture. Shape: a symmetric or sprawling group of joined buildings, the finest materials this world has. Front: a grand entrance with wide steps or a covered drive. Around it: a wall or barrier with a gate and a guard post around large private grounds, and a private shuttle pad. Seen a little further away so the grounds fit in the picture. It must look like the biggest and grandest home of this world.
 Building style: boxy modular habitat units bolted to the deck, smooth painted metal panels in pale grey and teal, round porthole windows, ribbed vents, pipes and cable trays running along the walls, a sliding door.
@@ -3651,6 +3721,7 @@ The picture MUST show: metal deck, ceiling with light strips, the big window ont
 The picture must NOT show: sky, clouds, sun, grass, dirt, soil, trees, mountains, rain.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -3702,6 +3773,7 @@ Background: green plains and blue mountains on the horizon, a distant colony tow
 The picture MUST show: green grass, blue sky with clouds, mountains.
 The picture must NOT show: snow, sand dunes, lava, alien haze.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -3753,6 +3825,7 @@ Background: tall jungle trees with hanging vines on both sides, the distant colo
 The picture MUST show: tall jungle trees, big tropical leaves, flowers.
 The picture must NOT show: snow, sand dunes, lava, dead land.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -3804,6 +3877,7 @@ Background: open sea to the horizon, small waves, a distant colony tower on a ro
 The picture MUST show: sea water around and under the home, the pier.
 The picture must NOT show: snow, sand dunes, lava, mountains, forest.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -3855,6 +3929,7 @@ The picture MUST show: red-brown cracked earth, dry yellow grass, boxy sand-colo
 The picture must NOT show: green grass, lush plants, a paved road, snow, lava, rain clouds.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -3906,6 +3981,7 @@ The picture MUST show: sand dunes, domed ceramic shells, a water condenser, a co
 The picture must NOT show: grass, any green plant, trees, a paved road, puddles, snow, lava, mud brick.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -3957,6 +4033,7 @@ The picture MUST show: brown moss and lichen, patches of snow, grey sky, an insu
 The picture must NOT show: trees, green grass, flowers, blue sunny sky, sand dunes, lava, a paved road, logs, turf, furs, firewood.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -4008,6 +4085,7 @@ The picture MUST show: deep snow, blue ice, a raised orange pod home, steam from
 The picture must NOT show: grass, any plant, trees, sand, liquid water, lava.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -4059,6 +4137,7 @@ The picture MUST show: ice volcanoes with white vapor plumes, dark starry sky, a
 The picture must NOT show: grass, any plant, trees, blue sky with white clouds, red lava, sand.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -4110,6 +4189,7 @@ The picture MUST show: black starry sky, grey rock and craters, half-buried cyli
 The picture must NOT show: grass, ANY plant or green color on the ground, trees, water, puddles, clouds, blue sky, snow, a ship trail (there is no air to leave one).
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -4154,13 +4234,14 @@ THE SCENE:
 Foreground: a raised metal grating walkway on short legs crosses sickly green-yellow puddles toward the door. Light: amber warning lights on the walls, glowing in the haze. Near the left edge: a tall air-sampling mast with a spinning vane.
 Ground: stained yellow-brown rock and mud, dead black stumps, no living plants.
 Sky: thick yellow-green haze, the sun a dim smudge, poor visibility.
-Yard details: spare filter canisters, a gas mask hanging by the door.
+Yard details: spare filter canisters, a small sealed entry porch at the door with a spare gas mask behind its window.
 Background: a distant colony tower barely visible through the haze, red landing pad lights.
 
 The picture MUST show: yellow-green haze, filter stacks on the roof, toxic puddles, a raised grating walkway.
 The picture must NOT show: green grass, healthy plants, trees with leaves, blue sky, white clouds, snow.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -4212,6 +4293,7 @@ The picture MUST show: black rock, glowing lava, a red ash-filled sky, the home 
 The picture must NOT show: grass, any plant, trees, water, snow, blue sky, white clouds.
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -4263,6 +4345,7 @@ The picture MUST show: dead grey land, a half-buried concrete bunker home, lead 
 The picture must NOT show: grass, any plant, trees, water, snow, blue sky, white clouds, radiation trefoil symbols on the home, the ground, barrels or anywhere else (only the one small sign on the mast).
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
@@ -4298,7 +4381,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 
 Do not imitate any earlier picture from this chat or anything attached: this world looks completely different, with its own building style, ground, foreground and color scheme. Only the art style and the camera stay the same.
 
-THE WORLD: A gas giant: there is no ground at all. The home is on a floating habitat platform deep INSIDE the gas giant's atmosphere, not in orbit and not in space: thick clouds and storms surround it on every side, above and below.
+THE WORLD: A gas giant: there is no ground at all. The home is on a floating habitat platform deep INSIDE the gas giant's atmosphere, not in orbit and not in space: thick clouds and storms surround it on every side, above and below. There is no horizon line: the cloud layers fade into haze in every direction, so where the camera rules say horizon, use the far edge of the deck and the cloud layer at that height.
 
 THE HOME (Estate): the richest home in the colony, a mansion built in this world's style. Size: like a mansion, two or three floors, several wings or modules around a grand entrance, the biggest building in the picture. Shape: a symmetric or sprawling group of joined buildings, the finest materials this world has. Front: a grand entrance with wide steps or a covered drive. Around it: a wall or barrier with a gate and a guard post around large private grounds, and a private shuttle pad. Seen a little further away so the grounds fit in the picture. It must look like the biggest and grandest home of this world.
 Building style: light, rounded pods of white and copper panels, round windows, anchored to the deck with cables against the wind, windsocks, small gas balloons tied above the roof.
@@ -4307,13 +4390,14 @@ THE SCENE:
 Foreground: the edge of a big floating metal deck with a railing along it; beyond the railing, a deep drop into clouds. Light: warm, dim, diffuse light filtered through thick clouds, no direct sun. Near the left edge: a tall mooring mast with a windsock.
 Ground: the metal deck of the platform, no soil or rock.
 Sky: no open sky and no space: thick layers of orange, cream and brown clouds above, below and on every side, towering storm clouds with flashes of lightning in the distance, haze that softens everything farther away.
-Yard details: tie-down cables, crates, a small shuttle on the deck.
+Yard details: tie-down cables, crates, and a personal shuttle parked on the deck, full size: its cabin taller than the door and about as long as the home is wide.
 Background: other floating platforms and balloon habitats half-hidden in the clouds and haze.
 
 The picture MUST show: a floating metal platform, thick clouds all around it (above and below), a storm in the distance, a railing at the deck edge.
-The picture must NOT show: grass, soil, rocks, ground, trees, mountains, sea, land on the horizon, outer space, stars, moons, planet rings, a curved planet horizon, the planet seen from orbit.
+The picture must NOT show: grass, soil, rocks, ground, trees, mountains, sea, land on the horizon, outer space, stars, moons, planet rings, a curved planet horizon, the planet seen from orbit, floating rocks, floating islands or cliffs (there is no solid ground anywhere).
 Nothing primitive, rustic, medieval or fantasy: no log cabins, no stone huts, no thatch or turf roofs, no animal hides, furs or leather, no tanning racks, no firewood stacks, no candles or oil lanterns, no wooden carts, no animal-drawn sleds, no farm animals or herds, no tribal or folk decorations.
 Do NOT reuse these props from other pictures: wooden plank walls, a blue or brown tarp on the roof, a rusty stovepipe, a solar panel with a TV antenna, a concrete curb or sidewalk, an asphalt road, an old-fashioned street lamp or lamp post, rusty gears, tires or tangled cables in the yard (those belong to other pictures in the set).
+Keep everything at human scale: the door is the size of a person. Any vehicle people ride in (a buggy, rover, crawler, skiff, shuttle or bike) must be big enough for people: at least as tall as the door. Only small machines with no seats may be smaller, like drones.
 No text, no letters, no numbers, no labels, no captions, no title bar, no UI, no border, no frame, no watermark. One single picture, not several side by side.
 
 Before you finish, check the picture against the art style, the retro-futurist look, the camera and the "must NOT" lists, and fix anything that does not match.
