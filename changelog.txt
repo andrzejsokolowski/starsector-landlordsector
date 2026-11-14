@@ -1,3 +1,9 @@
+Version 0.7.0 (2026-11-14)
+- New pictures for shacks, studios, small houses and houses on all 14 planet types, two different pictures for each; every home picks one of the two
+- Villas on stations and Terran worlds have their own pictures; the other villas and all estates still use placeholders
+- Homes you own or see for sale switch to the new pictures
+- Pictures are loaded only while a screen shows them, so they take much less memory
+
 Version 0.6.1 (2026-11-14)
 - Upgrade and house trait tooltips show the value change as "Multiplies base home value by 1.05x"
 

@@ -468,6 +468,34 @@ public final class RulesCheck {
         }
         expect(ext.getJSONObject("shack").length() == PlanetType.values().length + 1,
                 "art.json: a shack picture for every planet type");
+        // 0.7.0: pictures load on demand in game, which cannot check files, so every listed file is checked here.
+        java.nio.file.Path root = dir.getParent().getParent().getParent();
+        int pictures = 0;
+        java.util.Iterator<?> tiers2 = ext.keys();
+        while (tiers2.hasNext()) {
+            JSONObject byType = ext.getJSONObject(String.valueOf(tiers2.next()));
+            java.util.Iterator<?> keys = byType.keys();
+            while (keys.hasNext()) {
+                org.json.JSONArray list = byType.getJSONArray(String.valueOf(keys.next()));
+                for (int i = 0; i < list.length(); i++) {
+                    java.nio.file.Path f = root.resolve(list.getString(i));
+                    expect(java.nio.file.Files.isRegularFile(f), "art.json: " + list.getString(i) + " exists");
+                    if (!java.nio.file.Files.isRegularFile(f)) continue;
+                    java.awt.image.BufferedImage im = javax.imageio.ImageIO.read(f.toFile());
+                    expect(im != null && im.getWidth() == 1024 && im.getHeight() == 640,
+                            "art.json: " + list.getString(i) + " is 1024 x 640");
+                    pictures++;
+                }
+            }
+        }
+        for (String tier : new String[] {"shack", "studio", "small_house", "house"}) {
+            for (PlanetType t : PlanetType.values()) {
+                expect(ext.getJSONObject(tier).optJSONArray(t.id) != null
+                        && ext.getJSONObject(tier).getJSONArray(t.id).length() == 2,
+                        "art.json: two " + tier + " pictures for " + t.id + " (0.7.0)");
+            }
+        }
+        expect(pictures >= 116, "art.json: at least 116 pictures listed (0.7.0), found " + pictures);
     }
 
     /** 0.4.0 and 0.5.0: upgrades, levels, environment and health: every entry names real things, the math holds. */

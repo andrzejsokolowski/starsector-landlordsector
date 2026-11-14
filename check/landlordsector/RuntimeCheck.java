@@ -509,12 +509,44 @@ public final class RuntimeCheck {
         expect(Portfolio.get().properties().isEmpty(), "homes on a lost colony are gone");
         expect(!Portfolio.get().npcHomes().containsKey(b.getId()), "NPC homes of a lost colony are dropped");
 
+        checkPictureMemory070();
+
         if (!problems.isEmpty()) {
             for (String p : problems) System.err.println("FAIL: " + p);
             System.exit(1);
         }
         System.out.println("Landlordsector runtime verified: first month rent " + Math.round(rentA)
                 + ", NPC homes " + (npc == null ? 0 : npc.size()) + ", save size " + xml.length() + " chars");
+    }
+
+    /**
+     * 0.7.0: exterior pictures load when drawn, not at startup; beyond 12 the least recently drawn are unloaded,
+     * but never one drawn in the last second (a screen showing many pictures keeps them all).
+     */
+    private static void checkPictureMemory070() throws Exception {
+        org.json.JSONObject json = new org.json.JSONObject();
+        org.json.JSONObject shack = new org.json.JSONObject();
+        org.json.JSONArray all = new org.json.JSONArray();
+        for (int i = 0; i < 15; i++) all.put("graphics/landlordsector/exteriors/test_" + i + ".jpg");
+        shack.put("default", all);
+        json.put("exteriors", new org.json.JSONObject().put("shack", shack));
+        textureLoads.clear();
+        textureUnloads.clear();
+        landlordsector.Art.load(json);
+        expect(textureLoads.isEmpty(), "pictures are not loaded at startup (0.7.0)");
+        expect(landlordsector.Art.isKnown("graphics/landlordsector/exteriors/test_3.jpg"),
+                "a listed picture is known before it is loaded");
+        for (int i = 0; i < 14; i++) landlordsector.Art.use("graphics/landlordsector/exteriors/test_" + i + ".jpg");
+        landlordsector.Art.use("graphics/landlordsector/exteriors/test_0.jpg");
+        expect(textureLoads.size() == 14, "each picture loads once, found " + textureLoads.size());
+        expect(textureUnloads.isEmpty(), "pictures drawn in the last second stay loaded");
+        landlordsector.Art.use("graphics/x.png");
+        expect(textureLoads.size() == 14, "a path not in art.json is left alone");
+        Thread.sleep(1100L);
+        landlordsector.Art.use("graphics/landlordsector/exteriors/test_14.jpg");
+        expect(textureUnloads.size() == 3 && textureUnloads.contains("graphics/landlordsector/exteriors/test_1.jpg")
+                && !textureUnloads.contains("graphics/landlordsector/exteriors/test_0.jpg"),
+                "after a second the least recently drawn pictures above 12 are unloaded, found " + textureUnloads);
     }
 
     /** Thirty days, the last economy tick, then the month-end payment like CoreScript. */
@@ -536,6 +568,8 @@ public final class RuntimeCheck {
     // ---- Stand-ins ----
 
     private static final List<com.fs.starfarer.api.EveryFrameScript> sectorScripts = new ArrayList<>();
+    private static final List<String> textureLoads = new ArrayList<>();
+    private static final List<String> textureUnloads = new ArrayList<>();
 
     private static void installGlobals() {
         FactionAPI player = faction("player");
@@ -570,6 +604,8 @@ public final class RuntimeCheck {
                 },
                 "getFloat", a -> "economyIterPerMonth".equals(a[0]) ? 10f : 0f,
                 "getSpriteName", a -> "graphics/x.png",
+                "loadTexture", a -> textureLoads.add((String) a[0]),
+                "unloadTexture", a -> textureUnloads.add((String) a[0]),
                 "getString", a -> "graphics/fonts/insignia15LTaa.fnt"));
         Global.setSettings(settings);
         Global.setSector(sector);

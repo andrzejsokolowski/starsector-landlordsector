@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -21,15 +22,27 @@ public final class Art {
     public static final String PATH = "data/config/landlordsector/art.json";
     private static final Logger log = Global.getLogger(Art.class);
 
+    /** How many exterior pictures stay in graphics memory at once; older ones are unloaded (0.7.0). */
+    static final int MAX_LOADED_EXTERIORS = 12;
+
     /** tier id -> climate id (or "default") -> picture paths. */
     private static final Map<String, Map<String, List<String>>> exteriors = new HashMap<>();
+    /** Pictures that stay loaded for the whole session (furniture icons). */
     private static final Set<String> loaded = new HashSet<>();
+    /**
+     * Every exterior picture listed in art.json; loaded only when a screen draws it. The release build checks that
+     * every listed file exists (mod code may not touch files), and one that fails to load is dropped here.
+     */
+    private static final Set<String> listed = new HashSet<>();
+    /** Exterior pictures in graphics memory now, least recently drawn first. */
+    private static final LinkedHashMap<String, Long> inMemory = new LinkedHashMap<>(16, 0.75f, true);
 
     private Art() {
     }
 
     public static void load(JSONObject json) {
         exteriors.clear();
+        listed.clear();
         JSONObject ext = json.optJSONObject("exteriors");
         if (ext == null) return;
         Iterator<?> tiers = ext.keys();
@@ -46,7 +59,10 @@ public final class Art {
                 if (arr != null) {
                     for (int i = 0; i < arr.length(); i++) {
                         String p = arr.optString(i, "");
-                        if (!p.isEmpty() && loadTexture(p)) paths.add(p);
+                        if (!p.isEmpty()) {
+                            paths.add(p);
+                            listed.add(p);
+                        }
                     }
                 }
                 map.put(climate, paths);
@@ -64,6 +80,41 @@ public final class Art {
                 if (icon != null && !icon.isEmpty()) loadTexture(icon);
             } catch (Throwable t) {
                 log.warn("Landlordsector: no icon for " + d.itemId(), t);
+            }
+        }
+    }
+
+    /**
+     * Makes sure an exterior picture is in graphics memory before it is drawn, and unloads the least recently
+     * drawn ones beyond {@link #MAX_LOADED_EXTERIORS}, so 100+ pictures never sit in memory at once (0.7.0).
+     * Other paths (furniture icons, vanilla sprites) are left alone.
+     */
+    public static void use(String path) {
+        if (path == null || !listed.contains(path)) return;
+        long now = System.currentTimeMillis();
+        if (inMemory.containsKey(path)) {
+            inMemory.put(path, now); // marks it as just drawn
+            return;
+        }
+        try {
+            Global.getSettings().loadTexture(path);
+        } catch (Exception e) {
+            log.warn("Landlordsector: cannot load picture " + path, e);
+            listed.remove(path);
+            return;
+        }
+        inMemory.put(path, now);
+        while (inMemory.size() > MAX_LOADED_EXTERIORS) {
+            Iterator<Map.Entry<String, Long>> it = inMemory.entrySet().iterator();
+            Map.Entry<String, Long> eldest = it.next();
+            // Never unload a picture drawn in the last second: a screen showing many at once keeps them all.
+            if (now - eldest.getValue() < 1000L) break;
+            String oldest = eldest.getKey();
+            it.remove();
+            try {
+                Global.getSettings().unloadTexture(oldest);
+            } catch (Throwable t) {
+                log.warn("Landlordsector: cannot unload picture " + oldest, t);
             }
         }
     }
@@ -104,8 +155,8 @@ public final class Art {
         return list != null && list.contains(path);
     }
 
-    /** True when the picture is still listed and loaded (art.json can change between versions). */
+    /** True when the picture is still listed in art.json and its file exists (art.json can change between versions). */
     public static boolean isKnown(String path) {
-        return path != null && loaded.contains(path);
+        return path != null && (listed.contains(path) || loaded.contains(path));
     }
 }

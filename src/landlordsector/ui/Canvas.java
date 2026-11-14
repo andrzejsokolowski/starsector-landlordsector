@@ -692,6 +692,7 @@ public abstract class Canvas implements CustomUIPanelPlugin {
 
     protected void sprite(String path, float x, float y, float w, float h, float alpha, float aspect) {
         if (path == null || w <= 0f || h <= 0f) return;
+        landlordsector.Art.use(path);
         SpriteAPI s = Global.getSettings().getSprite(path);
         if (s == null) return;
         // Absolute texture window every frame, so a shared sprite never drifts.
