@@ -30,6 +30,21 @@ public final class TenantEvents {
         /** 0.4.0: the weight at health 0, rising from 1 at the "sickBelow" health. */
         public float sickMult = 1f;
         public String text = "";
+
+        // ---- 0.5.0 ----
+
+        /** A tenant event (their own life) rather than a house event. */
+        public boolean tenant;
+        /** A health event: bad ones grow as health falls, good ones shrink. */
+        public boolean health;
+        /** Only below this health (0: any). */
+        public float maxHealth;
+        /** The tenant dies. */
+        public boolean dies;
+        /** House traits and tenant traits it adds or removes. */
+        public String addTrait, removeTrait, addTenantTrait, removeTenantTrait;
+        /** Added to the tenant's wealth. */
+        public int wealth;
     }
 
     /** Lines a tenant says, for tenants with one of {@code traits} or from one of {@code factions}, or anyone. */
@@ -45,6 +60,8 @@ public final class TenantEvents {
     private static java.util.Map<String, String> kinds = new java.util.HashMap<>();
     private static float minDaysBetween = 5f;
     private static float dailyChance = 0.06f;
+    private static float tenantMinDays = 7f;
+    private static float tenantDailyChance = 0.05f;
 
     private TenantEvents() {
     }
@@ -101,6 +118,15 @@ public final class TenantEvents {
                 d.text = e.optString("text", "");
                 d.sickOnly = e.optBoolean("sickOnly", false);
                 d.sickMult = (float) e.optDouble("sickMult", 1);
+                d.tenant = "tenant".equals(e.optString("type", "house"));
+                d.health = e.optBoolean("health", false);
+                d.maxHealth = (float) e.optDouble("maxHealth", 0);
+                d.dies = e.optBoolean("dies", false);
+                d.addTrait = text(e, "addTrait");
+                d.removeTrait = text(e, "removeTrait");
+                d.addTenantTrait = text(e, "addTenantTrait");
+                d.removeTenantTrait = text(e, "removeTenantTrait");
+                d.wealth = e.optInt("wealth", 0);
                 list.add(d);
             }
         }
@@ -114,8 +140,27 @@ public final class TenantEvents {
             }
         }
         kinds = k;
-        minDaysBetween = (float) json.optDouble("minDaysBetween", 5);
-        dailyChance = (float) json.optDouble("dailyChance", 0.06);
+        JSONObject house = json.optJSONObject("house");
+        JSONObject tenant = json.optJSONObject("tenant");
+        minDaysBetween = (float) (house != null ? house : json).optDouble("minDaysBetween", 5);
+        dailyChance = (float) (house != null ? house : json).optDouble("dailyChance", 0.06);
+        tenantMinDays = tenant != null ? (float) tenant.optDouble("minDaysBetween", 7) : 7f;
+        tenantDailyChance = tenant != null ? (float) tenant.optDouble("dailyChance", 0.05) : 0.05f;
+    }
+
+    /** A string field, or null when it is missing, empty or a JSON null. */
+    private static String text(JSONObject o, String key) {
+        if (!o.has(key) || o.isNull(key)) return null;
+        String v = o.optString(key, "");
+        return v.isEmpty() ? null : v;
+    }
+
+    public static float tenantMinDays() {
+        return tenantMinDays;
+    }
+
+    public static float tenantDailyChance() {
+        return tenantDailyChance;
     }
 
     public static List<Def> all() {

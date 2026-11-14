@@ -36,6 +36,8 @@ public abstract class PropertyView extends Canvas {
         public final List<Object[]> traits = new ArrayList<>();
         /** 0.4.0: installed upgrades, the same shape as traits. */
         public final List<Object[]> upgrades = new ArrayList<>();
+        /** 0.5.0: placed furniture, the same shape as traits. */
+        public final List<Object[]> furniture = new ArrayList<>();
     }
 
     /** Upgrade names for a sheet: {name, good, tooltip title, tooltip lines} (0.4.0). */
@@ -49,36 +51,57 @@ public abstract class PropertyView extends Canvas {
         return out;
     }
 
-    /** A home's upgrades for its sheet; renovations still being built read "Pool (12 days)" in plain white. */
+    /** A home's upgrades (not furniture) for its sheet. */
     public static List<Object[]> upgradeItems(landlordsector.Property p) {
+        return installedItems(p, false);
+    }
+
+    /** A home's placed furniture for its sheet (0.5.0: its own row). */
+    public static List<Object[]> furnitureItems(landlordsector.Property p) {
+        return installedItems(p, true);
+    }
+
+    private static List<Object[]> installedItems(landlordsector.Property p, boolean furniture) {
         List<Object[]> out = new ArrayList<>();
         for (landlordsector.Installed i : p.upgrades()) {
             landlordsector.data.Upgrades.Def d = i.def();
-            if (d == null) continue;
-            boolean done = i.ready();
-            String name = done ? d.name : d.name + " (" + Math.max(1, Math.round(i.daysLeft())) + " days)";
-            out.add(new Object[] {name, done ? Boolean.TRUE : null, d.name, Tips.upgrade(d)});
+            if (d == null || i.furniture != furniture) continue;
+            out.add(new Object[] {d.name, Boolean.TRUE, d.name, Tips.upgrade(d)});
         }
         return out;
     }
 
-    /** Home levels for a sheet: only the ones that are a problem, or "All fine" (0.4.0). */
-    public static List<Object[]> levelItems(PropertyStats st) {
+    /**
+     * The Environment row (0.5.0, Andrzej: "replace the 'home levels' grey text with 'Environment' ... Commute, Air
+     * and noise, all letter graded"): the building next door, the three grades, then heat, cold or radiation only
+     * when the home has some.
+     */
+    public static List<Object[]> environmentItems(PropertyStats st) {
         List<Object[]> out = new ArrayList<>();
-        List<String[]> all = new ArrayList<>();
+        float price = st.neighbor.price;
+        Boolean nGood = Math.abs(price - 1f) < 0.001f ? null : price > 1f;
+        out.add(new Object[] {st.nextTo, nGood, st.nextTo, st.neighborLines});
+        for (landlordsector.data.Environment.Score sc : landlordsector.data.Environment.scores()) {
+            Float v = st.env.get(sc.id);
+            if (v == null) continue;
+            String letter = landlordsector.data.Environment.letter(v);
+            String label = landlordsector.PropertyStats.graded(sc.name, letter);
+            out.add(new Object[] {label, gradeGood(letter), label + " (" + Math.round(v) + ")", st.envLines.get(sc.id)});
+        }
         for (landlordsector.data.Levels.Def ld : landlordsector.data.Levels.all()) {
             int lvl = st.levels.getOrDefault(ld.id, 0);
-            String label = landlordsector.data.Levels.label(ld, lvl);
-            all.add(new String[] {label, lvl == 0 ? "+" : "-"});
             if (lvl == 0) continue;
+            String label = landlordsector.data.Levels.label(ld, lvl);
             out.add(new Object[] {label, Boolean.FALSE, label, st.levelLines.get(ld.id)});
         }
-        if (out.isEmpty()) {
-            all.add(new String[] {"Heat, cold, bad air, noise and darkness each cost tenants happiness and health.",
-                    null});
-            out.add(new Object[] {"All fine", Boolean.TRUE, "Home levels", all});
-        }
         return out;
+    }
+
+    /** S and A green, D, E and F red, B and C plain. */
+    public static Boolean gradeGood(String letter) {
+        if (letter.startsWith("S") || letter.startsWith("A")) return Boolean.TRUE;
+        if (letter.startsWith("D") || letter.startsWith("E") || letter.startsWith("F")) return Boolean.FALSE;
+        return null;
     }
 
     /** House trait names, colors and tooltips for a sheet: {name, good, tooltip title, tooltip lines}. */
@@ -213,52 +236,76 @@ public abstract class PropertyView extends Canvas {
         super(width, height);
     }
 
-    /** "Sindria, arid world, Sindrian Diktat". */
-    protected static String where(MarketAPI m, PropertyStats s) {
+    /**
+     * "Chicomoztoc, a barren-desert world belonging to the Hegemony" (Andrzej, 0.5.0: the place goes at the top of
+     * the screen, not under the picture).
+     */
+    public static String where(MarketAPI m, PropertyStats s) {
         if (m == null) return s.world;
-        String world = s.world.isEmpty() ? "" : ", " + s.world.toLowerCase();
-        return m.getName() + world + ", " + m.getFaction().getDisplayName();
+        return where(m);
+    }
+
+    public static String where(MarketAPI m) {
+        String w = PropertyStats.worldName(m);
+        String world = w.isEmpty() ? "world" : w.toLowerCase();
+        String owner;
+        if (landlordsector.MarketRules.isOwn(m)) {
+            owner = ", your colony";
+        } else {
+            String f;
+            try {
+                f = m.getFaction().getDisplayNameWithArticle();
+            } catch (Throwable t) {
+                f = null;
+            }
+            if (f == null || f.isEmpty()) f = m.getFaction().getDisplayName();
+            owner = " belonging to " + f;
+        }
+        return m.getName() + ", " + landlordsector.PropertyStats.article(world) + owner;
     }
 
     /** Height the sheet needs under its picture. */
     protected static float sheetTextHeight(Sheet s) {
-        return 8f + 26f + 24f + 5 * ROW + (s.traits.isEmpty() ? 0f : ROW) + (s.stats != null ? ROW : 0f)
-                + (s.upgrades.isEmpty() ? 0f : ROW) + s.extra.size() * ROW;
+        return 8f + 30f + 5 * ROW + (s.traits.isEmpty() ? 0f : ROW) + (s.stats != null ? ROW : 0f)
+                + (s.upgrades.isEmpty() ? 0f : ROW) + (s.furniture.isEmpty() ? 0f : ROW) + s.extra.size() * ROW;
     }
 
-    /** Width the sheet's text uses: the left column, then the right column up to the end of its numbers. */
+    /** Where the right column (the bars) starts, from the sheet's left edge (0.5.0: nearer the middle). */
+    protected static final float RIGHT_COL = 430f;
+
+    /**
+     * Width the sheet uses (0.5.0, Andrzej: the picture about a third smaller): two thirds of the 0.4 width, at
+     * least wide enough for both columns.
+     */
     protected static float contentWidth(float w) {
-        return w / 2f + 10f + 278f;
+        return Math.min(w, Math.max(RIGHT_COL + 290f, (w / 2f + 288f) * 0.67f));
     }
 
     /**
-     * The picture and the stat sheet under it. The picture spans the sheet's text, from the title on the
-     * left to the end of the Security row on the right, at most {@code maxImgH} tall (cropped from the
-     * middle when the box is flatter than 16 by 10).
+     * The picture and the stat sheet under it. The picture is 16 by 10, as wide as the sheet's text and at most
+     * {@code maxImgH} tall (narrower then, never cropped).
      *
      * @return the y just below the sheet
      */
     protected float sheet(Sheet s, float x, float y, float w, float maxImgH) {
-        float imgW = Math.min(w, contentWidth(w));
-        float imgH = Math.max(60f, Math.min(maxImgH, imgW * ART_RATIO));
-        float ix = x;
+        float cw = contentWidth(w);
+        float imgH = Math.max(60f, Math.min(maxImgH, cw * ART_RATIO));
+        float imgW = imgH / ART_RATIO;
         if (s.art != null) {
-            picture(s.art, ix, y, imgW, imgH);
+            picture(s.art, x, y, imgW, imgH);
         } else {
-            box(ix, y, imgW, imgH);
-            label("No picture", Misc.getGrayColor(), ix, y, imgW, imgH, com.fs.starfarer.api.ui.Alignment.MID,
+            box(x, y, imgW, imgH);
+            label("No picture", Misc.getGrayColor(), x, y, imgW, imgH, com.fs.starfarer.api.ui.Alignment.MID,
                     com.fs.starfarer.api.ui.Fonts.DEFAULT_SMALL);
         }
 
         float ty = y + imgH + 8f;
-        title(s.title, x, ty, w);
-        text(s.subtitle, Misc.getGrayColor(), x, ty + 26f, w);
+        title(s.title, x, ty, cw);
 
-        float r = ty + 50f;
-        float col = w / 2f;
+        float r = ty + 30f;
         float lx = x;
-        float rx = x + col + 10f;
-        float vw = col - 130f;
+        float rx = x + RIGHT_COL;
+        float vw = RIGHT_COL - 130f;
 
         row("Value", s.valueLine, Misc.getHighlightColor(), lx, r, vw);
         if (s.valueLines != null) tipColored(lx, r, 260f, ROW, "Value", s.valueLines);
@@ -271,21 +318,22 @@ public abstract class PropertyView extends Canvas {
 
         PropertyStats st = s.stats;
         if (st != null) {
+            // Happiness last, under health (Andrzej, 0.5.0: "the ultimate culmination of all the factors").
             stat("Comfort", st.comfort, GOLD, rx, r);
             tipColored(rx, r, 280f, ROW, "Comfort " + Math.round(st.comfort), st.comfortLines);
             stat("Decor", st.decor, GOLD, rx, r + ROW);
             tipColored(rx, r + ROW, 280f, ROW, "Decor " + Math.round(st.decor), st.decorLines);
-            Color happy = st.happiness >= 50f ? Misc.getPositiveHighlightColor()
-                    : (st.happiness >= 25f ? Misc.getHighlightColor() : Misc.getNegativeHighlightColor());
-            stat("Tenant happiness", st.happiness, happy, rx, r + 2 * ROW);
-            tipColored(rx, r + 2 * ROW, 280f, ROW, "Tenant happiness " + Math.round(st.happiness), st.happinessLines);
-            stat("Security", st.security, SECURITY, rx, r + 3 * ROW);
-            tipColored(rx, r + 3 * ROW, 280f, ROW, "Security " + Math.round(st.security), st.securityLines);
+            stat("Security", st.security, SECURITY, rx, r + 2 * ROW);
+            tipColored(rx, r + 2 * ROW, 280f, ROW, "Security " + Math.round(st.security), st.securityLines);
             Color healthy = st.health >= landlordsector.data.Levels.sickBelow() ? Misc.getPositiveHighlightColor()
                     : (st.health >= landlordsector.data.Levels.treatmentBelow() ? Misc.getHighlightColor()
                             : Misc.getNegativeHighlightColor());
-            stat("Tenant health", st.health, healthy, rx, r + 4 * ROW);
-            tipColored(rx, r + 4 * ROW, 280f, ROW, "Tenant health " + Math.round(st.health), st.healthLines);
+            stat("Tenant health", st.health, healthy, rx, r + 3 * ROW);
+            tipColored(rx, r + 3 * ROW, 280f, ROW, "Tenant health " + Math.round(st.health), st.healthLines);
+            Color happy = st.happiness >= 50f ? Misc.getPositiveHighlightColor()
+                    : (st.happiness >= 25f ? Misc.getHighlightColor() : Misc.getNegativeHighlightColor());
+            stat("Tenant happiness", st.happiness, happy, rx, r + 4 * ROW);
+            tipColored(rx, r + 4 * ROW, 280f, ROW, "Tenant happiness " + Math.round(st.happiness), st.happinessLines);
             text("Location", Misc.getGrayColor(), lx, r + 4 * ROW, 120f);
             text("[" + st.grade + "]", Misc.getHighlightColor(), lx + 120f, r + 4 * ROW, 50f);
             List<String[]> gl = st.gradeLines;
@@ -296,19 +344,25 @@ public abstract class PropertyView extends Canvas {
             tipColored(lx, r + 4 * ROW, 172f, ROW, landlordsector.PropertyStats.graded("Location", st.grade), gl);
         }
         float er = r + 5 * ROW;
+        float rowW = Math.max(cw, w * 0.6f) - 120f;
         if (!s.traits.isEmpty()) {
             text("Traits", Misc.getGrayColor(), lx, er, 120f);
-            coloredRow(s.traits, lx + 120f, er, contentWidth(w) - 120f);
+            coloredRow(s.traits, lx + 120f, er, rowW);
             er += ROW;
         }
         if (st != null) {
-            text("Home levels", Misc.getGrayColor(), lx, er, 120f);
-            coloredRow(levelItems(st), lx + 120f, er, contentWidth(w) - 120f);
+            text("Environment", Misc.getGrayColor(), lx, er, 120f);
+            coloredRow(environmentItems(st), lx + 120f, er, rowW);
             er += ROW;
         }
         if (!s.upgrades.isEmpty()) {
             text("Upgrades", Misc.getGrayColor(), lx, er, 120f);
-            coloredRow(s.upgrades, lx + 120f, er, contentWidth(w) - 120f);
+            coloredRow(s.upgrades, lx + 120f, er, rowW);
+            er += ROW;
+        }
+        if (!s.furniture.isEmpty()) {
+            text("Furniture", Misc.getGrayColor(), lx, er, 120f);
+            coloredRow(s.furniture, lx + 120f, er, rowW);
             er += ROW;
         }
         for (String[] pair : s.extra) {

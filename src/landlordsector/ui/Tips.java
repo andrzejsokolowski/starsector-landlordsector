@@ -33,6 +33,12 @@ public final class Tips {
             add(out, landlordsector.data.Levels.change(ld, e.getValue()),
                     landlordsector.data.Levels.helps(ld, e.getValue()) ? "+" : "-");
         }
+        // Environment (0.5.0): "Quieter (+20)".
+        for (java.util.Map.Entry<String, Float> e : d.env.entrySet()) {
+            landlordsector.data.Environment.Score sc = landlordsector.data.Environment.score(e.getKey());
+            if (sc == null || e.getValue() == 0f) continue;
+            add(out, landlordsector.data.Environment.change(sc, e.getValue()), e.getValue() > 0f ? "+" : "-");
+        }
         if (d.comfort != 0f) add(out, signed(d.comfort) + " comfort", d.comfort > 0 ? "+" : "-");
         if (d.decor != 0f) add(out, signed(d.decor) + " decor", d.decor > 0 ? "+" : "-");
         if (d.happiness != 0f) add(out, signed(d.happiness) + " tenant happiness", d.happiness > 0 ? "+" : "-");
@@ -44,7 +50,7 @@ public final class Tips {
             add(out, signed(d.kidsHealth()) + " health for tenants with kids", d.kidsHealth() > 0 ? "+" : "-");
         }
         if (d.security != 0f) add(out, signed(d.security) + " security", d.security > 0 ? "+" : "-");
-        if (d.price != 1f) add(out, "Price x" + round2(d.price), d.price > 1f ? "+" : "-");
+        if (d.price != 1f) add(out, "Value x" + round2(d.price), d.price > 1f ? "+" : "-");
         if (d.wear != 1f) {
             int pct = Math.round(Math.abs(d.wear - 1f) * 100f);
             add(out, "Wears out " + pct + "% " + (d.wear < 1f ? "slower" : "faster"), d.wear < 1f ? "+" : "-");
@@ -58,7 +64,7 @@ public final class Tips {
             }
         }
         for (java.util.Map.Entry<String, Float> e : d.cancels.entrySet()) {
-            add(out, "No " + conditionName(e.getKey()).toLowerCase() + " in this home (hazard -"
+            add(out, "Cancels " + conditionName(e.getKey()) + " in this home (hazard -"
                     + Math.round(e.getValue() * 100f) + "%)", "+");
         }
         for (String[] line : eventKinds(d.events)) out.add(line);
@@ -67,6 +73,7 @@ public final class Tips {
         for (String n : hates) hateGood.add(TenantTraits.byName(n));
         if (!likes.isEmpty()) out.add(named("Liked by", "+", likes, likeGood, " (+" + Math.round(TenantRules.LIKE) + ")"));
         if (!hates.isEmpty()) out.add(named("Hated by", "-", hates, hateGood, " (-" + Math.round(TenantRules.DISLIKE) + ")"));
+        if (d.mark) add(out, "Repairs clean it off.", null);
         if (out.isEmpty()) add(out, "No effect on its own.", null);
         return out;
     }
@@ -109,15 +116,11 @@ public final class Tips {
             HouseTraits.Def t = HouseTraits.get(f);
             if (t != null) out.add(new String[] {"Removes " + t.name + " for good", null, t.name, t.good ? "+" : "-"});
         }
-        if (d.furniture()) {
-            add(out, "Furniture: uses one furniture slot. You can take it back at any time.", null);
-        } else {
-            String what = d.oneTime ? "A one-time job: it takes no renovation slot." : "Renovation: uses one renovation"
-                    + " slot and stays with the home.";
-            add(out, what + " Costs " + Math.round(d.cost * 100f) + "% of the home's value (at least "
-                    + com.fs.starfarer.api.util.Misc.getDGSCredits(d.minCost) + ") and takes " + Math.round(d.days)
-                    + " days.", null);
+        // Andrzej, 0.5.0: no slot text (it is obvious), and the cost moved to the Build button's tooltip.
+        if (!d.furniture() && d.valueShare > 0f) {
+            add(out, "Adds " + Math.round(d.valueShare * 100f) + "% of what it costs to the value", "+");
         }
+        if (!d.furniture() && d.oneTime) add(out, "A one-time job.", null);
         if (d.minTier > 0 || d.station != null || !d.needs.isEmpty()) {
             StringBuilder b = new StringBuilder("Only for ");
             List<String> parts = new ArrayList<>();
@@ -163,8 +166,18 @@ public final class Tips {
         if (d.loyal) add(out, "Never moves out on their own", "+");
         if (d.homeShift > 0) add(out, "Wants a home " + d.homeShift + " size bigger than they can comfortably pay for", null);
         if (d.homeShift < 0) add(out, "Happy with a home " + (-d.homeShift) + " size smaller than they can pay for", null);
-        if (d.criminal) add(out, "Security makes them unhappy instead of happy", "-");
+        if (d.criminal) add(out, "A criminal: hates the police and anything that spies on them", "-");
+        if (d.health != 0f) add(out, signed(d.health) + " health", d.health > 0 ? "+" : "-");
         for (java.util.Map.Entry<String, Float> e : d.levels.entrySet()) {
+            landlordsector.data.Environment.Score sc = landlordsector.data.Environment.score(e.getKey());
+            if (sc != null) {
+                float f = e.getValue();
+                String text = f <= 0.001f ? sc.name + " does not matter to them"
+                        : (f > 1f ? sc.name + " matters " + round2(f) + " times as much to them"
+                                : sc.name + " matters less to them (x" + round2(f) + ")");
+                add(out, text, null);
+                continue;
+            }
             landlordsector.data.Levels.Def ld = landlordsector.data.Levels.get(e.getKey());
             if (ld == null) continue;
             float f = e.getValue();
@@ -215,7 +228,7 @@ public final class Tips {
         for (java.util.Map.Entry<String, Float> e : events.entrySet()) {
             landlordsector.data.TenantEvents.Def ev = landlordsector.data.TenantEvents.get(e.getKey());
             if (ev == null) continue;
-            String key = (ev.good ? "good|" : "bad|") + ev.kind;
+            String key = (ev.good ? "good|" : "bad|") + ev.kind + (ev.tenant ? "|t" : "|h");
             float[] s = sums.computeIfAbsent(key, k -> new float[2]);
             s[0] += (float) Math.log(Math.max(0.01f, e.getValue()));
             s[1]++;
@@ -225,10 +238,11 @@ public final class Tips {
             float mult = (float) Math.exp(e.getValue()[0] / e.getValue()[1]);
             if (Math.abs(mult - 1f) < 0.05f) continue;
             boolean good = e.getKey().startsWith("good|");
-            String kind = landlordsector.data.TenantEvents.kindName(e.getKey().substring(e.getKey().indexOf('|') + 1));
+            String[] k = e.getKey().split("\\|");
+            String kind = landlordsector.data.TenantEvents.kindName(k[1]);
             boolean more = mult > 1f;
             String text = (more ? "More" : "Less") + " likely to have " + (good ? "good" : "bad")
-                    + " house events about " + kind;
+                    + (e.getKey().endsWith("|t") ? " tenant" : " house") + " events about " + kind;
             add(out, text, more == good ? "+" : "-");
         }
         return out;

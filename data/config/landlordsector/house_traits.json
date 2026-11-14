@@ -7,7 +7,9 @@
 	#   station: true for stations only, false for planets only
 	#   minTier, maxTier: 0 shack, 1 studio, 2 small house, 3 house, 4 villa, 5 estate
 	# Effects: comfort, decor, happiness, health, security (added), price, wear (multiplied).
-	# levels: home levels it changes (levels.json), {"heat":1} hotter, {"air":-1} worse air, {"noise":-1} quieter.
+	# levels: home levels it changes (levels.json), {"heat":1} hotter, {"radiation":-1} shielded.
+	# env: environment scores it changes (environment.json, 0.5.0), {"air":-15} dirtier air, {"noise":20} quieter.
+	# mark: left on a home by tenants or events (Graffiti, Dirty); repairs clean it off. weight 0: never rolled.
 	# kids, events: see upgrades.json. Upgrades use the same effects.
 	# 0.4.0: Toasty, Air-conditioned, Renovated, Fortified, Barred, Shielded and Poolside became renovations
 	#   (upgrades.json, same ids). Homes that had them keep them as installed renovations.
@@ -21,22 +23,31 @@
 		{"id":"lakeside", "name":"Lakefront", "good":true, "weight":2, "anyCondition":["BSF_freshwaterLake","jdp_quarryLakes","water_surface","farmland_rich","farmland_bountiful"], "comfort":4, "tags":["water"]},
 		{"id":"mountain_view", "name":"Panoramic", "good":true, "weight":2, "station":false, "comfort":3, "tags":["view"]},
 		{"id":"starview", "name":"Starlit", "good":true, "weight":3, "station":true, "comfort":4, "tags":["view"]},
-		{"id":"recycled_air", "name":"Stale", "good":false, "weight":3, "station":true, "comfort":-4, "levels":{"air":-1}, "tags":["stale_air"]},
+		{"id":"recycled_air", "name":"Stale", "good":false, "weight":3, "station":true, "comfort":-4, "env":{"air":-15}, "tags":["stale_air"]},
 		{"id":"lava_lake", "name":"Scorched", "good":false, "weight":4, "anyCondition":["very_hot","extreme_tectonic_activity","tectonic_activity"], "price":0.92, "comfort":-6, "levels":{"heat":1}, "tags":["heat"]},
 		{"id":"frozen_pipes", "name":"Freezing", "good":false, "weight":3, "anyCondition":["cold","very_cold"], "wear":1.15, "levels":{"cold":1}, "tags":["cold"], "conflicts":["geothermal"]},
 		{"id":"geothermal", "name":"Geothermal", "good":true, "weight":2, "anyCondition":["cold","very_cold"], "station":false, "cancels":{"cold":0.25,"very_cold":0.5}, "levels":{"cold":-2}, "conflicts":["frozen_pipes"]},
-		{"id":"damp", "name":"Musty", "good":false, "weight":3, "climates":["ocean","jungle"], "comfort":-4, "wear":1.1, "levels":{"air":-1}, "tags":["damp"]},
-		{"id":"smog", "name":"Smoggy", "good":false, "weight":4, "anyCondition":["pollution","industrial_polity"], "comfort":-5, "levels":{"air":-1}, "tags":["smog"]},
-		{"id":"dust", "name":"Dusty", "good":false, "weight":3, "climates":["arid"], "comfort":-3, "wear":1.1, "levels":{"air":-1}, "tags":["dust"]},
-		{"id":"spaceport", "name":"Thunderous", "good":false, "weight":2, "happiness":-4, "levels":{"noise":1}, "tags":["noise","busy"], "conflicts":["quiet_street"]},
-		{"id":"quiet_street", "name":"Tranquil", "good":true, "weight":2, "happiness":4, "levels":{"noise":-1}, "tags":["quiet"], "conflicts":["spaceport"]},
+		{"id":"damp", "name":"Musty", "good":false, "weight":3, "climates":["ocean","jungle"], "comfort":-4, "wear":1.1, "health":-3, "env":{"air":-10}, "tags":["damp"]},
+		{"id":"smog", "name":"Smoggy", "good":false, "weight":4, "anyCondition":["pollution","industrial_polity"], "comfort":-5, "env":{"air":-15}, "tags":["smog"]},
+		{"id":"dust", "name":"Dusty", "good":false, "weight":3, "climates":["arid"], "comfort":-3, "wear":1.1, "env":{"air":-10}, "tags":["dust"]},
+		{"id":"spaceport", "name":"Thunderous", "good":false, "weight":2, "env":{"noise":-20}, "tags":["noise","busy"], "conflicts":["quiet_street"]},
+		{"id":"quiet_street", "name":"Tranquil", "good":true, "weight":2, "happiness":2, "env":{"noise":20}, "tags":["quiet"], "conflicts":["spaceport"]},
 		{"id":"market_nearby", "name":"Bustling", "good":true, "weight":2, "happiness":3, "tags":["busy"]},
-		{"id":"thin_walls", "name":"Thin-walled", "good":false, "weight":3, "maxTier":1, "happiness":-3, "levels":{"noise":1}, "tags":["noise"]},
+		{"id":"thin_walls", "name":"Thin-walled", "good":false, "weight":3, "maxTier":1, "env":{"noise":-15}, "tags":["noise"]},
 		{"id":"cramped", "name":"Cramped", "good":false, "weight":2, "maxTier":2, "comfort":-3},
 		{"id":"leaky_roof", "name":"Leaky", "good":false, "weight":2, "station":false, "wear":1.2},
 		{"id":"ruins", "name":"Historic", "good":true, "weight":3, "anyCondition":["ruins_scattered","ruins_widespread","ruins_extensive","ruins_vast"], "price":1.05, "tags":["history"]},
 		{"id":"fungus_cellar", "name":"Mushroomy", "good":true, "weight":5, "anyCondition":["US_shrooms"], "happiness":6, "tags":["fungus"]},
 		{"id":"lobster_pond", "name":"Pondside", "good":true, "weight":4, "anyCondition":["volturnian_lobster_pens","DE_Lobsters","DE_Lobsters_PAGSM","jdp_volturnianLobsterPens"], "happiness":3, "tags":["pets"]},
+		{"id":"clean", "name":"Clean", "good":true, "weight":2, "health":10, "decor":2, "conflicts":["dirty","infested"]},
+		{"id":"dirty", "name":"Dirty", "good":false, "weight":2, "mark":true, "health":-10, "decor":-3, "conflicts":["clean"]},
+		{"id":"infested", "name":"Infested", "good":false, "weight":1.5, "health":-6, "happiness":-3, "conflicts":["clean"]},
+		{"id":"asbestos", "name":"Asbestos", "good":false, "weight":1, "minTier":1, "health":-8},
+		{"id":"spacious", "name":"Spacious", "good":true, "weight":2, "minTier":1, "comfort":6, "conflicts":["cramped"]},
+		{"id":"drafty", "name":"Drafty", "good":false, "weight":2, "anyCondition":["cold","very_cold"], "comfort":-2, "levels":{"cold":1}, "conflicts":["geothermal"]},
+		{"id":"sunny", "name":"Sunny", "good":true, "weight":2, "station":false, "happiness":3, "decor":2, "tags":["view"]},
+		{"id":"underground", "name":"Underground", "good":true, "weight":3, "station":false, "anyCondition":["irradiated","no_atmosphere","bbplus_sigmairradiated"], "comfort":-2, "levels":{"radiation":-1}},
+		{"id":"graffiti", "name":"Graffiti", "good":false, "weight":0, "mark":true, "decor":-10},
 		{"id":"blossoms", "name":"Blossoming", "good":true, "weight":5, "anyCondition":["US_sakura"], "comfort":6, "tags":["flowers"]}
 	]
 }

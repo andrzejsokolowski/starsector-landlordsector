@@ -31,7 +31,7 @@ public class RealEstatePage implements ManagePage {
 
     private enum Mode { HOMES, POOL, FINDERS }
 
-    private enum Sub { DETAILS, TENANT, UPGRADES, LOG }
+    private enum Sub { DETAILS, TENANT, FURNITURE, UPGRADES, LOG }
 
     /** Kept while the game runs, so reopening the tab shows the same place. */
     private Mode mode = Mode.HOMES;
@@ -106,7 +106,7 @@ public class RealEstatePage implements ManagePage {
             b.selected = mode == m;
         }
 
-        /** H, P, U switch Homes, Tenant pool, Headhunters; D, T, G, L the home's Details, Tenants, Upgrades, Log. */
+        /** H, P, U switch Homes, Tenant pool, Headhunters; D, T, F, G, L the home's Details, Tenants, Furniture, Upgrades, Log. */
         @Override
         protected boolean onKey(int key) {
             String a = null;
@@ -116,6 +116,7 @@ public class RealEstatePage implements ManagePage {
                 case org.lwjgl.input.Keyboard.KEY_U: a = "mode:FINDERS"; break;
                 case org.lwjgl.input.Keyboard.KEY_D: if (mode == Mode.HOMES) a = "sub:DETAILS"; break;
                 case org.lwjgl.input.Keyboard.KEY_T: if (mode == Mode.HOMES) a = "sub:TENANT"; break;
+                case org.lwjgl.input.Keyboard.KEY_F: if (mode == Mode.HOMES) a = "sub:FURNITURE"; break;
                 case org.lwjgl.input.Keyboard.KEY_G: if (mode == Mode.HOMES) a = "sub:UPGRADES"; break;
                 case org.lwjgl.input.Keyboard.KEY_L: if (mode == Mode.HOMES && !sideLog()) a = "sub:LOG"; break;
                 default: break;
@@ -191,10 +192,12 @@ public class RealEstatePage implements ManagePage {
             Btn t = hotkeyButton("sub:TENANT", chosen.tenant != null ? "Tenants" : "Tenants: "
                     + chosen.applicants().size(), "T", rx + 136f, TOP, 130f, 24f);
             t.selected = sub == Sub.TENANT;
-            Btn g = hotkeyButton("sub:UPGRADES", "Upgrades", "G", rx + 272f, TOP, 130f, 24f);
+            Btn f = hotkeyButton("sub:FURNITURE", "Furniture", "F", rx + 272f, TOP, 130f, 24f);
+            f.selected = sub == Sub.FURNITURE;
+            Btn g = hotkeyButton("sub:UPGRADES", "Upgrades", "G", rx + 408f, TOP, 130f, 24f);
             g.selected = sub == Sub.UPGRADES;
             if (!sideLog) {
-                Btn l = hotkeyButton("sub:LOG", "Log", "L", rx + 408f, TOP, 130f, 24f);
+                Btn l = hotkeyButton("sub:LOG", "Log", "L", rx + 544f, TOP, 130f, 24f);
                 l.selected = sub == Sub.LOG;
             } else if (sub == Sub.LOG) {
                 sub = Sub.DETAILS;
@@ -204,6 +207,9 @@ public class RealEstatePage implements ManagePage {
             switch (sub) {
                 case TENANT:
                     buildTenantTab(chosen, rx, y0);
+                    break;
+                case FURNITURE:
+                    buildFurnitureTab(chosen, rx, y0);
                     break;
                 case UPGRADES:
                     buildUpgradesTab(chosen, rx, y0);
@@ -244,7 +250,10 @@ public class RealEstatePage implements ManagePage {
             float rw = rightW();
             Sheet s = new Sheet();
             s.title = chosen.name != null ? chosen.name : chosen.tier().name;
-            s.subtitle = chosen.tier().name + ", " + (m != null ? where(m, st) : chosen.marketName + " (gone)");
+            // Andrzej, 0.5.0: the place at the top, not under the picture.
+            text(chosen.tier().name + " on " + (m != null ? where(m) : chosen.marketName + " (gone)"),
+                    Misc.getGrayColor(), rx, y0, contentWidth(rw));
+            y0 += 22f;
             s.art = chosen.artPath;
             s.valueLine = Misc.getDGSCredits(chosen.value());
             s.valueLines = PropertyStats.valueLines(chosen.tier(), chosen.basePrice, st.grade, st.marketMult,
@@ -268,11 +277,12 @@ public class RealEstatePage implements ManagePage {
             s.stats = st;
             s.traits.addAll(houseTraits(chosen.traits()));
             s.upgrades.addAll(upgradeItems(chosen));
+            s.furniture.addAll(furnitureItems(chosen));
             s.extra.add(new String[] {"Bought for", Misc.getDGSCredits(chosen.paidPrice)});
             s.extra.add(new String[] {"Rent so far", Misc.getDGSCredits(chosen.totalRent)
                     + " (last month " + Misc.getDGSCredits(chosen.lastRent) + ")"});
             float maxImg = height - y0 - sheetTextHeight(s) - 48f;
-            float end = sheet(s, rx, y0, rw, Math.min(380f, maxImg));
+            float end = sheet(s, rx, y0, rw, maxImg);
 
             float cy = Math.min(end + 8f, height - 36f);
             RentSetting set = chosen.setting();
@@ -283,6 +293,9 @@ public class RealEstatePage implements ManagePage {
             float cost = chosen.repairCost();
             button("repair:" + chosen.id, cost > 0f ? "Repair for " + Misc.getDGSCredits(cost) : "No repairs needed",
                     rx + 220f, cy, 200f, 28f, cost > 0f && Actions.credits() >= cost && m != null);
+            if (chosen.hasMarks()) {
+                tip(rx + 220f, cy, 200f, 28f, "Repair", "Brings the home back to 100% and cleans off graffiti and dirt.");
+            }
             boolean confirm = chosen.id.equals(pendingSell);
             button("sell:" + chosen.id, (confirm ? "Confirm: sell for " : "Sell for ")
                     + Misc.getDGSCredits(chosen.saleValue(false)), rx + 430f, cy, 220f, 28f,
@@ -291,8 +304,8 @@ public class RealEstatePage implements ManagePage {
             boolean furnished = chosen.furnitureCount() > 0;
             tip(rx + 430f, cy, 220f, 28f, "Selling", "You can sell a home in any condition, rented or not. You get"
                     + " its value minus a " + Math.round(landlordsector.TierTable.economy().brokerFee * 100f)
-                    + "% broker fee and the local tariff." + (furnished ? " The furniture comes back to your cargo."
-                    : ""), noSale);
+                    + "% broker fee and the local tariff." + (furnished ? " The furniture goes back into your"
+                    + " furniture storage." : ""), noSale);
             // Only as wide as the sheet, so it never runs into the event log.
             float fw = Math.min(230f, contentWidth(rw) - 660f);
             if (furnished && fw >= 150f) {
@@ -373,82 +386,138 @@ public class RealEstatePage implements ManagePage {
         }
 
         /**
-         * Furniture and renovations (0.4.0): what is in the home, furniture in your cargo to place (delivered, from
-         * anywhere), and renovations to build.
+         * Furniture (0.5.0, Andrzej: "slots like the inventory ... drag&drop the furniture items into the squares"): one
+         * square per slot of the home, and the furniture storage under it. Drag a piece from the storage into a slot to
+         * place it, and from a slot back to the storage to take it out.
+         */
+        private void buildFurnitureTab(Property p, float rx, float y0) {
+            float cw = contentWidth(rightW());
+            int slots = p.tier().slots;
+            float gap = 8f;
+            float size = Math.max(56f, Math.min(96f, (cw - 7 * gap) / 8f));
+            List<landlordsector.Installed> placed = new ArrayList<>();
+            for (landlordsector.Installed i : p.upgrades()) if (i.furniture) placed.add(i);
+
+            float y = y0;
+            title("Furniture: " + placed.size() + " of " + slots, rx, y, cw);
+            tip(rx, y, cw, 26f, "Furniture", "Drag a piece from your storage into an empty square. Drag it back to"
+                    + " the storage to take it out. A home holds one of each piece.");
+            y += 32f;
+            for (int k = 0; k < slots; k++) {
+                float sx = rx + k * (size + gap);
+                box(sx, y, size, size);
+                dropZone("slot", sx, y, size, size);
+                if (k >= placed.size()) continue;
+                landlordsector.Installed i = placed.get(k);
+                String icon = icon(i.id);
+                portrait(icon, sx + 4f, y + 4f, size - 8f);
+                draggable("placed:" + p.id + ":" + p.upgrades().indexOf(i), icon, sx, y, size, size);
+                landlordsector.data.Upgrades.Def d = i.def();
+                if (d != null) tipColored(sx, y, size, size, d.name, landlordsector.ui.Tips.upgrade(d));
+            }
+            y += size + 24f;
+
+            java.util.Map<String, Integer> store = Portfolio.get().furniture();
+            int total = 0;
+            for (Integer n : store.values()) total += n;
+            title("Furniture storage: " + total, rx, y, cw);
+            tip(rx, y, cw, 26f, "Furniture storage", "Furniture you keep for your homes. Open markets on worlds with a"
+                    + " property agent sell a few pieces, and salvage sometimes has some. Right-click a piece in your"
+                    + " cargo to put it here.");
+            y += 32f;
+            int perRow = Math.max(1, (int) ((cw + gap) / (size + gap)));
+            int rows = Math.max(1, (store.size() + perRow - 1) / perRow);
+            float areaH = rows * (size + 22f + gap);
+            dropZone("storage", rx, y, cw, Math.max(size + 22f, areaH));
+            int k = 0;
+            for (java.util.Map.Entry<String, Integer> e : store.entrySet()) {
+                landlordsector.data.Upgrades.Def d = landlordsector.data.Upgrades.get(e.getKey());
+                if (d == null || e.getValue() <= 0) continue;
+                float sx = rx + (k % perRow) * (size + gap);
+                float sy = y + (k / perRow) * (size + 22f + gap);
+                box(sx, sy, size, size);
+                String icon = icon(d.id);
+                portrait(icon, sx + 4f, sy + 4f, size - 8f);
+                String no = Actions.cannotPlace(p, d);
+                label((e.getValue() > 1 ? e.getValue() + "x " : "") + d.name, no == null ? Misc.getTextColor()
+                        : Misc.getGrayColor(), sx - 4f, sy + size + 2f, size + 8f, 18f, Alignment.MID,
+                        Fonts.DEFAULT_SMALL);
+                List<String[]> lines = new ArrayList<>(landlordsector.ui.Tips.upgrade(d));
+                if (no != null && !no.startsWith("All furniture slots")) lines.add(new String[] {no, "-"});
+                tipColored(sx, sy, size, size + 20f, d.name, lines);
+                draggable("stored:" + p.id + ":" + d.id, icon, sx, sy, size, size);
+                k++;
+            }
+            float after = y + Math.max(size + 22f, areaH) + 8f;
+            if (k == 0) {
+                text("Empty. Open markets sell furniture, and salvage sometimes has some.", Misc.getGrayColor(), rx,
+                        y + 8f, cw);
+            }
+            int inCargo = Actions.furnitureInCargo();
+            if (inCargo > 0) {
+                text(inCargo + (inCargo == 1 ? " piece" : " pieces") + " of furniture in your cargo: right-click "
+                        + (inCargo == 1 ? "it" : "them") + " there to put " + (inCargo == 1 ? "it" : "them")
+                        + " in storage.", Misc.getHighlightColor(), rx, after, cw);
+            }
+        }
+
+        /** A piece of furniture's icon: its item's own picture. */
+        private String icon(String upgradeId) {
+            try {
+                String n = Global.getSettings().getSpecialItemSpec(landlordsector.data.Upgrades.ITEM_PREFIX + upgradeId)
+                        .getIconName();
+                if (n != null && !n.isEmpty()) return n;
+            } catch (Throwable ignored) {
+                // An item from a mod that is gone.
+            }
+            return "graphics/icons/cargo/landlordsector/" + upgradeId + ".png";
+        }
+
+        @Override
+        protected void onDrop(Object dragKey, Object dropKey) {
+            String[] parts = String.valueOf(dragKey).split(":");
+            if (parts.length < 3) return;
+            Property p = findHome(parts[1]);
+            if (p == null) return;
+            if ("stored".equals(parts[0]) && "slot".equals(dropKey)) {
+                landlordsector.data.Upgrades.Def d = landlordsector.data.Upgrades.get(parts[2]);
+                if (d != null) result(Actions.place(p, d));
+            } else if ("placed".equals(parts[0]) && "storage".equals(dropKey)) {
+                result(Actions.takeBack(p, installedAt(p, parts[2])));
+            } else {
+                return;
+            }
+            rebuild();
+        }
+
+        /**
+         * Upgrades (0.5.0, Andrzej: "Upgrades are permanent", built at once, no slots, the cost in the Build button's
+         * tooltip): what the home has, then what it can get.
          */
         private void buildUpgradesTab(Property p, float rx, float y0) {
             float cw = contentWidth(rightW());
             float col = (cw - 16f) / 2f;
             float lx = rx, gx = rx + col + 16f;
-            int fSlots = p.tier().slots;
-            int rSlots = landlordsector.data.Upgrades.renovationSlots(p.tierId);
 
-            // Furniture: placed, then the cargo.
             float y = y0;
-            title("Furniture: " + p.furnitureCount() + " of " + fSlots, lx, y, col);
-            tip(lx, y, col, 26f, "Furniture slots", "A " + p.tier().name.toLowerCase() + " holds " + fSlots
-                    + " pieces of furniture. Open markets that sell homes stock a few pieces, and salvage sometimes"
-                    + " has some. Place it from here wherever you are; it is delivered.");
+            title("Upgrades", lx, y, col);
+            tip(lx, y, col, 26f, "Upgrades", "Upgrades are permanent.");
             y += 30f;
             boolean any = false;
             for (landlordsector.Installed i : p.upgrades()) {
-                if (!i.furniture) continue;
+                if (i.furniture) continue;
                 any = true;
-                upgradeName(i.def(), i.name(), Boolean.TRUE, lx, y + 5f, col - 130f);
-                button("takeback:" + p.id + ":" + p.upgrades().indexOf(i), "Take back", lx + col - 120f, y, 120f, 26f,
+                if (y > height - 40f) break;
+                upgradeName(i.def(), i.name(), Boolean.TRUE, lx, y + 5f, col - 110f);
+                button("remove:" + p.id + ":" + p.upgrades().indexOf(i), "Remove", lx + col - 100f, y, 100f, 26f,
                         true);
                 y += 30f;
             }
-            if (!any) {
-                text("No furniture yet.", Misc.getGrayColor(), lx, y, col);
-                y += 24f;
-            }
-            y += 8f;
-            text("In your cargo", Misc.getGrayColor(), lx, y, col);
-            y += 22f;
-            boolean cargo = false;
-            for (landlordsector.data.Upgrades.Def d : landlordsector.data.Upgrades.of(
-                    landlordsector.data.Upgrades.Kind.FURNITURE)) {
-                int n = Actions.inCargo(d);
-                if (n <= 0) continue;
-                cargo = true;
-                if (y > height - 40f) break;
-                String no = Actions.cannotPlace(p, d);
-                upgradeName(d, d.name + (n > 1 ? " x" + n : ""), null, lx, y + 5f, col - 130f);
-                button("place:" + p.id + ":" + d.id, "Place", lx + col - 120f, y, 120f, 26f, no == null);
-                if (no != null) tip(lx + col - 120f, y, 120f, 26f, "Place", no);
-                y += 30f;
-            }
-            if (!cargo) {
-                text("You have no furniture in your cargo.", Misc.getGrayColor(), lx, y, col);
-            }
+            if (!any) text("None yet.", Misc.getGrayColor(), lx, y, col);
 
-            // Renovations: built or being built, then what can be built.
             y = y0;
-            title("Renovations: " + p.renovationCount() + " of " + rSlots, gx, y, col);
-            tip(gx, y, col, 26f, "Renovation slots", "A " + p.tier().name.toLowerCase() + " has room for " + rSlots
-                    + (rSlots == 1 ? " renovation" : " renovations") + ". They are built with credits, take some"
-                    + " days, stay with the home and raise its value. One-time jobs (a new roof) take no slot.");
+            title("Build", gx, y, col);
             y += 30f;
-            any = false;
-            for (landlordsector.Installed i : p.upgrades()) {
-                if (i.furniture) continue;
-                any = true;
-                String name = i.ready() ? i.name() : i.name() + ", " + Math.max(1, Math.round(i.daysLeft()))
-                        + " days left";
-                upgradeName(i.def(), name, i.ready() ? Boolean.TRUE : null, gx, y + 5f, col - 130f);
-                button("tearout:" + p.id + ":" + p.upgrades().indexOf(i), "Tear out", gx + col - 120f, y, 120f, 26f,
-                        i.ready());
-                tip(gx + col - 120f, y, 120f, 26f, "Tear out", "Removes it to free its slot. Nothing is paid back.");
-                y += 30f;
-            }
-            if (!any) {
-                text("No renovations yet.", Misc.getGrayColor(), gx, y, col);
-                y += 24f;
-            }
-            y += 8f;
-            text("Build", Misc.getGrayColor(), gx, y, col);
-            y += 22f;
             int hidden = 0;
             for (landlordsector.data.Upgrades.Def d : landlordsector.data.Upgrades.of(
                     landlordsector.data.Upgrades.Kind.RENOVATION)) {
@@ -461,10 +530,13 @@ public class RealEstatePage implements ManagePage {
                 }
                 float cost = Actions.renovationCost(p, d);
                 String no = Actions.cannotBuild(p, d);
-                upgradeName(d, d.name + ", " + Math.round(d.days) + " days", null, gx, y + 5f, col - 190f);
+                upgradeName(d, d.name, null, gx, y + 5f, col - 190f);
                 button("build:" + p.id + ":" + d.id, "Build for " + Misc.getDGSCredits(cost), gx + col - 180f, y, 180f,
                         26f, no == null);
-                if (no != null) tip(gx + col - 180f, y, 180f, 26f, "Build", no);
+                String costLine = "Costs " + Math.round(d.cost * 100f) + "% of the home's value, at least "
+                        + Misc.getDGSCredits(d.minCost) + ".";
+                if (no != null) tip(gx + col - 180f, y, 180f, 26f, d.name, costLine, no);
+                else tip(gx + col - 180f, y, 180f, 26f, d.name, costLine);
                 y += 30f;
             }
             if (hidden > 0) text("And " + hidden + " more that do not fit on the screen.", Misc.getGrayColor(), gx, y, col);
@@ -801,21 +873,13 @@ public class RealEstatePage implements ManagePage {
                         return "furnished:" + pr.id;
                     }
                     break;
-                case "place": {
-                    landlordsector.data.Upgrades.Def d = landlordsector.data.Upgrades.get(parts[2]);
-                    if (d != null) result(Actions.place(pr, d));
-                    break;
-                }
                 case "build": {
                     landlordsector.data.Upgrades.Def d = landlordsector.data.Upgrades.get(parts[2]);
                     if (d != null) result(Actions.build(pr, d));
                     break;
                 }
-                case "takeback":
-                    result(Actions.takeBack(pr, installedAt(pr, parts[2])));
-                    break;
-                case "tearout":
-                    result(Actions.tearOut(pr, installedAt(pr, parts[2])));
+                case "remove":
+                    result(Actions.remove(pr, installedAt(pr, parts[2])));
                     break;
                 case "sell":
                     if (pr.id.equals(pendingSell)) {
@@ -858,7 +922,7 @@ public class RealEstatePage implements ManagePage {
             boolean ok = text.startsWith("Sold") || text.startsWith("Repaired") || text.startsWith("Rebuilt")
                     || text.startsWith("Screened") || text.contains(" moved into ") || text.startsWith("Turned")
                     || text.startsWith("Evicted") || text.startsWith("Placed") || text.startsWith("Took back")
-                    || text.startsWith("Started") || text.startsWith("Tore out");
+                    || text.startsWith("Built") || text.startsWith("Removed");
             if (ok) good(text);
             else bad(text);
         }

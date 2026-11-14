@@ -110,13 +110,19 @@ public final class RulesCheck {
                 "taste never changes what a tenant can pay");
         expect(Pricing.decorHappiness(0f) < -5f && Pricing.decorHappiness(Pricing.DECOR_PLAIN) == 0f
                 && Pricing.decorHappiness(100f) > 20f, "bare walls cost happiness, plain is neutral, furnished adds");
-        expect(Pricing.securityHappiness(90f, false) > 0f && Pricing.securityHappiness(90f, true) < 0f
-                && Pricing.securityHappiness(10f, false) < 0f, "law-abiding tenants like security, criminals don't");
+        expect(Pricing.securityHappiness(90f, false) > 0f && Pricing.securityHappiness(90f, true) > 0f
+                && Pricing.securityHappiness(10f, false) < 0f, "everyone likes security, criminals too (0.5.0)");
+        expect(landlordsector.data.TenantTraits.get("shady").dislikes.contains("police")
+                && landlordsector.data.TenantTraits.get("vandal").dislikes.contains("spying"),
+                "criminals hate the police and spying");
         landlordsector.data.TenantEvents.Def tipEv = landlordsector.data.TenantEvents.get("tip");
         expect(tipEv != null && tipEv.requires.contains("generous"), "only Generous tenants tip");
         // 0.3.9: big events carry a line in the tenant's own voice; trait lines win over faction and plain ones.
         for (landlordsector.data.TenantEvents.Def ev : landlordsector.data.TenantEvents.all()) {
-            if (ev.big) expect(landlordsector.data.TenantEvents.hasMessages(ev.id), ev.id + " is big but has no tenant message");
+            // A tenant who died sends no message.
+            if (ev.big && !ev.dies) {
+                expect(landlordsector.data.TenantEvents.hasMessages(ev.id), ev.id + " is big but has no tenant message");
+            }
         }
         java.util.Random sayRnd = new java.util.Random(3);
         for (int i = 0; i < 20; i++) {
@@ -222,9 +228,11 @@ public final class RulesCheck {
                 "US_shrooms")), "hegemony").size() == 1, "matching skips owner-only effects of other owners");
         java.util.Set<String> houseTags = new java.util.HashSet<>();
         for (landlordsector.data.Upgrades.Def u : landlordsector.data.Upgrades.all()) houseTags.addAll(u.effects.tags);
+        // 0.5.0: neighbours and colony buildings carry tags too (police, spying).
+        houseTags.addAll(landlordsector.data.Environment.allTags());
         for (landlordsector.data.HouseTraits.Def d : landlordsector.data.HouseTraits.all()) {
             houseTags.addAll(d.tags);
-            expect(d.weight > 0f && d.price > 0.5f && d.price < 1.5f && d.wear > 0.5f && d.wear < 1.5f,
+            expect((d.weight > 0f || d.mark) && d.price > 0.5f && d.price < 1.5f && d.wear > 0.5f && d.wear < 1.5f,
                     "house trait " + d.id + " has sane numbers");
             for (String c : d.conflicts) expect(landlordsector.data.HouseTraits.get(c) != null, d.id + " conflicts with a real trait");
         }
@@ -281,10 +289,9 @@ public final class RulesCheck {
         expect(landlordsector.data.HouseTraits.get("geothermal").conflicts.contains("frozen_pipes")
                 && landlordsector.data.HouseTraits.get("frozen_pipes").conflicts.contains("geothermal"),
                 "a Geothermal home is never also Freezing");
-        expect(Math.abs(landlordsector.data.HouseTraits.hazardOffset(
-                java.util.Collections.singletonList("air_conditioned"),
-                new java.util.HashSet<>(java.util.Arrays.asList("very_hot"))) - 0.5f) < 0.001f,
-                "Air-conditioned takes the extreme heat's 50% hazard off its home");
+        expect(landlordsector.data.HouseTraits.get("air_conditioned").cancels.isEmpty()
+                && landlordsector.data.HouseTraits.get("air_conditioned").levels.get("heat") == -1f,
+                "Air conditioning reads Heat -1 (0.5.0), not a cancelled condition");
         java.util.Random geoRoll = new java.util.Random(7);
         for (int i = 0; i < 2000; i++) {
             java.util.List<String> r = landlordsector.data.HouseTraits.roll(cold, "cold", false, 3, geoRoll);
@@ -362,9 +369,18 @@ public final class RulesCheck {
                 "cheap rent draws applicants faster");
         expect(landlordsector.data.TenantEvents.minDaysBetween() >= 5f, "at most one event per home every 5 days (Andrzej)");
 
-        // Listings by size.
-        expect(Pricing.listingCount(3) == 1 && Pricing.listingCount(5) == 2 && Pricing.listingCount(7) == 3
-                && Pricing.listingCount(12) == 4, "fewer listings now that every market has an agent");
+        // Listings by size (0.5.0, Andrzej: "Size 8 = 8 properties potentially").
+        expect(Pricing.listingCount(8) == 8 && Pricing.listingCount(2) == 0, "a market has room for one home per size");
+        java.util.Random lr = new java.util.Random(4);
+        int lo = 99, hi = 0;
+        for (int i = 0; i < 500; i++) {
+            int n = MarketRules.listingRoll(8, lr);
+            lo = Math.min(lo, n);
+            hi = Math.max(hi, n);
+        }
+        expect(lo == 4 && hi == 8, "a size 8 market with nothing owned lists 4 to 8 homes, got " + lo + " to " + hi);
+        expect(MarketRules.listingRoll(0, lr) == 0 && MarketRules.listingRoll(1, lr) == 1,
+                "no room, no listings; one free home lists one");
 
         // Climates from vanilla planet types.
         expect(Climate.ofType("terran") == Climate.TEMPERATE, "terran is temperate");
@@ -412,6 +428,7 @@ public final class RulesCheck {
         landlordsector.data.Names.load(json(dir.resolve("names.json")));
         landlordsector.data.Upgrades.load(json(dir.resolve("upgrades.json")));
         landlordsector.data.Levels.load(json(dir.resolve("levels.json")));
+        landlordsector.data.Environment.load(json(dir.resolve("environment.json")));
     }
 
     /**
@@ -452,16 +469,24 @@ public final class RulesCheck {
                 "art.json: a shack picture for every planet type");
     }
 
-    /** 0.4.0: upgrades, home levels and health: every entry names real things, and the health math holds. */
+    /** 0.4.0 and 0.5.0: upgrades, levels, environment and health: every entry names real things, the math holds. */
     private static void checkUpgrades040(java.nio.file.Path dir) throws Exception {
-        expect(landlordsector.data.Levels.all().size() == 5, "five home levels");
+        expect(landlordsector.data.Levels.all().size() == 3 && landlordsector.data.Levels.get("radiation") != null
+                && landlordsector.data.Levels.get("light") == null, "three home levels: heat, cold, radiation (0.5.0)");
+        expect(landlordsector.data.Environment.scores().size() == 3, "three environment grades: commute, air, noise");
         expect(landlordsector.data.Upgrades.of(landlordsector.data.Upgrades.Kind.FURNITURE).size() >= 15,
                 "at least 15 pieces of furniture");
+        expect(landlordsector.data.Upgrades.of(landlordsector.data.Upgrades.Kind.RENOVATION).size() >= 25,
+                "at least 25 upgrades (0.5.0: more upgrades)");
         java.util.Set<String> levelIds = new java.util.HashSet<>();
         for (landlordsector.data.Levels.Def l : landlordsector.data.Levels.all()) {
             levelIds.add(l.id);
             expect(l.words.length == 4, l.id + ": four words, 0 to 3");
         }
+        java.util.Set<String> envIds = new java.util.HashSet<>();
+        for (landlordsector.data.Environment.Score sc : landlordsector.data.Environment.scores()) envIds.add(sc.id);
+        java.util.Set<String> multIds = new java.util.HashSet<>(levelIds);
+        multIds.addAll(envIds);
         // The cargo items for furniture.
         java.nio.file.Path csv = dir.resolve("../../campaign/special_items.csv").normalize();
         java.util.Map<String, String[]> rows = new java.util.HashMap<>();
@@ -475,14 +500,16 @@ public final class RulesCheck {
         for (landlordsector.data.TenantTraits.Def t : landlordsector.data.TenantTraits.all()) {
             likedTags.addAll(t.likes);
             likedTags.addAll(t.dislikes);
-            for (String l : t.levels.keySet()) expect(levelIds.contains(l), t.id + " names unknown level " + l);
+            for (String l : t.levels.keySet()) expect(multIds.contains(l), t.id + " names unknown level or grade " + l);
         }
         for (landlordsector.data.HouseTraits.Def h : landlordsector.data.HouseTraits.all()) {
             for (String l : h.levels.keySet()) expect(levelIds.contains(l), h.id + " names unknown level " + l);
+            for (String l : h.env.keySet()) expect(envIds.contains(l), h.id + " names unknown grade " + l);
             expect(landlordsector.data.Upgrades.get(h.id) == null, h.id + " is both a house trait and an upgrade");
         }
         for (landlordsector.data.Upgrades.Def d : landlordsector.data.Upgrades.all()) {
             for (String l : d.effects.levels.keySet()) expect(levelIds.contains(l), d.id + " names unknown level " + l);
+            for (String l : d.effects.env.keySet()) expect(envIds.contains(l), d.id + " names unknown grade " + l);
             for (String e : d.effects.events.keySet()) expect(eventIds.contains(e), d.id + " names unknown event " + e);
             for (String t : d.effects.tags) expect(likedTags.contains(t), d.id + ": no tenant likes or hates tag " + t);
             for (String k : d.effects.kids.keySet()) {
@@ -490,6 +517,7 @@ public final class RulesCheck {
             }
             for (String t : d.needs) expect(landlordsector.data.HouseTraits.isTrait(t), d.id + " needs unknown trait " + t);
             for (String t : d.fixes) expect(landlordsector.data.HouseTraits.isTrait(t), d.id + " fixes unknown trait " + t);
+            for (String c : d.conflicts) expect(landlordsector.data.Upgrades.get(c) != null, d.id + " conflicts with unknown " + c);
             if (d.furniture()) {
                 String[] row = rows.get(d.itemId());
                 expect(row != null, d.id + ": no special_items.csv row " + d.itemId());
@@ -500,30 +528,52 @@ public final class RulesCheck {
                     expect(row[15].trim().matches("\\d+"), d.id + ": item order must be a number");
                 }
             } else {
-                expect(d.days > 0f && d.minCost > 0f && d.cost > 0f, d.id + ": a renovation has a cost and days");
+                expect(d.minCost > 0f && d.cost > 0f, d.id + ": an upgrade has a cost");
+                expect(!(d.valueShare > 0f && d.effects.price != 1f), d.id + ": a flat value or a percent, not both");
             }
         }
-        for (Tier t : TierTable.all()) {
-            expect(landlordsector.data.Upgrades.renovationSlots(t.id) >= 1, t.id + ": renovation slots");
-        }
+        // Andrzej's names (0.5.0).
+        expect("Better insulation".equals(landlordsector.data.Upgrades.get("insulation").name)
+                && "Fire sprinkler system".equals(landlordsector.data.Upgrades.get("sprinklers").name),
+                "upgrade names: Better insulation, Fire sprinkler system");
+        expect(landlordsector.data.Upgrades.get("air_conditioned").minTier == 0, "shacks can get air conditioning");
+        expect(landlordsector.data.Upgrades.get("lead_lined").effects.levels.get("radiation") < 0f,
+                "Lead lining shields from radiation");
+        expect(landlordsector.data.Upgrades.get("massage_chair").effects.decor < 0f
+                && landlordsector.data.Upgrades.get("massage_chair").effects.happiness > 0f,
+                "the massage chair trades decor for happiness");
+        expect(landlordsector.data.Upgrades.get("air_conditioned").valueShare > 0f
+                && landlordsector.data.Upgrades.get("new_plumbing").effects.price > 1f,
+                "air conditioning adds a flat value, new plumbing a percent");
         // The seven traits that became renovations (0.4.0) keep their ids as upgrades.
         for (String id : new String[] {"heated_floors", "air_conditioned", "new_plumbing", "reinforced", "bars",
                 "lead_lined", "pool"}) {
             expect(!landlordsector.data.HouseTraits.isTrait(id) && landlordsector.data.Upgrades.get(id) != null,
                     id + " is a renovation now");
         }
-        // Levels: Heat -1 cools, Air +1 cleans.
+        // Levels: Heat -1 cools.
         landlordsector.data.Levels.Def heat = landlordsector.data.Levels.get("heat");
-        landlordsector.data.Levels.Def air = landlordsector.data.Levels.get("air");
-        expect(landlordsector.data.Levels.severity(heat, -1f) == -1f && landlordsector.data.Levels.severity(air, 1f) == -1f,
-                "Heat -1 and Air +1 both make a home better");
+        expect(landlordsector.data.Levels.severity(heat, -1f) == -1f, "Heat -1 makes a home better");
         expect("Heat: Hot (1)".equals(landlordsector.data.Levels.label(heat, 1)), "levels read Heat: Hot (1)");
-        expect(landlordsector.data.Levels.fromPlace(air, java.util.Set.of("pollution", "toxic_atmosphere"), 5, null) == 3,
-                "pollution and a toxic atmosphere add up to Toxic air");
-        landlordsector.data.Levels.Def noise = landlordsector.data.Levels.get("noise");
-        expect(landlordsector.data.Levels.fromPlace(noise, java.util.Set.of(), 6, null) == 0
-                && landlordsector.data.Levels.fromPlace(noise, java.util.Set.of(), 9, null) == 2,
-                "big markets are noisy");
+        landlordsector.data.Levels.Def rad = landlordsector.data.Levels.get("radiation");
+        expect(landlordsector.data.Levels.fromPlace(rad, java.util.Set.of("irradiated"), 5, null) == 2
+                && landlordsector.data.Levels.fromPlace(rad, java.util.Set.of("no_atmosphere"), 5, null) == 1,
+                "irradiated worlds give Radiation 2, no atmosphere 1");
+        // Environment.
+        expect("S".equals(landlordsector.data.Environment.letter(95f)) && "C".equals(landlordsector.data.Environment.letter(50f))
+                && "F".equals(landlordsector.data.Environment.letter(5f)), "grades from S to F");
+        landlordsector.data.Environment.Neighbor mining = landlordsector.data.Environment.of("mining",
+                java.util.Set.of("mining", "industry", "industrial"));
+        expect(mining.noise < 0f && mining.air < 0f && mining.price < 1f, "Mining next door is loud, dirty and cheap");
+        landlordsector.data.Environment.Neighbor resort = landlordsector.data.Environment.of("aotd_resort_center",
+                java.util.Set.of("tourism", "industry"));
+        expect(resort.price >= 1.3f, "a Resort Center next door is the best location");
+        expect(!landlordsector.data.Environment.pickable("orbitalstation", java.util.Set.of("station"))
+                && landlordsector.data.Environment.pickable("mining", java.util.Set.of("mining")),
+                "no home sits next to an orbital station");
+        expect(landlordsector.data.Environment.colonyTags("patrolhq", java.util.Set.of("patrol")).contains("police")
+                && landlordsector.data.Environment.colonyTags("BOGGLED_CHAMELEON", java.util.Set.of("structure"))
+                        .contains("spying"), "the Patrol HQ is police, CHAMELEON is spying");
         // Health.
         float sick = landlordsector.data.Levels.sickBelow();
         expect(TenantRules.sickness(sick, sick) == 0f && TenantRules.sickness(0f, sick) == 1f, "sickness from 0 to 1");
@@ -535,8 +585,37 @@ public final class RulesCheck {
                 "a worn home costs health from 50% condition down");
         expect(TenantRules.treatmentChance(10f, 20f, false) > 0f && TenantRules.treatmentChance(10f, 20f, true) == 0f
                 && TenantRules.treatmentChance(30f, 20f, false) == 0f, "only very sick, not loyal tenants leave for treatment");
-        expect(landlordsector.data.TenantEvents.get("fell_sick") != null
-                && landlordsector.data.TenantEvents.get("fell_sick").sickOnly, "the fell sick event is for sick tenants");
+        expect(TenantRules.healthWeight(false, 95f) < TenantRules.healthWeight(false, 30f)
+                && TenantRules.healthWeight(true, 95f) > TenantRules.healthWeight(true, 30f),
+                "high health makes bad health events rarer and good ones more common");
+        expect(TenantRules.belowWeight(25f, 30f) == 0f && TenantRules.belowWeight(25f, 5f) > 0f,
+                "dying of an illness only below its health line");
+        // Events (0.5.0): house and tenant events are separate.
+        int house = 0, tenant = 0;
+        for (landlordsector.data.TenantEvents.Def e : landlordsector.data.TenantEvents.all()) {
+            if (e.tenant) tenant++;
+            else house++;
+            if (e.addTrait != null) expect(landlordsector.data.HouseTraits.isTrait(e.addTrait), e.id + " adds unknown trait");
+            if (e.removeTrait != null) expect(landlordsector.data.HouseTraits.isTrait(e.removeTrait), e.id + " removes unknown trait");
+            if (e.addTenantTrait != null) expect(landlordsector.data.TenantTraits.get(e.addTenantTrait) != null, e.id + " adds unknown tenant trait");
+            if (e.removeTenantTrait != null) expect(landlordsector.data.TenantTraits.get(e.removeTenantTrait) != null, e.id + " removes unknown tenant trait");
+            expect(landlordsector.data.TenantEvents.hasKind(e.kind), e.id + ": unknown kind " + e.kind);
+        }
+        expect(house >= 12 && tenant >= 15, "house events and tenant events: " + house + " and " + tenant);
+        for (String id : new String[] {"burglary", "small_fire", "graffiti"}) {
+            expect(!landlordsector.data.TenantEvents.get(id).tenant, id + " is a house event");
+        }
+        for (String id : new String[] {"killed", "hospital", "child_born", "partner_moves_in", "pet_acquired", "mugged",
+                "died_ill", "fell_sick"}) {
+            expect(landlordsector.data.TenantEvents.get(id) != null && landlordsector.data.TenantEvents.get(id).tenant,
+                    id + " is a tenant event");
+        }
+        expect(landlordsector.data.TenantEvents.get("died_ill").dies && landlordsector.data.TenantEvents.get("killed").dies,
+                "tenants can die");
+        expect(landlordsector.data.HouseTraits.get("graffiti").mark && landlordsector.data.HouseTraits.get("graffiti").decor < 0f
+                && landlordsector.data.HouseTraits.get("graffiti").weight == 0f, "graffiti is a mark that lowers decor");
+        expect(landlordsector.data.HouseTraits.get("clean").health > 0f && landlordsector.data.HouseTraits.get("dirty").health < 0f,
+                "Clean homes are healthier, Dirty ones less");
     }
 
     private static void expect(boolean ok, String what) {

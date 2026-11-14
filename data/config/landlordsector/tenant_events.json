@@ -1,24 +1,35 @@
 {
-	# Tenant events. A rented home can have one at most every 5 days (minDaysBetween), with dailyChance
-	# after that, so most homes see one or two a month.
-	# Which event: weight, times the tenant's trait multipliers (tenant_traits.json), times:
+	# Events (0.5.0: house events and tenant events are separate, Andrzej: "House event example: Burglary | Tenant
+	# event example: Killed, Hospital, Child born"). type: "house" (default) or "tenant".
+	# A rented home rolls each type on its own: at most one house event every house.minDaysBetween days and one
+	# tenant event every tenant.minDaysBetween days, each with its dailyChance after that.
+	#
+	# House events: weight, times the tenant's trait multipliers (tenant_traits.json), times:
 	#   bad events: 0.5 at happiness 100 up to 2.5 at happiness 0, and 0.6 on Charity rent up to 1.5 on Greedy
 	#   good events: 0.5 at happiness 0 up to 2.5 at happiness 100
 	#   damage events: 2 in a shack down to 0.6 in an estate
 	#   crime events: 1.5 at security 0 down to 0.5 at security 100
+	# Tenant events: weight, times the trait multipliers, times:
+	#   health events ("health":true): bad ones grow as health falls (0.1 at health 96+, 1 at 60, 2.5 at 0), good
+	#     ones shrink (1.6 at health 96+, 1 at 60, 0.2 at 12 or less)
+	#   crime events: 1.5 at security 0 down to 0.5 at security 100
+	#   sickOnly: only below the "sickBelow" health (levels.json), more often the sicker the tenant is
+	#   maxHealth: only below this health, more often the lower it is (dying of an illness)
+	#   sickMult: the weight at health 0, rising from 1 at "sickBelow" (missed rent)
+	# House traits and upgrades multiply the weight of both types ("events" in upgrades.json).
+	#
 	# Effects: condition (share, -0.2 is 20% off), mood (tenant mood, wears off a point a day),
 	# rentMult (this month's rent), tip (share of a month's rent paid now), decor (added to the home),
-	# rep (reputation points with the market's owners), leave (the tenant moves out).
+	# rep (reputation points with the market's owners), leave (the tenant moves out), dies (the tenant dies),
+	# addTrait / removeTrait (a house trait, Graffiti), addTenantTrait / removeTenantTrait (Couple, Family with kids),
+	# wealth (added to the tenant's wealth, 1 to 6).
 	# requires: only tenants with one of these traits have the event.
-	# Health (0.4.0): sickOnly events only happen below the "sickBelow" health (levels.json), more often the sicker
-	#   the tenant is (3 times the weight at health 0). sickMult: the weight at health 0, rising from 1 at "sickBelow".
-	# House traits and upgrades can multiply an event's weight too ("events" in upgrades.json).
 	# kind: what the event is about. Trait tooltips name the kind (from "kinds"), never the event.
 	# big: also sent to the intel screen. Every event goes into the home's log and the fleet log.
 	# $tenant and $home are filled in.
-	"minDaysBetween":5,
-	"dailyChance":0.06,
-	"kinds":{"money":"money", "damage":"damage to the home", "upkeep":"cleaning and repairs", "neighbors":"the neighbors", "crime":"crime and safety", "decor":"decorating the home", "health":"health"},
+	"house":{"minDaysBetween":5, "dailyChance":0.06},
+	"tenant":{"minDaysBetween":7, "dailyChance":0.05},
+	"kinds":{"money":"money", "damage":"damage to the home", "upkeep":"cleaning and repairs", "neighbors":"the neighbors", "crime":"crime and safety", "decor":"decorating the home", "health":"health", "life":"family and life"},
 	# messages: what the tenant says to you about a big event (0.3.9), shown under it in the log and the intel
 	# message. Each group has lines and may name traits or factions. Lines for one of the tenant's traits come
 	# first, then lines for their faction, then the group with neither. One line is picked at random.
@@ -55,6 +66,19 @@
 			{"factions":["pirates"], "lines":["Bunch of badges kicked my door in. Your door. Whatever."]},
 			{"lines":["I swear that crate wasn't mine.", "Police tore the place apart. Found nothing. Fix the door?"]}
 		],
+		"child_born":[
+			{"traits":["couple"], "lines":["We had a baby! We'll need a bigger crib. And more sleep.", "It's a girl. Or a boy. We're still arguing about the name."]},
+			{"lines":["Little one arrived this morning. Healthy and loud.", "We're three now, boss. Thanks for the roof over our heads."]}
+		],
+		"hospital":[
+			{"traits":["elderly"], "lines":["The doctors say I'll live. They always say that.", "A week in the ward. The food was worse than mine."]},
+			{"traits":["sickly"], "lines":["Back in the ward again. They know me by name there.", "Same cough, different week."]},
+			{"lines":["I'm in the hospital for a bit. The rent will be late.", "Doctors want to keep me a few more days."]}
+		],
+		"lost_job":[
+			{"traits":["gambler"], "lines":["Lost the job. Lost the bet too. Long week.", "They let me go. I'll win it back, don't worry."]},
+			{"lines":["They let me go today. I'm looking for something new.", "Lost my job. I'll find another, I promise."]}
+		],
 		"new_furniture":[
 			{"traits":["prosperous"], "lines":["Got a new sofa. The old one didn't match the curtains.", "Picked up some furniture. Your place deserved better."]},
 			{"traits":["generous"], "lines":["Brought in some new furniture. Consider it a gift."]},
@@ -63,24 +87,40 @@
 		]
 	},
 	"events":[
-		{"id":"smashed_window", "kind":"damage", "good":false, "weight":2, "damage":true, "condition":-0.03, "mood":-2, "text":"$tenant smashed a window at $home."},
-		{"id":"trashed", "kind":"damage", "good":false, "weight":0.3, "damage":true, "condition":-0.15, "big":true, "text":"$tenant trashed $home."},
-		{"id":"graffiti", "kind":"damage", "good":false, "weight":1, "damage":true, "condition":-0.02, "decor":-2, "text":"$tenant painted graffiti all over $home."},
-		{"id":"mess", "kind":"upkeep", "good":false, "weight":1.5, "condition":-0.04, "text":"$tenant left $home a filthy mess."},
-		{"id":"late_rent", "kind":"money", "good":false, "weight":1, "sickMult":2, "rentMult":0.5, "text":"$tenant paid the rent for $home late and short."},
-		{"id":"skipped_rent", "kind":"money", "good":false, "weight":0.4, "sickMult":2, "rentMult":0, "big":true, "text":"$tenant skipped this month's rent at $home."},
-		{"id":"noise_complaint", "kind":"neighbors", "good":false, "weight":1, "rep":-0.5, "mood":-3, "text":"The neighbors complained about $tenant at $home."},
-		{"id":"burglary", "kind":"crime", "good":false, "weight":1, "crime":true, "condition":-0.05, "mood":-10, "text":"Burglars broke into $home."},
-		{"id":"small_fire", "kind":"damage", "good":false, "weight":0.2, "damage":true, "condition":-0.2, "mood":-10, "big":true, "text":"A small fire damaged $home."},
-		{"id":"sabotage", "kind":"damage", "good":false, "weight":0.05, "condition":-0.25, "big":true, "text":"$tenant wrecked the machinery at $home in the name of Ludd."},
-		{"id":"police_raid", "kind":"crime", "good":false, "weight":0.1, "crime":true, "condition":-0.05, "rep":-1, "mood":-15, "big":true, "text":"Police raided $home looking for $tenant's contraband."},
-		{"id":"fixed_something", "kind":"upkeep", "good":true, "weight":1, "condition":0.03, "text":"$tenant fixed a leaky tap at $home."},
-		{"id":"garden", "kind":"decor", "good":true, "weight":0.5, "decor":2, "mood":5, "text":"$tenant planted a garden at $home."},
-		{"id":"new_furniture", "kind":"money", "good":true, "weight":0.3, "decor":5, "big":true, "text":"$tenant bought new furniture for $home."},
-		{"id":"tip", "kind":"money", "good":true, "weight":1, "tip":0.1, "requires":["generous"], "text":"$tenant left a tip with the rent for $home."},
-		{"id":"housewarming", "kind":"neighbors", "good":true, "weight":0.5, "mood":10, "text":"$tenant threw a party at $home."},
-		{"id":"recommended", "kind":"neighbors", "good":true, "weight":0.5, "rep":0.5, "text":"$tenant told the neighbors you are a good landlord."},
-		{"id":"chased_burglars", "kind":"crime", "good":true, "weight":0.3, "mood":5, "condition":0.01, "text":"$tenant chased burglars away from $home."},
-		{"id":"fell_sick", "kind":"health", "good":false, "weight":1.5, "sickOnly":true, "rentMult":0.75, "mood":-5, "text":"$tenant fell sick at $home and missed work."}
+		{"id":"smashed_window", "type":"house", "kind":"damage", "good":false, "weight":2, "damage":true, "condition":-0.03, "mood":-2, "text":"$tenant smashed a window at $home."},
+		{"id":"trashed", "type":"house", "kind":"damage", "good":false, "weight":0.3, "damage":true, "condition":-0.15, "big":true, "text":"$tenant trashed $home."},
+		{"id":"graffiti", "type":"house", "kind":"damage", "good":false, "weight":1, "damage":true, "condition":-0.01, "addTrait":"graffiti", "text":"$tenant painted graffiti all over $home."},
+		{"id":"mess", "type":"house", "kind":"upkeep", "good":false, "weight":1.5, "condition":-0.02, "addTrait":"dirty", "text":"$tenant left $home a filthy mess."},
+		{"id":"pests", "type":"house", "kind":"upkeep", "good":false, "weight":0.5, "addTrait":"infested", "mood":-3, "text":"Pests moved into $home."},
+		{"id":"pipe_burst", "type":"house", "kind":"damage", "good":false, "weight":0.6, "damage":true, "condition":-0.06, "mood":-3, "text":"A pipe burst at $home."},
+		{"id":"power_outage", "type":"house", "kind":"upkeep", "good":false, "weight":0.6, "mood":-4, "text":"The power went out at $home for two days."},
+		{"id":"burglary", "type":"house", "kind":"crime", "good":false, "weight":1, "crime":true, "condition":-0.05, "mood":-10, "text":"Burglars broke into $home."},
+		{"id":"small_fire", "type":"house", "kind":"damage", "good":false, "weight":0.2, "damage":true, "condition":-0.2, "mood":-10, "big":true, "text":"A small fire damaged $home."},
+		{"id":"sabotage", "type":"house", "kind":"damage", "good":false, "weight":0.05, "condition":-0.25, "big":true, "text":"$tenant wrecked the machinery at $home in the name of Ludd."},
+		{"id":"fixed_something", "type":"house", "kind":"upkeep", "good":true, "weight":1, "condition":0.03, "text":"$tenant fixed a leaky tap at $home."},
+		{"id":"cleaned_up", "type":"house", "kind":"upkeep", "good":true, "weight":0.6, "condition":0.01, "removeTrait":"dirty", "text":"$tenant gave $home a good clean."},
+		{"id":"garden", "type":"house", "kind":"decor", "good":true, "weight":0.5, "decor":2, "mood":5, "text":"$tenant planted a garden at $home."},
+		{"id":"new_furniture", "type":"house", "kind":"money", "good":true, "weight":0.3, "decor":5, "big":true, "text":"$tenant bought new furniture for $home."},
+		{"id":"chased_burglars", "type":"house", "kind":"crime", "good":true, "weight":0.3, "mood":5, "condition":0.01, "text":"$tenant chased burglars away from $home."},
+
+		{"id":"late_rent", "type":"tenant", "kind":"money", "good":false, "weight":1, "sickMult":2, "rentMult":0.5, "text":"$tenant paid the rent for $home late and short."},
+		{"id":"skipped_rent", "type":"tenant", "kind":"money", "good":false, "weight":0.4, "sickMult":2, "rentMult":0, "big":true, "text":"$tenant skipped this month's rent at $home."},
+		{"id":"tip", "type":"tenant", "kind":"money", "good":true, "weight":1, "tip":0.1, "requires":["generous"], "text":"$tenant left a tip with the rent for $home."},
+		{"id":"promotion", "type":"tenant", "kind":"money", "good":true, "weight":0.25, "wealth":1, "mood":10, "text":"$tenant got a promotion at work."},
+		{"id":"lost_job", "type":"tenant", "kind":"money", "good":false, "weight":0.2, "wealth":-1, "rentMult":0.5, "mood":-10, "big":true, "text":"$tenant lost their job."},
+		{"id":"noise_complaint", "type":"tenant", "kind":"neighbors", "good":false, "weight":1, "rep":-0.5, "mood":-3, "text":"The neighbors complained about $tenant at $home."},
+		{"id":"housewarming", "type":"tenant", "kind":"neighbors", "good":true, "weight":0.5, "mood":10, "text":"$tenant threw a party at $home."},
+		{"id":"recommended", "type":"tenant", "kind":"neighbors", "good":true, "weight":0.5, "rep":0.5, "text":"$tenant told the neighbors you are a good landlord."},
+		{"id":"police_raid", "type":"tenant", "kind":"crime", "good":false, "weight":0.1, "crime":true, "condition":-0.05, "rep":-1, "mood":-15, "big":true, "text":"Police raided $home looking for $tenant's contraband."},
+		{"id":"mugged", "type":"tenant", "kind":"crime", "good":false, "weight":0.6, "crime":true, "mood":-8, "rentMult":0.9, "text":"$tenant was mugged on the way home."},
+		{"id":"killed", "type":"tenant", "kind":"crime", "good":false, "weight":0.02, "crime":true, "dies":true, "big":true, "text":"$tenant was killed in a fight near $home."},
+		{"id":"fell_sick", "type":"tenant", "kind":"health", "good":false, "weight":1.5, "sickOnly":true, "rentMult":0.75, "mood":-5, "text":"$tenant fell sick at $home and missed work."},
+		{"id":"hospital", "type":"tenant", "kind":"health", "good":false, "weight":0.3, "health":true, "rentMult":0.5, "mood":-8, "big":true, "text":"$tenant spent a week in the hospital."},
+		{"id":"died_ill", "type":"tenant", "kind":"health", "good":false, "weight":1, "maxHealth":25, "dies":true, "rep":-1, "big":true, "text":"$tenant died of an illness caused by the poor living conditions at $home."},
+		{"id":"got_fit", "type":"tenant", "kind":"health", "good":true, "weight":0.4, "health":true, "mood":5, "text":"$tenant took up running and feels great."},
+		{"id":"partner_moves_in", "type":"tenant", "kind":"life", "good":true, "weight":0.2, "addTenantTrait":"couple", "mood":10, "text":"$tenant's partner moved in with them at $home."},
+		{"id":"breakup", "type":"tenant", "kind":"life", "good":false, "weight":0.15, "requires":["couple"], "removeTenantTrait":"couple", "mood":-15, "text":"$tenant and their partner broke up."},
+		{"id":"child_born", "type":"tenant", "kind":"life", "good":true, "weight":0.1, "requires":["couple","family"], "addTenantTrait":"family", "mood":15, "big":true, "text":"$tenant had a baby."},
+		{"id":"pet_acquired", "type":"tenant", "kind":"life", "good":true, "weight":0.25, "addTenantTrait":"pet_owner", "mood":8, "text":"$tenant adopted a pet."}
 	]
 }

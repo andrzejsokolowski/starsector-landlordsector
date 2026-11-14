@@ -95,7 +95,8 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
         boolean own = MarketRules.isOwn(market);
         float tariff = MarketRules.tariff(market);
 
-        title("Real estate on " + market.getName(), MARGIN, 12f, width - 2 * MARGIN);
+        // Andrzej, 0.5.0: "Real estate on Chicomoztoc, a barren-desert world belonging to Hegemony" at the top.
+        title("Real estate on " + where(market), MARGIN, 12f, width - 2 * MARGIN);
         String terms = own ? "Your colony: homes cost half, with no tariff."
                 : "Prices include the " + Math.round(tariff * 100f) + "% tariff. Rent pays the same tariff.";
         text("Credits: " + Misc.getDGSCredits(Actions.credits()) + ".   " + terms, MARGIN, 42f, width - 2 * MARGIN);
@@ -142,7 +143,6 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
                     : Pricing.rent(full, t.rentShare, 1f, 1f, Settings.rentMult()) * (1f - tariff);
             Sheet s = new Sheet();
             s.title = l.name != null ? l.name : (t != null ? t.name : l.tierId);
-            s.subtitle = (t != null ? t.name + ", " : "") + where(market, st);
             s.art = l.artPath;
             s.valueLine = Misc.getDGSCredits(full);
             if (t != null) {

@@ -8,13 +8,6 @@ public final class TenantRules {
     public static final float DISLIKE = 15f;
     /** Below this a tenant may move out. */
     public static final float MOVE_OUT_BELOW = 15f;
-    /** From this happiness up a tenant does small repairs: this much condition back each month. */
-    public static final float MAINTAIN_ABOVE = 60f;
-    public static final float MAINTAIN_REPAIR = 0.01f;
-    /** From this happiness up a tenant may decorate the home: this chance a month, this much decor. */
-    public static final float IMPROVE_ABOVE = 80f;
-    public static final float IMPROVE_CHANCE = 0.25f;
-    public static final float IMPROVE_DECOR = 2f;
     /** Applicants and pool tenants wait this many days, then look elsewhere. */
     public static final float APPLICANT_DAYS = 30f;
     public static final float POOL_DAYS = 60f;
@@ -270,6 +263,32 @@ public final class TenantRules {
     public static float treatmentChance(float health, float treatmentBelow, boolean loyal) {
         if (loyal) return 0f;
         return health < treatmentBelow ? 1f / 30f : 0f;
+    }
+
+    /**
+     * Tenant health events (0.5.0, Andrzej: "A high health reduces the chances of negative health events"): bad ones
+     * 0.1 at health 96 and up, 1 at 60, 2.5 at 0; good ones 1.6 at 96 and up, 1 at 60, 0.2 at 12 and below.
+     */
+    public static float healthWeight(boolean good, float health) {
+        float h = Pricing.clamp(health, 0f, 100f);
+        if (good) return Pricing.clamp(h / 60f, 0.2f, 1.6f);
+        return Pricing.clamp((100f - h) / 40f, 0.1f, 2.5f);
+    }
+
+    /** An event that only happens below {@code maxHealth}: 0 above it, rising to 2 at health 0. */
+    public static float belowWeight(float maxHealth, float health) {
+        if (maxHealth <= 0f) return 1f;
+        if (health >= maxHealth) return 0f;
+        return 2f * (maxHealth - Pricing.clamp(health, 0f, 100f)) / maxHealth;
+    }
+
+    /** How likely one tenant event is, before the others are weighed against it (0.5.0). */
+    public static float tenantEventWeight(boolean good, boolean healthEvent, boolean crime, float baseWeight,
+            float traitMult, float health, float security) {
+        float w = Math.max(0f, baseWeight) * Math.max(0f, traitMult);
+        if (healthEvent) w *= healthWeight(good, health);
+        if (crime) w *= 1.5f - Pricing.clamp(security, 0f, 100f) / 100f;
+        return w;
     }
 
     /** What one home level costs: per step, times the level, times the tenant's multiplier. */

@@ -15,6 +15,8 @@ public class Listing {
     public String name;
     /** 0.4.0: renovations the home already has (ids in upgrades.json). Null on older listings. */
     public java.util.List<String> upgrades;
+    /** 0.5.0: the building the home sits next to, "none", or null on older listings until rolled on load. */
+    public String neighbor;
 
     /** House traits and the renovations it comes with: everything that counts like a trait. */
     public java.util.List<String> features() {

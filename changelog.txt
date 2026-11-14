@@ -1,3 +1,23 @@
+Version 0.5.0 (2026-11-14)
+- Every home sits next to one building on its colony, or next to nothing. Mining or heavy industry next door makes it louder, dirtier and cheaper, the city center shortens the commute, and a resort is the best spot there is
+- New Environment row on the property screens: Commute, Air and Noise as letter grades, plus Heat, Cold or Radiation when the home has any. Noise no longer comes from the market size, and Light is gone
+- Radiation: irradiated worlds and worlds with no atmosphere cost tenants health. Lead lining blocks it
+- Markets have room for one home per point of size and list half to all of the free ones. Your colonies get more room as they grow
+- Upgrades (were renovations) are built at once and have no slots: buy every one that fits the home. Their cost is on the Build button's tooltip
+- New upgrades: New wiring, Double-glazed windows, Fresh paint, Security cameras, Air filtration system, Water filter, Pest-proofing, Greenhouse, Playground, Home gym, Hot tub, Panic room, Pest control and Asbestos removal
+- Better insulation and Fire sprinkler system are the new names. Air conditioning says Heat -1 and fits shacks too. Skylights give comfort and decor
+- Plumbing, wiring and insulation raise a home's value by a percent; air conditioning, window bars, alarms and the like by a flat amount
+- Furniture: right-click it in your cargo to put it in your furniture storage. The new Furniture tab (F) shows one square per slot: drag pieces from the storage into the squares and back. A home holds one of each piece
+- House events and tenant events are separate. Tenant events follow the tenant's own life: a partner moving in, a baby, a pet, a promotion, a lost job, a mugging, a hospital stay. Tenants can die, by violence or from an illness their home gave them
+- Healthy tenants rarely have bad health events, sick ones often do
+- Happy tenants no longer repair or decorate by themselves; they have better house events instead
+- Security is good for every tenant. Criminals hate police and spying buildings on their colony instead
+- Graffiti and dirt stay on a home and cost decor or health until repairs clean them off
+- New house traits: Clean, Dirty, Infested, Asbestos, Spacious, Drafty, Sunny and Underground
+- New tenant traits: Athletic, Sickly, Smoker, Elderly, Works from home, Long hours, Night owl, Couple, Gambler and Smuggler
+- Property screens: the place is named at the top, the picture is a third smaller, the stat bars sit nearer the middle and Tenant happiness comes last
+- The Massage chair costs decor and gives more happiness
+
 Version 0.4.2 (2026-11-14)
 - Shacks have real pictures: a different one for each of 14 planet types, from Terran, Jungle and Water to Tundra, Frozen, Barren, Toxic, Volcanic, Irradiated, gas giants and stations
 - Shacks you already own or see for sale switch to the new picture for their planet

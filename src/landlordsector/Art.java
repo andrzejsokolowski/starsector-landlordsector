@@ -55,6 +55,19 @@ public final class Art {
         }
     }
 
+    /** Loads every furniture icon, so the Furniture tab can draw them (0.5.0). */
+    public static void loadFurnitureIcons() {
+        for (landlordsector.data.Upgrades.Def d : landlordsector.data.Upgrades.of(
+                landlordsector.data.Upgrades.Kind.FURNITURE)) {
+            try {
+                String icon = Global.getSettings().getSpecialItemSpec(d.itemId()).getIconName();
+                if (icon != null && !icon.isEmpty()) loadTexture(icon);
+            } catch (Throwable t) {
+                log.warn("Landlordsector: no icon for " + d.itemId(), t);
+            }
+        }
+    }
+
     private static boolean loadTexture(String path) {
         if (loaded.contains(path)) return true;
         try {

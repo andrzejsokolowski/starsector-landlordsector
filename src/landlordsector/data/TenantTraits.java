@@ -37,8 +37,12 @@ public final class TenantTraits {
         public Set<String> conflicts = Collections.emptySet();
         /** Tiers bigger (+) or smaller (-) than their wealth fits that they want their home. */
         public int homeShift;
-        /** Security makes them unhappy instead of happy. */
+        /** A criminal (0.5.0: they like security like anyone, but hate the police and spying on their colony). */
         public boolean criminal;
+        /** 0.5.0: added to their health. */
+        public float health;
+        /** 0.5.0: only given by events (Couple, from a partner moving in), never rolled. */
+        public boolean eventOnly;
         /** 0.4.0: multiplies what each home level costs them, {"heat":0} does not mind heat. */
         public Map<String, Float> levels = Collections.emptyMap();
         /** 0.4.0: multiplies every health cost (Hardy 0.5). */
@@ -78,6 +82,8 @@ public final class TenantTraits {
                 d.criminal = t.optBoolean("criminal", false);
                 d.levels = floats(t.optJSONObject("levels"));
                 d.healthCost = (float) t.optDouble("healthCost", 1);
+                d.health = (float) t.optDouble("health", 0);
+                d.eventOnly = t.optBoolean("eventOnly", false);
                 d.kids = t.optBoolean("kids", false);
                 d.conflicts = HouseTraits.strings(t.optJSONArray("conflicts"));
                 map.put(d.id, d);

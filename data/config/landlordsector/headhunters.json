@@ -21,7 +21,7 @@
 		 "pitch":"Every tenant I place is vetted twice."},
 		{"id":"hh_kantas_den", "first":"Rook", "last":"Massey", "gender":"male", "markets":["kantas_den"], "names":["Kanta's Den"],
 		 "profile":"pirates", "hire":20000, "search":3000, "days":8, "tenants":6, "badTraits":1.2, "wealthShift":-1,
-		 "traitBoost":{"hardy":6}, "perk":"Cheap tenants used to rough living: they put up with poor homes, but bring trouble.",
+		 "traitBoost":{"hardy":9}, "perk":"Cheap tenants used to rough living: they put up with poor homes, but bring trouble.",
 		 "pitch":"My people sleep anywhere. They pay, mostly."},
 		{"id":"hh_new_auroria", "first":"Elin", "last":"Sato", "gender":"female", "markets":["uaf_new_auroria"], "names":["New Auroria"],
 		 "profile":"uaf", "hire":120000, "search":20000, "days":12, "tenants":4, "badTraits":0.6, "wealthShift":1,

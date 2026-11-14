@@ -84,7 +84,7 @@ public final class MarketRules {
         return Pricing.clamp(market.getTariff().getModifiedValue(), 0f, 0.9f);
     }
 
-    /** What a listing is worth new, at today's market, with its tier's decor. */
+    /** What a listing is worth new, at today's market, with its tier's decor, its neighbour and its upgrades. */
     public static float listingValue(MarketAPI market, Listing listing) {
         Tier t = TierTable.get(listing.tierId);
         float decor = t != null ? t.decor : 0f;
@@ -92,7 +92,24 @@ public final class MarketRules {
             HouseTraits.Def d = HouseTraits.get(id);
             if (d != null) decor += d.decor;
         }
-        return listing.basePrice * mult(market) * Pricing.decorValueMult(decor) * traitPrice(listing.features(), market);
+        float v = listing.basePrice * Surroundings.homeMult(market, listing.neighbor) * Pricing.decorValueMult(decor)
+                * traitPrice(listing.features(), market);
+        return v + landlordsector.data.Upgrades.flatValue(listing.upgrades, v);
+    }
+
+    /**
+     * Homes a market has room for (0.5.0, Andrzej: "Size 8 = 8 properties potentially", and a growing colony gets
+     * more): one per point of market size, owned and for sale together.
+     */
+    public static int housingSlots(MarketAPI market) {
+        return Math.max(0, market.getSize());
+    }
+
+    /** Homes for sale to roll: half to all of the free room, at least one while there is room. */
+    public static int listingRoll(int free, Random random) {
+        if (free <= 0) return 0;
+        int min = Math.max(1, (free + 1) / 2);
+        return min + random.nextInt(free - min + 1);
     }
 
     /** Price to buy a listing right now, tariff and own-colony discount included. */
@@ -130,7 +147,7 @@ public final class MarketRules {
         WeightedRandomPicker<Tier> picker = new WeightedRandomPicker<>(random);
         for (Tier t : tiers) picker.add(t, Math.max(0.01f, t.weight));
         Climate climate = Climate.of(market);
-        int count = Pricing.listingCount(market.getSize());
+        int count = listingRoll(housingSlots(market) - Portfolio.get().countAt(market.getId()), random);
         for (int i = 0; i < count; i++) {
             Tier t = picker.pick();
             float base = t.min + (t.max - t.min) * random.nextFloat();
@@ -141,6 +158,7 @@ public final class MarketRules {
             l.upgrades = landlordsector.data.Upgrades.roll(Tenants.conditions(market), climate.id,
                     climate == Climate.STATION, t.index, l.traits, random);
             l.name = landlordsector.data.Names.make(t.id, l.features(), random);
+            l.neighbor = Surroundings.roll(market, random);
             ml.list().add(l);
         }
         // Cheapest first, so the screen reads like a price list.

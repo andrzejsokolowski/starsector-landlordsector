@@ -51,6 +51,16 @@ public final class HouseTraits {
         /** Tenant event weight multipliers. */
         public Map<String, Float> events = Collections.emptyMap();
 
+        // ---- 0.5.0 ----
+
+        /** Environment score changes: {"noise":15} quieter, {"air":-15} dirtier (environment.json). */
+        public Map<String, Float> env = Collections.emptyMap();
+        /**
+         * A mark left on the home (Graffiti, Dirty): never rolled for a home for sale unless it has a weight, and
+         * repairs clean it off.
+         */
+        public boolean mark;
+
         public float kidsHappiness() {
             Float f = kids.get("happiness");
             return f == null ? 0f : f;
@@ -106,6 +116,8 @@ public final class HouseTraits {
         d.levels = numbers(t.optJSONObject("levels"), 0f);
         d.kids = numbers(t.optJSONObject("kids"), 0f);
         d.events = numbers(t.optJSONObject("events"), 1f);
+        d.env = numbers(t.optJSONObject("env"), 0f);
+        d.mark = t.optBoolean("mark", false);
     }
 
     /** A JSON object of numbers, in order. */
@@ -173,7 +185,7 @@ public final class HouseTraits {
             float total = 0f;
             List<Def> pool = new ArrayList<>();
             for (Def d : defs.values()) {
-                if (out.contains(d.id) || !fits(d, conditions, climateId, station, tier)) continue;
+                if (out.contains(d.id) || d.weight <= 0f || !fits(d, conditions, climateId, station, tier)) continue;
                 boolean clash = false;
                 for (String o : out) {
                     Def od = defs.get(o);

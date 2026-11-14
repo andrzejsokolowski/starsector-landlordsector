@@ -98,6 +98,20 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   `TenantDaily.finishWork` finishes renovations and one-time `fixes`. `LandlordsectorModPlugin.upgradeTo040` moves
   any trait id that is now an upgrade into `Property.upgrades` (same id, built). Manage page: Upgrades tab (G).
   Space (family size) waits for 0.5.0; Loud tenants make no noise for others until homes hold more people.
+- 0.5.0 (LLS-3, LLS-4, LLS-12, LLS-13, Andrzej's 33 notes after 0.4.2): `data/Environment` (environment.json):
+  Commute, Air and Noise scores 0 to 100 with letter grades, the neighbour each home sits next to
+  (`Property.neighbor` / `Listing.neighbor`, an industry id or "none", rolled by `Surroundings.roll` from the
+  colony's buildings; `byId`, then `byTag`, `skipTags` keeps orbital stations out) and colony tags (police,
+  spying) that criminals hate. Levels are only heat, cold and radiation now (light gone, air and noise moved).
+  `Surroundings.homeMult` is the location multiplier of one home (market times neighbour price). Upgrades: no
+  slots, built at once (`Actions.build`), `conflicts`, `valueShare` (flat value, `Upgrades.flatValue`, added in
+  `Property.fullValue` / `MarketRules.listingValue`). Furniture lives in `Portfolio.furniture` (id to count):
+  `FurnitureItemPlugin` right-click stores it, the Furniture tab (F) uses `Canvas.draggable` / `dropZone` /
+  `onDrop`. Events have a `type`: house events (`rollEvent`, happiness-weighted) and tenant events
+  (`rollTenantEvent`, `TenantRules.tenantEventWeight`: health, security, traits; `dies`, `addTenantTrait`...).
+  Marks (house traits with `mark`, Graffiti and Dirty) are cleaned by repairs. Homes per market:
+  `MarketRules.housingSlots` = size, `listingRoll`. `upgradeTo050` rolls neighbours, finishes old renovations,
+  moves duplicate furniture to storage and clears all listings once (`Portfolio.upgraded050`).
   0.4.1: furniture icons are Andrzej's, 80x80 in `graphics/icons/cargo/landlordsector/<id>.png`, cut from his sheet
   (first view of each piece, background already transparent). A new piece needs an icon there and its csv row.
 

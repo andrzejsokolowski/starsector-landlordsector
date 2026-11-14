@@ -142,15 +142,7 @@ public class MonthlyTick implements EconomyTickListener, ColonyPlayerHostileActL
                 float wear = Pricing.wearMult(stats.happiness) * p.wearMult() / eco.wearMonths;
                 if (anyDisrupted(m)) wear += eco.disruptionWear * Pricing.damageMult(stats.security);
                 p.condition -= wear;
-                // Happy tenants look after the home (Andrzej, 0.3.8): small repairs above 60, decorating above 80.
-                if (p.tenant != null && stats.happiness >= TenantRules.MAINTAIN_ABOVE) {
-                    p.condition = Math.min(1f, p.condition + TenantRules.MAINTAIN_REPAIR);
-                }
-                if (p.tenant != null && stats.happiness >= TenantRules.IMPROVE_ABOVE
-                        && random.nextFloat() < TenantRules.IMPROVE_CHANCE && p.decor() < 100f) {
-                    p.decorBonus += TenantRules.IMPROVE_DECOR;
-                    Notify.event(p, p.tenant.name + " decorated " + p.displayName() + " on their own.", true, false);
-                }
+                // 0.5.0 (Andrzej): happiness no longer repairs or decorates by itself; it only tilts house events.
                 if (p.condition <= 0f) {
                     p.condition = 0f;
                     p.condemned = true;

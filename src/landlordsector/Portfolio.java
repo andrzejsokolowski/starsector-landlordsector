@@ -31,6 +31,27 @@ public class Portfolio {
     /** 0.4.0: when each market's open market last got its furniture, by market id. */
     public Map<String, Long> shopStocked;
 
+    /** 0.5.0: furniture the player keeps for their homes, by upgrade id, how many of each. */
+    public Map<String, Integer> furniture;
+    /** 0.5.0: true once the save was moved to 0.5.0 (listings rolled again with neighbours and new counts). */
+    public boolean upgraded050;
+
+    public Map<String, Integer> furniture() {
+        if (furniture == null) furniture = new java.util.LinkedHashMap<>();
+        return furniture;
+    }
+
+    public int furnitureCount(String id) {
+        Integer n = furniture().get(id);
+        return n == null ? 0 : n;
+    }
+
+    public void addFurniture(String id, int n) {
+        int now = furnitureCount(id) + n;
+        if (now <= 0) furniture().remove(id);
+        else furniture().put(id, now);
+    }
+
     public Map<String, Long> shopStocked() {
         if (shopStocked == null) shopStocked = new HashMap<>();
         return shopStocked;

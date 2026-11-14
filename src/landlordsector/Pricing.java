@@ -70,13 +70,10 @@ public final class Pricing {
         return m;
     }
 
-    /**
-     * Number of listings a market of this size rolls: 1 at size 3 and 4, 2 at 5 and 6, 3 at 7 and 8, at most 4.
-     * Every market has an agent since 0.3.2, so each lists fewer homes (Andrzej, 2026-11-12).
-     */
+    /** Homes a market of this size has room for (0.5.0: one per point of size). */
     public static int listingCount(int size) {
         if (size < 3) return 0;
-        return Math.max(1, Math.min(4, (size - 1) / 2));
+        return size;
     }
 
     /** Monthly rent before tariff. */
@@ -127,12 +124,12 @@ public final class Pricing {
     }
 
     /**
-     * Security 50 is neutral. Law-abiding tenants gain up to 5 happiness from a safe home and lose up to 5 in a
-     * lawless one; criminals the other way round (Andrzej, 0.3.8).
+     * Security 50 is neutral: tenants gain up to 5 happiness from a safe home and lose up to 5 in a lawless one.
+     * 0.5.0 (Andrzej: "A drug lord tenant wants high security for HIS home, just not police"): criminals too; they
+     * hate the police and spying on their colony instead. {@code criminal} is no longer used.
      */
     public static float securityHappiness(float security, boolean criminal) {
-        float v = (clamp(security, 0f, 100f) - 50f) * 0.1f;
-        return criminal ? -v : v;
+        return (clamp(security, 0f, 100f) - 50f) * 0.1f;
     }
 
     /** Wear speed: unhappy tenants (0) wear a home 1.5 times as fast, happy ones (100) half as fast. */

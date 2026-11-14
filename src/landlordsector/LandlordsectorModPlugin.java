@@ -30,6 +30,9 @@ public class LandlordsectorModPlugin extends BaseModPlugin {
         landlordsector.data.Names.load(Global.getSettings().getMergedJSON(landlordsector.data.Names.PATH));
         landlordsector.data.Upgrades.load(Global.getSettings().getMergedJSON(landlordsector.data.Upgrades.PATH));
         landlordsector.data.Levels.load(Global.getSettings().getMergedJSON(landlordsector.data.Levels.PATH));
+        landlordsector.data.Environment.load(
+                Global.getSettings().getMergedJSON(landlordsector.data.Environment.PATH));
+        Art.loadFurnitureIcons();
         Manage.addPage(Settings.MOD_ID, "Real estate", new Color(200, 170, 80), new RealEstatePage());
     }
 
@@ -48,6 +51,45 @@ public class LandlordsectorModPlugin extends BaseModPlugin {
         p.findersSeeded = true;
         upgradeTo030(p, random);
         upgradeTo040(p);
+        upgradeTo050(p, random);
+    }
+
+    /**
+     * 0.5.0: homes get the building they sit next to, renovations still being built finish (upgrades are instant
+     * now), and every market's homes for sale are rolled again so they have neighbours and the new counts (one home
+     * per point of market size). Public for the headless check.
+     */
+    public static void upgradeTo050(Portfolio p, Random random) {
+        for (Property pr : p.properties()) {
+            if (pr.neighbor == null) {
+                com.fs.starfarer.api.campaign.econ.MarketAPI m = pr.market();
+                pr.neighbor = m != null ? Surroundings.roll(m, random) : landlordsector.data.Environment.NOTHING;
+            }
+            TenantDaily.finishWork(pr);
+            // Renovation slots are gone: nothing to trim. Two of the same furniture in one home: one goes to storage.
+            java.util.Set<String> seen = new java.util.HashSet<>();
+            java.util.Iterator<Installed> it = pr.upgrades().iterator();
+            while (it.hasNext()) {
+                Installed i = it.next();
+                if (!i.furniture) continue;
+                if (!seen.add(i.id)) {
+                    it.remove();
+                    p.addFurniture(i.id, 1);
+                }
+            }
+        }
+        if (!p.upgraded050) {
+            p.listings().clear();
+            p.upgraded050 = true;
+        }
+        for (Map.Entry<String, MarketListings> e : p.listings().entrySet()) {
+            com.fs.starfarer.api.campaign.econ.MarketAPI m = Global.getSector().getEconomy().getMarket(e.getKey());
+            for (Listing l : e.getValue().list()) {
+                if (l.neighbor == null) {
+                    l.neighbor = m != null ? Surroundings.roll(m, random) : landlordsector.data.Environment.NOTHING;
+                }
+            }
+        }
     }
 
     /**
@@ -111,10 +153,10 @@ public class LandlordsectorModPlugin extends BaseModPlugin {
         p.tenantsMigrated = true;
         for (Map.Entry<String, MarketListings> e : p.listings().entrySet()) {
             com.fs.starfarer.api.campaign.econ.MarketAPI m = Global.getSector().getEconomy().getMarket(e.getKey());
-            // 0.3.2 lists fewer homes per market: drop the extra ones from older saves.
+            // Never more homes for sale than the market has room for (0.5.0: one per point of size).
             if (m != null) {
                 java.util.List<Listing> list = e.getValue().list();
-                while (list.size() > Pricing.listingCount(m.getSize())) list.remove(list.size() - 1);
+                while (list.size() > MarketRules.housingSlots(m)) list.remove(list.size() - 1);
             }
             for (Listing l : e.getValue().list()) {
                 if (l.traits == null) {

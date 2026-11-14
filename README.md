@@ -9,7 +9,8 @@ Requires LunaLib and OddiszCommons.
 ## Buying
 
 - Homes are sold by **property agents**: every market of size 3 or more that is not pirate or Luddic
-  Path has one in its comm directory. Each lists 1 to 4 homes (1 at size 3 and 4, up to 4 from size 9).
+  Path has one in its comm directory. A market has room for one home per point of size (owned and for sale together) and
+  lists half to all of the free ones.
 - The property screen lists the homes on the left and shows the chosen one large on the right, with its
   stat sheet.
 - Bigger markets list better homes: shacks and studios from size 3, small houses from 4, houses from 5,
@@ -37,11 +38,12 @@ Requires LunaLib and OddiszCommons.
   one tier more expensive, Low and High half as much. Applicants for an advert fit the home; the market's faction tilts their wealth.
 - You see one trait of an applicant until you pay to screen them. A monthly screening service makes bad
   traits rarer.
-- Homes roll 0 to 3 traits of their own (house_traits.json). Geothermal (cold worlds) and the Air conditioning renovation (hot
-  worlds) take the cold or the heat off one home: its comfort and price use the hazard without it. Tenants like (+8 happiness) or hate (-15)
+- Homes roll 0 to 3 traits of their own (house_traits.json). Geothermal (cold worlds) takes the cold off one home:
+  its comfort and price use the hazard without it. Marks (Graffiti, Dirty) stay until repairs clean them off. Tenants like (+8 happiness) or hate (-15)
   some of them. Hover over a trait to see what it does. Tenant traits tell which kind of house event
   (money, damage, crime and safety, the neighbors, cleaning and repairs, decorating) they make likelier, not the events themselves.
-- Tenant events (tenant_events.json): at most one per home every 5 days. For the big ones the tenant also
+- Events (tenant_events.json, 0.5.0): house events (at most one per home every 5 days) and tenant events (the
+  tenant's own life, at most one every 7 days, steered by health, security and traits; tenants can die). For the big ones the tenant also
   sends you a line in their own words ("messages" in the same file, by trait or faction). Bad ones get likelier with
   unhappy tenants, greedy rent, cheap homes (for damage) and low security (for crime). Good ones get
   likelier with happy tenants. They go into the fleet log and the home's log.
@@ -58,19 +60,21 @@ Requires LunaLib and OddiszCommons.
   habitable worlds with a mild climate, less on stations and polluted worlds. A worn home loses some.
 - **Decor** (0 to 100): from the tier, furniture and what tenants do. Adds up to a quarter to the value and
   raises the reputation its rent earns or costs.
-- **Home levels** (0.4.0, levels.json): Heat, Cold, Air, Noise and Light, 0 to 3, from market conditions,
-  buildings and market size, moved by house traits and upgrades. Each step costs tenants happiness and health;
-  tenant traits change how much ("levels" and "healthCost" in tenant_traits.json).
+- **Environment** (0.5.0, environment.json): every home sits next to one building on its colony, or next to
+  nothing. Commute, Air and Noise are scores from 0 to 100 shown as letter grades, set by the station, market
+  conditions, the neighbour, house traits and upgrades; they move tenant happiness and health. Home levels
+  (levels.json): Heat, Cold and Radiation, 0 to 3. Tenant traits change how much each matters ("levels" and
+  "healthCost" in tenant_traits.json). Criminals hate police and spying buildings on their colony.
 - **Tenant health** (0 to 100, 0.4.0): base 70, minus home levels and a worn home, plus traits and upgrades
   (kids' effects only for Family with kids). Below 60 tenants can fall sick and miss rent more often; below 20
   they may move out to get treatment.
-- **Upgrades** (0.4.0, upgrades.json): furniture (cargo items `lls_<id>` in special_items.csv, sold in open
-  markets with a property agent and found in salvage) and renovations (credits, build days, stay with the home).
-  Both use the house trait effects plus `levels`, `kids` and `events`. Placed from the Upgrades tab (G) of the
-  Manage page.
-- **Tenant happiness** (0 to 100): from comfort, decor (below 20 costs happiness), condition, security and the
-  rent setting. Below 15 a tenant may move out; above 60 they do small repairs (+1% condition a month); above 80
-  they may decorate the home. Happy tenants wear a home slower; unhappy ones up to 1.5 times as fast. Only
+- **Upgrades** (upgrades.json): furniture (items `lls_<id>` in special_items.csv, sold in open markets with a
+  property agent and found in salvage; right-click one to put it in the furniture storage, then drag it into a
+  home's slots on the Furniture tab (F)) and upgrades (credits, built at once, no slots, `conflicts` only; Upgrades
+  tab (G)). Both use the house trait effects plus `levels`, `env`, `kids` and `events`; `price` raises the value by
+  a percent, `valueShare` by a flat share of the cost.
+- **Tenant happiness** (0 to 100): from comfort, decor (below 20 costs happiness), condition, security, the
+  environment and the rent setting. Below 15 a tenant may move out. It tilts house events toward good ones. Happy tenants wear a home slower; unhappy ones up to 1.5 times as fast. Only
   Generous tenants tip.
 - **Location** (S+, S, A, B, C, D, E, F): the market's price grade. A standard world is C, an Earth-like
   one S, a high-hazard world with pirates F. Hovering over the grade lists every price factor and the market

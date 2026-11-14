@@ -1,0 +1,121 @@
+{
+	# Environment (0.5.0): what one home's surroundings are like, each a score from 0 to 100, shown as a letter
+	# grade (S 90+, A 75+, B 60+, C 45+, D 30+, E 15+, F below). Higher is always better: a high Noise grade is a
+	# quiet home.
+	# base: the score before anything else. station: added on stations. conditions: added for each market
+	# condition the market has. Neighbours, house traits and upgrades add their own ("env" in house_traits.json
+	# and upgrades.json).
+	# neutral, happiness, health: every point above neutral adds this much tenant happiness and health, every point
+	# below takes it away. Tenant traits can multiply that ("levels" in tenant_traits.json, same ids).
+	# better, worse: how a change reads in tooltips ("Quieter (+15)").
+	"scores":[
+		{"id":"commute", "name":"Commute", "better":"Shorter commute", "worse":"Longer commute",
+			"base":50, "station":10, "neutral":50, "happiness":0.15, "health":0},
+		{"id":"air", "name":"Air", "better":"Cleaner air", "worse":"Dirtier air",
+			"base":80, "station":-10, "neutral":70, "happiness":0.05, "health":0.25,
+			"conditions":{"pollution":-30, "toxic_atmosphere":-35, "no_atmosphere":-10, "thin_atmosphere":-5,
+				"dense_atmosphere":-10, "extreme_weather":-5, "inimical_biosphere":-10}},
+		{"id":"noise", "name":"Noise", "better":"Quieter", "worse":"Louder",
+			"base":80, "station":-5, "neutral":70, "happiness":0.2, "health":0.05,
+			"conditions":{"extreme_weather":-5, "extreme_tectonic_activity":-10, "tectonic_activity":-5}}
+	],
+
+	# Neighbours: each home sits next to one building on its colony, or next to nothing. A home for sale rolls one
+	# from the buildings the colony has, each with its weight, against nothingWeight. If the building is gone later,
+	# the home counts as next to nothing.
+	# Each neighbour: commute, air, noise (added to the scores), price (multiplies the location), happiness,
+	# health, security (added), tags (what tenants like or hate, tenant_traits.json), weight (how often it is
+	# rolled), name (shown instead of the building's own name).
+	# byId: buildings by industry id. byTag: buildings by their industries.csv tag, first match wins, for every
+	# building not in byId. skipIds, skipTags: never rolled (orbital stations, hidden buildings).
+	"nothingWeight":3,
+	"skipTags":["station", "battlestation", "starfortress", "sub_item", "hide_in_codex", "do_not_show_in_build_dialog", "artillery"],
+	"skipIds":["grounddefenses", "planetaryshield", "IndEvo_InvisiblePlanetaryShield", "istl_sigmafield", "aotd_gw_construction_site", "aotd_misc_hidden_industry", "dummy_industry", "MPC_FOBIAIICPatherResist"],
+	"byId":{
+		"population":{"name":"the city center", "weight":3, "commute":25, "noise":-10, "air":-5, "price":1.08, "tags":["busy"]},
+		"IndEvo_SwitchablePopulation":{"name":"the city center", "weight":3, "commute":25, "noise":-10, "air":-5, "price":1.08, "tags":["busy"]},
+		"aotd_capital_complex":{"name":"the capital", "weight":3, "commute":25, "noise":-10, "price":1.12, "tags":["busy"]},
+		"spaceport":{"commute":15, "noise":-20, "air":-5, "price":0.97, "tags":["busy", "noise"]},
+		"megaport":{"commute":20, "noise":-30, "air":-10, "price":0.95, "tags":["busy", "noise"]},
+		"waystation":{"commute":5, "noise":-5},
+		"commerce":{"commute":15, "noise":-10, "price":1.05, "happiness":2, "tags":["busy"]},
+		"ii_interstellarbazaar":{"commute":15, "noise":-10, "price":1.06, "happiness":3, "tags":["busy"]},
+		"aotd_underworld":{"commute":10, "noise":-10, "price":0.9, "security":-10, "tags":["busy"]},
+		"aotd_trade_outpost":{"commute":10, "noise":-5, "price":1.03, "tags":["busy"]},
+		"aotd_maglev":{"commute":35, "noise":-10, "price":1.1},
+		"kk_mailuo_deck":{"commute":25, "noise":-5, "price":1.05},
+		"patrolhq":{"commute":5, "noise":-10, "security":8, "price":1.02, "tags":["police"]},
+		"militarybase":{"commute":5, "noise":-20, "security":12, "price":1.0, "tags":["police", "noise"]},
+		"highcommand":{"commute":10, "noise":-20, "security":15, "price":1.03, "tags":["police", "noise"]},
+		"heavybatteries":{"noise":-15, "security":5, "price":0.97, "tags":["noise"]},
+		"BOGGLED_CHAMELEON":{"security":5, "price":0.98, "tags":["spying"]},
+		"HPSID":{"security":8, "tags":["spying", "police"]},
+		"ix_surveillance_center":{"security":8, "tags":["spying"]},
+		"ix_panopticon":{"security":10, "price":0.95, "tags":["spying"]},
+		"ix_panopticon_node":{"security":8, "tags":["spying"]},
+		"ix_panopticon_player_core":{"security":10, "tags":["spying"]},
+		"ix_panopticon_player_node":{"security":8, "tags":["spying"]},
+		"6emebureau":{"security":10, "tags":["spying", "police"]},
+		"eis_bureau":{"security":10, "tags":["spying", "police"]},
+		"aotd_resort_center":{"weight":3, "commute":-5, "noise":5, "air":10, "price":1.35, "happiness":8, "tags":["garden", "water", "view"]},
+		"aotd_garden_of_elysium":{"weight":3, "noise":10, "air":15, "price":1.45, "happiness":10, "tags":["garden", "flowers", "plants"]},
+		"kol_garden":{"weight":2, "noise":15, "air":10, "price":1.2, "happiness":5, "tags":["garden", "quiet", "faith"]},
+		"BOGGLED_MESOZOIC_PARK":{"weight":2, "noise":-10, "price":1.15, "happiness":5, "tags":["pets", "busy"]},
+		"IndEvo_LeisureOrbitals":{"weight":2, "noise":-5, "price":1.2, "happiness":5, "tags":["busy", "view"]},
+		"IndEvo_LifeTree":{"weight":2, "noise":10, "air":15, "price":1.25, "happiness":6, "tags":["garden", "plants"]},
+		"IndEvo_Museum":{"commute":5, "price":1.1, "happiness":3, "tags":["history"]},
+		"IndEvo_Memorial":{"noise":5, "price":1.05, "tags":["history", "quiet"]},
+		"IndEvo_Megachurch":{"noise":-5, "price":1.05, "happiness":2, "tags":["faith"]},
+		"IndEvo_PetStore":{"noise":-5, "price":1.03, "tags":["pets"]},
+		"IndEvo_Academy":{"commute":5, "price":1.05},
+		"IndEvo_senate":{"commute":10, "price":1.08, "security":5},
+		"IndEvo_embassy":{"price":1.05, "security":5},
+		"aotd_persean_university":{"commute":5, "price":1.06},
+		"BOGGLED_DOMED_CITIES":{"air":20, "noise":5, "price":1.08},
+		"BOGGLED_ATMOSPHERE_PROCESSOR":{"air":10, "noise":-10},
+		"BOGGLED_HYDROPONICS":{"air":5, "price":1.0, "tags":["plants"]},
+		"BOGGLED_KLETKA_SIMULATOR":{"noise":-10, "price":0.95, "tags":["tech"]},
+		"BOGGLED_LIMELIGHT_NETWORK":{"noise":-10, "price":1.03, "happiness":3, "tags":["busy", "tech"]},
+		"BOGGLED_GENELAB":{"price":0.97, "tags":["tech"]},
+		"BOGGLED_CLONING":{"price":0.95, "tags":["tech"]},
+		"cryosanctum":{"noise":10, "price":1.0},
+		"cryorevival":{"price":0.98},
+		"techmining":{"commute":-10, "noise":-15, "air":-10, "price":0.9},
+		"IndEvo_ScrapYard":{"commute":-5, "noise":-25, "air":-15, "price":0.82, "tags":["noise", "smog"]},
+		"aotd_druglight":{"price":0.95, "security":-5}
+	},
+	"byTag":[
+		{"tag":"mining", "commute":-15, "noise":-25, "air":-15, "price":0.82, "tags":["noise", "dust"]},
+		{"tag":"refining", "commute":-10, "noise":-20, "air":-20, "price":0.83, "tags":["noise", "smog"]},
+		{"tag":"heavyindustry", "commute":-5, "noise":-25, "air":-20, "price":0.82, "tags":["noise", "smog"]},
+		{"tag":"fuelprod", "commute":-10, "noise":-15, "air":-20, "price":0.85, "tags":["smog"]},
+		{"tag":"organfarm", "noise":-5, "air":-5, "price":0.92},
+		{"tag":"cryoharvester", "noise":-10, "price":0.95},
+		{"tag":"lightindustry", "commute":5, "noise":-10, "air":-5, "price":0.95, "tags":["busy"]},
+		{"tag":"industrial", "noise":-15, "air":-10, "price":0.9, "tags":["noise"]},
+		{"tag":"farming", "commute":-10, "noise":10, "air":5, "price":1.02, "tags":["garden", "plants"]},
+		{"tag":"aquaculture", "commute":-5, "noise":5, "price":1.04, "tags":["water"]},
+		{"tag":"tourism", "noise":0, "air":5, "price":1.2, "happiness":5, "tags":["view"]},
+		{"tag":"command", "commute":10, "noise":-15, "security":12, "tags":["police"]},
+		{"tag":"military", "noise":-15, "security":10, "tags":["police", "noise"]},
+		{"tag":"patrol", "noise":-10, "security":8, "tags":["police"]},
+		{"tag":"grounddefenses", "noise":-10, "security":5},
+		{"tag":"spaceport", "commute":15, "noise":-20, "air":-5, "price":0.97, "tags":["busy", "noise"]},
+		{"tag":"waystation", "commute":5, "noise":-5},
+		{"tag":"urban", "commute":10, "noise":-10, "price":1.04, "tags":["busy"]},
+		{"tag":"rural", "commute":-5, "noise":5, "price":1.0},
+		{"tag":"industry", "noise":-10, "air":-5, "price":0.95},
+		{"tag":"structure", "price":1.0}
+	],
+
+	# Colony tags (0.5.0): what tenants like or hate about the colony as a whole, by building. Criminals hate police
+	# and spying anywhere on their colony (Andrzej: "A drug lord tenant wants high security for HIS home, just not
+	# police"). A neighbour's own tags count again for the home next to it.
+	"colonyTagsById":{
+		"patrolhq":["police"], "militarybase":["police"], "highcommand":["police"],
+		"BOGGLED_CHAMELEON":["spying"], "HPSID":["spying", "police"], "ix_surveillance_center":["spying"],
+		"ix_panopticon":["spying"], "ix_panopticon_node":["spying"], "ix_panopticon_player_core":["spying"],
+		"ix_panopticon_player_node":["spying"], "6emebureau":["spying", "police"], "eis_bureau":["spying", "police"]
+	},
+	"colonyTagsByTag":{"military":["police"], "command":["police"], "patrol":["police"]}
+}

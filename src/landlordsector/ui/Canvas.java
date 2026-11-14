@@ -125,6 +125,31 @@ public abstract class Canvas implements CustomUIPanelPlugin {
         }
     }
 
+    /** 0.5.0: something the player can pick up and drop on a drop zone (furniture). */
+    private static final class Drag {
+        final Object key;
+        final String icon;
+        final float x, y, w, h;
+
+        Drag(Object key, String icon, float x, float y, float w, float h) {
+            this.key = key;
+            this.icon = icon;
+            this.x = x;
+            this.y = y;
+            this.w = w;
+            this.h = h;
+        }
+
+        boolean contains(float mx, float my) {
+            return mx >= x && mx <= x + w && my >= y && my <= y + h;
+        }
+    }
+
+    private final List<Drag> draggables = new ArrayList<>();
+    private final List<Drag> dropZones = new ArrayList<>();
+    private Drag dragging;
+    private float mouseX, mouseY;
+
     private static final float TIP_W = 380f;
     private final List<Tip> tips = new ArrayList<>();
     private Tip shownTip;
@@ -163,6 +188,9 @@ public abstract class Canvas implements CustomUIPanelPlugin {
         pics.clear();
         bars.clear();
         tips.clear();
+        draggables.clear();
+        dropZones.clear();
+        dragging = null;
         hideTip();
         build();
     }
@@ -177,6 +205,23 @@ public abstract class Canvas implements CustomUIPanelPlugin {
      */
     protected boolean onEscape() {
         return false;
+    }
+
+    /**
+     * Something picked up with {@link #draggable} was let go over a drop zone (0.5.0). {@code dropKey} is null when it
+     * was let go anywhere else.
+     */
+    protected void onDrop(Object dragKey, Object dropKey) {
+    }
+
+    /** An area the player can pick up and drag; {@code icon} follows the mouse while it is held. */
+    protected void draggable(Object key, String icon, float x, float y, float w, float h) {
+        draggables.add(new Drag(key, icon, x, y, w, h));
+    }
+
+    /** An area things can be dropped on. */
+    protected void dropZone(Object key, float x, float y, float w, float h) {
+        dropZones.add(new Drag(key, null, x, y, w, h));
     }
 
     /** A key was pressed (an LWJGL key code). Return true to take it. */
@@ -467,7 +512,23 @@ public abstract class Canvas implements CustomUIPanelPlugin {
         float mx = Mouse.getX() / scale - p.getX();
         float my = p.getY() + p.getHeight() - Mouse.getY() / scale;
         boolean inside = mx >= 0 && my >= 0 && mx <= p.getWidth() && my <= p.getHeight();
+        mouseX = mx;
+        mouseY = my;
         for (Btn b : buttons) b.hovered = inside && b.enabled && contains(b, mx, my);
+        boolean held = Mouse.isButtonDown(0);
+        if (dragging != null) {
+            hideTip();
+            if (!held) {
+                // Let go: over a drop zone, or anywhere else.
+                Drag drag = dragging;
+                dragging = null;
+                wasDown = false;
+                Object zone = null;
+                if (inside) for (Drag z : dropZones) if (z.contains(mx, my)) zone = z.key;
+                onDrop(drag.key, zone);
+            }
+            return;
+        }
         Tip over = null;
         if (inside) {
             for (Tip t : tips) {
@@ -479,10 +540,17 @@ public abstract class Canvas implements CustomUIPanelPlugin {
             else showTip(over, mx, my);
         }
 
-        boolean down = Mouse.isButtonDown(0);
+        boolean down = held;
         boolean clicked = down && !wasDown;
         wasDown = down;
         if (!clicked || !inside) return;
+        for (Drag d : draggables) {
+            if (!d.contains(mx, my)) continue;
+            dragging = d;
+            hideTip();
+            Global.getSoundPlayer().playUISound("ui_cargo_special_industrial_pickup", 1f, 1f);
+            return;
+        }
         for (Btn b : new ArrayList<>(buttons)) {
             if (!contains(b, mx, my)) continue;
             if (!b.enabled) {
@@ -522,6 +590,27 @@ public abstract class Canvas implements CustomUIPanelPlugin {
 
     @Override
     public void render(float alphaMult) {
+        if (p == null || dragging == null) return;
+        GL11.glPushAttrib(GL11.GL_ENABLE_BIT | GL11.GL_COLOR_BUFFER_BIT | GL11.GL_CURRENT_BIT
+                | GL11.GL_TEXTURE_BIT);
+        try {
+            GL11.glEnable(GL11.GL_BLEND);
+            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+            for (Drag z : dropZones) {
+                if (z.contains(mouseX, mouseY)) frame(z.x, z.y, z.w, z.h, GOLD, alphaMult);
+            }
+            if (dragging.icon != null) {
+                sprite(dragging.icon, mouseX - dragging.w / 2f, mouseY - dragging.h / 2f, dragging.w, dragging.h,
+                        alphaMult * 0.85f, 1f);
+            }
+        } finally {
+            GL11.glPopAttrib();
+        }
+    }
+
+    /** True while the player holds something picked up with {@link #draggable}. */
+    protected boolean isDragging() {
+        return dragging != null;
     }
 
     @Override

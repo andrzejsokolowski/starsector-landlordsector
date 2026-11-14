@@ -69,6 +69,7 @@ public class TenantDaily implements EveryFrameScript {
                     continue;
                 }
                 rollEvent(p, m, random);
+                if (p.tenant != null) rollTenantEvent(p, m, random);
                 if (p.tenant != null) maybeMoveOut(p, random);
                 if (p.tenant != null) maybeTreatment(p, random);
             } else {
@@ -118,16 +119,10 @@ public class TenantDaily implements EveryFrameScript {
         List<Float> weights = new ArrayList<>();
         float total = 0f;
         for (TenantEvents.Def d : TenantEvents.all()) {
-            if (d.leave) continue;
-            if (!d.requires.isEmpty()) {
-                boolean ok = false;
-                for (String tr : d.requires) if (p.tenant.has(tr)) ok = true;
-                if (!ok) continue;
-            }
+            if (d.leave || d.tenant || !allowed(p, d)) continue;
             float w = TenantRules.eventWeight(d.good, d.damage, d.crime, d.weight, p.tenant.eventMult(d.id),
                     st.happiness, p.setting(), p.tier().index, st.security);
-            // 0.4.0: sick tenants fall sick and miss rent more; traits and upgrades change the odds (Sprinklers).
-            w *= TenantRules.sickWeight(d.sickOnly, d.sickMult, st.health, Levels.sickBelow());
+            // Traits and upgrades change the odds (Fire sprinkler system).
             w *= featureMult(features, d.id);
             if (w <= 0f) continue;
             pool.add(d);
@@ -147,9 +142,72 @@ public class TenantDaily implements EveryFrameScript {
         apply(p, m, pick);
     }
 
+    /**
+     * The tenant's own life (0.5.0, Andrzej: "House events are separate from tenant events ... Killed, Hospital,
+     * Child born"): rolled on its own timer, steered by health, security and the tenant's traits, not by happiness.
+     */
+    private static void rollTenantEvent(Property p, MarketAPI m, Random random) {
+        if (Global.getSector().getClock().getElapsedDaysSince(p.lastTenantEventAt) < TenantEvents.tenantMinDays()) {
+            return;
+        }
+        if (random.nextFloat() >= TenantEvents.tenantDailyChance()) return;
+        TenantEvents.Def pick = pickTenantEvent(p, random);
+        if (pick != null) apply(p, m, pick);
+    }
+
+    /** One tenant event by weight, or null. Public for the headless check. */
+    public static TenantEvents.Def pickTenantEvent(Property p, Random random) {
+        PropertyStats st = p.stats();
+        List<String> features = p.features();
+        List<TenantEvents.Def> pool = new ArrayList<>();
+        List<Float> weights = new ArrayList<>();
+        float total = 0f;
+        for (TenantEvents.Def d : TenantEvents.all()) {
+            if (d.leave || !d.tenant || !allowed(p, d)) continue;
+            float w = tenantWeight(d, p.tenant.eventMult(d.id), st.health, st.security) * featureMult(features, d.id);
+            if (w <= 0f) continue;
+            pool.add(d);
+            weights.add(w);
+            total += w;
+        }
+        if (pool.isEmpty()) return null;
+        float r = random.nextFloat() * total;
+        for (int i = 0; i < pool.size(); i++) {
+            r -= weights.get(i);
+            if (r <= 0f) return pool.get(i);
+        }
+        return pool.get(pool.size() - 1);
+    }
+
+    /** One tenant event's weight for a tenant with this health in a home this safe. */
+    public static float tenantWeight(TenantEvents.Def d, float traitMult, float health, float security) {
+        float w = TenantRules.tenantEventWeight(d.good, d.health, d.crime, d.weight, traitMult, health, security);
+        // Sick tenants fall sick and miss rent more; dying of an illness only happens to the very sick.
+        w *= TenantRules.sickWeight(d.sickOnly, d.sickMult, health, Levels.sickBelow());
+        w *= TenantRules.belowWeight(d.maxHealth, health);
+        return w;
+    }
+
+    /** True when the tenant has one of the event's required traits, and it would change something. */
+    private static boolean allowed(Property p, TenantEvents.Def d) {
+        if (!d.requires.isEmpty()) {
+            boolean ok = false;
+            for (String tr : d.requires) if (p.tenant.has(tr)) ok = true;
+            if (!ok) return false;
+        }
+        if (d.addTenantTrait != null && p.tenant.has(d.addTenantTrait) && !"family".equals(d.addTenantTrait)) return false;
+        if (d.removeTenantTrait != null && !p.tenant.has(d.removeTenantTrait)) return false;
+        if (d.addTrait != null && p.traits().contains(d.addTrait)) return false;
+        if (d.removeTrait != null && !p.traits().contains(d.removeTrait)) return false;
+        if (d.wealth > 0 && p.tenant.wealth >= TenantRules.MAX_WEALTH) return false;
+        if (d.wealth < 0 && p.tenant.wealth <= 1) return false;
+        return true;
+    }
+
     /** Applies one event. Public for the headless check. */
     public static void apply(Property p, MarketAPI m, TenantEvents.Def e) {
-        p.lastEventAt = Global.getSector().getClock().getTimestamp();
+        if (e.tenant) p.lastTenantEventAt = Global.getSector().getClock().getTimestamp();
+        else p.lastEventAt = Global.getSector().getClock().getTimestamp();
         Tenant t = p.tenant;
         String text = e.text.replace("$tenant", t != null ? t.name : "The tenant").replace("$home", p.displayName());
         if (e.condition != 0f && !p.condemned) {
@@ -166,13 +224,23 @@ public class TenantDaily implements EveryFrameScript {
                 text = text + " " + com.fs.starfarer.api.util.Misc.getDGSCredits(tip) + ".";
             }
         }
+        if (e.addTrait != null && !p.traits().contains(e.addTrait)) p.traits().add(e.addTrait);
+        if (e.removeTrait != null) p.traits().remove(e.removeTrait);
+        if (t != null) {
+            if (e.addTenantTrait != null && !t.has(e.addTenantTrait)) t.traits().add(e.addTenantTrait);
+            if (e.removeTenantTrait != null) t.traits().remove(e.removeTenantTrait);
+            if (e.wealth != 0) t.wealth = Math.max(1, Math.min(TenantRules.MAX_WEALTH, t.wealth + e.wealth));
+        }
         if (e.rep != 0f && m != null && !MarketRules.isOwn(m)) {
             Global.getSector().getPlayerFaction().adjustRelationship(m.getFactionId(), e.rep / 100f);
         }
-        String said = e.big && t != null ? TenantEvents.say(e.id, t.traits(), t.factionId, new java.util.Random())
-                : null;
+        String said = e.big && t != null && !e.dies
+                ? TenantEvents.say(e.id, t.traits(), t.factionId, new java.util.Random()) : null;
         Notify.event(p, text, e.good, e.big, t != null ? t.name : null, said);
-        if (e.leave && t != null) p.tenant = null;
+        if ((e.leave || e.dies) && t != null) {
+            p.tenant = null;
+            p.advertising = true;
+        }
     }
 
     /** House traits and upgrades multiply an event's odds: a fire extinguisher halves small fires. */
@@ -187,12 +255,15 @@ public class TenantDaily implements EveryFrameScript {
         return m;
     }
 
-    /** Renovations whose work is done: logged, and one-time jobs fix their traits and leave (0.4.0). */
+    /**
+     * Renovations from older saves that were still being built: done now (0.5.0 builds at once), logged, and one-time
+     * jobs fix their traits and leave.
+     */
     public static void finishWork(Property p) {
         Iterator<Installed> it = p.upgrades().iterator();
         while (it.hasNext()) {
             Installed i = it.next();
-            if (i.furniture || i.days <= 0f || !i.ready()) continue;
+            if (i.furniture || i.days <= 0f) continue;
             Upgrades.Def d = i.def();
             i.days = 0f;
             String name = d != null ? d.name : i.id;

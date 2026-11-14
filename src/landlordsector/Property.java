@@ -60,6 +60,13 @@ public class Property {
     /** Placed furniture and renovations, built or being built. Null on older saves. */
     public List<Installed> upgrades;
 
+    // ---- 0.5.0 ----
+
+    /** The building the home sits next to (an industry id), "none", or null until rolled on load. */
+    public String neighbor;
+    /** When the tenant last had a tenant event (house events use lastEventAt). */
+    public long lastTenantEventAt;
+
     public List<Installed> upgrades() {
         if (upgrades == null) upgrades = new ArrayList<>();
         return upgrades;
@@ -85,14 +92,17 @@ public class Property {
         return n;
     }
 
-    /** Renovations built or being built, not counting one-time jobs. */
-    public int renovationCount() {
-        int n = 0;
-        for (Installed i : upgrades()) {
-            landlordsector.data.Upgrades.Def d = i.def();
-            if (!i.furniture && (d == null || !d.oneTime)) n++;
-        }
-        return n;
+    /** Upgrade ids built in this home, not furniture. */
+    public List<String> renovationIds() {
+        List<String> out = new ArrayList<>();
+        for (Installed i : upgrades()) if (!i.furniture) out.add(i.id);
+        return out;
+    }
+
+    /** True when this piece of furniture is placed here (a home holds one of each, 0.5.0). */
+    public boolean hasFurniture(String id) {
+        for (Installed i : upgrades()) if (i.furniture && i.id.equals(id)) return true;
+        return false;
     }
 
     public boolean has(String upgradeId) {
@@ -221,8 +231,14 @@ public class Property {
     }
 
     public float fullValue(boolean withFurniture) {
+        float v = valueBeforeUpgrades(withFurniture);
+        return v + landlordsector.data.Upgrades.flatValue(renovationIds(), v);
+    }
+
+    /** The full value without the flat value some upgrades add (0.5.0). */
+    public float valueBeforeUpgrades(boolean withFurniture) {
         MarketAPI m = market();
-        float mult = m != null ? MarketRules.mult(m) : Pricing.MULT_MIN;
+        float mult = m != null ? Surroundings.homeMult(m, neighbor) : Pricing.MULT_MIN;
         return basePrice * mult * drift * Pricing.decorValueMult(decor(withFurniture)) * traitPrice();
     }
 
@@ -243,8 +259,24 @@ public class Property {
     }
 
     public float repairCost() {
-        if (condition >= 0.999f && !condemned) return 0f;
-        return Pricing.repairCost(fullValue(), condition, TierTable.economy().repairFullCost);
+        int marks = 0;
+        for (String id : traits()) {
+            HouseTraits.Def d = HouseTraits.get(id);
+            if (d != null && d.mark) marks++;
+        }
+        if (condition >= 0.999f && !condemned && marks == 0) return 0f;
+        // 0.5.0: cleaning off a mark (Graffiti, Dirty) costs 1% of the value, at least 100.
+        float clean = marks * Math.max(100f, fullValue() * 0.01f);
+        return Pricing.repairCost(fullValue(), condition, TierTable.economy().repairFullCost) + clean;
+    }
+
+    /** True when repairs would clean off Graffiti or dirt (0.5.0). */
+    public boolean hasMarks() {
+        for (String id : traits()) {
+            HouseTraits.Def d = HouseTraits.get(id);
+            if (d != null && d.mark) return true;
+        }
+        return false;
     }
 
     /** What a sale pays after the broker fee and the tariff, furniture left in. */

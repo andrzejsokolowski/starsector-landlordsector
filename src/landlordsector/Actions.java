@@ -22,6 +22,10 @@ public final class Actions {
         if (cap > 0 && Portfolio.get().properties().size() >= cap) {
             return "You already own " + cap + " properties, the most your settings allow.";
         }
+        int slots = MarketRules.housingSlots(market);
+        if (Portfolio.get().countAt(market.getId()) >= slots) {
+            return "This market has room for " + slots + (slots == 1 ? " home" : " homes") + ", and you own them all.";
+        }
         if (listing != null && credits() < MarketRules.buyPrice(market, listing)) return "Not enough credits.";
         return null;
     }
@@ -47,6 +51,7 @@ public final class Actions {
         p.boughtAt = Global.getSector().getClock().getTimestamp();
         p.traits = listing.traits != null ? new java.util.ArrayList<>(listing.traits) : new java.util.ArrayList<>();
         p.name = listing.name;
+        p.neighbor = listing.neighbor;
         if (listing.upgrades != null) for (String id : listing.upgrades) p.upgrades().add(Installed.done(id));
         p.advertising = true;
         p.addLog("Bought for " + Misc.getDGSCredits(price) + ". Advertising for tenants.");
@@ -64,6 +69,11 @@ public final class Actions {
         boolean wasCondemned = p.condemned;
         p.condition = 1f;
         p.condemned = false;
+        // 0.5.0: repairs also clean off marks (Graffiti, Dirty).
+        p.traits().removeIf(id -> {
+            landlordsector.data.HouseTraits.Def d = landlordsector.data.HouseTraits.get(id);
+            return d != null && d.mark;
+        });
         Global.getSoundPlayer().playUISound("ui_upgrade_industry", 1f, 1f);
         return (wasCondemned ? "Rebuilt: " : "Repaired: ") + p.displayName() + " for " + Misc.getDGSCredits(cost)
                 + ".";
@@ -90,11 +100,9 @@ public final class Actions {
         float pay = p.saleValue(furnished);
         int back = 0;
         if (!furnished) {
-            com.fs.starfarer.api.campaign.CargoAPI cargo = Global.getSector().getPlayerFleet().getCargo();
             for (Installed i : p.upgrades()) {
                 if (!i.furniture) continue;
-                cargo.addSpecial(new com.fs.starfarer.api.campaign.SpecialItemData(
-                        landlordsector.data.Upgrades.ITEM_PREFIX + i.id, null), 1f);
+                Portfolio.get().addFurniture(i.id, 1);
                 back++;
             }
         }
@@ -103,16 +111,34 @@ public final class Actions {
         Global.getSoundPlayer().playUISound("ui_cargo_special_tech_drop", 1f, 1f);
         return "Sold: " + p.displayName() + " for " + Misc.getDGSCredits(pay) + "."
                 + (back > 0 ? " " + back + (back == 1 ? " piece of furniture is" : " pieces of furniture are")
-                        + " back in your cargo." : "");
+                        + " back in your furniture storage." : "");
     }
 
-    // ---- Upgrades (0.4.0) ----
+    // ---- Upgrades (0.4.0; 0.5.0: furniture storage, instant upgrades, no upgrade slots) ----
 
-    /** How many pieces of this furniture are in the player's cargo. */
+    /** How many pieces of this furniture are in the player's cargo (right-click them to store them). */
     public static int inCargo(landlordsector.data.Upgrades.Def d) {
         com.fs.starfarer.api.campaign.CargoAPI cargo = Global.getSector().getPlayerFleet().getCargo();
         return Math.round(cargo.getQuantity(com.fs.starfarer.api.campaign.CargoAPI.CargoItemType.SPECIAL,
                 new com.fs.starfarer.api.campaign.SpecialItemData(d.itemId(), null)));
+    }
+
+    /** Pieces of furniture of any kind in the player's cargo. */
+    public static int furnitureInCargo() {
+        int n = 0;
+        for (landlordsector.data.Upgrades.Def d : landlordsector.data.Upgrades.of(
+                landlordsector.data.Upgrades.Kind.FURNITURE)) {
+            n += inCargo(d);
+        }
+        return n;
+    }
+
+    /** Moves one piece of furniture from the cargo into the furniture storage (the item's right-click). */
+    public static String store(String upgradeId) {
+        landlordsector.data.Upgrades.Def d = landlordsector.data.Upgrades.get(upgradeId);
+        if (d == null || !d.furniture()) return "That is not furniture.";
+        Portfolio.get().addFurniture(d.id, 1);
+        return d.name + " is in your furniture storage. Place it from the Real estate tab of the Manage screen.";
     }
 
     /** Null when this furniture can go into this home now, or the reason it cannot. */
@@ -121,40 +147,37 @@ public final class Actions {
         if (!landlordsector.data.Upgrades.fits(d, p.tier().index, p.onStation(), p.traits())) {
             return "It does not fit " + PropertyStats.article(p.tier().name.toLowerCase()) + ".";
         }
-        if (p.furnitureCount() >= p.tier().slots) return "No free furniture slot.";
-        if (inCargo(d) <= 0) return "You have none in your cargo.";
+        if (p.hasFurniture(d.id)) return "There is already one in this home.";
+        if (p.furnitureCount() >= p.tier().slots) return "All furniture slots are full.";
+        if (Portfolio.get().furnitureCount(d.id) <= 0) return "You have none in storage.";
         return null;
     }
 
-    /** Takes one piece of furniture out of the cargo and puts it into the home (delivered, from anywhere). */
+    /** Takes one piece of furniture out of the storage and puts it into the home. */
     public static String place(Property p, landlordsector.data.Upgrades.Def d) {
         String no = cannotPlace(p, d);
         if (no != null) return no;
-        Global.getSector().getPlayerFleet().getCargo().removeItems(
-                com.fs.starfarer.api.campaign.CargoAPI.CargoItemType.SPECIAL,
-                new com.fs.starfarer.api.campaign.SpecialItemData(d.itemId(), null), 1f);
+        Portfolio.get().addFurniture(d.id, -1);
         p.upgrades().add(new Installed(d.id, true, 0f));
         p.addLog("Placed: " + d.name + ".", true, "Placed: " + d.name + ".");
         Global.getSoundPlayer().playUISound("ui_cargo_special_industrial_drop", 1f, 1f);
         return "Placed: " + d.name + " in " + p.displayName() + ".";
     }
 
-    /** Takes a piece of furniture out of the home and back into the cargo. */
+    /** Takes a piece of furniture out of the home and back into the storage. */
     public static String takeBack(Property p, Installed i) {
         if (i == null || !i.furniture || !p.upgrades().remove(i)) return "That furniture is not there.";
-        Global.getSector().getPlayerFleet().getCargo().addSpecial(
-                new com.fs.starfarer.api.campaign.SpecialItemData(landlordsector.data.Upgrades.ITEM_PREFIX + i.id,
-                        null), 1f);
+        Portfolio.get().addFurniture(i.id, 1);
         p.addLog("Took back: " + i.name() + ".");
         Global.getSoundPlayer().playUISound("ui_cargo_special_industrial_pickup", 1f, 1f);
-        return "Took back: " + i.name() + ". It is in your cargo.";
+        return "Took back: " + i.name() + ".";
     }
 
     public static float renovationCost(Property p, landlordsector.data.Upgrades.Def d) {
-        return landlordsector.data.Upgrades.renovationCost(d, p.fullValue(false));
+        return landlordsector.data.Upgrades.renovationCost(d, p.valueBeforeUpgrades(false));
     }
 
-    /** Null when this renovation can be built in this home now, or the reason it cannot. */
+    /** Null when this upgrade can be built in this home now, or the reason it cannot. */
     public static String cannotBuild(Property p, landlordsector.data.Upgrades.Def d) {
         if (p.market() == null) return "The world is gone.";
         if (p.condemned) return "Repair the home first.";
@@ -162,29 +185,33 @@ public final class Actions {
         if (!landlordsector.data.Upgrades.fits(d, p.tier().index, p.onStation(), p.traits())) {
             return "Not for this home.";
         }
-        if (!d.oneTime && p.renovationCount() >= landlordsector.data.Upgrades.renovationSlots(p.tierId)) {
-            return "No free renovation slot.";
+        String clash = landlordsector.data.Upgrades.clash(d, p.renovationIds());
+        if (clash != null) {
+            landlordsector.data.Upgrades.Def c = landlordsector.data.Upgrades.get(clash);
+            return "Does not go with " + (c != null ? c.name : clash) + ".";
         }
         if (credits() < renovationCost(p, d)) return "Not enough credits.";
         return null;
     }
 
+    /** Builds an upgrade at once (Andrzej, 0.5.0: "performed immediately, not after X days"). */
     public static String build(Property p, landlordsector.data.Upgrades.Def d) {
         String no = cannotBuild(p, d);
         if (no != null) return no;
         float cost = renovationCost(p, d);
         Global.getSector().getPlayerFleet().getCargo().getCredits().subtract(cost);
-        p.upgrades().add(new Installed(d.id, false, d.days));
-        p.addLog("Started: " + d.name + " for " + Misc.getDGSCredits(cost) + ", " + Math.round(d.days) + " days.");
+        if (!d.fixes.isEmpty()) p.traits().removeAll(d.fixes);
+        if (!d.oneTime) p.upgrades().add(Installed.done(d.id));
+        p.addLog("Built: " + d.name + " for " + Misc.getDGSCredits(cost) + ".", true, "Built: " + d.name);
         Global.getSoundPlayer().playUISound("ui_upgrade_industry", 1f, 1f);
-        return "Started: " + d.name + " at " + p.displayName() + ", ready in " + Math.round(d.days) + " days.";
+        return "Built: " + d.name + " at " + p.displayName() + " for " + Misc.getDGSCredits(cost) + ".";
     }
 
-    /** Tears a renovation out to free its slot. Nothing is paid back. */
-    public static String tearOut(Property p, Installed i) {
-        if (i == null || i.furniture || !p.upgrades().remove(i)) return "That renovation is not there.";
-        p.addLog("Tore out: " + i.name() + ".");
-        return "Tore out: " + i.name() + ".";
+    /** Removes an upgrade from the home. */
+    public static String remove(Property p, Installed i) {
+        if (i == null || i.furniture || !p.upgrades().remove(i)) return "That upgrade is not there.";
+        p.addLog("Removed: " + i.name() + ".");
+        return "Removed: " + i.name() + ".";
     }
 
     public static void setRent(Property p, RentSetting s) {

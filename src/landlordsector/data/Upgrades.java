@@ -13,9 +13,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- * Home upgrades from data/config/landlordsector/upgrades.json (0.4.0): furniture (cargo items placed in a home) and
- * renovations (built with credits). Every upgrade carries the same effects as a house trait, so the stat sheet, the
- * price and the tenants treat an installed upgrade exactly like a trait.
+ * Home upgrades from data/config/landlordsector/upgrades.json (0.4.0): furniture (items kept in the furniture storage
+ * and placed in a home's slots) and upgrades bought with credits (called renovations in the code and saves, Andrzej
+ * 0.5.0: "call them upgrades"). Every upgrade carries the same effects as a house trait, so the stat sheet, the price
+ * and the tenants treat an installed upgrade exactly like a trait.
  */
 public final class Upgrades {
 
@@ -30,8 +31,15 @@ public final class Upgrades {
         public String id;
         public Kind kind;
         public String name;
-        /** Renovations: share of the home's full value, at least minCost, and the days it takes. */
-        public float cost, minCost, days;
+        /** Renovations: share of the home's full value, at least minCost. Built at once since 0.5.0. */
+        public float cost, minCost;
+        /**
+         * 0.5.0 (Andrzej: "air conditioning would only increase it by a flat value"): the value it adds as a share of
+         * what it costs. Upgrades that raise the value by a percent use "price" instead.
+         */
+        public float valueShare;
+        /** 0.5.0: upgrades it can never be in one home with. */
+        public Set<String> conflicts = Collections.emptySet();
         public int minTier = 0;
         public int maxTier = 99;
         /** null: anywhere, true: stations only, false: planets only. */
@@ -59,7 +67,6 @@ public final class Upgrades {
     }
 
     private static Map<String, Def> defs = Collections.emptyMap();
-    private static Map<String, Integer> renovationSlots = Collections.emptyMap();
     private static float listingChance = 0.3f;
     private static int shopMin = 1, shopMax = 3;
     private static float shopDays = 30f, lootChance = 0.12f;
@@ -76,11 +83,13 @@ public final class Upgrades {
                 if (o == null || o.optString("id", "").isEmpty()) continue;
                 Def d = new Def();
                 d.id = o.optString("id");
-                d.kind = "renovation".equals(o.optString("kind", "furniture")) ? Kind.RENOVATION : Kind.FURNITURE;
+                String kind = o.optString("kind", "furniture");
+                d.kind = "renovation".equals(kind) || "upgrade".equals(kind) ? Kind.RENOVATION : Kind.FURNITURE;
                 d.name = o.optString("name", d.id);
                 d.cost = (float) o.optDouble("cost", 0);
                 d.minCost = (float) o.optDouble("minCost", 0);
-                d.days = (float) o.optDouble("days", 0);
+                d.valueShare = (float) o.optDouble("valueShare", 0);
+                d.conflicts = HouseTraits.strings(o.optJSONArray("conflicts"));
                 d.minTier = o.optInt("minTier", 0);
                 d.maxTier = o.optInt("maxTier", 99);
                 d.station = o.has("station") && !o.isNull("station") ? o.optBoolean("station") : null;
@@ -104,14 +113,6 @@ public final class Upgrades {
                 map.put(d.id, d);
             }
         }
-        Map<String, Integer> slots = new LinkedHashMap<>();
-        JSONObject so = json.optJSONObject("renovationSlots");
-        if (so != null) {
-            for (java.util.Iterator<?> it = so.keys(); it.hasNext();) {
-                String k = String.valueOf(it.next());
-                slots.put(k, so.optInt(k, 1));
-            }
-        }
         JSONArray stock = json.optJSONArray("shopStock");
         if (stock != null && stock.length() >= 2) {
             shopMin = stock.optInt(0, 1);
@@ -120,8 +121,18 @@ public final class Upgrades {
         shopDays = (float) json.optDouble("shopDays", 30);
         lootChance = (float) json.optDouble("lootChance", 0.12);
         listingChance = (float) json.optDouble("listingChance", 0.3);
+        // Conflicts go both ways.
+        for (Def d : map.values()) {
+            for (String c : d.conflicts) {
+                Def o = map.get(c);
+                if (o != null && !o.conflicts.contains(d.id)) {
+                    Set<String> s = new java.util.HashSet<>(o.conflicts);
+                    s.add(d.id);
+                    o.conflicts = s;
+                }
+            }
+        }
         defs = map;
-        renovationSlots = slots;
     }
 
     public static Def get(String id) {
@@ -151,11 +162,6 @@ public final class Upgrades {
         return out;
     }
 
-    public static int renovationSlots(String tierId) {
-        Integer n = renovationSlots.get(tierId);
-        return n == null ? 1 : n;
-    }
-
     public static int shopMin() {
         return shopMin;
     }
@@ -175,6 +181,25 @@ public final class Upgrades {
     /** What a renovation costs on a home worth {@code fullValue}. */
     public static float renovationCost(Def d, float fullValue) {
         return Math.max(d.minCost, d.cost * fullValue);
+    }
+
+    /** The flat value these upgrades add to a home worth {@code fullValue} without them (0.5.0). */
+    public static float flatValue(java.util.Collection<String> ids, float fullValue) {
+        float v = 0f;
+        if (ids == null) return v;
+        for (String id : ids) {
+            Def d = defs.get(id);
+            if (d == null || d.furniture() || d.valueShare <= 0f) continue;
+            v += d.valueShare * renovationCost(d, fullValue);
+        }
+        return v;
+    }
+
+    /** The installed upgrade this one clashes with, or null. */
+    public static String clash(Def d, java.util.Collection<String> installed) {
+        if (installed == null) return null;
+        for (String i : installed) if (d.conflicts.contains(i)) return i;
+        return null;
     }
 
     /** True when this upgrade can go into a home of this tier, on a station or a planet, with these traits. */
