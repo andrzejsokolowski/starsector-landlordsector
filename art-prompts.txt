@@ -909,7 +909,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: The home is INSIDE a large orbital space station, on a wide habitat deck. There is no outdoors at all. Where the camera rules say horizon, use the far end of the deck; where they say sky, use the ceiling and the big window.
 
-THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
+THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about as big as one long shipping container, one floor, one room, the roof a little above the door. Shape: one plain box, pod or dome with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door. It stands alone: not joined to other units, not a cluster, no second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: boxy modular habitat units bolted to the deck, smooth painted metal panels in pale grey and teal, round porthole windows, ribbed vents, pipes and cable trays running along the walls, a sliding door.
 
 HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
@@ -970,7 +970,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: An Earth-like colony world with a mild climate.
 
-THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
+THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about as big as one long shipping container, one floor, one room, the roof a little above the door. Shape: one plain box, pod or dome with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door. It stands alone: not joined to other units, not a cluster, no second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: off-white and pale grey prefab panels with rounded corners on a concrete base, a boxy climate unit on the wall, a small dish antenna, rounded-rectangle windows, a door with a keypad.
 
 HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
@@ -1031,7 +1031,7 @@ Keep to the attached picture where this prompt says so.
 
 THE WORLD: A hot, wet jungle world.
 
-THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
+THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about as big as one long shipping container, one floor, one room, the roof a little above the door. Shape: one plain box, pod or dome with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door. It stands alone: not joined to other units, not a cluster, no second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: prefab panels and metal plating like the Terran homes, raised on a low concrete base against the mud, moss on the lower walls, vines starting to climb it, a humming dehumidifier unit.
 
 HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
@@ -1092,7 +1092,7 @@ Keep to the attached picture where this prompt says so.
 
 THE WORLD: An ocean world: almost all water, with homes on the coast and on piers.
 
-THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
+THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about as big as one long shipping container, one floor, one room, the roof a little above the door. Shape: one plain box, pod or dome with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door. It stands alone: not joined to other units, not a cluster, no second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: prefab panels and metal plating like the Terran homes, standing on steel and concrete pilings above the water, salt stains and rust streaks, a water purifier unit with pipes into the sea.
 
 HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
@@ -1153,7 +1153,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: A hot, dry savanna world: not a sand desert, but dry steppe.
 
-THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
+THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about as big as one long shipping container, one floor, one room, the roof a little above the door. Shape: one plain box, pod or dome with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door. It stands alone: not joined to other units, not a cluster, no second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: low, boxy prefab modules painted sand and ochre, shaded by a big slatted metal sun-screen on posts, thick insulated walls, narrow tinted windows, a large roof-mounted cooling unit with a spinning fan, a white water tank and a row of solar panels.
 
 HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
@@ -1214,7 +1214,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: A sand desert world.
 
-THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
+THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about as big as one long shipping container, one floor, one room, the roof a little above the door. Shape: one plain box, pod or dome with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door. It stands alone: not joined to other units, not a cluster, no second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: smooth domed shells of sand-colored ceramic plating, half buried in the dunes on purpose for cooling, a round airlock-style door against the sand, small round tinted windows, sand louvers over every vent, a big dish-shaped water condenser and a tall cooling tower with fins.
 
 HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
@@ -1275,7 +1275,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: A cold tundra world: cold and bleak, but with some life.
 
-THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
+THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about as big as one long shipping container, one floor, one room, the roof a little above the door. Shape: one plain box, pod or dome with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door. It stands alone: not joined to other units, not a cluster, no second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: a long, low insulated prefab module in olive drab and off-white, half sunk into the permafrost behind a gravel berm, heavy insulated panels with rounded corners, a chunky heat-exchanger box with radiator fins, small double-glazed windows with a warm amber glow, an exhaust stack venting steam.
 
 HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
@@ -1336,7 +1336,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: A frozen ice world: deep, permanent cold.
 
-THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
+THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about as big as one long shipping container, one floor, one room, the roof a little above the door. Shape: one plain box, pod or dome with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door. It stands alone: not joined to other units, not a cluster, no second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: rounded insulated prefab pods raised on stilts above the snow, bright orange and white panels so they can be seen in a blizzard, a thick round airlock-style door, small triple-glazed windows with frost, steam rising from a heating vent, icicles along the edges.
 
 HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
@@ -1397,7 +1397,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: An icy world with ice volcanoes that erupt cold water vapor instead of lava. The air is very thin.
 
-THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
+THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about as big as one long shipping container, one floor, one room, the roof a little above the door. Shape: one plain box, pod or dome with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door. It stands alone: not joined to other units, not a cluster, no second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: a pressurized geodesic dome or cluster of domes made of white triangular panels crusted with ice, anchored to the ground with cables, a boxy airlock entrance, round windows glowing warm yellow.
 
 HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
@@ -1458,7 +1458,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: An airless rock world, like a moon: no air, no water, no life.
 
-THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
+THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about as big as one long shipping container, one floor, one room, the roof a little above the door. Shape: one plain box, pod or dome with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door. It stands alone: not joined to other units, not a cluster, no second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: grey metal cylindrical pressure modules lying on their sides, partly buried under piled grey rock and gravel for shielding, a round airlock hatch with a small porthole, air tanks and pipes on the outside, a blinking beacon on top.
 
 HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
@@ -1519,7 +1519,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: A world with a poisonous atmosphere: nobody goes outside without a mask.
 
-THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
+THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about as big as one long shipping container, one floor, one room, the roof a little above the door. Shape: one plain box, pod or dome with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door. It stands alone: not joined to other units, not a cluster, no second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: a sealed box of grimy corrugated metal and riveted plates, everything stained with yellow residue, a heavy bulkhead door, two tall filter stacks humming on the roof, small sealed windows, yellow and black hazard stripes (no writing).
 
 HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
@@ -1580,7 +1580,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: A volcanic world with lava and constant eruptions.
 
-THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
+THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about as big as one long shipping container, one floor, one room, the roof a little above the door. Shape: one plain box, pod or dome with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door. It stands alone: not joined to other units, not a cluster, no second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: an angular, wedge-shaped home of dark heat-shield ceramic tiles, raised on thick pillars above the hot ground, sloped walls, narrow shielded windows glowing orange, cooling fins and vents.
 
 HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
@@ -1641,7 +1641,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: A world bathed in deadly radiation: dead land, harsh light.
 
-THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
+THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about as big as one long shipping container, one floor, one room, the roof a little above the door. Shape: one plain box, pod or dome with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door. It stands alone: not joined to other units, not a cluster, no second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: a squat concrete bunker half sunk into an earth mound, a thick slab roof, very small thick windows, a heavy steel door at the bottom of a short ramp, lead-lined plates bolted on, no symbols painted on the walls.
 
 HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
@@ -1702,7 +1702,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: A gas giant: there is no ground at all. The home is on a floating habitat platform deep INSIDE the gas giant's atmosphere, not in orbit and not in space: thick clouds and storms surround it on every side, above and below. There is no horizon line: the cloud layers fade into haze in every direction, so where the camera rules say horizon, use the far edge of the deck and the cloud layer at that height.
 
-THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about two shipping containers side by side, one floor, one room. Shape: a plain box with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door; it may be the end unit of a short, low row of two or three joined one-floor units. No second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
+THE HOME (Studio): a cheap one-room home, built in this world's style. Size: about as big as one long shipping container, one floor, one room, the roof a little above the door. Shape: one plain box, pod or dome with a flat or low roof, simple but kept in order. Front: one door and one or two small windows. Around it: a small bit of space by the door. It stands alone: not joined to other units, not a cluster, no second floor, no tower, no block of flats. It must look bigger and tidier than a shack and smaller than a small house.
 Building style: light, rounded pods of white and copper panels, round windows, anchored to the deck with cables against the wind, windsocks, small gas balloons tied above the roof.
 
 HOW BIG (the six homes of this set from smallest to biggest, all seen from the same camera distance, so a bigger home fills more of the picture):
