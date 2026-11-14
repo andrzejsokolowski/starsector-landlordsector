@@ -31,6 +31,17 @@ def main():
     for _ in range(max(1, a.wait)):  # the download can take a while to land
         files = sorted((f for f in glob.glob(os.path.join(DOWNLOADS, 'Gemini_Generated_Image_*'))
                         if not f.endswith(('.crdownload', '.tmp'))), key=os.path.getmtime)
+        good = []
+        for f in files:  # an empty or half-written file (a misclicked download) is skipped
+            try:
+                from PIL import Image as _I
+                with _I.open(f) as probe:
+                    probe.load()
+                good.append(f)
+            except Exception:
+                if os.path.getsize(f) == 0 and time.time() - os.path.getmtime(f) > 10:
+                    os.remove(f)
+        files = good
         if files:
             break
         # Sometimes the browser pane leaves a finished download as <guid>.tmp: take it once it
