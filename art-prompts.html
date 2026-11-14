@@ -107,7 +107,7 @@ pre { white-space: pre-wrap; word-wrap: break-word; font-family: var(--body); fo
     <div class="toast" id="toast" role="status"></div>
     <div class="reminder" id="attach"></div>
     <pre id="prompt"></pre>
-    <p class="note">Click Mark done once when variant 1 is saved (yellow), again when variant 2 is saved too (green), a third time to clear. Done marks are kept in this browser only. The art checklist on the LLS-10 ticket is the real record.</p>
+    <p class="note">Click Mark done once when variant 1 is saved (yellow), again when variant 2 is saved too (green), a third time to clear. <span id="sync">Done marks are kept in this browser only.</span></p>
   </section>
 </div>
 
@@ -117,16 +117,59 @@ const order = [];
 DATA.sizes.forEach(s => DATA.planets.forEach(p => order.push({s, p, key: s.id + '_' + p.id})));
 let done = {};
 try { done = JSON.parse(localStorage.getItem('lls-art-done') || '{}') || {}; } catch (e) { done = {}; }
-function saveDone() { try { localStorage.setItem('lls-art-done', JSON.stringify(done)); } catch (e) {} }
+// Marks live in this artifact's shared store when it is available (Claude sets them there too),
+// with this browser's copy as the fallback.
+let marksRef = null, marksLive = false, writing = Promise.resolve();
+function cleanMarks(m) {
+  const out = {};
+  Object.keys(m || {}).forEach(k => { const v = Math.min(2, Number(m[k]) || 0); if (v > 0 && DATA.prompts[k]) out[k] = v; });
+  return out;
+}
+function saveLocal() { try { localStorage.setItem('lls-art-done', JSON.stringify(done)); } catch (e) {} }
+function saveDone() {
+  saveLocal();
+  if (!marksRef || !marksLive) return;
+  const body = { marks: cleanMarks(done) };
+  writing = writing.then(() => marksRef.set(body)).catch(() => setSync('Could not save the mark to the shared list; it is kept in this browser.'));
+}
+function setSync(text) { const el = document.getElementById('sync'); if (el) el.textContent = text; }
+(async () => {
+  const db = window.claude && window.claude.use ? await window.claude.use('db').catch(() => null) : null;
+  if (!db) { setSync('Done marks are kept in this browser only.'); return; }
+  marksRef = db.doc('progress/marks');
+  let first = true;
+  const timer = setTimeout(() => setSync('The shared marks cannot be reached yet; showing this browser\'s marks.'), 10000);
+  marksRef.onSnapshot(snap => {
+    const shared = cleanMarks(snap.exists ? (snap.data() || {}).marks : {});
+    if (!snap.metadata.fromCache) clearTimeout(timer);
+    if (first && !snap.metadata.fromCache) {
+      first = false;
+      // Bring this browser's earlier marks into the shared list once.
+      const merged = Object.assign({}, shared);
+      Object.keys(cleanMarks(done)).forEach(k => { merged[k] = Math.max(merged[k] || 0, done[k]); });
+      done = merged; marksLive = true; saveLocal();
+      if (JSON.stringify(cleanMarks(merged)) !== JSON.stringify(shared)) saveDone();
+    } else if (!first) {
+      done = shared; saveLocal();
+    }
+    setSync('Done marks are shared: Claude marks the pictures it makes, and your marks show everywhere.');
+    show(cur);
+  }, () => setSync('The shared marks stopped updating; marks are kept in this browser.'));
+})();
 let cur = 0;
 let variant = 1;
 try { variant = localStorage.getItem('lls-art-var') === '2' ? 2 : 1; } catch (e) {}
 function state(key) { return done[key] ? Math.min(2, Number(done[key]) || 1) : 0; }
-function fileName(o) { return o.key + (variant === 2 ? '_2' : '') + '.png'; }
+// Andrzej's file names: shouse for the small house, gasgiant without the underscore, _alt for variant 2.
+function fileName(o) {
+  const size = o.s.id === 'small_house' ? 'shouse' : o.s.id;
+  const planet = o.p.id === 'gas_giant' ? 'gasgiant' : o.p.id;
+  return size + '_' + planet + (variant === 2 ? '_alt' : '') + '.jpg';
+}
 function promptText(o) {
   const base = DATA.prompts[o.key];
   if (variant === 1) return base;
-  return base + '\n\nVARIANT 2 (a second picture of this home, so two homes of the same size on the same world do not look the same):\n'
+  return 'VARIANT 2 (a second picture of this home, so two homes of the same size on the same world do not look the same):\n'
     + '- Keep everything above exactly as it is: the art style, the camera and framing, the world, the light, the time of day, and every MUST and MUST NOT rule.\n'
     + '- Change only the building and its yard: a different floor plan and outline, a different roof shape, different window and door positions, a different pattern of panels and patches, and a different accent color.\n'
     + '- Change the props: a different object at the left edge of the picture and different clutter on the ground.\n'
@@ -167,10 +210,9 @@ function show(i) {
   document.getElementById('what').textContent = o.s.name + ' on a ' + o.p.name + ' world';
   document.getElementById('pos').textContent = (cur + 1) + ' of ' + order.length;
   document.getElementById('prompt').textContent = promptText(o);
-  const terran = o.s.id + '_terran' + (variant === 2 ? '_2' : '') + '.png';
-  document.getElementById('attach').textContent = (o.p.shared && o.p.id !== 'terran' && o.s.id !== 'shack')
-    ? 'Attach the Terran ' + o.s.name.toLowerCase() + ' picture, variant ' + variant + ' (' + terran + '): this one keeps the same building.'
-    : 'Attach NOTHING. The art style and the camera are written out in the prompt.';
+  document.getElementById('attach').textContent = variant === 1
+    ? 'Start a new chat and attach nothing. The art style and the camera are written out in the prompt.'
+    : 'Send this in the same chat, right after variant 1. Flip the picture left to right before saving it.';
   const d = document.getElementById('done');
   const st = state(o.key);
   d.textContent = st === 0 ? 'Mark variant 1 done' : (st === 1 ? 'Mark both done' : 'Clear marks');
