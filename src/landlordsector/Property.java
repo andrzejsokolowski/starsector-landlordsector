@@ -77,13 +77,32 @@ public class Property {
         return features(true);
     }
 
+    /**
+     * Features with or without the furniture. Without furniture (what the home is worth on its own) also leaves out
+     * the services, which stop when the home is sold (0.6.0).
+     */
     public List<String> features(boolean withFurniture) {
         List<String> out = new ArrayList<>(traits());
         for (Installed i : upgrades()) {
             if (!i.ready() || (i.furniture && !withFurniture)) continue;
             out.add(i.id);
         }
+        if (withFurniture) out.addAll(services());
         return out;
+    }
+
+    // ---- 0.6.0 ----
+
+    /** Services hired for this home (services.json ids). Null on older saves. */
+    public List<String> services;
+
+    public List<String> services() {
+        if (services == null) services = new ArrayList<>();
+        return services;
+    }
+
+    public boolean hasService(String id) {
+        return services().contains(id) || (landlordsector.data.Services.SCREENING.equals(id) && screeningService);
     }
 
     public int furnitureCount() {
@@ -155,12 +174,17 @@ public class Property {
 
     /** Decor with or without the furniture (a home sold empty is valued without it). */
     public float decor(boolean withFurniture) {
+        return Pricing.clamp(decorRaw(withFurniture), 0f, 100f);
+    }
+
+    /** Decor before it is kept between 0 and 100, for the stat sheet's breakdown (0.6.0). */
+    public float decorRaw(boolean withFurniture) {
         float d = tier().decor + decorBonus;
         for (String id : features(withFurniture)) {
             HouseTraits.Def def = HouseTraits.get(id);
             if (def != null) d += def.decor;
         }
-        return Pricing.clamp(d, 0f, 100f);
+        return d;
     }
 
     /** Price multiplier of the house traits and finished renovations. */

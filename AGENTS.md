@@ -112,6 +112,18 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   Marks (house traits with `mark`, Graffiti and Dirty) are cleaned by repairs. Homes per market:
   `MarketRules.housingSlots` = size, `listingRoll`. `upgradeTo050` rolls neighbours, finishes old renovations,
   moves duplicate furniture to storage and clears all listings once (`Portfolio.upgraded050`).
+- 0.6.0 (LLS-3, LLS-4, LLS-12, the Services and House flipping tickets, Andrzej's 22 notes after 0.5.0): grades
+  start at 50 (C), `Environment.letter` S+ to F, `colonyOverrides` (the AoTD `aotd_maglev` lifts commute to 95).
+  `PropertyStats.area` / `nextTo` ("Mining nearby", "Residential area"), the sheet's Area, Size and Climate rows,
+  upgrades and furniture as a count with a tooltip (`PropertyView.countItem`). Tenant happiness and health are the
+  tenant's own bars (`Sheet.tenant`: null hides the section, "" shows None). `PropertyStats.uselessHere` greys
+  out level upgrades a home does not need. Upgrade price = minCost + cost x value (`Upgrades.renovationCost`).
+  Services (`data/Services`, services.json, `Property.services`, `HouseTraits.get` falls back to them, left out
+  of `features(false)` so they never change the value; `MonthlyTick` charges them and runs `cleans` / `repairs`;
+  Services tab (S); `upgradeTo060` turns the old `screeningService` flag into the service). House flipping:
+  `Listing.wear` (0 on old listings), `MarketRules.listingWorth` / `WORN_CHANCE`, worn listings may roll Graffiti
+  or Dirty; `checkRules` pins worn price + repairs < new and repaired sale > worn price. Picture variants:
+  `<tier>_<type>_2.png` next to the first one in art.json; `Art.pick` already picks at random.
   0.4.1: furniture icons are Andrzej's, 80x80 in `graphics/icons/cargo/landlordsector/<id>.png`, cut from his sheet
   (first view of each piece, background already transparent). A new piece needs an icon there and its csv row.
 

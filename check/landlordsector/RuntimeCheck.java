@@ -128,7 +128,7 @@ public final class RuntimeCheck {
         // Buy the cheapest on the Hegemony world: the price includes the 30 percent tariff.
         Listing cheap = la.list().get(0);
         float before = credits.get();
-        float expected = MarketRules.listingValue(a, cheap) * 1.3f;
+        float expected = MarketRules.listingWorth(a, cheap) * 1.3f;
         String result = Actions.buy(a, cheap);
         expect(result.startsWith("Bought"), "buying works: " + result);
         expect(Math.abs(before - credits.get() - expected) < CREDIT_EPS, "the buy price includes the tariff");
@@ -139,7 +139,7 @@ public final class RuntimeCheck {
         // On the player's colony: half price, no tariff.
         Listing own = MarketRules.listings(b).list().get(0);
         before = credits.get();
-        float ownPrice = MarketRules.listingValue(b, own) * 0.5f;
+        float ownPrice = MarketRules.listingWorth(b, own) * 0.5f;
         Actions.buy(b, own);
         expect(Math.abs(before - credits.get() - ownPrice) < CREDIT_EPS, "own colony homes cost half with no tariff");
         Property colonyHome = Portfolio.get().properties().get(1);
@@ -378,12 +378,20 @@ public final class RuntimeCheck {
         expect(mine.env.get("noise") < calm.env.get("noise") && mine.env.get("air") < calm.env.get("air"),
                 "a home next to Mining is louder and dirtier");
         expect(mine.marketMult < calm.marketMult && home.fullValue() > 0f, "Mining next door lowers the location");
-        expect("Next to mining".equals(mine.nextTo), "the sheet names the neighbour: " + mine.nextTo);
+        expect("mining nearby".equalsIgnoreCase(mine.nextTo) && "Mining".equals(mine.area),
+                "the sheet names the area: " + mine.area);
         home.neighbor = "population";
         PropertyStats center = home.stats();
         expect(center.env.get("commute") > calm.env.get("commute"), "the city center shortens the commute");
         heg.industries.remove("population");
-        expect("Next to nothing".equals(home.stats().nextTo), "a neighbour that is gone counts as nothing");
+        expect("Residential".equals(home.stats().area), "a neighbour that is gone counts as a residential area");
+        // The AoTD Maglev Central Hub lifts every commute on the colony to S+ (Andrzej, 0.6.0).
+        heg.industries.put("aotd_maglev", java.util.Set.of("trainstation", "structure"));
+        expect(home.stats().env.get("commute") >= 85f, "a Maglev makes every commute S+");
+        heg.industries.remove("aotd_maglev");
+        // A station home: base 50 plus the station's 10, a B, once the Maglev is gone.
+        expect(Math.abs(home.stats().env.get("commute") - 60f) < 0.01f,
+                "without the Maglev the station commute is back to 60: " + home.stats().env.get("commute"));
         home.neighbor = "none";
 
         // Criminals like security, but hate the police on their colony (0.5.0).
@@ -427,6 +435,22 @@ public final class RuntimeCheck {
         home.condition = 1f;
         expect(home.repairCost() > 0f && Actions.repair(home).startsWith("Repaired") && !home.traits().contains("graffiti"),
                 "repairs clean off graffiti");
+
+        // Services (0.6.0): paid monthly, their effects count while hired, the cleaners take graffiti off.
+        landlordsector.data.Services.Def patrol = landlordsector.data.Services.get("security_patrol");
+        float secNoPatrol = home.stats().security;
+        expect(Actions.toggleService(home, "security_patrol").startsWith("Hired") && home.hasService("security_patrol"),
+                "a service can be hired");
+        expect(home.stats().security > secNoPatrol, "a security patrol raises security");
+        expect(Actions.servicePrice(home, patrol) >= patrol.min, "a service costs at least its minimum");
+        float valueWithPatrol = home.fullValue(false);
+        Actions.toggleService(home, "security_patrol");
+        expect(!home.hasService("security_patrol") && Math.abs(home.fullValue(false) - valueWithPatrol) < 1f,
+                "cancelled, and a service never changed the value");
+        home.screeningService = true;
+        LandlordsectorModPlugin.upgradeTo060(Portfolio.get());
+        expect(!home.screeningService && home.services().contains("screening"), "the old screening flag becomes the service");
+        Actions.toggleService(home, "screening");
 
         // Furniture in the shops.
         FurnitureSources.stock(a, days);

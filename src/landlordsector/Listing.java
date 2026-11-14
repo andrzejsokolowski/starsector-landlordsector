@@ -17,6 +17,12 @@ public class Listing {
     public java.util.List<String> upgrades;
     /** 0.5.0: the building the home sits next to, "none", or null on older listings until rolled on load. */
     public String neighbor;
+    /** 0.6.0 (house flipping): how worn it is, 0 new (older listings) to 1 ruined. Condition is 1 - wear. */
+    public float wear;
+
+    public float condition() {
+        return Math.max(0f, Math.min(1f, 1f - wear));
+    }
 
     /** House traits and the renovations it comes with: everything that counts like a trait. */
     public java.util.List<String> features() {

@@ -71,7 +71,9 @@ public final class PropertyStats {
     public final java.util.Map<String, Float> env = new java.util.LinkedHashMap<>();
     public final java.util.Map<String, List<String[]>> envLines = new java.util.LinkedHashMap<>();
     /** 0.5.0: "Next to Mining" or "Next to nothing", and what that building does. */
-    public String nextTo = "Next to nothing";
+    public String nextTo = "Residential area";
+    /** 0.6.0: the Area row, "Heavy Batteries" or "Residential". */
+    public String area = "Residential";
     public Environment.Neighbor neighbor = Environment.of(null, null);
     public final List<String[]> neighborLines = new ArrayList<>();
     /** 0.4.0: home levels after traits and upgrades, 0 to 3, by level id, and what makes each up. */
@@ -85,13 +87,13 @@ public final class PropertyStats {
 
     /** The home with its own tenant (or none). Its traits and finished upgrades count alike (0.4.0). */
     public static PropertyStats of(Property p) {
-        return of(p.tier(), p.market(), climate(p.climateId), p.condition, p.setting(), p.features(), p.decor(),
+        return of(p.tier(), p.market(), climate(p.climateId), p.condition, p.setting(), p.features(), p.decorRaw(true),
                 p.tenant, p.neighbor);
     }
 
     /** The home as it would be with this tenant moving in. */
     public static PropertyStats withTenant(Property p, Tenant t) {
-        return of(p.tier(), p.market(), climate(p.climateId), p.condition, p.setting(), p.features(), p.decor(), t,
+        return of(p.tier(), p.market(), climate(p.climateId), p.condition, p.setting(), p.features(), p.decorRaw(true), t,
                 p.neighbor);
     }
 
@@ -105,7 +107,8 @@ public final class PropertyStats {
             HouseTraits.Def d = HouseTraits.get(id);
             if (d != null) decor += d.decor;
         }
-        return of(t, market, climate(l.climateId), 1f, RentSetting.NORMAL, features, decor, null, l.neighbor);
+        return of(t, market, climate(l.climateId), l.condition(), RentSetting.NORMAL, features, decor, null,
+                l.neighbor);
     }
 
     public static PropertyStats of(Tier tier, MarketAPI m, Climate climate, float condition, RentSetting setting,
@@ -127,8 +130,9 @@ public final class PropertyStats {
             featureDecor += d.decor;
             s.decorLines.add(effect(d.name, d.decor, d.good));
         }
-        float extra = s.decor - tierDecor - featureDecor;
+        float extra = decor - tierDecor - featureDecor;
         if (Math.abs(extra) >= 0.5f) s.decorLines.add(effect("Added by tenants and events", extra, null));
+        if (decor < -0.5f) s.decorLines.add(new String[] {"Decor can't go below 0.", null});
         s.decorLines.add(new String[] {"Decor raises the home's value and makes tenants happier. A bare home makes"
                 + " them unhappy.", null});
         float traitComfort = 0f, traitHappy = 0f, traitSecurity = 0f;
@@ -155,6 +159,7 @@ public final class PropertyStats {
         Set<String> conds = Tenants.conditions(m);
         s.neighbor = Surroundings.neighbor(m, neighborId);
         s.nextTo = Surroundings.nextTo(m, neighborId);
+        s.area = Surroundings.area(m, neighborId);
         levels(s, m, conds, houseTraits);
         environment(s, m, conds, houseTraits, climate == Climate.STATION);
         float condComfort = 0f, condHappy = 0f, condSecurity = 0f;
@@ -527,7 +532,7 @@ public final class PropertyStats {
         }
         s.health = Pricing.clamp(h, 0f, 100f);
         s.healthLines.add(new String[] {"Healthy tenants rarely fall ill. Poor health brings sickness, missed rent,"
-                + " hospital stays and worse.", null});
+                + " hospital stays or worse.", null});
     }
 
     /**
@@ -563,13 +568,21 @@ public final class PropertyStats {
                 lines.add(envLine(d.name, sc, w));
             }
             v = Environment.clamp(v);
+            // 0.6.0 (Andrzej): a building anywhere on the colony can lift every home (the AoTD Maglev: S+ commute).
+            for (java.util.Map.Entry<String, Float> o : Environment.overridesFor(sc.id,
+                    Surroundings.buildings(m).keySet()).entrySet()) {
+                if (v >= o.getValue()) continue;
+                v = o.getValue();
+                lines.add(new String[] {industryName(m, new String[] {o.getKey()}) + " on this colony: "
+                        + graded(sc.name, Environment.letter(v)), null, graded(sc.name, Environment.letter(v)), "+"});
+            }
             s.env.put(sc.id, v);
-            String what = sc.happiness != 0f && sc.health != 0f ? "tenants' happiness and health"
-                    : (sc.health != 0f ? "tenants' health" : "tenants' happiness");
-            lines.add(new String[] {"A better grade is better for " + what + ".", null});
+            // Andrzej, 0.6.0: no "a better grade is better", only what it affects.
+            String what = sc.happiness != 0f && sc.health != 0f ? "tenant health and happiness"
+                    : (sc.health != 0f ? "tenant health" : "tenant happiness");
+            lines.add(new String[] {sc.name + " affects " + what + ".", null});
             s.envLines.put(sc.id, lines);
         }
-        s.neighborLines.add(new String[] {s.nextTo, null});
         Environment.Neighbor nb = s.neighbor;
         for (Environment.Score sc : Environment.scores()) {
             float d = nb.score(sc.id);
@@ -584,9 +597,9 @@ public final class PropertyStats {
         if (nb.security != 0f) {
             s.neighborLines.add(new String[] {signed(nb.security) + " security", nb.security > 0f ? "+" : "-"});
         }
-        if (s.neighborLines.size() == 1) s.neighborLines.add(new String[] {"Nothing nearby changes this home.", null});
-        s.neighborLines.add(new String[] {"Every home sits next to one building on its colony, or next to nothing.",
-                null});
+        if (s.neighborLines.isEmpty()) s.neighborLines.add(new String[] {"Nothing nearby changes this home.", null});
+        s.neighborLines.add(new String[] {"Every home sits next to one building on its colony, or in a residential"
+                + " area.", null});
     }
 
     /** "Mining nearby: Louder (-25)", colored by help. */
@@ -602,9 +615,30 @@ public final class PropertyStats {
 
     /** Who carries a tag the tenant likes or hates: the building next door or one on the colony. */
     private static String source(MarketAPI m, PropertyStats s, String tag) {
-        if (s.neighbor.tags.contains(tag)) return s.nextTo.substring("Next to ".length());
+        if (s.neighbor.tags.contains(tag)) return "the " + s.area + " nearby";
         String c = Surroundings.colonySource(m, tag);
         return c != null ? c + " on this colony" : tag;
+    }
+
+    /**
+     * 0.6.0 (Andrzej: Lead lining showed "Radiation -2" on a world with no radiation): the levels an upgrade would
+     * lower that this home does not have without it, as "No radiation in this home: no effect here." lines.
+     */
+    public static List<String[]> uselessHere(Property p, landlordsector.data.Upgrades.Def d) {
+        List<String[]> out = new ArrayList<>();
+        if (d.effects.levels.isEmpty() || p.market() == null) return out;
+        List<String> without = new ArrayList<>(p.features());
+        without.remove(d.id);
+        PropertyStats s = of(p.tier(), p.market(), climate(p.climateId), p.condition, p.setting(), without,
+                p.decorRaw(true), null, p.neighbor);
+        for (java.util.Map.Entry<String, Float> e : d.effects.levels.entrySet()) {
+            Levels.Def ld = Levels.get(e.getKey());
+            if (ld == null || !Levels.helps(ld, e.getValue())) continue;
+            if (s.levels.getOrDefault(ld.id, 0) == 0) {
+                out.add(new String[] {"No " + ld.name.toLowerCase() + " in this home: no effect here.", null});
+            }
+        }
+        return out;
     }
 
     /** The tier this tenant wants, capitalized ("Villa", "Small house"). */

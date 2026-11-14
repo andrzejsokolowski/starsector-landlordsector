@@ -38,6 +38,16 @@ public abstract class PropertyView extends Canvas {
         public final List<Object[]> upgrades = new ArrayList<>();
         /** 0.5.0: placed furniture, the same shape as traits. */
         public final List<Object[]> furniture = new ArrayList<>();
+        /** 0.6.0: furniture slots of the home (0 hides the row). */
+        public int furnitureSlots;
+        /** 0.6.0: the size row ("Shack"). */
+        public String size = "";
+        /**
+         * 0.6.0 (Andrzej: tenant happiness depends on the tenant, not the house): the tenant section. Null hides it
+         * (a home for sale); "" shows "None" (an empty home); a name shows the tenant's own health and happiness.
+         */
+        public String tenant;
+        public landlordsector.Tenant tenantRef;
     }
 
     /** Upgrade names for a sheet: {name, good, tooltip title, tooltip lines} (0.4.0). */
@@ -71,16 +81,9 @@ public abstract class PropertyView extends Canvas {
         return out;
     }
 
-    /**
-     * The Environment row (0.5.0, Andrzej: "replace the 'home levels' grey text with 'Environment' ... Commute, Air
-     * and noise, all letter graded"): the building next door, the three grades, then heat, cold or radiation only
-     * when the home has some.
-     */
+    /** The Environment row (0.5.0; 0.6.0: grades only, the building nearby has its own Area row). */
     public static List<Object[]> environmentItems(PropertyStats st) {
         List<Object[]> out = new ArrayList<>();
-        float price = st.neighbor.price;
-        Boolean nGood = Math.abs(price - 1f) < 0.001f ? null : price > 1f;
-        out.add(new Object[] {st.nextTo, nGood, st.nextTo, st.neighborLines});
         for (landlordsector.data.Environment.Score sc : landlordsector.data.Environment.scores()) {
             Float v = st.env.get(sc.id);
             if (v == null) continue;
@@ -88,12 +91,29 @@ public abstract class PropertyView extends Canvas {
             String label = landlordsector.PropertyStats.graded(sc.name, letter);
             out.add(new Object[] {label, gradeGood(letter), label + " (" + Math.round(v) + ")", st.envLines.get(sc.id)});
         }
+        return out;
+    }
+
+    /**
+     * The Climate row (0.6.0, Andrzej: "where can I see the house stats?"): Heat, Cold and Radiation, always, so an
+     * upgrade like Lead lining can be judged.
+     */
+    public static List<Object[]> climateItems(PropertyStats st) {
+        List<Object[]> out = new ArrayList<>();
         for (landlordsector.data.Levels.Def ld : landlordsector.data.Levels.all()) {
             int lvl = st.levels.getOrDefault(ld.id, 0);
-            if (lvl == 0) continue;
             String label = landlordsector.data.Levels.label(ld, lvl);
-            out.add(new Object[] {label, Boolean.FALSE, label, st.levelLines.get(ld.id)});
+            out.add(new Object[] {label, lvl == 0 ? null : Boolean.FALSE, label, st.levelLines.get(ld.id)});
         }
+        return out;
+    }
+
+    /** "14 built" with every name in its tooltip (Andrzej, 0.6.0: no long list on the sheet). */
+    public static List<Object[]> countItem(List<Object[]> items, String shown, String title) {
+        List<Object[]> out = new ArrayList<>();
+        List<String[]> lines = new ArrayList<>();
+        for (Object[] i : items) lines.add(new String[] {String.valueOf(i[0]), "+"});
+        out.add(new Object[] {shown, Boolean.TRUE, title, lines});
         return out;
     }
 
@@ -185,6 +205,14 @@ public abstract class PropertyView extends Canvas {
             tipColored(x, ny, 280f, ROW, "Happiness there: " + Math.round(st.happiness), visibleLines(t,
                     st.happinessLines));
             ny += ROW;
+            text("Health there", Misc.getGrayColor(), x, ny, 120f);
+            Color healthy = st.health >= landlordsector.data.Levels.sickBelow() ? Misc.getPositiveHighlightColor()
+                    : (st.health >= landlordsector.data.Levels.treatmentBelow() ? Misc.getHighlightColor()
+                            : Misc.getNegativeHighlightColor());
+            bar(x + 120f, ny + 5f, 110f, 10f, st.health / 100f, healthy);
+            text(String.valueOf(Math.round(st.health)), x + 238f, ny, 40f);
+            tipColored(x, ny, 280f, ROW, "Health there: " + Math.round(st.health), visibleLines(t, st.healthLines));
+            ny += ROW;
             for (landlordsector.PropertyStats.Note n : st.notes) {
                 if (n.text.contains(":") && hiddenTraitName(t, n.text.substring(0, n.text.indexOf(':')))) {
                     // Hidden traits keep their likes and dislikes hidden too.
@@ -266,8 +294,9 @@ public abstract class PropertyView extends Canvas {
 
     /** Height the sheet needs under its picture. */
     protected static float sheetTextHeight(Sheet s) {
-        return 8f + 30f + 5 * ROW + (s.traits.isEmpty() ? 0f : ROW) + (s.stats != null ? ROW : 0f)
-                + (s.upgrades.isEmpty() ? 0f : ROW) + (s.furniture.isEmpty() ? 0f : ROW) + s.extra.size() * ROW;
+        int rows = 7;
+        return 8f + 30f + rows * ROW + (s.traits.isEmpty() ? 0f : ROW) + (s.stats != null ? 2 * ROW : 0f)
+                + (s.upgrades.isEmpty() ? 0f : ROW) + (s.furnitureSlots > 0 ? ROW : 0f) + s.extra.size() * ROW;
     }
 
     /** Where the right column (the bars) starts, from the sheet's left edge (0.5.0: nearer the middle). */
@@ -284,6 +313,10 @@ public abstract class PropertyView extends Canvas {
     /**
      * The picture and the stat sheet under it. The picture is 16 by 10, as wide as the sheet's text and at most
      * {@code maxImgH} tall (narrower then, never cropped).
+     *
+     * Left: Value, Rent, Condition, Occupancy, Size, Location, Area. Right: the home's Comfort, Decor and Security,
+     * then the Tenant section with the tenant's own Health and Happiness (0.6.0). Under both: Traits, Environment,
+     * Climate, Upgrades, Furniture.
      *
      * @return the y just below the sheet
      */
@@ -315,36 +348,54 @@ public abstract class PropertyView extends Canvas {
         bar(lx + 120f, r + 2 * ROW + 5f, 110f, 10f, s.condition, cond);
         text(Math.round(s.condition * 100f) + "%", lx + 238f, r + 2 * ROW, 90f);
         row("Occupancy", s.occupancy, s.occupancyColor, lx, r + 3 * ROW, vw);
+        row("Size", s.size, Misc.getTextColor(), lx, r + 4 * ROW, vw);
 
         PropertyStats st = s.stats;
         if (st != null) {
-            // Happiness last, under health (Andrzej, 0.5.0: "the ultimate culmination of all the factors").
             stat("Comfort", st.comfort, GOLD, rx, r);
             tipColored(rx, r, 280f, ROW, "Comfort " + Math.round(st.comfort), st.comfortLines);
             stat("Decor", st.decor, GOLD, rx, r + ROW);
             tipColored(rx, r + ROW, 280f, ROW, "Decor " + Math.round(st.decor), st.decorLines);
             stat("Security", st.security, SECURITY, rx, r + 2 * ROW);
             tipColored(rx, r + 2 * ROW, 280f, ROW, "Security " + Math.round(st.security), st.securityLines);
-            Color healthy = st.health >= landlordsector.data.Levels.sickBelow() ? Misc.getPositiveHighlightColor()
-                    : (st.health >= landlordsector.data.Levels.treatmentBelow() ? Misc.getHighlightColor()
-                            : Misc.getNegativeHighlightColor());
-            stat("Tenant health", st.health, healthy, rx, r + 3 * ROW);
-            tipColored(rx, r + 3 * ROW, 280f, ROW, "Tenant health " + Math.round(st.health), st.healthLines);
-            Color happy = st.happiness >= 50f ? Misc.getPositiveHighlightColor()
-                    : (st.happiness >= 25f ? Misc.getHighlightColor() : Misc.getNegativeHighlightColor());
-            stat("Tenant happiness", st.happiness, happy, rx, r + 4 * ROW);
-            tipColored(rx, r + 4 * ROW, 280f, ROW, "Tenant happiness " + Math.round(st.happiness), st.happinessLines);
-            text("Location", Misc.getGrayColor(), lx, r + 4 * ROW, 120f);
-            text("[" + st.grade + "]", Misc.getHighlightColor(), lx + 120f, r + 4 * ROW, 50f);
+
+            // The tenant's own bars (Andrzej, 0.6.0): only with a tenant; health first, happiness last.
+            if (s.tenant != null) {
+                if (s.tenant.isEmpty()) {
+                    row("Tenant", "None", Misc.getGrayColor(), rx, r + 4 * ROW, 160f);
+                } else {
+                    com.fs.starfarer.api.ui.LabelAPI tl = text(s.tenant, Misc.getHighlightColor(), rx, r + 4 * ROW, 290f);
+                    if (s.tenantRef != null) factionColored(tl, s.tenantRef);
+                    Color healthy = st.health >= landlordsector.data.Levels.sickBelow() ? Misc.getPositiveHighlightColor()
+                            : (st.health >= landlordsector.data.Levels.treatmentBelow() ? Misc.getHighlightColor()
+                                    : Misc.getNegativeHighlightColor());
+                    stat("Health", st.health, healthy, rx, r + 5 * ROW);
+                    tipColored(rx, r + 5 * ROW, 280f, ROW, "Health " + Math.round(st.health), st.healthLines);
+                    Color happy = st.happiness >= 50f ? Misc.getPositiveHighlightColor()
+                            : (st.happiness >= 25f ? Misc.getHighlightColor() : Misc.getNegativeHighlightColor());
+                    stat("Happiness", st.happiness, happy, rx, r + 6 * ROW);
+                    tipColored(rx, r + 6 * ROW, 280f, ROW, "Happiness " + Math.round(st.happiness),
+                            st.happinessLines);
+                }
+            }
+
+            text("Location", Misc.getGrayColor(), lx, r + 5 * ROW, 120f);
+            text("[" + st.grade + "]", Misc.getHighlightColor(), lx + 120f, r + 5 * ROW, 50f);
             List<String[]> gl = st.gradeLines;
             if (gl.isEmpty()) {
                 gl = new ArrayList<>();
                 gl.add(new String[] {st.gradeReason, null});
             }
-            tipColored(lx, r + 4 * ROW, 172f, ROW, landlordsector.PropertyStats.graded("Location", st.grade), gl);
+            tipColored(lx, r + 5 * ROW, 172f, ROW, landlordsector.PropertyStats.graded("Location", st.grade), gl);
+            // Andrzej, 0.6.0: the building nearby as its own row, "Area: Heavy Batteries".
+            float p = st.neighbor.price;
+            Color ac = Math.abs(p - 1f) < 0.001f ? Misc.getTextColor()
+                    : (p > 1f ? Misc.getPositiveHighlightColor() : Misc.getNegativeHighlightColor());
+            row("Area", st.area, ac, lx, r + 6 * ROW, vw);
+            tipColored(lx, r + 6 * ROW, 300f, ROW, "Area: " + st.area, st.neighborLines);
         }
-        float er = r + 5 * ROW;
-        float rowW = Math.max(cw, w * 0.6f) - 120f;
+        float er = r + 7 * ROW;
+        float rowW = cw - 120f;
         if (!s.traits.isEmpty()) {
             text("Traits", Misc.getGrayColor(), lx, er, 120f);
             coloredRow(s.traits, lx + 120f, er, rowW);
@@ -354,15 +405,23 @@ public abstract class PropertyView extends Canvas {
             text("Environment", Misc.getGrayColor(), lx, er, 120f);
             coloredRow(environmentItems(st), lx + 120f, er, rowW);
             er += ROW;
+            text("Climate", Misc.getGrayColor(), lx, er, 120f);
+            coloredRow(climateItems(st), lx + 120f, er, rowW);
+            er += ROW;
         }
         if (!s.upgrades.isEmpty()) {
             text("Upgrades", Misc.getGrayColor(), lx, er, 120f);
-            coloredRow(s.upgrades, lx + 120f, er, rowW);
+            coloredRow(countItem(s.upgrades, s.upgrades.size() + " built", "Upgrades"), lx + 120f, er, rowW);
             er += ROW;
         }
-        if (!s.furniture.isEmpty()) {
+        if (s.furnitureSlots > 0) {
             text("Furniture", Misc.getGrayColor(), lx, er, 120f);
-            coloredRow(s.furniture, lx + 120f, er, rowW);
+            if (s.furniture.isEmpty()) {
+                text("0 of " + s.furnitureSlots + " slots", Misc.getGrayColor(), lx + 120f, er, rowW);
+            } else {
+                coloredRow(countItem(s.furniture, s.furniture.size() + " of " + s.furnitureSlots + " slots", "Furniture"),
+                        lx + 120f, er, rowW);
+            }
             er += ROW;
         }
         for (String[] pair : s.extra) {

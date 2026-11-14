@@ -1,3 +1,20 @@
+Version 0.6.0 (2026-11-14)
+- Services: a new Services tab (S) on each home. Hire a security patrol, cleaning crew, maintenance contract, gardener, concierge, night watchman or pest control plan for a share of the rent each month. The screening service moved there
+- House flipping: about a third of homes for sale come worn, some dirty or covered in graffiti, and cost less. Repaired, they are worth more than you paid
+- Tenant health and happiness belong to the tenant now: the home sheet shows the home's comfort, decor and security, and a Tenant section shows the tenant's own health and happiness
+- Applicants and pool tenants show the health they would have in a home, next to their happiness
+- Environment grades start at C with nothing around and run from F to S+ like the location
+- The building next to a home has its own Area row
+- With the AoTD Maglev Central Hub on a colony, every home there has an S+ commute
+- New Climate row with heat, cold and radiation, always shown. Upgrades that do nothing in a home are grayed out there
+- New Size row on the property screens
+- Upgrades and furniture show as a count on the sheet, with the full list when you hover over it
+- Upgrades cost a flat fee plus a share of the home's value, and the flat fees are higher
+- Upgrade tooltips: percent upgrades end with "Multiplies base home value by 105%"; flat ones no longer show a value line
+- New house trait: Breezy
+- Fixed: a home for sale whose decor hit 0 showed decor "added by tenants and events"
+- The rent tooltip no longer mentions wear; wear depends only on tenant happiness
+
 Version 0.5.0 (2026-11-14)
 - Every home sits next to one building on its colony, or next to nothing. Mining or heavy industry next door makes it louder, dirtier and cheaper, the city center shortens the commute, and a resort is the best spot there is
 - New Environment row on the property screens: Commute, Air and Noise as letter grades, plus Heat, Cold or Radiation when the home has any. Noise no longer comes from the market size, and Light is gone

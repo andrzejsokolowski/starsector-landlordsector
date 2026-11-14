@@ -139,25 +139,34 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
             Tier t = TierTable.get(l.tierId);
             PropertyStats st = PropertyStats.of(l, market);
             float full = MarketRules.listingValue(market, l);
+            float worth = MarketRules.listingWorth(market, l);
+            float cond = l.condition();
             float rent = t == null ? 0f
-                    : Pricing.rent(full, t.rentShare, 1f, 1f, Settings.rentMult()) * (1f - tariff);
+                    : Pricing.rent(full, t.rentShare, 1f, cond, Settings.rentMult()) * (1f - tariff);
             Sheet s = new Sheet();
             s.title = l.name != null ? l.name : (t != null ? t.name : l.tierId);
             s.art = l.artPath;
-            s.valueLine = Misc.getDGSCredits(full);
+            s.valueLine = Misc.getDGSCredits(worth);
             if (t != null) {
                 s.valueLines = PropertyStats.valueLines(t, l.basePrice, st.grade, st.marketMult, 1f,
-                        MarketRules.traitPrice(l.features(), market), st.decor, 1f, false, full);
+                        MarketRules.traitPrice(l.features(), market), st.decor, cond, false, worth);
+                if (cond < 0.995f) {
+                    float repair = Pricing.repairCost(full, cond, TierTable.economy().repairFullCost);
+                    s.valueLines.add(new String[] {"Repaired, it would be worth " + Misc.getDGSCredits(full)
+                            + ". Repairs cost about " + Misc.getDGSCredits(repair) + ".", "+"});
+                }
                 float pay = MarketRules.buyPrice(market, l);
                 s.valueLines.add(new String[] {(own ? "Your colony: you pay half, " : "With the tariff you pay ")
                         + Misc.getDGSCredits(pay) + ".", null});
             }
             s.rentLine = "about " + Misc.getDGSCredits(rent) + " a month" + (own ? "" : ", after tariff");
-            s.condition = 1f;
+            s.condition = cond;
             s.occupancy = "For sale";
             s.stats = st;
             s.traits.addAll(houseTraits(l.traits));
             s.upgrades.addAll(upgradeNames(l.upgrades));
+            s.size = t != null ? t.name : l.tierId;
+            s.furnitureSlots = t != null ? t.slots : 0;
             float maxImg = height - TOP - sheetTextHeight(s) - 56f;
             sheet(s, rx, TOP, rw, maxImg);
 

@@ -429,6 +429,7 @@ public final class RulesCheck {
         landlordsector.data.Upgrades.load(json(dir.resolve("upgrades.json")));
         landlordsector.data.Levels.load(json(dir.resolve("levels.json")));
         landlordsector.data.Environment.load(json(dir.resolve("environment.json")));
+        landlordsector.data.Services.load(json(dir.resolve("services.json")));
     }
 
     /**
@@ -560,8 +561,49 @@ public final class RulesCheck {
                 && landlordsector.data.Levels.fromPlace(rad, java.util.Set.of("no_atmosphere"), 5, null) == 1,
                 "irradiated worlds give Radiation 2, no atmosphere 1");
         // Environment.
-        expect("S".equals(landlordsector.data.Environment.letter(95f)) && "C".equals(landlordsector.data.Environment.letter(50f))
-                && "F".equals(landlordsector.data.Environment.letter(5f)), "grades from S to F");
+        expect("S+".equals(landlordsector.data.Environment.letter(95f)) && "C".equals(landlordsector.data.Environment.letter(50f))
+                && "F".equals(landlordsector.data.Environment.letter(5f)), "grades from S+ to F");
+        for (landlordsector.data.Environment.Score sc : landlordsector.data.Environment.scores()) {
+            expect("C".equals(landlordsector.data.Environment.letter(sc.base)), sc.id + ": no modifiers is C (Andrzej, 0.6.0)");
+        }
+        // Andrzej, 0.6.0: a plain world, a residential area and an Air filtration system is S; a good trait on top S+.
+        float filtered = landlordsector.data.Environment.score("air").base
+                + landlordsector.data.Upgrades.get("air_filtration").effects.env.get("air");
+        expect("S".equals(landlordsector.data.Environment.letter(filtered))
+                && "S+".equals(landlordsector.data.Environment.letter(filtered
+                        + landlordsector.data.HouseTraits.get("fresh_air").env.get("air"))),
+                "Air filtration alone is S, with Breezy S+");
+        expect(landlordsector.data.Environment.overridesFor("commute", java.util.List.of("aotd_maglev")).get("aotd_maglev")
+                >= 85f, "the AoTD Maglev lifts commutes to S+");
+        // House flipping (0.6.0): worn price plus repairs stays under the price new, and the repaired home sells,
+        // after the broker fee, for more than the worn price (before tariffs).
+        Economy flip = TierTable.economy();
+        for (float c = 0.3f; c <= 0.81f; c += 0.05f) {
+            float worn = Pricing.value(1000f, c, false, flip.landValue);
+            float repair = Pricing.repairCost(1000f, c, flip.repairFullCost) + 2 * 10f;
+            expect(worn + repair < 1000f, "a worn home plus repairs costs less than new at condition " + c);
+            expect(1000f * (1f - flip.brokerFee) > worn, "a repaired home sells for more than its worn price at " + c);
+        }
+        // Services.
+        expect(landlordsector.data.Services.size() >= 6 && landlordsector.data.Services.get("screening") != null
+                && landlordsector.data.Services.get("security_patrol").effects.security >= 20f,
+                "services load: screening and a security patrol");
+        for (landlordsector.data.Services.Def sv : landlordsector.data.Services.all()) {
+            expect(sv.share > 0f && sv.share < 0.5f && sv.min >= 0f, sv.id + ": a sane monthly price");
+            expect(sv.effects.price == 1f, sv.id + ": a service never changes the value");
+            for (String e : sv.effects.events.keySet()) {
+                expect(landlordsector.data.TenantEvents.get(e) != null, sv.id + " names unknown event " + e);
+            }
+        }
+        // Tooltips (Andrzej, 0.6.0): a percent upgrade ends with its value line, a flat one has none.
+        java.util.List<String[]> plumbing = landlordsector.ui.Tips.upgrade(landlordsector.data.Upgrades.get("new_plumbing"));
+        expect(plumbing.get(plumbing.size() - 1)[0].equals("Multiplies base home value by 105%"),
+                "the value line is last: " + plumbing.get(plumbing.size() - 1)[0]);
+        for (String[] l : landlordsector.ui.Tips.upgrade(landlordsector.data.Upgrades.get("air_conditioned"))) {
+            expect(!l[0].contains("value"), "no value line on a flat upgrade: " + l[0]);
+        }
+        expect(landlordsector.data.Upgrades.renovationCost(landlordsector.data.Upgrades.get("air_conditioned"), 20000f)
+                == 1000f + 0.04f * 20000f, "an upgrade costs its flat fee plus its share of the value");
         landlordsector.data.Environment.Neighbor mining = landlordsector.data.Environment.of("mining",
                 java.util.Set.of("mining", "industry", "industrial"));
         expect(mining.noise < 0f && mining.air < 0f && mining.price < 1f, "Mining next door is loud, dirty and cheap");

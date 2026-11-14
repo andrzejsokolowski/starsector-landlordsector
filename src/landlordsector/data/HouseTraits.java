@@ -150,7 +150,9 @@ public final class HouseTraits {
     /** A house trait, or the effects of an upgrade with this id (upgrades count wherever traits do, 0.4.0). */
     public static Def get(String id) {
         Def d = defs.get(id);
-        return d != null ? d : Upgrades.effects(id);
+        if (d != null) return d;
+        d = Upgrades.effects(id);
+        return d != null ? d : Services.effects(id);
     }
 
     /** True for a real house trait, not an upgrade. */

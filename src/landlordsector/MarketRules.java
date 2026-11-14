@@ -19,6 +19,8 @@ import landlordsector.data.HouseTraits;
 public final class MarketRules {
 
     public static final int MIN_SIZE = 3;
+    /** Share of homes for sale that come worn (0.6.0). */
+    public static final float WORN_CHANCE = 0.35f;
 
     private MarketRules() {
     }
@@ -112,9 +114,18 @@ public final class MarketRules {
         return min + random.nextInt(free - min + 1);
     }
 
+    /**
+     * What a listing is worth as it stands (0.6.0, house flipping): its value new, lowered by its wear like an owned
+     * home ({@link Pricing#value}). Repairing it costs less than the difference, so a worn home bought, repaired and
+     * sold makes money before tariffs.
+     */
+    public static float listingWorth(MarketAPI market, Listing listing) {
+        return Pricing.value(listingValue(market, listing), listing.condition(), false, TierTable.economy().landValue);
+    }
+
     /** Price to buy a listing right now, tariff and own-colony discount included. */
     public static float buyPrice(MarketAPI market, Listing listing) {
-        float price = listingValue(market, listing);
+        float price = listingWorth(market, listing);
         if (isOwn(market)) return price * TierTable.economy().ownColonyPrice;
         return price * (1f + tariff(market));
     }
@@ -159,6 +170,14 @@ public final class MarketRules {
                     climate == Climate.STATION, t.index, l.traits, random);
             l.name = landlordsector.data.Names.make(t.id, l.features(), random);
             l.neighbor = Surroundings.roll(market, random);
+            // House flipping (Andrzej, 0.6.0): some homes come worn, the worst ones dirty or covered in graffiti.
+            if (random.nextFloat() < WORN_CHANCE) {
+                l.wear = 0.2f + random.nextFloat() * 0.5f;
+                if (l.wear > 0.45f && random.nextFloat() < 0.6f) {
+                    String mark = random.nextBoolean() ? "graffiti" : "dirty";
+                    if (!l.traits.contains(mark) && HouseTraits.get(mark) != null) l.traits.add(mark);
+                }
+            }
             ml.list().add(l);
         }
         // Cheapest first, so the screen reads like a price list.

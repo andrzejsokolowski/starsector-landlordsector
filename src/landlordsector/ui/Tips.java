@@ -23,8 +23,24 @@ public final class Tips {
         return (v > 0 ? "+" : "") + Math.round(v);
     }
 
-    /** What a house trait does, and which tenant traits like or hate it. */
+    /** What a house trait does, and which tenant traits like or hate it; the value line last (0.6.0). */
     public static List<String[]> houseTrait(HouseTraits.Def d) {
+        List<String[]> out = houseTraitEffects(d);
+        String[] v = valueLine(d);
+        if (v != null) {
+            if (out.size() == 1 && "No effect on its own.".equals(out.get(0)[0])) out.clear();
+            out.add(v);
+        }
+        return out;
+    }
+
+    /** Andrzej, 0.6.0: "Multiplies base home value by 105%", always the last line. Null when it does not. */
+    static String[] valueLine(HouseTraits.Def d) {
+        if (Math.abs(d.price - 1f) < 0.0005f) return null;
+        return new String[] {"Multiplies base home value by " + Math.round(d.price * 100f) + "%", d.price > 1f ? "+" : "-"};
+    }
+
+    private static List<String[]> houseTraitEffects(HouseTraits.Def d) {
         List<String[]> out = new ArrayList<>();
         // Home levels first (0.4.0): "Heat -1", green when it helps.
         for (java.util.Map.Entry<String, Float> e : d.levels.entrySet()) {
@@ -50,7 +66,6 @@ public final class Tips {
             add(out, signed(d.kidsHealth()) + " health for tenants with kids", d.kidsHealth() > 0 ? "+" : "-");
         }
         if (d.security != 0f) add(out, signed(d.security) + " security", d.security > 0 ? "+" : "-");
-        if (d.price != 1f) add(out, "Value x" + round2(d.price), d.price > 1f ? "+" : "-");
         if (d.wear != 1f) {
             int pct = Math.round(Math.abs(d.wear - 1f) * 100f);
             add(out, "Wears out " + pct + "% " + (d.wear < 1f ? "slower" : "faster"), d.wear < 1f ? "+" : "-");
@@ -108,18 +123,16 @@ public final class Tips {
         return id.replace('_', ' ');
     }
 
-    /** What an upgrade does (0.4.0): its effects, then where it goes and what it costs. */
+    /** What an upgrade does (0.4.0): its effects, then where it goes; the value line last (0.6.0). */
     public static List<String[]> upgrade(landlordsector.data.Upgrades.Def d) {
-        List<String[]> out = houseTrait(d.effects);
+        List<String[]> out = houseTraitEffects(d.effects);
         if (out.size() == 1 && "No effect on its own.".equals(out.get(0)[0]) && !d.fixes.isEmpty()) out.clear();
         for (String f : d.fixes) {
             HouseTraits.Def t = HouseTraits.get(f);
             if (t != null) out.add(new String[] {"Removes " + t.name + " for good", null, t.name, t.good ? "+" : "-"});
         }
         // Andrzej, 0.5.0: no slot text (it is obvious), and the cost moved to the Build button's tooltip.
-        if (!d.furniture() && d.valueShare > 0f) {
-            add(out, "Adds " + Math.round(d.valueShare * 100f) + "% of what it costs to the value", "+");
-        }
+        // 0.6.0: no line for the flat value an upgrade adds.
         if (!d.furniture() && d.oneTime) add(out, "A one-time job.", null);
         if (d.minTier > 0 || d.station != null || !d.needs.isEmpty()) {
             StringBuilder b = new StringBuilder("Only for ");
@@ -137,6 +150,23 @@ public final class Tips {
             b.append(String.join(", ", parts)).append(".");
             add(out, b.toString(), null);
         }
+        String[] v = valueLine(d.effects);
+        if (v != null) {
+            if (out.size() == 1 && "No effect on its own.".equals(out.get(0)[0])) out.clear();
+            out.add(v);
+        }
+        return out;
+    }
+
+    /** What a service does while hired (0.6.0). */
+    public static List<String[]> service(landlordsector.data.Services.Def d) {
+        List<String[]> out = houseTraitEffects(d.effects);
+        if (out.size() == 1 && "No effect on its own.".equals(out.get(0)[0])) out.clear();
+        if (d.screening) add(out, "Applicants are half as likely to have bad traits", "+");
+        if (d.cleans) add(out, "Cleans off graffiti and dirt every month", "+");
+        if (d.repairs > 0f) add(out, "Repairs " + Math.round(d.repairs * 100f) + "% condition every month", "+");
+        add(out, "Costs " + Math.round(d.share * 100f) + "% of the Normal rent a month, at least "
+                + com.fs.starfarer.api.util.Misc.getDGSCredits(d.min) + ".", null);
         return out;
     }
 

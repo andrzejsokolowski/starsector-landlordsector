@@ -60,6 +60,12 @@ Requires LunaLib and OddiszCommons.
   habitable worlds with a mild climate, less on stations and polluted worlds. A worn home loses some.
 - **Decor** (0 to 100): from the tier, furniture and what tenants do. Adds up to a quarter to the value and
   raises the reputation its rent earns or costs.
+- **Services** (0.6.0, services.json): hired per home on the Services tab (S), paid monthly as a share of the
+  Normal rent: security patrol, cleaning crew (cleans graffiti and dirt), maintenance contract (repairs), gardener,
+  concierge, night watchman, pest control plan and the screening service.
+- **House flipping** (0.6.0): about a third of homes for sale come worn, some with graffiti or dirt. Worn price plus
+  repairs stays under the price new, and the repaired home sells for more than the worn price before tariffs.
+- **Tenant happiness and health** (0.6.0) are the tenant's own bars, in the Tenant section of the home sheet.
 - **Environment** (0.5.0, environment.json): every home sits next to one building on its colony, or next to
   nothing. Commute, Air and Noise are scores from 0 to 100 shown as letter grades, set by the station, market
   conditions, the neighbour, house traits and upgrades; they move tenant happiness and health. Home levels

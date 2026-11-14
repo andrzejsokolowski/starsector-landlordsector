@@ -1,6 +1,9 @@
 package landlordsector;
 
-/** The rent control. Cheap rent earns reputation, greedy rent costs it and wears the home faster. */
+/**
+ * The rent control. Cheap rent earns reputation, greedy rent costs it. Wear follows tenant happiness only (0.6.0);
+ * {@code wearMult} is kept for old saves and is not used.
+ */
 public enum RentSetting {
     /** No rent at all (Andrzej, 0.3.8). */
     FREE("Free", 0f, 0.8f, 0.5f, 40f),

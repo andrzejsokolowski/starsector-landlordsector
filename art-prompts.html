@@ -7,7 +7,7 @@
 :root {
   --bg: #eef1f6; --panel: #ffffff; --fg: #141a2a; --muted: #5b6478; --line: #d3d9e4;
   --accent: #96690a; --accent-fg: #ffffff; --chip: #e3e8f1; --done: #2f7d4f; --done-bg: #dcefe3;
-  --shared: #e9e2cf;
+  --shared: #e9e2cf; --half: #8a6400; --half-bg: #fbeaa6;
   --display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
   --body: "Inter", "Segoe UI", system-ui, sans-serif;
   --mono: "JetBrains Mono", Consolas, monospace;
@@ -15,11 +15,11 @@
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
   --bg: #0d1322; --panel: #151d31; --fg: #e5e9f3; --muted: #9aa4bb; --line: #2a3550;
   --accent: #e2b54e; --accent-fg: #1a1404; --chip: #1d2740; --done: #7fd3a0; --done-bg: #183626;
-  --shared: #2e2a1e; color-scheme: dark } }
+  --shared: #2e2a1e; --half: #f2cd5c; --half-bg: #3d3110; color-scheme: dark } }
 :root[data-theme="dark"] {
   --bg: #0d1322; --panel: #151d31; --fg: #e5e9f3; --muted: #9aa4bb; --line: #2a3550;
   --accent: #e2b54e; --accent-fg: #1a1404; --chip: #1d2740; --done: #7fd3a0; --done-bg: #183626;
-  --shared: #2e2a1e; color-scheme: dark }
+  --shared: #2e2a1e; --half: #f2cd5c; --half-bg: #3d3110; color-scheme: dark }
 body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.55; }
 .wrap { max-width: 1180px; margin: 0 auto; padding-block: 28px 56px;
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
@@ -40,6 +40,7 @@ td button { width: 34px; height: 30px; border-radius: 6px; border: 1px solid tra
   color: var(--muted); font: 600 12px var(--body); cursor: pointer; }
 td button.shared { background: var(--shared); }
 td button.done { background: var(--done-bg); color: var(--done); }
+td button.half { background: var(--half-bg); color: var(--half); }
 td button.sel { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); color: var(--fg); }
 td button:focus-visible, .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 10px; color: var(--muted); font-size: 13px; }
@@ -47,6 +48,7 @@ td button:focus-visible, .btn:focus-visible { outline: 2px solid var(--accent); 
   vertical-align: -1px; background: var(--chip); }
 .legend .l-shared::before { background: var(--shared); }
 .legend .l-done::before { background: var(--done-bg); border: 1px solid var(--done); }
+.legend .l-half::before { background: var(--half-bg); border: 1px solid var(--half); }
 .head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px; }
 .fname { font-family: var(--mono); font-size: 18px; word-break: break-all; }
 .sub { color: var(--muted); font-size: 14px; }
@@ -55,6 +57,9 @@ td button:focus-visible, .btn:focus-visible { outline: 2px solid var(--accent); 
   background: transparent; color: var(--fg); }
 .btn.primary { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
 .btn.on { background: var(--done-bg); color: var(--done); border-color: var(--done); }
+.btn.half { background: var(--half-bg); color: var(--half); border-color: var(--half); }
+.btn.var { min-width: 96px; }
+.btn.var.cur { background: var(--chip); border-color: var(--accent); }
 .note { font-size: 13px; color: var(--muted); }
 .reminder { font-size: 14px; padding: 10px 12px; border-radius: 8px; background: var(--shared); margin-bottom: 12px; }
 pre { white-space: pre-wrap; word-wrap: break-word; font-family: var(--body); font-size: 14.5px; line-height: 1.6; margin: 0;
@@ -82,7 +87,7 @@ pre { white-space: pre-wrap; word-wrap: break-word; font-family: var(--body); fo
   <section class="panel">
     <h2>Pictures</h2>
     <div class="gridbox"><table id="grid"></table></div>
-    <div class="legend"><span>Built for its planet</span><span class="l-shared">Shares the Terran building</span><span class="l-done">Marked done</span></div>
+    <div class="legend"><span>Built for its planet</span><span class="l-shared">Shares the Terran building</span><span class="l-half">Variant 1 done</span><span class="l-done">Both variants done</span></div>
   </section>
 
   <section class="panel" id="detail">
@@ -91,6 +96,8 @@ pre { white-space: pre-wrap; word-wrap: break-word; font-family: var(--body); fo
       <div class="sub" id="pos"></div>
     </div>
     <div class="actions">
+      <button class="btn var" id="v1" type="button">Variant 1</button>
+      <button class="btn var" id="v2" type="button">Variant 2</button>
       <button class="btn primary" id="copy" type="button">Copy prompt</button>
       <button class="btn" id="copyName" type="button">Copy file name</button>
       <button class="btn" id="done" type="button">Mark done</button>
@@ -100,7 +107,7 @@ pre { white-space: pre-wrap; word-wrap: break-word; font-family: var(--body); fo
     <div class="toast" id="toast" role="status"></div>
     <div class="reminder" id="attach"></div>
     <pre id="prompt"></pre>
-    <p class="note">Done marks are kept in this browser only. The art checklist on the LLS-10 ticket is the real record.</p>
+    <p class="note">Click Mark done once when variant 1 is saved (yellow), again when variant 2 is saved too (green), a third time to clear. Done marks are kept in this browser only. The art checklist on the LLS-10 ticket is the real record.</p>
   </section>
 </div>
 
@@ -112,6 +119,19 @@ let done = {};
 try { done = JSON.parse(localStorage.getItem('lls-art-done') || '{}') || {}; } catch (e) { done = {}; }
 function saveDone() { try { localStorage.setItem('lls-art-done', JSON.stringify(done)); } catch (e) {} }
 let cur = 0;
+let variant = 1;
+try { variant = localStorage.getItem('lls-art-var') === '2' ? 2 : 1; } catch (e) {}
+function state(key) { return done[key] ? Math.min(2, Number(done[key]) || 1) : 0; }
+function fileName(o) { return o.key + (variant === 2 ? '_2' : '') + '.png'; }
+function promptText(o) {
+  const base = DATA.prompts[o.key];
+  if (variant === 1) return base;
+  return base + '\n\nVARIANT 2 (a second picture of this home, so two homes of the same size on the same world do not look the same):\n'
+    + '- Keep everything above exactly as it is: the art style, the camera and framing, the world, the light, the time of day, and every MUST and MUST NOT rule.\n'
+    + '- Change only the building and its yard: a different floor plan and outline, a different roof shape, different window and door positions, a different pattern of panels and patches, and a different accent color.\n'
+    + '- Change the props: a different object at the left edge of the picture and different clutter on the ground.\n'
+    + '- It must still clearly be a ' + o.s.name.toLowerCase() + ' on this world, the same size of home as variant 1.';
+}
 try { const k = localStorage.getItem('lls-art-cur'); const i = order.findIndex(o => o.key === k); if (i >= 0) cur = i; } catch (e) {}
 
 const grid = document.getElementById('grid');
@@ -132,24 +152,30 @@ function buildGrid() {
 function paintGrid() {
   grid.querySelectorAll('button').forEach(b => {
     const o = order.find(x => x.key === b.dataset.key);
-    b.className = (o.p.shared ? 'shared ' : '') + (done[o.key] ? 'done ' : '') + (o.key === order[cur].key ? 'sel' : '');
-    b.textContent = done[o.key] ? '\u2713' : '';
+    const st = state(o.key);
+    b.className = (o.p.shared ? 'shared ' : '') + (st === 2 ? 'done ' : (st === 1 ? 'half ' : '')) + (o.key === order[cur].key ? 'sel' : '');
+    b.textContent = st === 2 ? '\u2713' : (st === 1 ? '1' : '');
   });
 }
 function show(i) {
   cur = (i + order.length) % order.length;
   const o = order[cur];
   try { localStorage.setItem('lls-art-cur', o.key); } catch (e) {}
-  document.getElementById('fname').textContent = o.key + '.png';
+  document.getElementById('fname').textContent = fileName(o);
+  document.getElementById('v1').classList.toggle('cur', variant === 1);
+  document.getElementById('v2').classList.toggle('cur', variant === 2);
   document.getElementById('what').textContent = o.s.name + ' on a ' + o.p.name + ' world';
   document.getElementById('pos').textContent = (cur + 1) + ' of ' + order.length;
-  document.getElementById('prompt').textContent = DATA.prompts[o.key];
+  document.getElementById('prompt').textContent = promptText(o);
+  const terran = o.s.id + '_terran' + (variant === 2 ? '_2' : '') + '.png';
   document.getElementById('attach').textContent = (o.p.shared && o.p.id !== 'terran' && o.s.id !== 'shack')
-    ? 'Attach the Terran ' + o.s.name.toLowerCase() + ' picture (' + o.s.id + '_terran.png): this one keeps the same building.'
+    ? 'Attach the Terran ' + o.s.name.toLowerCase() + ' picture, variant ' + variant + ' (' + terran + '): this one keeps the same building.'
     : 'Attach NOTHING. The art style and the camera are written out in the prompt.';
   const d = document.getElementById('done');
-  d.textContent = done[o.key] ? 'Done' : 'Mark done';
-  d.classList.toggle('on', !!done[o.key]);
+  const st = state(o.key);
+  d.textContent = st === 0 ? 'Mark variant 1 done' : (st === 1 ? 'Mark both done' : 'Clear marks');
+  d.classList.toggle('half', st === 1);
+  d.classList.toggle('on', st === 2);
   document.getElementById('toast').textContent = '';
   paintGrid();
 }
@@ -164,9 +190,16 @@ function copy(text, what) {
     navigator.clipboard.writeText(text).then(() => { t.textContent = what + ' copied.'; }, fallback);
   } catch (e) { fallback(); }
 }
-document.getElementById('copy').addEventListener('click', () => copy(DATA.prompts[order[cur].key], 'Prompt'));
-document.getElementById('copyName').addEventListener('click', () => copy(order[cur].key + '.png', 'File name'));
-document.getElementById('done').addEventListener('click', () => { const k = order[cur].key; if (done[k]) delete done[k]; else done[k] = 1; saveDone(); show(cur); });
+document.getElementById('copy').addEventListener('click', () => copy(promptText(order[cur]), 'Prompt'));
+document.getElementById('copyName').addEventListener('click', () => copy(fileName(order[cur]), 'File name'));
+document.getElementById('done').addEventListener('click', () => {
+  const k = order[cur].key; const st = state(k);
+  if (st === 2) delete done[k]; else done[k] = st + 1;
+  saveDone(); show(cur);
+});
+function setVariant(v) { variant = v; try { localStorage.setItem('lls-art-var', String(v)); } catch (e) {} show(cur); }
+document.getElementById('v1').addEventListener('click', () => setVariant(1));
+document.getElementById('v2').addEventListener('click', () => setVariant(2));
 document.getElementById('prev').addEventListener('click', () => show(cur - 1));
 document.getElementById('next').addEventListener('click', () => show(cur + 1));
 buildGrid();

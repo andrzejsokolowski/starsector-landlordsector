@@ -47,6 +47,7 @@
 		{"id":"drafty", "name":"Drafty", "good":false, "weight":2, "anyCondition":["cold","very_cold"], "comfort":-2, "levels":{"cold":1}, "conflicts":["geothermal"]},
 		{"id":"sunny", "name":"Sunny", "good":true, "weight":2, "station":false, "happiness":3, "decor":2, "tags":["view"]},
 		{"id":"underground", "name":"Underground", "good":true, "weight":3, "station":false, "anyCondition":["irradiated","no_atmosphere","bbplus_sigmairradiated"], "comfort":-2, "levels":{"radiation":-1}},
+		{"id":"fresh_air", "name":"Breezy", "good":true, "weight":2, "station":false, "env":{"air":10}, "tags":["view"]},
 		{"id":"graffiti", "name":"Graffiti", "good":false, "weight":0, "mark":true, "decor":-10},
 		{"id":"blossoms", "name":"Blossoming", "good":true, "weight":5, "anyCondition":["US_sakura"], "comfort":6, "tags":["flowers"]}
 	]

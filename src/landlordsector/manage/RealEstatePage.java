@@ -31,7 +31,7 @@ public class RealEstatePage implements ManagePage {
 
     private enum Mode { HOMES, POOL, FINDERS }
 
-    private enum Sub { DETAILS, TENANT, FURNITURE, UPGRADES, LOG }
+    private enum Sub { DETAILS, TENANT, FURNITURE, UPGRADES, SERVICES, LOG }
 
     /** Kept while the game runs, so reopening the tab shows the same place. */
     private Mode mode = Mode.HOMES;
@@ -118,6 +118,7 @@ public class RealEstatePage implements ManagePage {
                 case org.lwjgl.input.Keyboard.KEY_T: if (mode == Mode.HOMES) a = "sub:TENANT"; break;
                 case org.lwjgl.input.Keyboard.KEY_F: if (mode == Mode.HOMES) a = "sub:FURNITURE"; break;
                 case org.lwjgl.input.Keyboard.KEY_G: if (mode == Mode.HOMES) a = "sub:UPGRADES"; break;
+                case org.lwjgl.input.Keyboard.KEY_S: if (mode == Mode.HOMES) a = "sub:SERVICES"; break;
                 case org.lwjgl.input.Keyboard.KEY_L: if (mode == Mode.HOMES && !sideLog()) a = "sub:LOG"; break;
                 default: break;
             }
@@ -187,17 +188,19 @@ public class RealEstatePage implements ManagePage {
 
             float rx = rightX();
             boolean sideLog = sideLog();
-            Btn d = hotkeyButton("sub:DETAILS", "Details", "D", rx, TOP, 130f, 24f);
+            Btn d = hotkeyButton("sub:DETAILS", "Details", "D", rx, TOP, 124f, 24f);
             d.selected = sub == Sub.DETAILS;
             Btn t = hotkeyButton("sub:TENANT", chosen.tenant != null ? "Tenants" : "Tenants: "
-                    + chosen.applicants().size(), "T", rx + 136f, TOP, 130f, 24f);
+                    + chosen.applicants().size(), "T", rx + 128f, TOP, 124f, 24f);
             t.selected = sub == Sub.TENANT;
-            Btn f = hotkeyButton("sub:FURNITURE", "Furniture", "F", rx + 272f, TOP, 130f, 24f);
+            Btn f = hotkeyButton("sub:FURNITURE", "Furniture", "F", rx + 256f, TOP, 124f, 24f);
             f.selected = sub == Sub.FURNITURE;
-            Btn g = hotkeyButton("sub:UPGRADES", "Upgrades", "G", rx + 408f, TOP, 130f, 24f);
+            Btn g = hotkeyButton("sub:UPGRADES", "Upgrades", "G", rx + 384f, TOP, 124f, 24f);
             g.selected = sub == Sub.UPGRADES;
+            Btn sv = hotkeyButton("sub:SERVICES", "Services", "S", rx + 512f, TOP, 124f, 24f);
+            sv.selected = sub == Sub.SERVICES;
             if (!sideLog) {
-                Btn l = hotkeyButton("sub:LOG", "Log", "L", rx + 544f, TOP, 130f, 24f);
+                Btn l = hotkeyButton("sub:LOG", "Log", "L", rx + 640f, TOP, 124f, 24f);
                 l.selected = sub == Sub.LOG;
             } else if (sub == Sub.LOG) {
                 sub = Sub.DETAILS;
@@ -213,6 +216,9 @@ public class RealEstatePage implements ManagePage {
                     break;
                 case UPGRADES:
                     buildUpgradesTab(chosen, rx, y0);
+                    break;
+                case SERVICES:
+                    buildServicesTab(chosen, rx, y0);
                     break;
                 case LOG:
                     buildLog(chosen, rx, y0, contentWidth(rightW()));
@@ -278,6 +284,10 @@ public class RealEstatePage implements ManagePage {
             s.traits.addAll(houseTraits(chosen.traits()));
             s.upgrades.addAll(upgradeItems(chosen));
             s.furniture.addAll(furnitureItems(chosen));
+            s.size = chosen.tier().name;
+            s.furnitureSlots = chosen.tier().slots;
+            s.tenant = chosen.tenant == null ? "" : nameAndFaction(chosen.tenant);
+            s.tenantRef = chosen.tenant;
             s.extra.add(new String[] {"Bought for", Misc.getDGSCredits(chosen.paidPrice)});
             s.extra.add(new String[] {"Rent so far", Misc.getDGSCredits(chosen.totalRent)
                     + " (last month " + Misc.getDGSCredits(chosen.lastRent) + ")"});
@@ -316,9 +326,9 @@ public class RealEstatePage implements ManagePage {
                 tip(rx + 660f, cy, fw, 28f, "Selling furnished", "The furniture stays in the home and the buyer pays"
                         + " its full price on top: " + Misc.getDGSCredits(chosen.furnitureValue()) + ".", noSale);
             }
-            tip(rx, cy, 210f, 28f, "Rent", "Free: no rent at all. Anyone can afford it, tenants are grateful, and rich ones take a smaller home than usual. Charity and Low: less rent,"
-                    + " happier tenants, more reputation. High and Greedy: more rent, unhappier tenants, faster wear,"
-                    + " lost reputation.");
+            tip(rx, cy, 210f, 28f, "Rent", "Free: no rent at all. Anyone can afford it, tenants are grateful, and rich"
+                    + " ones take a smaller home than usual. Charity and Low: less rent, happier tenants, more reputation."
+                    + " High and Greedy: more rent, unhappier tenants, lost reputation.");
         }
 
         private void buildTenantTab(Property p, float rx, float y0) {
@@ -339,10 +349,13 @@ public class RealEstatePage implements ManagePage {
             Btn adv = button("advertise:" + p.id, p.advertising ? "Advertising: on" : "Advertising: off", rx, y0, 200f,
                     28f, true);
             adv.selected = p.advertising;
-            Btn scr = button("screening:" + p.id, (p.screeningService ? "Screening service: on, " : "Screening service: off, ")
-                    + Misc.getDGSCredits(TenantRules.screeningService(normal)) + " a month", rx + 210f, y0, 360f, 28f,
-                    true);
-            scr.selected = p.screeningService;
+            landlordsector.data.Services.Def scrDef = landlordsector.data.Services.get(
+                    landlordsector.data.Services.SCREENING);
+            boolean screening = p.hasService(landlordsector.data.Services.SCREENING);
+            Btn scr = button("screening:" + p.id, (screening ? "Screening service: on, " : "Screening service: off, ")
+                    + Misc.getDGSCredits(scrDef != null ? Actions.servicePrice(p, scrDef) : 0f) + " a month",
+                    rx + 210f, y0, 360f, 28f, scrDef != null);
+            scr.selected = screening;
             tip(rx, y0, 200f, 28f, "Advertising", "While on, people looking for a home apply to rent it, up to "
                     + TenantRules.MAX_APPLICANTS + " at a time. Each waits " + Math.round(TenantRules.APPLICANT_DAYS)
                     + " days for your answer. They come faster to good locations, comfortable homes and cheap rent."
@@ -508,7 +521,7 @@ public class RealEstatePage implements ManagePage {
                 if (i.furniture) continue;
                 any = true;
                 if (y > height - 40f) break;
-                upgradeName(i.def(), i.name(), Boolean.TRUE, lx, y + 5f, col - 110f);
+                upgradeName(p, i.def(), i.name(), Boolean.TRUE, lx, y + 5f, col - 110f);
                 button("remove:" + p.id + ":" + p.upgrades().indexOf(i), "Remove", lx + col - 100f, y, 100f, 26f,
                         true);
                 y += 30f;
@@ -530,11 +543,11 @@ public class RealEstatePage implements ManagePage {
                 }
                 float cost = Actions.renovationCost(p, d);
                 String no = Actions.cannotBuild(p, d);
-                upgradeName(d, d.name, null, gx, y + 5f, col - 190f);
+                upgradeName(p, d, d.name, null, gx, y + 5f, col - 190f);
                 button("build:" + p.id + ":" + d.id, "Build for " + Misc.getDGSCredits(cost), gx + col - 180f, y, 180f,
                         26f, no == null);
-                String costLine = "Costs " + Math.round(d.cost * 100f) + "% of the home's value, at least "
-                        + Misc.getDGSCredits(d.minCost) + ".";
+                String costLine = "Costs " + Misc.getDGSCredits(d.minCost) + " plus " + Math.round(d.cost * 100f)
+                        + "% of the home's value.";
                 if (no != null) tip(gx + col - 180f, y, 180f, 26f, d.name, costLine, no);
                 else tip(gx + col - 180f, y, 180f, 26f, d.name, costLine);
                 y += 30f;
@@ -542,11 +555,56 @@ public class RealEstatePage implements ManagePage {
             if (hidden > 0) text("And " + hidden + " more that do not fit on the screen.", Misc.getGrayColor(), gx, y, col);
         }
 
+        /**
+         * Services (0.6.0, Andrzej: "Continuous payments for some boosts", their own panel): every service that fits
+         * the home, hired or not, with its monthly price and a Hire / Cancel button.
+         */
+        private void buildServicesTab(Property p, float rx, float y0) {
+            float cw = contentWidth(rightW());
+            float y = y0;
+            title("Services", rx, y, cw);
+            tip(rx, y, cw, 26f, "Services", "Paid at the end of every month while hired, as a share of the home's Normal"
+                    + " rent, also while it stands empty. Cancel at any time.");
+            y += 30f;
+            float total = 0f;
+            for (String id : p.services()) {
+                landlordsector.data.Services.Def d = landlordsector.data.Services.get(id);
+                if (d != null) total += Actions.servicePrice(p, d);
+            }
+            text(p.services().isEmpty() ? "No services hired." : "Hired services cost " + Misc.getDGSCredits(total)
+                    + " a month.", Misc.getGrayColor(), rx, y, cw);
+            y += 28f;
+            for (landlordsector.data.Services.Def d : landlordsector.data.Services.all()) {
+                if (!landlordsector.data.Services.fits(d, p.tier().index, p.onStation())) continue;
+                if (y > height - 40f) break;
+                boolean on = p.hasService(d.id);
+                float price = Actions.servicePrice(p, d);
+                text(d.name, traitColor(on ? Boolean.TRUE : null), rx, y + 5f, cw - 420f);
+                tipColored(rx, y + 5f, Math.min(cw - 420f, 260f), 18f, d.name, landlordsector.ui.Tips.service(d));
+                text(Misc.getDGSCredits(price) + " a month", Misc.getGrayColor(), rx + cw - 400f, y + 5f, 180f);
+                Btn b = button("service:" + p.id + ":" + d.id, on ? "Cancel" : "Hire", rx + cw - 200f, y, 200f, 26f,
+                        true);
+                b.selected = on;
+                y += 30f;
+            }
+        }
+
         /** An upgrade's name with its tooltip. good: green (true) or plain (null). */
         private void upgradeName(landlordsector.data.Upgrades.Def d, String shown, Boolean good, float x, float y,
                 float w) {
-            text(shown, traitColor(good), x, y, w);
-            if (d != null) tipColored(x, y, Math.min(w, 260f), 18f, d.name, landlordsector.ui.Tips.upgrade(d));
+            upgradeName(null, d, shown, good, x, y, w);
+        }
+
+        /** The same, saying when it does nothing in this home (0.6.0). */
+        private void upgradeName(Property p, landlordsector.data.Upgrades.Def d, String shown, Boolean good, float x,
+                float y, float w) {
+            List<String[]> useless = p != null && d != null ? PropertyStats.uselessHere(p, d)
+                    : new ArrayList<String[]>();
+            text(shown, useless.isEmpty() ? traitColor(good) : Misc.getGrayColor(), x, y, w);
+            if (d == null) return;
+            List<String[]> lines = new ArrayList<>(landlordsector.ui.Tips.upgrade(d));
+            lines.addAll(useless);
+            tipColored(x, y, Math.min(w, 260f), 18f, d.name, lines);
         }
 
         private void poolRow(Property p, Tenant a, float x, float y, float w) {
@@ -900,6 +958,9 @@ public class RealEstatePage implements ManagePage {
                     Actions.toggleScreening(pr);
                     message = "";
                     break;
+                case "service":
+                    if (parts.length > 2) result(Actions.toggleService(pr, parts[2]));
+                    break;
                 case "screen":
                     if (applicant != null) result(Actions.screen(pr, applicant));
                     break;
@@ -922,7 +983,8 @@ public class RealEstatePage implements ManagePage {
             boolean ok = text.startsWith("Sold") || text.startsWith("Repaired") || text.startsWith("Rebuilt")
                     || text.startsWith("Screened") || text.contains(" moved into ") || text.startsWith("Turned")
                     || text.startsWith("Evicted") || text.startsWith("Placed") || text.startsWith("Took back")
-                    || text.startsWith("Built") || text.startsWith("Removed");
+                    || text.startsWith("Built") || text.startsWith("Removed") || text.startsWith("Hired")
+                    || text.startsWith("Cancelled");
             if (ok) good(text);
             else bad(text);
         }

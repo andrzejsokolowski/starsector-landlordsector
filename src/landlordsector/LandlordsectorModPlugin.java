@@ -32,6 +32,7 @@ public class LandlordsectorModPlugin extends BaseModPlugin {
         landlordsector.data.Levels.load(Global.getSettings().getMergedJSON(landlordsector.data.Levels.PATH));
         landlordsector.data.Environment.load(
                 Global.getSettings().getMergedJSON(landlordsector.data.Environment.PATH));
+        landlordsector.data.Services.load(Global.getSettings().getMergedJSON(landlordsector.data.Services.PATH));
         Art.loadFurnitureIcons();
         Manage.addPage(Settings.MOD_ID, "Real estate", new Color(200, 170, 80), new RealEstatePage());
     }
@@ -52,6 +53,18 @@ public class LandlordsectorModPlugin extends BaseModPlugin {
         upgradeTo030(p, random);
         upgradeTo040(p);
         upgradeTo050(p, random);
+        upgradeTo060(p);
+    }
+
+    /** 0.6.0: the old screening service flag becomes the screening service. Public for the headless check. */
+    public static void upgradeTo060(Portfolio p) {
+        for (Property pr : p.properties()) {
+            if (!pr.screeningService) continue;
+            pr.screeningService = false;
+            if (!pr.services().contains(landlordsector.data.Services.SCREENING)) {
+                pr.services().add(landlordsector.data.Services.SCREENING);
+            }
+        }
     }
 
     /**

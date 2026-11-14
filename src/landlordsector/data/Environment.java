@@ -59,6 +59,8 @@ public final class Environment {
     private static Set<String> skipIds = Collections.emptySet(), skipTags = Collections.emptySet();
     private static Map<String, Set<String>> colonyById = Collections.emptyMap(), colonyByTag = Collections.emptyMap();
     private static float nothingWeight = 3f;
+    /** 0.6.0: building id to the score each lifts every home on the colony to (Maglev: commute 95). */
+    private static Map<String, Map<String, Float>> overrides = Collections.emptyMap();
     /** A building with no entry: no effects. */
     private static final Neighbor PLAIN = new Neighbor();
 
@@ -112,6 +114,25 @@ public final class Environment {
         nothingWeight = (float) json.optDouble("nothingWeight", 3);
         colonyById = stringLists(json.optJSONObject("colonyTagsById"));
         colonyByTag = stringLists(json.optJSONObject("colonyTagsByTag"));
+        Map<String, Map<String, Float>> ov = new HashMap<>();
+        JSONObject oo = json.optJSONObject("colonyOverrides");
+        if (oo != null) {
+            for (java.util.Iterator<?> it = oo.keys(); it.hasNext();) {
+                String k = String.valueOf(it.next());
+                ov.put(k, HouseTraits.numbers(oo.optJSONObject(k), 0f));
+            }
+        }
+        overrides = ov;
+    }
+
+    /** The lowest score a colony building forces for this score, by building id ("aotd_maglev" -> 95). */
+    public static Map<String, Float> overridesFor(String scoreId, Collection<String> buildingIds) {
+        Map<String, Float> out = new LinkedHashMap<>();
+        for (String b : buildingIds) {
+            Map<String, Float> m = overrides.get(b);
+            if (m != null && m.containsKey(scoreId)) out.put(b, m.get(scoreId));
+        }
+        return out;
     }
 
     private static Neighbor neighbor(String key, JSONObject o) {
@@ -232,14 +253,15 @@ public final class Environment {
         return byId.values();
     }
 
-    /** S 90+, A 75+, B 60+, C 45+, D 30+, E 15+, F below. */
+    /** S+ 85+, S 75+, A 65+, B 55+, C 45+, D 35+, E 25+, F below (0.6.0: 50, no modifiers, is C). */
     public static String letter(float score) {
-        if (score >= 90f) return "S";
-        if (score >= 75f) return "A";
-        if (score >= 60f) return "B";
+        if (score >= 85f) return "S+";
+        if (score >= 75f) return "S";
+        if (score >= 65f) return "A";
+        if (score >= 55f) return "B";
         if (score >= 45f) return "C";
-        if (score >= 30f) return "D";
-        if (score >= 15f) return "E";
+        if (score >= 35f) return "D";
+        if (score >= 25f) return "E";
         return "F";
     }
 

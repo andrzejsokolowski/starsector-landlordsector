@@ -96,7 +96,7 @@ public class TenantDaily implements EveryFrameScript {
         if (p.applicants().size() >= TenantRules.MAX_APPLICANTS) return;
         PropertyStats st = p.stats();
         if (random.nextFloat() >= TenantRules.arrivalChance(st.marketMult, st.comfort, p.setting())) return;
-        float bad = p.screeningService ? TenantRules.SCREENED_BAD_MULT : 1f;
+        float bad = p.hasService(landlordsector.data.Services.SCREENING) ? TenantRules.SCREENED_BAD_MULT : 1f;
         // Only people who can pay for the home and would live in it answer the advert.
         Tenant a = null;
         for (int i = 0; i < 6 && a == null; i++) {

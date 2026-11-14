@@ -77,9 +77,20 @@ public final class Surroundings {
         return id;
     }
 
-    /** "Next to Mining" or "Next to nothing". */
+    /** The source name in tooltips: "Mining nearby" or "Residential area" (0.6.0). */
     public static String nextTo(MarketAPI m, String neighborId) {
-        return "Next to " + name(m, neighborId);
+        String id = current(m, neighborId);
+        if (Environment.NOTHING.equals(id)) return "Residential area";
+        return area(m, neighborId) + " nearby";
+    }
+
+    /** The Area row (Andrzej, 0.6.0: "Area: Heavy Batteries"): the building's name, or "Residential". */
+    public static String area(MarketAPI m, String neighborId) {
+        String id = current(m, neighborId);
+        if (Environment.NOTHING.equals(id)) return "Residential";
+        String n = name(m, neighborId);
+        if (n.startsWith("the ")) n = n.substring(4);
+        return n.isEmpty() ? n : Character.toUpperCase(n.charAt(0)) + n.substring(1);
     }
 
     /** The location multiplier of one home: the market's, times its neighbour's price, within the limits. */

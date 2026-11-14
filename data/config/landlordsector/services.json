@@ -1,0 +1,22 @@
+{
+	# Services (0.6.0, Andrzej: "Continuous payments for some boosts. For example: Hired security service takes out
+	# 10% of your rent for a substantial increase in security"). Hired per home on its Services tab, paid every month
+	# while hired, cancelled at any time.
+	# share: the monthly price as a share of the home's rent at Normal (after the tariff), so it also costs money
+	#   while the home stands empty. min: the lowest monthly price.
+	# Effects: the same words as house traits and upgrades (comfort, decor, happiness, health, security, wear,
+	#   levels, env, kids, events, tags). They count only while the service is hired and never raise the home's value.
+	# Special jobs: screening (applicants are half as likely to have bad traits), cleans (graffiti and dirt are cleaned
+	#   off every month), repairs (condition added every month, 0.03 is 3%).
+	# Where it can go: minTier, maxTier (0 shack to 5 estate), station (true stations only, false planets only).
+	"services":[
+		{"id":"screening", "name":"Screening service", "share":0.10, "min":100, "screening":true},
+		{"id":"security_patrol", "name":"Security patrol", "share":0.10, "min":200, "security":25},
+		{"id":"cleaning", "name":"Cleaning crew", "share":0.06, "min":100, "cleans":true, "wear":0.8, "health":3},
+		{"id":"maintenance", "name":"Maintenance contract", "share":0.12, "min":200, "repairs":0.03},
+		{"id":"gardener", "name":"Gardener", "station":false, "share":0.04, "min":100, "decor":4, "comfort":2, "tags":["garden"]},
+		{"id":"concierge", "name":"Concierge", "minTier":3, "share":0.10, "min":500, "happiness":6},
+		{"id":"pest_control_plan", "name":"Pest control plan", "share":0.03, "min":100, "events":{"pests":0.1}},
+		{"id":"night_watch", "name":"Night watchman", "share":0.06, "min":150, "security":10, "events":{"burglary":0.5, "mugged":0.7}}
+	]
+}

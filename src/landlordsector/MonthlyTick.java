@@ -128,12 +128,25 @@ public class MonthlyTick implements EconomyTickListener, ColonyPlayerHostileActL
                 node.tooltipCreator = TIP;
             }
 
-            if (p.screeningService) {
-                float fee = TenantRules.screeningService(Actions.normalRent(p));
-                FDNode node = report.getNode(root, p.id + "_screening");
-                node.name = "Screening service, " + p.displayName();
+            // Services (0.6.0): paid every month while hired; some clean or repair.
+            for (String sid : new ArrayList<>(p.services())) {
+                landlordsector.data.Services.Def sd = landlordsector.data.Services.get(sid);
+                if (sd == null) continue;
+                float fee = Actions.servicePrice(p, sd);
+                FDNode node = report.getNode(root, p.id + "_service_" + sid);
+                node.name = sd.name + ", " + p.displayName();
                 node.upkeep += fee;
                 node.tooltipCreator = TIP;
+                if (sd.cleans) {
+                    boolean cleaned = p.traits().removeIf(id -> {
+                        landlordsector.data.HouseTraits.Def d = landlordsector.data.HouseTraits.get(id);
+                        return d != null && d.mark;
+                    });
+                    if (cleaned) p.addLog(sd.name + " cleaned the home.", true, sd.name);
+                }
+                if (sd.repairs > 0f && !p.condemned && p.condition < 1f) {
+                    p.condition = Math.min(1f, p.condition + sd.repairs);
+                }
             }
 
             // Wear after the rent: the tenants lived in it all month.

@@ -1,7 +1,7 @@
 {
 	# Environment (0.5.0): what one home's surroundings are like, each a score from 0 to 100, shown as a letter
-	# grade (S 90+, A 75+, B 60+, C 45+, D 30+, E 15+, F below). Higher is always better: a high Noise grade is a
-	# quiet home.
+	# grade like the location (0.6.0, Andrzej: no modifiers is C): S+ 85+, S 75+, A 65+, B 55+, C 45+, D 35+, E 25+,
+	# F below. Higher is always better: a high Noise grade is a quiet home. Every score starts at 50 (C).
 	# base: the score before anything else. station: added on stations. conditions: added for each market
 	# condition the market has. Neighbours, house traits and upgrades add their own ("env" in house_traits.json
 	# and upgrades.json).
@@ -12,11 +12,11 @@
 		{"id":"commute", "name":"Commute", "better":"Shorter commute", "worse":"Longer commute",
 			"base":50, "station":10, "neutral":50, "happiness":0.15, "health":0},
 		{"id":"air", "name":"Air", "better":"Cleaner air", "worse":"Dirtier air",
-			"base":80, "station":-10, "neutral":70, "happiness":0.05, "health":0.25,
+			"base":50, "station":-10, "neutral":50, "happiness":0.05, "health":0.25,
 			"conditions":{"pollution":-30, "toxic_atmosphere":-35, "no_atmosphere":-10, "thin_atmosphere":-5,
 				"dense_atmosphere":-10, "extreme_weather":-5, "inimical_biosphere":-10}},
 		{"id":"noise", "name":"Noise", "better":"Quieter", "worse":"Louder",
-			"base":80, "station":-5, "neutral":70, "happiness":0.2, "health":0.05,
+			"base":50, "station":-5, "neutral":50, "happiness":0.2, "health":0.05,
 			"conditions":{"extreme_weather":-5, "extreme_tectonic_activity":-10, "tectonic_activity":-5}}
 	],
 
@@ -107,6 +107,12 @@
 		{"tag":"industry", "noise":-10, "air":-5, "price":0.95},
 		{"tag":"structure", "price":1.0}
 	],
+
+	# Colony overrides (0.6.0): a building anywhere on the colony lifts a score for every home on it to at least this
+	# (Andrzej: the AoTD Maglev Central Hub makes every commute S+).
+	"colonyOverrides":{
+		"aotd_maglev":{"commute":95}
+	},
 
 	# Colony tags (0.5.0): what tenants like or hate about the colony as a whole, by building. Criminals hate police
 	# and spying anywhere on their colony (Andrzej: "A drug lord tenant wants high security for HIS home, just not

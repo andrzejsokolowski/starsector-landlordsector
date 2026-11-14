@@ -47,6 +47,7 @@ public final class Actions {
         p.climateId = listing.climateId;
         p.artPath = listing.artPath;
         p.basePrice = listing.basePrice;
+        p.condition = listing.condition();
         p.paidPrice = price;
         p.boughtAt = Global.getSector().getClock().getTimestamp();
         p.traits = listing.traits != null ? new java.util.ArrayList<>(listing.traits) : new java.util.ArrayList<>();
@@ -233,8 +234,29 @@ public final class Actions {
     }
 
     public static void toggleScreening(Property p) {
-        p.screeningService = !p.screeningService;
-        p.addLog(p.screeningService ? "Hired a screening service." : "Cancelled the screening service.");
+        toggleService(p, landlordsector.data.Services.SCREENING);
+    }
+
+    /** Monthly price of a service on this home (0.6.0): a share of the Normal rent, at least the service's minimum. */
+    public static float servicePrice(Property p, landlordsector.data.Services.Def d) {
+        return landlordsector.data.Services.monthly(d, normalRent(p));
+    }
+
+    /** Hires or cancels a service (0.6.0). Paid at the end of each month while hired. */
+    public static String toggleService(Property p, String id) {
+        landlordsector.data.Services.Def d = landlordsector.data.Services.get(id);
+        if (d == null) return "No such service.";
+        if (p.hasService(id)) {
+            p.services().remove(id);
+            if (landlordsector.data.Services.SCREENING.equals(id)) p.screeningService = false;
+            p.addLog("Cancelled: " + d.name + ".");
+            return "Cancelled: " + d.name + " at " + p.displayName() + ".";
+        }
+        if (!landlordsector.data.Services.fits(d, p.tier().index, p.onStation())) return "Not for this home.";
+        p.services().add(id);
+        p.addLog("Hired: " + d.name + ".", true, "Hired: " + d.name);
+        return "Hired: " + d.name + " at " + p.displayName() + ", " + Misc.getDGSCredits(servicePrice(p, d))
+                + " a month.";
     }
 
     public static String screen(Property p, Tenant a) {

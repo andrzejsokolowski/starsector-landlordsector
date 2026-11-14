@@ -178,9 +178,9 @@ public final class Upgrades {
         return lootChance;
     }
 
-    /** What a renovation costs on a home worth {@code fullValue}. */
+    /** What an upgrade costs on a home worth {@code fullValue}: a flat fee plus a share of the value (0.6.0). */
     public static float renovationCost(Def d, float fullValue) {
-        return Math.max(d.minCost, d.cost * fullValue);
+        return d.minCost + d.cost * fullValue;
     }
 
     /** The flat value these upgrades add to a home worth {@code fullValue} without them (0.5.0). */
