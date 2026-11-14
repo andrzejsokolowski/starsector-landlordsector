@@ -1504,7 +1504,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 15 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 40% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 50% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -1514,7 +1514,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: The home is INSIDE a large orbital space station, on a wide habitat deck. There is no outdoors at all. Where the camera rules say horizon, use the far end of the deck; where they say sky, use the ceiling and the big window.
 
-THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms. Shape: a simple long box with a low pitched or flat roof, plain but cared for. Front: one door and three or four windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look bigger than a studio and clearly smaller than a two-floor house.
+THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms: about twice as wide and twice as deep as a one-room studio. The front wall is about eight doors wide, so the door is only a small part of it. Shape: a long, deep box with a low pitched roof (a flat roof with a raised edge only where this world needs one), plain but cared for. Front: one door under a small awning, one big living-room window and two smaller bedroom windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look clearly bigger than a studio (one room with one or two small windows) and clearly smaller than a two-floor house.
 Building style: boxy modular habitat units bolted to the deck, smooth painted metal panels in pale grey and teal, round porthole windows, ribbed vents, pipes and cable trays running along the walls, a sliding door.
 
 THE SCENE:
@@ -1556,7 +1556,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 15 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 40% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 50% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -1566,7 +1566,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: An Earth-like colony world with a mild climate.
 
-THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms. Shape: a simple long box with a low pitched or flat roof, plain but cared for. Front: one door and three or four windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look bigger than a studio and clearly smaller than a two-floor house.
+THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms: about twice as wide and twice as deep as a one-room studio. The front wall is about eight doors wide, so the door is only a small part of it. Shape: a long, deep box with a low pitched roof (a flat roof with a raised edge only where this world needs one), plain but cared for. Front: one door under a small awning, one big living-room window and two smaller bedroom windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look clearly bigger than a studio (one room with one or two small windows) and clearly smaller than a two-floor house.
 Building style: off-white and pale grey prefab panels with rounded corners on a concrete base, a boxy climate unit on the wall, a small dish antenna, rounded-rectangle windows, a door with a keypad.
 This is the first home of this size: the Jungle and Water pictures will copy this building later.
 
@@ -1608,7 +1608,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 15 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 40% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 50% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -1618,7 +1618,7 @@ Keep to the attached picture where this prompt says so.
 
 THE WORLD: A hot, wet jungle world.
 
-THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms. Shape: a simple long box with a low pitched or flat roof, plain but cared for. Front: one door and three or four windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look bigger than a studio and clearly smaller than a two-floor house.
+THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms: about twice as wide and twice as deep as a one-room studio. The front wall is about eight doors wide, so the door is only a small part of it. Shape: a long, deep box with a low pitched roof (a flat roof with a raised edge only where this world needs one), plain but cared for. Front: one door under a small awning, one big living-room window and two smaller bedroom windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look clearly bigger than a studio (one room with one or two small windows) and clearly smaller than a two-floor house.
 Building style: prefab panels and metal plating like the Terran homes, raised on a low concrete base against the mud, moss on the lower walls, vines starting to climb it, a humming dehumidifier unit.
 The attached picture is the Terran home of this size: keep exactly the same building, art style and camera. Only the surroundings and a few small touches on the building change for this world.
 
@@ -1660,7 +1660,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 15 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 40% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 50% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -1670,7 +1670,7 @@ Keep to the attached picture where this prompt says so.
 
 THE WORLD: An ocean world: almost all water, with homes on the coast and on piers.
 
-THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms. Shape: a simple long box with a low pitched or flat roof, plain but cared for. Front: one door and three or four windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look bigger than a studio and clearly smaller than a two-floor house.
+THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms: about twice as wide and twice as deep as a one-room studio. The front wall is about eight doors wide, so the door is only a small part of it. Shape: a long, deep box with a low pitched roof (a flat roof with a raised edge only where this world needs one), plain but cared for. Front: one door under a small awning, one big living-room window and two smaller bedroom windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look clearly bigger than a studio (one room with one or two small windows) and clearly smaller than a two-floor house.
 Building style: prefab panels and metal plating like the Terran homes, standing on steel and concrete pilings above the water, salt stains and rust streaks, a water purifier unit with pipes into the sea.
 The attached picture is the Terran home of this size: keep exactly the same building, art style and camera. Only the surroundings and a few small touches on the building change for this world.
 
@@ -1712,7 +1712,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 15 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 40% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 50% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -1722,7 +1722,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: A hot, dry savanna world: not a sand desert, but dry steppe.
 
-THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms. Shape: a simple long box with a low pitched or flat roof, plain but cared for. Front: one door and three or four windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look bigger than a studio and clearly smaller than a two-floor house.
+THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms: about twice as wide and twice as deep as a one-room studio. The front wall is about eight doors wide, so the door is only a small part of it. Shape: a long, deep box with a low pitched roof (a flat roof with a raised edge only where this world needs one), plain but cared for. Front: one door under a small awning, one big living-room window and two smaller bedroom windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look clearly bigger than a studio (one room with one or two small windows) and clearly smaller than a two-floor house.
 Building style: low, boxy prefab modules painted sand and ochre, shaded by a big slatted metal sun-screen on posts, thick insulated walls, narrow tinted windows, a large roof-mounted cooling unit with a spinning fan, a white water tank and a row of solar panels.
 
 THE SCENE:
@@ -1764,7 +1764,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 15 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 40% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 50% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -1774,7 +1774,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: A sand desert world.
 
-THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms. Shape: a simple long box with a low pitched or flat roof, plain but cared for. Front: one door and three or four windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look bigger than a studio and clearly smaller than a two-floor house.
+THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms: about twice as wide and twice as deep as a one-room studio. The front wall is about eight doors wide, so the door is only a small part of it. Shape: a long, deep box with a low pitched roof (a flat roof with a raised edge only where this world needs one), plain but cared for. Front: one door under a small awning, one big living-room window and two smaller bedroom windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look clearly bigger than a studio (one room with one or two small windows) and clearly smaller than a two-floor house.
 Building style: smooth domed shells of sand-colored ceramic plating, half buried in the dunes on purpose for cooling, a round airlock-style door against the sand, small round tinted windows, sand louvers over every vent, a big dish-shaped water condenser and a tall cooling tower with fins.
 
 THE SCENE:
@@ -1816,7 +1816,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 15 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 40% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 50% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -1826,7 +1826,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: A cold tundra world: cold and bleak, but with some life.
 
-THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms. Shape: a simple long box with a low pitched or flat roof, plain but cared for. Front: one door and three or four windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look bigger than a studio and clearly smaller than a two-floor house.
+THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms: about twice as wide and twice as deep as a one-room studio. The front wall is about eight doors wide, so the door is only a small part of it. Shape: a long, deep box with a low pitched roof (a flat roof with a raised edge only where this world needs one), plain but cared for. Front: one door under a small awning, one big living-room window and two smaller bedroom windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look clearly bigger than a studio (one room with one or two small windows) and clearly smaller than a two-floor house.
 Building style: a long, low insulated prefab module in olive drab and off-white, half sunk into the permafrost behind a gravel berm, heavy insulated panels with rounded corners, a chunky heat-exchanger box with radiator fins, small double-glazed windows with a warm amber glow, an exhaust stack venting steam.
 
 THE SCENE:
@@ -1868,7 +1868,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 15 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 40% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 50% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -1878,7 +1878,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: A frozen ice world: deep, permanent cold.
 
-THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms. Shape: a simple long box with a low pitched or flat roof, plain but cared for. Front: one door and three or four windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look bigger than a studio and clearly smaller than a two-floor house.
+THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms: about twice as wide and twice as deep as a one-room studio. The front wall is about eight doors wide, so the door is only a small part of it. Shape: a long, deep box with a low pitched roof (a flat roof with a raised edge only where this world needs one), plain but cared for. Front: one door under a small awning, one big living-room window and two smaller bedroom windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look clearly bigger than a studio (one room with one or two small windows) and clearly smaller than a two-floor house.
 Building style: rounded insulated prefab pods raised on stilts above the snow, bright orange and white panels so they can be seen in a blizzard, a thick round airlock-style door, small triple-glazed windows with frost, steam rising from a heating vent, icicles along the edges.
 
 THE SCENE:
@@ -1920,7 +1920,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 15 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 40% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 50% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -1930,7 +1930,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: An icy world with ice volcanoes that erupt cold water vapor instead of lava. The air is very thin.
 
-THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms. Shape: a simple long box with a low pitched or flat roof, plain but cared for. Front: one door and three or four windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look bigger than a studio and clearly smaller than a two-floor house.
+THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms: about twice as wide and twice as deep as a one-room studio. The front wall is about eight doors wide, so the door is only a small part of it. Shape: a long, deep box with a low pitched roof (a flat roof with a raised edge only where this world needs one), plain but cared for. Front: one door under a small awning, one big living-room window and two smaller bedroom windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look clearly bigger than a studio (one room with one or two small windows) and clearly smaller than a two-floor house.
 Building style: a pressurized geodesic dome or cluster of domes made of white triangular panels crusted with ice, anchored to the ground with cables, a boxy airlock entrance, round windows glowing warm yellow.
 
 THE SCENE:
@@ -1972,7 +1972,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 15 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 40% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 50% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -1982,7 +1982,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: An airless rock world, like a moon: no air, no water, no life.
 
-THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms. Shape: a simple long box with a low pitched or flat roof, plain but cared for. Front: one door and three or four windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look bigger than a studio and clearly smaller than a two-floor house.
+THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms: about twice as wide and twice as deep as a one-room studio. The front wall is about eight doors wide, so the door is only a small part of it. Shape: a long, deep box with a low pitched roof (a flat roof with a raised edge only where this world needs one), plain but cared for. Front: one door under a small awning, one big living-room window and two smaller bedroom windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look clearly bigger than a studio (one room with one or two small windows) and clearly smaller than a two-floor house.
 Building style: grey metal cylindrical pressure modules lying on their sides, partly buried under piled grey rock and gravel for shielding, a round airlock hatch with a small porthole, air tanks and pipes on the outside, a blinking beacon on top.
 
 THE SCENE:
@@ -2024,7 +2024,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 15 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 40% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 50% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -2034,7 +2034,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: A world with a poisonous atmosphere: nobody goes outside without a mask.
 
-THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms. Shape: a simple long box with a low pitched or flat roof, plain but cared for. Front: one door and three or four windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look bigger than a studio and clearly smaller than a two-floor house.
+THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms: about twice as wide and twice as deep as a one-room studio. The front wall is about eight doors wide, so the door is only a small part of it. Shape: a long, deep box with a low pitched roof (a flat roof with a raised edge only where this world needs one), plain but cared for. Front: one door under a small awning, one big living-room window and two smaller bedroom windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look clearly bigger than a studio (one room with one or two small windows) and clearly smaller than a two-floor house.
 Building style: a sealed box of grimy corrugated metal and riveted plates, everything stained with yellow residue, a heavy bulkhead door, two tall filter stacks humming on the roof, small sealed windows, yellow and black hazard stripes (no writing).
 
 THE SCENE:
@@ -2076,7 +2076,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 15 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 40% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 50% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -2086,7 +2086,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: A volcanic world with lava and constant eruptions.
 
-THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms. Shape: a simple long box with a low pitched or flat roof, plain but cared for. Front: one door and three or four windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look bigger than a studio and clearly smaller than a two-floor house.
+THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms: about twice as wide and twice as deep as a one-room studio. The front wall is about eight doors wide, so the door is only a small part of it. Shape: a long, deep box with a low pitched roof (a flat roof with a raised edge only where this world needs one), plain but cared for. Front: one door under a small awning, one big living-room window and two smaller bedroom windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look clearly bigger than a studio (one room with one or two small windows) and clearly smaller than a two-floor house.
 Building style: an angular, wedge-shaped home of dark heat-shield ceramic tiles, raised on thick pillars above the hot ground, sloped walls, narrow shielded windows glowing orange, cooling fins and vents.
 
 THE SCENE:
@@ -2128,7 +2128,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 15 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 40% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 50% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -2138,7 +2138,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: A world bathed in deadly radiation: dead land, harsh light.
 
-THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms. Shape: a simple long box with a low pitched or flat roof, plain but cared for. Front: one door and three or four windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look bigger than a studio and clearly smaller than a two-floor house.
+THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms: about twice as wide and twice as deep as a one-room studio. The front wall is about eight doors wide, so the door is only a small part of it. Shape: a long, deep box with a low pitched roof (a flat roof with a raised edge only where this world needs one), plain but cared for. Front: one door under a small awning, one big living-room window and two smaller bedroom windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look clearly bigger than a studio (one room with one or two small windows) and clearly smaller than a two-floor house.
 Building style: a squat concrete bunker half sunk into an earth mound, a thick slab roof, very small thick windows, a heavy steel door at the bottom of a short ramp, lead-lined plates bolted on, no symbols painted on the walls.
 
 THE SCENE:
@@ -2180,7 +2180,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 15 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 40% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 50% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -2190,7 +2190,7 @@ Do not imitate any earlier picture from this chat or anything attached: this wor
 
 THE WORLD: A gas giant: there is no ground at all. The home is on a floating habitat platform deep INSIDE the gas giant's atmosphere, not in orbit and not in space: thick clouds and storms surround it on every side, above and below. There is no horizon line: the cloud layers fade into haze in every direction, so where the camera rules say horizon, use the far edge of the deck and the cloud layer at that height.
 
-THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms. Shape: a simple long box with a low pitched or flat roof, plain but cared for. Front: one door and three or four windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look bigger than a studio and clearly smaller than a two-floor house.
+THE HOME (Small house): a modest family home, built in this world's style. Size: like a small bungalow, one floor, three or four rooms: about twice as wide and twice as deep as a one-room studio. The front wall is about eight doors wide, so the door is only a small part of it. Shape: a long, deep box with a low pitched roof (a flat roof with a raised edge only where this world needs one), plain but cared for. Front: one door under a small awning, one big living-room window and two smaller bedroom windows in a row. Around it: a small plot marked off by a low fence or edging, with a few personal touches. It must look clearly bigger than a studio (one room with one or two small windows) and clearly smaller than a two-floor house.
 Building style: light, rounded pods of white and copper panels, round windows, anchored to the deck with cables against the wind, windsocks, small gas balloons tied above the roof.
 
 THE SCENE:
@@ -2235,7 +2235,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 15 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 45% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 55% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -2287,7 +2287,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 15 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 45% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 55% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -2339,7 +2339,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 15 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 45% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 55% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -2391,7 +2391,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 15 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 45% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 55% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -2443,7 +2443,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 15 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 45% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 55% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -2495,7 +2495,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 15 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 45% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 55% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -2547,7 +2547,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 15 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 45% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 55% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -2599,7 +2599,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 15 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 45% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 55% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -2651,7 +2651,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 15 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 45% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 55% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -2703,7 +2703,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 15 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 45% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 55% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -2755,7 +2755,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 15 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 45% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 55% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -2807,7 +2807,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 15 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 45% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 55% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -2859,7 +2859,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 15 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 45% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 55% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -2911,7 +2911,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 15 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 45% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 55% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -2966,7 +2966,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 25 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 55% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 58% of the way from the left edge, it covers about 60% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -3018,7 +3018,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 25 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 55% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 58% of the way from the left edge, it covers about 60% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -3070,7 +3070,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 25 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 55% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 58% of the way from the left edge, it covers about 60% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -3122,7 +3122,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 25 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 55% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 58% of the way from the left edge, it covers about 60% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -3174,7 +3174,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 25 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 55% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 58% of the way from the left edge, it covers about 60% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -3226,7 +3226,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 25 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 55% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 58% of the way from the left edge, it covers about 60% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -3278,7 +3278,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 25 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 55% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 58% of the way from the left edge, it covers about 60% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -3330,7 +3330,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 25 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 55% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 58% of the way from the left edge, it covers about 60% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -3382,7 +3382,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 25 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 55% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 58% of the way from the left edge, it covers about 60% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -3434,7 +3434,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 25 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 55% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 58% of the way from the left edge, it covers about 60% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -3486,7 +3486,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 25 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 55% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 58% of the way from the left edge, it covers about 60% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -3538,7 +3538,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 25 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 55% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 58% of the way from the left edge, it covers about 60% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -3590,7 +3590,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 25 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 55% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 58% of the way from the left edge, it covers about 60% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -3642,7 +3642,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 25 meters in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 55% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 58% of the way from the left edge, it covers about 60% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -3697,7 +3697,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 40 meters (further back than usual, so the grounds fit) in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 60% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 55% of the way from the left edge, it covers about 65% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -3749,7 +3749,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 40 meters (further back than usual, so the grounds fit) in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 60% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 55% of the way from the left edge, it covers about 65% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -3801,7 +3801,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 40 meters (further back than usual, so the grounds fit) in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 60% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 55% of the way from the left edge, it covers about 65% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -3853,7 +3853,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 40 meters (further back than usual, so the grounds fit) in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 60% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 55% of the way from the left edge, it covers about 65% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -3905,7 +3905,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 40 meters (further back than usual, so the grounds fit) in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 60% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 55% of the way from the left edge, it covers about 65% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -3957,7 +3957,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 40 meters (further back than usual, so the grounds fit) in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 60% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 55% of the way from the left edge, it covers about 65% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -4009,7 +4009,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 40 meters (further back than usual, so the grounds fit) in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 60% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 55% of the way from the left edge, it covers about 65% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -4061,7 +4061,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 40 meters (further back than usual, so the grounds fit) in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 60% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 55% of the way from the left edge, it covers about 65% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -4113,7 +4113,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 40 meters (further back than usual, so the grounds fit) in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 60% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 55% of the way from the left edge, it covers about 65% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -4165,7 +4165,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 40 meters (further back than usual, so the grounds fit) in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 60% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 55% of the way from the left edge, it covers about 65% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -4217,7 +4217,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 40 meters (further back than usual, so the grounds fit) in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 60% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 55% of the way from the left edge, it covers about 65% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -4269,7 +4269,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 40 meters (further back than usual, so the grounds fit) in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 60% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 55% of the way from the left edge, it covers about 65% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -4321,7 +4321,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 40 meters (further back than usual, so the grounds fit) in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 60% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 55% of the way from the left edge, it covers about 65% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
@@ -4373,7 +4373,7 @@ CAMERA AND FRAMING (the same in every picture of this set; do not change it, how
 - The viewer stands on the ground, about 40 meters (further back than usual, so the grounds fit) in front of the home and a little to its left, eyes at normal human height (1.6 m). No aerial view, no bird's-eye view, no top-down, no isometric, no low worm's-eye angle, no fisheye.
 - Normal lens, like 35 mm on a full-frame camera: mild two-point perspective, vertical lines stay straight up and down.
 - Three-quarter view of the home: its front wall with the door faces the viewer, turned about 30 degrees toward the left; its right side wall is visible, shorter, and recedes to the right.
-- The home stands right of center: its middle is about 60% of the way from the left edge, it covers about 60% of the picture width, and its right edge ends before 90% of the width.
+- The home stands right of center: its middle is about 55% of the way from the left edge, it covers about 65% of the picture width, and its right edge ends before 90% of the width.
 - The bottom of the home, where it meets the ground, sits about 70% down from the top of the picture. The horizon line is about 60% down from the top and crosses the home at about door-handle height.
 - The bottom 30% of the picture is ground in front of the home. A path or approach enters from the bottom-left corner and leads toward the door.
 - The left third of the picture is an open view into the distance. Near the left edge, one tall, thin upright object frames the scene (see the scene below).
