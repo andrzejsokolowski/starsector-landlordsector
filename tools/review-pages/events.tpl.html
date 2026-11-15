@@ -1,0 +1,94 @@
+<title>Landlordsector Tenant Events</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oxanium:wght@500;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+/*__CSS__*/
+</style>
+<div class="wrap">
+  <header>
+    <h1>Events <span>/ Landlordsector __VERSION__</span></h1>
+    <p class="lede">Every event a rented home or its tenant can have, as the mod is now. Approve or reject each one, and write notes on what to change. Everything saves as you go, and Claude reads it back.</p>
+  </header>
+  <ul class="rules" id="rules"></ul>
+  <section class="progress" aria-label="Review progress">
+    <div class="counts">
+      <span><b class="ok" id="c-ok">0</b> approved</span>
+      <span><b class="no" id="c-no">0</b> rejected</span>
+      <span><b id="c-todo">0</b> to review</span>
+      <span><b id="c-notes">0</b> with notes</span>
+    </div>
+    <div class="meter" aria-hidden="true"><i class="ok" id="m-ok"></i><i class="no" id="m-no"></i></div>
+  </section>
+  <section class="general">
+    <label class="label" for="note-general">General notes and ideas for new events</label>
+    <textarea id="note-general" data-id="general" placeholder="Ideas for new events, or anything about events as a whole"></textarea>
+    <div class="status" id="status-general"></div>
+  </section>
+  <div class="banner" id="banner" hidden></div>
+  <div class="toolbar">
+    <div class="chips" id="f-kind" role="group" aria-label="Show">
+      <span class="label">Show</span>
+      <button class="chip" type="button" data-f="all" aria-pressed="true">All</button>
+      <button class="chip" type="button" data-f="house" aria-pressed="false">House events</button>
+      <button class="chip" type="button" data-f="tenant" aria-pressed="false">Tenant events</button>
+      <button class="chip" type="button" data-f="good" aria-pressed="false">Good</button>
+      <button class="chip" type="button" data-f="bad" aria-pressed="false">Bad</button>
+    </div>
+    <div class="chips" id="f-review" role="group" aria-label="Review">
+      <span class="label">Review</span>
+      <button class="chip" type="button" data-f="any" aria-pressed="true">Any</button>
+      <button class="chip" type="button" data-f="todo" aria-pressed="false">To review</button>
+      <button class="chip" type="button" data-f="approve" aria-pressed="false">Approved</button>
+      <button class="chip" type="button" data-f="reject" aria-pressed="false">Rejected</button>
+      <button class="chip" type="button" data-f="noted" aria-pressed="false">With notes</button>
+    </div>
+  </div>
+  <p class="empty" id="empty" hidden>Nothing matches these filters.</p>
+  <section class="group" id="g-house"><h2>House events</h2><p class="sub">Things that happen to the home.</p><div class="list" id="list-house"></div></section>
+  <section class="group" id="g-tenant"><h2>Tenant events</h2><p class="sub">Things that happen to the tenant: money, health, crime and family.</p><div class="list" id="list-tenant"></div></section>
+</div>
+<script>
+const DATA = __DATA__;
+/*__COMMON__*/
+
+[
+  "House events and tenant events roll apart. A home has at most one house event every " + DATA.house.minDaysBetween + " days, then a " + Math.round(DATA.house.dailyChance * 100) + "% chance each day. A tenant has at most one tenant event every " + DATA.tenant.minDaysBetween + " days, then " + Math.round(DATA.tenant.dailyChance * 100) + "% a day.",
+  "For house events, unhappy tenants and greedy rent make bad events likelier, and happy tenants make good events likelier.",
+  "Tenant traits, renovations and furniture multiply how likely an event is (the numbers below). In game, the trait tooltip names only the kind of event.",
+  "Share: how often the event is picked among events of the same type and side, for a tenant with no traits. Events only some tenants can have are left out of the share.",
+  "Intel message: the event also goes to the intel screen, with a line from the tenant. Every event goes into the home's log."
+].forEach(r => $("#rules").appendChild(el("li", null, r)));
+
+DATA.events.forEach(e => {
+  const c = card(e, e.type);
+  c.head.appendChild(el("span", "tag", e.good ? "Good" : "Bad"));
+  c.head.appendChild(el("span", "tag plain", e.kindName));
+  if (e.big) c.head.appendChild(el("span", "tag plain", "Intel message"));
+  c.appendChild(el("p", "quote", e.text));
+  if (e.fx.length) c.appendChild(fxList(e.fx));
+  const dl = metaList();
+  dl.add("Share", e.share == null ? "Only some tenants" : e.share + "% of " + e.type + " events that are " + (e.good ? "good" : "bad"));
+  dl.add("Tenant traits", e.traits.length ? e.traits.map(([n, m]) => n + (m === 0 ? " never" : " x" + m)).join(", ") : "None, any tenant");
+  if (e.reno.length) dl.add("Renovations", e.reno.map(([n, m]) => n + " x" + m).join(", "));
+  if (e.mods.length) dl.add("Also", e.mods.join(". ") + ".");
+  c.appendChild(dl);
+  if (e.lines.length) {
+    const d = el("details");
+    const count = e.lines.reduce((s, [, l]) => s + l.length, 0);
+    d.appendChild(el("summary", null, "What the tenant says (" + count + " lines)"));
+    const ul = el("ul");
+    e.lines.forEach(([who, lines]) => lines.forEach(l => {
+      const li = el("li", null, "“" + l + "” ");
+      li.appendChild(el("span", "who", who));
+      ul.appendChild(li);
+    }));
+    d.appendChild(ul);
+    c.appendChild(d);
+  }
+  finishCard(c, e);
+  $("#list-" + e.type).appendChild(c);
+});
+
+startStore();
+</script>

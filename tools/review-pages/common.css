@@ -1,0 +1,83 @@
+/* Layout: one reading column; rules, progress and general notes up top, a sticky filter bar, then one card per item
+   with its verdict buttons and notes box. Navy and gold from the mod's icon. */
+:root{
+  --bg:#f3f4f8; --panel:#ffffff; --ink:#151a2b; --muted:#5b6278; --line:#d9dce8;
+  --gold:#a77a12; --gold-soft:#f4ead2; --good:#1f7a45; --good-soft:#e2f2e8; --bad:#b0352b; --bad-soft:#f8e3e0;
+  --plain:#5b6278; --plain-soft:#eceef4; --field:#f7f8fb;
+  --display:"Oxanium","Segoe UI",system-ui,sans-serif; --body:"Inter","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0c1222; --panel:#141c31; --ink:#e7e9f2; --muted:#9aa2bd; --line:#26304d;
+  --gold:#e3b54a; --gold-soft:#2b2615; --good:#5fcf8c; --good-soft:#132a1f; --bad:#f07a6d; --bad-soft:#331917;
+  --plain:#c3c8da; --plain-soft:#1d2540; --field:#0f1628; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0c1222; --panel:#141c31; --ink:#e7e9f2; --muted:#9aa2bd; --line:#26304d;
+  --gold:#e3b54a; --gold-soft:#2b2615; --good:#5fcf8c; --good-soft:#132a1f; --bad:#f07a6d; --bad-soft:#331917;
+  --plain:#c3c8da; --plain-soft:#1d2540; --field:#0f1628; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font:15px/1.55 var(--body)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:820px;margin:0 auto;padding-block:32px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:24px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
+h1{font-size:30px;font-weight:700;letter-spacing:.01em}
+h1 span{color:var(--gold)}
+h2{font-size:22px;font-weight:700}
+.lede{color:var(--muted);margin:6px 0 0;max-width:65ch}
+.rules{display:grid;gap:6px;margin:0;padding:14px 16px;background:var(--panel);border:1px solid var(--line);border-radius:8px;list-style:none}
+.rules li{padding-left:16px;position:relative}
+.rules li::before{content:"";position:absolute;left:2px;top:.62em;width:6px;height:6px;background:var(--gold);transform:rotate(45deg)}
+.label{font:600 11px/1 var(--body);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.general{display:flex;flex-direction:column;gap:8px}
+textarea{width:100%;box-sizing:border-box;min-height:56px;resize:vertical;padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:var(--field);color:var(--ink);font:14px/1.5 var(--body)}
+textarea:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+textarea:disabled,button:disabled{opacity:.6;cursor:default}
+.progress{display:flex;flex-direction:column;gap:8px;padding:14px 16px;background:var(--panel);border:1px solid var(--line);border-radius:8px}
+.counts{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:14px;font-variant-numeric:tabular-nums}
+.counts b{font-weight:600}
+.counts .ok{color:var(--good)} .counts .no{color:var(--bad)}
+.meter{display:flex;height:8px;border-radius:4px;overflow:hidden;background:var(--field);border:1px solid var(--line)}
+.meter i{display:block;height:100%}
+.meter .ok{background:var(--good)} .meter .no{background:var(--bad)}
+.toolbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:10px;margin-block:-10px;display:flex;flex-direction:column;gap:8px;border-bottom:1px solid var(--line)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chips .label{margin-right:4px;min-width:54px}
+.chip{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:999px;padding:5px 12px;font:500 13px var(--body);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--gold-soft);border-color:var(--gold)}
+.group{display:flex;flex-direction:column;gap:14px}
+.group .sub{margin:-8px 0 0;color:var(--muted);font-size:14px;max-width:65ch}
+.list{display:flex;flex-direction:column;gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--side);border-radius:8px;padding:16px 18px;display:flex;flex-direction:column;gap:10px}
+.card.good{--side:var(--good);--side-soft:var(--good-soft)}
+.card.bad{--side:var(--bad);--side-soft:var(--bad-soft)}
+.card.plain{--side:var(--plain);--side-soft:var(--plain-soft)}
+.head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 10px}
+.head h3{font-size:19px;font-weight:700}
+.tag{font:600 11px/1 var(--body);letter-spacing:.06em;text-transform:uppercase;padding:4px 8px;border-radius:4px;background:var(--side-soft);color:var(--side)}
+.tag.plain{background:var(--field);color:var(--muted)}
+.vpill{margin-left:auto;font:600 11px/1 var(--body);letter-spacing:.06em;text-transform:uppercase;padding:4px 8px;border-radius:4px}
+.vpill.ok{background:var(--good-soft);color:var(--good)}
+.vpill.no{background:var(--bad-soft);color:var(--bad)}
+.quote{margin:0;color:var(--muted);font-style:italic}
+.fx{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0;list-style:none}
+.fx li{font-size:13px;padding:3px 9px;border-radius:4px;border:1px solid var(--line);font-variant-numeric:tabular-nums}
+.fx li.up{color:var(--good)}
+.fx li.down{color:var(--bad)}
+.meta{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:13.5px;margin:0}
+.meta dt{color:var(--muted)}
+.meta dd{margin:0;min-width:0}
+.g{color:var(--good);font-weight:600}
+.b{color:var(--bad);font-weight:600}
+.n{font-weight:600}
+details{font-size:13.5px}
+details summary{cursor:pointer;color:var(--muted)}
+details ul{margin:6px 0 0;padding-left:18px;display:grid;gap:4px}
+details .who{color:var(--muted);font-size:12.5px}
+.review{display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--line);padding-top:10px}
+.verdict{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.vbtn{border:1px solid var(--line);background:var(--field);color:var(--ink);border-radius:6px;padding:6px 14px;font:600 13px var(--body);cursor:pointer}
+.vbtn.ok[aria-pressed="true"]{background:var(--good-soft);border-color:var(--good);color:var(--good)}
+.vbtn.no[aria-pressed="true"]{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.status{font-size:12px;color:var(--muted);min-height:1em;margin-left:auto}
+.status.err{color:var(--bad)}
+.banner{font-size:13px;color:var(--muted);padding:10px 12px;border:1px dashed var(--line);border-radius:6px}
+.empty{color:var(--muted);font-size:14px;padding:12px 0}
+@media (max-width:480px){h1{font-size:24px}.meta{grid-template-columns:1fr}.meta dt{margin-top:4px}.chips .label{width:100%}}

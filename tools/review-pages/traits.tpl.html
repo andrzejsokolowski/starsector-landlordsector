@@ -1,0 +1,118 @@
+<title>Landlordsector Traits</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oxanium:wght@500;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+/*__CSS__*/
+</style>
+<div class="wrap">
+  <header>
+    <h1>Traits <span>/ Landlordsector __VERSION__</span></h1>
+    <p class="lede">Every tenant trait, house trait and world in the mod as it is now. Approve or reject each one, and write notes on what to change. Everything saves as you go, and Claude reads it back.</p>
+  </header>
+  <ul class="rules" id="rules"></ul>
+  <section class="progress" aria-label="Review progress">
+    <div class="counts">
+      <span><b class="ok" id="c-ok">0</b> approved</span>
+      <span><b class="no" id="c-no">0</b> rejected</span>
+      <span><b id="c-todo">0</b> to review</span>
+      <span><b id="c-notes">0</b> with notes</span>
+    </div>
+    <div class="meter" aria-hidden="true"><i class="ok" id="m-ok"></i><i class="no" id="m-no"></i></div>
+  </section>
+  <section class="general">
+    <label class="label" for="note-general">General notes and ideas for new traits or worlds</label>
+    <textarea id="note-general" data-id="general" placeholder="Ideas for new traits, worlds to add, or anything about traits as a whole"></textarea>
+    <div class="status" id="status-general"></div>
+  </section>
+  <div class="banner" id="banner" hidden></div>
+  <div class="toolbar">
+    <div class="chips" id="f-kind" role="group" aria-label="Show">
+      <span class="label">Show</span>
+      <button class="chip" type="button" data-f="all" aria-pressed="true">All</button>
+      <button class="chip" type="button" data-f="tenant" aria-pressed="false">Tenant traits</button>
+      <button class="chip" type="button" data-f="house" aria-pressed="false">House traits</button>
+      <button class="chip" type="button" data-f="world" aria-pressed="false">Worlds</button>
+      <button class="chip" type="button" data-f="good" aria-pressed="false">Good</button>
+      <button class="chip" type="button" data-f="bad" aria-pressed="false">Bad</button>
+    </div>
+    <div class="chips" id="f-review" role="group" aria-label="Review">
+      <span class="label">Review</span>
+      <button class="chip" type="button" data-f="any" aria-pressed="true">Any</button>
+      <button class="chip" type="button" data-f="todo" aria-pressed="false">To review</button>
+      <button class="chip" type="button" data-f="approve" aria-pressed="false">Approved</button>
+      <button class="chip" type="button" data-f="reject" aria-pressed="false">Rejected</button>
+      <button class="chip" type="button" data-f="noted" aria-pressed="false">With notes</button>
+    </div>
+  </div>
+  <p class="empty" id="empty" hidden>Nothing matches these filters.</p>
+  <section class="group" id="g-tenant"><h2>Tenant traits</h2><p class="sub">Each tenant rolls 2 or 3.</p><div class="list" id="list-tenant"></div></section>
+  <section class="group" id="g-house"><h2>House traits</h2><p class="sub">Each home rolls 0 to 3 when it comes on the market. Renovations are not listed here.</p><div class="list" id="list-house"></div></section>
+  <section class="group" id="g-world"><h2>Worlds</h2><p class="sub">Worlds from the lore with their own housing. Other markets use only their conditions.</p><div class="list" id="list-world"></div></section>
+</div>
+<script>
+const DATA = __DATA__;
+/*__COMMON__*/
+
+[
+  "A tenant rolls 2 or 3 tenant traits, weighted by their faction and their market's conditions. A home rolls 0 to 3 house traits, from its market, size and world.",
+  "Each house trait a tenant likes adds " + DATA.like + " happiness. Each one they hate takes " + DATA.dislike + ". Renovations, furniture and colony buildings can be liked or hated too.",
+  "Names are colored by the trait itself: green good, red bad, white neutral. A tenant can like a red trait.",
+  "Weight: how often the trait is picked among those that fit. Event numbers multiply how likely that event is. In game, the tooltip names only the kind of event.",
+  "World numbers multiply how often a house trait rolls there. At x1 or more it needs none of its usual conditions, only its size and planet-or-station rule. At x10 or more every home there has it. Never: it can't roll there."
+].forEach(r => $("#rules").appendChild(el("li", null, r)));
+
+DATA.tenant.forEach(t => {
+  const c = card(t, "tenant");
+  c.head.appendChild(el("span", "tag", sideWord(t.good)));
+  c.head.appendChild(el("span", "tag plain", "Weight " + t.weight));
+  if (t.fx.length) c.appendChild(fxList(t.fx));
+  const dl = metaList();
+  dl.add("Likes", names(t.likes));
+  dl.add("Hates", names(t.hates));
+  if (t.events.length) dl.add("Events", names(t.events.map(([n, m, g]) => [n + (m === 0 ? " never" : " x" + m), g])));
+  dl.add("More common from", t.where.length ? t.where.join(", ") : "Anyone");
+  if (t.conflicts.length) dl.add("Never with", t.conflicts.join(", "));
+  c.appendChild(dl);
+  finishCard(c, t);
+  $("#list-tenant").appendChild(c);
+});
+
+DATA.house.forEach(h => {
+  const c = card(h, "house");
+  c.head.appendChild(el("span", "tag", sideWord(h.good)));
+  c.head.appendChild(el("span", "tag plain", "Weight " + h.weight));
+  if (h.fx.length) c.appendChild(fxList(h.fx));
+  const dl = metaList();
+  dl.add("Rolls on", h.rolls.join(". "));
+  dl.add("Liked by", names(h.liked));
+  dl.add("Hated by", names(h.hated));
+  if (h.every.length) dl.add("Every home on", h.every.join(", "));
+  if (h.more.length) dl.add("More on", h.more.join(", "));
+  if (h.fewer.length) dl.add("Fewer on", h.fewer.join(", "));
+  if (h.never.length) dl.add("Never on", h.never.join(", "));
+  if (h.conflicts.length) dl.add("Never with", h.conflicts.join(", "));
+  c.appendChild(dl);
+  finishCard(c, h);
+  $("#list-house").appendChild(c);
+});
+
+DATA.worlds.forEach(w => {
+  const c = card(Object.assign({ good: null }, w), "world");
+  c.head.appendChild(el("span", "tag plain", w.faction));
+  c.head.appendChild(el("span", "tag plain", w.title));
+  if (w.line) c.appendChild(el("p", "quote", w.line));
+  if (w.fx.length) c.appendChild(fxList(w.fx));
+  const dl = metaList();
+  if (w.sizes.length) dl.add("Home sizes", names(w.sizes));
+  if (w.every.length) dl.add("Every home has", names(w.every));
+  if (w.more.length) dl.add("More often", names(w.more));
+  if (w.fewer.length) dl.add("Less often", names(w.fewer));
+  if (w.never.length) dl.add("Never", names(w.never));
+  c.appendChild(dl);
+  finishCard(c, w);
+  $("#list-world").appendChild(c);
+});
+
+startStore();
+</script>
