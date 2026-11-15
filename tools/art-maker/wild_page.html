@@ -1,0 +1,142 @@
+<title>Landlordsector Wild Prompts</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap">
+<style>
+/* Layout: same look as the first prompts page; a size x planet grid of idea names on top, the chosen prompt below. */
+:root {
+  --bg: #eef1f6; --panel: #ffffff; --fg: #141a2a; --muted: #5b6478; --line: #d3d9e4;
+  --accent: #96690a; --accent-fg: #ffffff; --chip: #e3e8f1; --sel: #fbeaa6; --sel-fg: #6b4d00;
+  --display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --body: "Inter", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0d1322; --panel: #151d31; --fg: #e5e9f3; --muted: #9aa4bb; --line: #2a3550;
+  --accent: #e2b54e; --accent-fg: #1a1404; --chip: #1d2740; --sel: #3d3110; --sel-fg: #f2cd5c; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0d1322; --panel: #151d31; --fg: #e5e9f3; --muted: #9aa4bb; --line: #2a3550;
+  --accent: #e2b54e; --accent-fg: #1a1404; --chip: #1d2740; --sel: #3d3110; --sel-fg: #f2cd5c; color-scheme: dark }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.55; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-block: 28px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: 22px; }
+h1 { font-family: var(--display); font-weight: 700; font-size: 30px; line-height: 1.15; margin: 0; text-wrap: balance; }
+h2 { font-family: var(--display); font-weight: 500; font-size: 13px; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--muted); margin: 0 0 10px; }
+.lead { color: var(--muted); margin: 6px 0 0; max-width: 72ch; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px; min-width: 0; }
+.steps { margin: 0; padding-left: 22px; display: grid; gap: 6px; max-width: 80ch; }
+.gridbox { overflow-x: auto; }
+table { border-collapse: separate; border-spacing: 4px; font-size: 12px; }
+th { font-family: var(--display); font-weight: 500; color: var(--muted); white-space: nowrap; text-align: left; padding: 2px 6px; }
+td button { width: 118px; min-height: 46px; border-radius: 6px; border: 1px solid transparent; background: var(--chip);
+  color: var(--fg); font: 500 11.5px/1.25 var(--body); cursor: pointer; padding: 4px 6px; text-align: left; }
+td button.sel { background: var(--sel); color: var(--sel-fg); border-color: var(--accent); }
+td button:focus-visible, .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px; }
+.fname { font-family: var(--mono); font-size: 18px; word-break: break-all; }
+.idea { font-family: var(--display); font-size: 20px; font-weight: 700; margin-top: 4px; }
+.sub { color: var(--muted); font-size: 14px; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
+.btn { font: 600 14px var(--body); border-radius: 8px; padding: 9px 14px; cursor: pointer; border: 1px solid var(--line);
+  background: transparent; color: var(--fg); }
+.btn.primary { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+pre { white-space: pre-wrap; word-wrap: break-word; font-family: var(--body); font-size: 14.5px; line-height: 1.6; margin: 0;
+  padding: 16px; border-radius: 8px; background: var(--bg); border: 1px solid var(--line); max-height: 60vh; overflow: auto; }
+.toast { min-height: 1.4em; font-size: 13px; color: var(--accent); }
+@media (prefers-reduced-motion: no-preference) { td button, .btn { transition: background .12s, box-shadow .12s; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Landlordsector wild prompts</h1>
+    <p class="lead">The third picture of every home: 84 Gemini prompts, 6 sizes on 14 planet types, each a different strange idea. Same pixel-art style and size ladder as the first two pictures; the home stands in the middle and every picture has its own place, light and time of day.</p>
+  </header>
+
+  <section class="panel">
+    <h2>How to use</h2>
+    <ol class="steps">
+      <li><b>New Gemini chat for every picture, model 3.1 Pro, attach nothing.</b></li>
+      <li><b>Save it with the file name</b> shown above the prompt (<code>_alt2</code>). Do not flip it: the home stands in the middle.</li>
+      <li><b>One short correction</b> in the same chat if something is off; still wrong, a new chat with the full prompt.</li>
+    </ol>
+  </section>
+
+  <section class="panel">
+    <h2>Pictures</h2>
+    <div class="gridbox"><table id="grid"></table></div>
+  </section>
+
+  <section class="panel" id="detail">
+    <div class="head">
+      <div><div class="fname" id="fname"></div><div class="idea" id="idea"></div><div class="sub" id="what"></div></div>
+      <div class="sub" id="pos"></div>
+    </div>
+    <div class="actions">
+      <button class="btn primary" id="copy" type="button">Copy prompt</button>
+      <button class="btn" id="copyName" type="button">Copy file name</button>
+      <button class="btn" id="prev" type="button">Previous</button>
+      <button class="btn" id="next" type="button">Next</button>
+    </div>
+    <div class="toast" id="toast" role="status"></div>
+    <pre id="prompt"></pre>
+  </section>
+</div>
+
+<script>
+const DATA = __DATA__;
+const order = [];
+DATA.sizes.forEach(s => DATA.planets.forEach(p => order.push({s, p, key: s.id + '_' + p.id})));
+function promptText(key) {
+  const size = order.find(o => o.key === key).s.id;
+  const [top, bottom] = DATA.parts[key];
+  return [DATA.shared.A, top, DATA.shared['S_' + size], bottom, DATA.shared.Z].join('\n\n');
+}
+let cur = 0;
+try { const k = localStorage.getItem('lls-wild-cur'); const i = order.findIndex(o => o.key === k); if (i >= 0) cur = i; } catch (e) {}
+const grid = document.getElementById('grid');
+function buildGrid() {
+  let h = '<thead><tr><th></th>' + DATA.sizes.map(s => '<th>' + s.name + '</th>').join('') + '</tr></thead><tbody>';
+  DATA.planets.forEach(p => {
+    h += '<tr><th scope="row">' + p.name + '</th>';
+    DATA.sizes.forEach(s => {
+      const key = s.id + '_' + p.id;
+      h += '<td><button type="button" data-key="' + key + '" aria-label="' + s.name + ' on ' + p.name + '"></button></td>';
+    });
+    h += '</tr>';
+  });
+  grid.innerHTML = h + '</tbody>';
+  grid.querySelectorAll('button').forEach(b => {
+    b.textContent = DATA.ideas[b.dataset.key];
+    b.addEventListener('click', () => show(order.findIndex(o => o.key === b.dataset.key)));
+  });
+}
+function show(i) {
+  cur = (i + order.length) % order.length;
+  const o = order[cur];
+  try { localStorage.setItem('lls-wild-cur', o.key); } catch (e) {}
+  document.getElementById('fname').textContent = DATA.stems[o.key] + '.jpg';
+  document.getElementById('idea').textContent = DATA.ideas[o.key];
+  document.getElementById('what').textContent = o.s.name + ' on a ' + o.p.name + ' world';
+  document.getElementById('pos').textContent = (cur + 1) + ' of ' + order.length;
+  document.getElementById('prompt').textContent = promptText(o.key);
+  document.getElementById('toast').textContent = '';
+  grid.querySelectorAll('button').forEach(b => b.classList.toggle('sel', b.dataset.key === o.key));
+}
+function copy(text, what, el) {
+  const t = document.getElementById('toast');
+  const fallback = () => {
+    const r = document.createRange(); r.selectNodeContents(document.getElementById(el));
+    const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    t.textContent = 'Copying is blocked here: the text is selected, press Ctrl+C.';
+  };
+  try { navigator.clipboard.writeText(text).then(() => { t.textContent = what + ' copied.'; }, fallback); } catch (e) { fallback(); }
+}
+document.getElementById('copy').addEventListener('click', () => copy(promptText(order[cur].key), 'Prompt', 'prompt'));
+document.getElementById('copyName').addEventListener('click', () => copy(DATA.stems[order[cur].key] + '.jpg', 'File name', 'fname'));
+document.getElementById('prev').addEventListener('click', () => show(cur - 1));
+document.getElementById('next').addEventListener('click', () => show(cur + 1));
+buildGrid();
+show(cur);
+</script>

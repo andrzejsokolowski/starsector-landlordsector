@@ -53,6 +53,7 @@ class Home:
         self.prompt = prompt
         self.stem = SIZE_FILE.get(size['id'], size['id']) + '_' + PLANET_FILE.get(planet['id'], planet['id'])
         self.alt_stem = self.stem + '_alt'
+        self.alt2_stem = self.stem + '_alt2'  # the third, "wild" picture (art-prompts-wild), never flipped
 
     @property
     def alt_text(self):

@@ -24,7 +24,7 @@ def main():
     ap.add_argument('--wait', type=int, default=60, help='seconds to wait for the download')
     a = ap.parse_args()
     a.flip = a.stem.endswith('_alt') and not a.no_flip
-    known = {s for h in artlib.homes() for s in (h.stem, h.alt_stem)}
+    known = {s for h in artlib.homes() for s in (h.stem, h.alt_stem, h.alt2_stem)}
     if a.stem not in known:
         sys.exit(f'Unknown picture name: {a.stem}')
     files = []
