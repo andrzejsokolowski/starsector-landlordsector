@@ -36,6 +36,8 @@ public abstract class PropertyView extends Canvas {
         public final List<Object[]> traits = new ArrayList<>();
         /** 0.4.0: installed upgrades, the same shape as traits. */
         public final List<Object[]> upgrades = new ArrayList<>();
+        /** 1.0.1: the ids of those upgrades, for the combined effects in the row's tooltip. */
+        public final List<String> upgradeIds = new ArrayList<>();
         /** 0.5.0: placed furniture, the same shape as traits. */
         public final List<Object[]> furniture = new ArrayList<>();
         /** 0.6.0: furniture slots of the home (0 hides the row). */
@@ -414,7 +416,11 @@ public abstract class PropertyView extends Canvas {
         if (s.upgrades.isEmpty()) {
             text("0 built", Misc.getGrayColor(), lx + 120f, er, rowW);
         } else {
-            coloredRow(countItem(s.upgrades, s.upgrades.size() + " built", "Upgrades"), lx + 120f, er, rowW);
+            // 1.0.1 (Andrzej): the tooltip adds up what every upgrade does, instead of listing their names.
+            List<Object[]> row = new ArrayList<>();
+            row.add(new Object[] {s.upgrades.size() + " built", Boolean.TRUE, "Upgrades: " + s.upgrades.size()
+                    + " built", Tips.upgradeTotals(s.upgradeIds)});
+            coloredRow(row, lx + 120f, er, rowW);
         }
         er += ROW;
         if (s.furnitureSlots > 0) {

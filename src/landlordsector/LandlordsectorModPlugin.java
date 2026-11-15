@@ -56,6 +56,23 @@ public class LandlordsectorModPlugin extends BaseModPlugin {
         upgradeTo050(p, random);
         upgradeTo060(p);
         upgradeTo080(p);
+        upgradeTo101(p);
+    }
+
+    /**
+     * 1.0.1: services that are no longer in services.json (Andrzej: remove "night watchman") are cancelled on load.
+     * Public for the headless check.
+     */
+    public static void upgradeTo101(Portfolio p) {
+        for (Property pr : p.properties()) {
+            java.util.Iterator<String> it = pr.services().iterator();
+            while (it.hasNext()) {
+                String id = it.next();
+                if (landlordsector.data.Services.get(id) != null) continue;
+                it.remove();
+                pr.addLog("A service you hired is no longer offered and was cancelled.");
+            }
+        }
     }
 
     /**

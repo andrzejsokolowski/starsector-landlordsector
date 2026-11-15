@@ -256,7 +256,10 @@ public class Property {
 
     public float fullValue(boolean withFurniture) {
         float v = valueBeforeUpgrades(withFurniture);
-        return v + landlordsector.data.Upgrades.flatValue(renovationIds(), v);
+        MarketAPI m = market();
+        List<String> f = features(false);
+        return v + landlordsector.data.Upgrades.flatValue(renovationIds(), v,
+                id -> !PropertyStats.noUse(landlordsector.data.Upgrades.get(id), m, f));
     }
 
     /** The full value without the flat value some upgrades add (0.5.0). */

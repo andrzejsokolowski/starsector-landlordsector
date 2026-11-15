@@ -9,6 +9,7 @@
 	# Special jobs: screening (applicants are half as likely to have bad traits), cleans (graffiti and dirt are cleaned
 	#   off every month), repairs (condition added every month, 0.03 is 3%).
 	# Where it can go: minTier, maxTier (0 shack to 5 estate), station (true stations only, false planets only).
+	# 1.0.1: Night watchman removed (Andrzej: "sounds cringy"). Homes that had it lose it on load.
 	"services":[
 		{"id":"screening", "name":"Screening service", "share":0.10, "min":100, "screening":true},
 		{"id":"security_patrol", "name":"Security patrol", "share":0.10, "min":200, "security":25},
@@ -16,7 +17,6 @@
 		{"id":"maintenance", "name":"Maintenance contract", "share":0.12, "min":200, "repairs":0.03},
 		{"id":"gardener", "name":"Gardener", "station":false, "share":0.04, "min":100, "decor":4, "comfort":2, "tags":["garden"]},
 		{"id":"concierge", "name":"Concierge", "minTier":3, "share":0.10, "min":500, "happiness":6},
-		{"id":"pest_control_plan", "name":"Pest control plan", "share":0.03, "min":100, "events":{"pests":0.1}},
-		{"id":"night_watch", "name":"Night watchman", "share":0.06, "min":150, "security":10, "events":{"burglary":0.5, "mugged":0.7}}
+		{"id":"pest_control_plan", "name":"Pest control plan", "share":0.03, "min":100, "events":{"pests":0.1}}
 	]
 }

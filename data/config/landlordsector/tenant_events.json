@@ -109,7 +109,7 @@
 		{"id":"promotion", "type":"tenant", "kind":"money", "good":true, "weight":0.25, "wealth":1, "mood":10, "text":"$tenant got a promotion at work."},
 		{"id":"lost_job", "type":"tenant", "kind":"money", "good":false, "weight":0.2, "wealth":-1, "rentMult":0.5, "mood":-10, "big":true, "text":"$tenant lost their job."},
 		{"id":"noise_complaint", "type":"tenant", "kind":"neighbors", "good":false, "weight":1, "rep":-0.5, "mood":-3, "text":"The neighbors complained about $tenant at $home."},
-		{"id":"housewarming", "type":"tenant", "kind":"neighbors", "good":true, "weight":0.5, "mood":10, "text":"$tenant threw a party at $home."},
+		{"id":"housewarming", "type":"tenant", "kind":"neighbors", "good":true, "weight":0.5, "mood":10, "condition":-0.01, "text":"$tenant threw a party at $home. It left a few scuffs."},
 		{"id":"recommended", "type":"tenant", "kind":"neighbors", "good":true, "weight":0.5, "rep":0.5, "text":"$tenant told the neighbors you are a good landlord."},
 		{"id":"police_raid", "type":"tenant", "kind":"crime", "good":false, "weight":0.1, "crime":true, "condition":-0.05, "rep":-1, "mood":-15, "big":true, "text":"Police raided $home looking for $tenant's contraband."},
 		{"id":"mugged", "type":"tenant", "kind":"crime", "good":false, "weight":0.6, "crime":true, "mood":-8, "rentMult":0.9, "text":"$tenant was mugged on the way home."},

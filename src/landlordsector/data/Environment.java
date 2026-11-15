@@ -29,6 +29,11 @@ public final class Environment {
     public static final class Score {
         public String id, name, better, worse;
         public float base, station, neutral, happiness, health;
+        /**
+         * 1.0.1 (Andrzej: "roll a commute randomly, from 0 to 50"): each home's own base, from rollMin to rollMax,
+         * instead of {@link #base}. Negative when the score has no roll.
+         */
+        public float rollMin = -1f, rollMax = -1f;
         public Map<String, Float> conditions = Collections.emptyMap();
     }
 
@@ -41,6 +46,14 @@ public final class Environment {
         public float price = 1f;
         public float weight = 1f;
         public Set<String> tags = Collections.emptySet();
+        /** 1.0.1: the city center. A home next to it gets the highest rolled base ("50 + 25 from the city center"). */
+        public boolean central;
+
+        /** True when the building changes anything for the home next to it (1.0.1: no plain neighbours). */
+        public boolean hasEffect() {
+            return central || commute != 0f || air != 0f || noise != 0f || happiness != 0f || health != 0f
+                    || security != 0f || Math.abs(price - 1f) > 0.001f || !tags.isEmpty();
+        }
 
         /** The change to one score. */
         public float score(String id) {
@@ -84,6 +97,11 @@ public final class Environment {
                 s.neutral = (float) o.optDouble("neutral", 50);
                 s.happiness = (float) o.optDouble("happiness", 0);
                 s.health = (float) o.optDouble("health", 0);
+                JSONArray roll = o.optJSONArray("roll");
+                if (roll != null && roll.length() == 2) {
+                    s.rollMin = (float) roll.optDouble(0, -1);
+                    s.rollMax = (float) roll.optDouble(1, -1);
+                }
                 s.conditions = HouseTraits.numbers(o.optJSONObject("conditions"), 0f);
                 list.add(s);
             }
@@ -148,6 +166,7 @@ public final class Environment {
         n.price = (float) o.optDouble("price", 1);
         n.weight = (float) o.optDouble("weight", 1);
         n.tags = HouseTraits.strings(o.optJSONArray("tags"));
+        n.central = o.optBoolean("central", false);
         return n;
     }
 
@@ -170,11 +189,29 @@ public final class Environment {
         return null;
     }
 
-    /** True when a home can sit next to this building (not an orbital station or a hidden building). */
+    /**
+     * True when a home can sit next to this building: not in orbit (stations, orbital works, the terminus), not
+     * hidden, and it changes something for the home (1.0.1, Andrzej: "remove being close to buildings that dont
+     * have effects, like the indevo restoration docks").
+     */
     public static boolean pickable(String industryId, Collection<String> industryTags) {
         if (industryId == null || skipIds.contains(industryId)) return false;
         if (industryTags != null) for (String t : industryTags) if (skipTags.contains(t.trim())) return false;
-        return true;
+        return of(industryId, industryTags).hasEffect();
+    }
+
+    /**
+     * The score a home starts from (1.0.1): its own roll between rollMin and rollMax, the same every time for the
+     * same home, or the highest roll next to the city center. Scores without a roll, and homes without an id,
+     * start from the base.
+     */
+    public static float start(Score sc, String homeId, Neighbor nb) {
+        if (sc.rollMin < 0f || sc.rollMax < sc.rollMin) return sc.base;
+        if (nb != null && nb.central) return sc.rollMax;
+        if (homeId == null) return sc.base;
+        int range = Math.round(sc.rollMax - sc.rollMin);
+        Random r = new Random(homeId.hashCode() * 31L + sc.id.hashCode());
+        return sc.rollMin + r.nextInt(range + 1);
     }
 
     /** What this building does to the home next to it: its own entry, else its first matching tag, else nothing. */

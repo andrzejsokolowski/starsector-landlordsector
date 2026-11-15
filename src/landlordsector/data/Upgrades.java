@@ -185,9 +185,16 @@ public final class Upgrades {
 
     /** The flat value these upgrades add to a home worth {@code fullValue} without them (0.5.0). */
     public static float flatValue(java.util.Collection<String> ids, float fullValue) {
+        return flatValue(ids, fullValue, null);
+    }
+
+    /** 1.0.1: only the upgrades {@code counts} accepts (an upgrade that does nothing in the home adds nothing). */
+    public static float flatValue(java.util.Collection<String> ids, float fullValue,
+            java.util.function.Predicate<String> counts) {
         float v = 0f;
         if (ids == null) return v;
         for (String id : ids) {
+            if (counts != null && !counts.test(id)) continue;
             Def d = defs.get(id);
             if (d == null || d.furniture() || d.valueShare <= 0f) continue;
             v += d.valueShare * renovationCost(d, fullValue);

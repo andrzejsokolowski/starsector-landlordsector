@@ -50,7 +50,11 @@ public final class Surroundings {
     /** The building next to the home, or {@link Environment#NOTHING} when it is none or the building is gone. */
     public static String current(MarketAPI m, String neighborId) {
         if (m == null || neighborId == null || Environment.NOTHING.equals(neighborId)) return Environment.NOTHING;
-        return buildings(m).containsKey(neighborId) ? neighborId : Environment.NOTHING;
+        // 1.0.1: a home next to a building it can no longer sit by (one in orbit, or one with no effect) counts as
+        // next to nothing, so homes from older versions follow the new rules too.
+        Map<String, Collection<String>> b = buildings(m);
+        if (!b.containsKey(neighborId) || !Environment.pickable(neighborId, b.get(neighborId))) return Environment.NOTHING;
+        return neighborId;
     }
 
     /** What the building next to the home does (no effects when there is none). */

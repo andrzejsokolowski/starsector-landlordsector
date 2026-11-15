@@ -283,6 +283,7 @@ public class RealEstatePage implements ManagePage {
             s.stats = st;
             s.traits.addAll(houseTraits(chosen.traits()));
             s.upgrades.addAll(upgradeItems(chosen));
+            s.upgradeIds.addAll(chosen.renovationIds());
             s.furniture.addAll(furnitureItems(chosen));
             s.size = chosen.tier().name;
             s.furnitureSlots = chosen.tier().slots;
@@ -537,6 +538,9 @@ public class RealEstatePage implements ManagePage {
                 if (p.has(d.id) || !landlordsector.data.Upgrades.fits(d, p.tier().index, p.onStation(), p.traits())) {
                     continue;
                 }
+                // 1.0.1 (Andrzej: "just hide them conditionally from the upgrades panel"): no heated floors on a
+                // hot world.
+                if (landlordsector.PropertyStats.noUse(d, p.market(), p.features(false))) continue;
                 if (y > height - 40f) {
                     hidden++;
                     continue;

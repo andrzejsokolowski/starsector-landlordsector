@@ -66,12 +66,13 @@ Requires LunaLib and OddiszCommons.
   raises the reputation its rent earns or costs.
 - **Services** (0.6.0, services.json): hired per home on the Services tab (S), paid monthly as a share of the
   Normal rent: security patrol, cleaning crew (cleans graffiti and dirt), maintenance contract (repairs), gardener,
-  concierge, night watchman, pest control plan and the screening service.
+  concierge, pest control plan and the screening service.
 - **House flipping** (0.6.0): about a third of homes for sale come worn, some with graffiti or dirt. Worn price plus
   repairs stays under the price new, and the repaired home sells for more than the worn price before tariffs.
 - **Tenant happiness and health** (0.6.0) are the tenant's own bars, in the Tenant section of the home sheet.
 - **Environment** (0.5.0, environment.json): every home sits next to one building on its colony, or next to
-  nothing. Commute, Air and Noise are scores from 0 to 100 shown as letter grades, set by the station, market
+  nothing (never a building in orbit or one with no effect, 1.0.1). Commute, Air and Noise are scores from 0 to
+  100 shown as letter grades, set by the home's spot on the colony (commute 0 to 50, 1.0.1), the station, market
   conditions, the neighbour, house traits and upgrades; they move tenant happiness and health. Home levels
   (levels.json): Heat, Cold and Radiation, 0 to 3. Tenant traits change how much each matters ("levels" and
   "healthCost" in tenant_traits.json). Criminals hate police and spying buildings on their colony.
@@ -134,7 +135,7 @@ chosen one large on the right with its stat sheet, rent setting, Repair and Sell
 ## Settings (LunaLib)
 
 - Rent multiplier.
-- Most properties you can own (0 for no limit).
+- Most properties you can own (default 5, 0 for no limit).
 
 ## Compatibility
 

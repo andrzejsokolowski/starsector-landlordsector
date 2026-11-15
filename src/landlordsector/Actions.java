@@ -186,6 +186,7 @@ public final class Actions {
         if (!landlordsector.data.Upgrades.fits(d, p.tier().index, p.onStation(), p.traits())) {
             return "Not for this home.";
         }
+        if (PropertyStats.noUse(d, p.market(), p.features(false))) return "It would do nothing in this home.";
         String clash = landlordsector.data.Upgrades.clash(d, p.renovationIds());
         if (clash != null) {
             landlordsector.data.Upgrades.Def c = landlordsector.data.Upgrades.get(clash);

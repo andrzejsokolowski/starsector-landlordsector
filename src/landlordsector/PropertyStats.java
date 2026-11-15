@@ -88,13 +88,13 @@ public final class PropertyStats {
     /** The home with its own tenant (or none). Its traits and finished upgrades count alike (0.4.0). */
     public static PropertyStats of(Property p) {
         return of(p.tier(), p.market(), climate(p.climateId), p.condition, p.setting(), p.features(), p.decorRaw(true),
-                p.tenant, p.neighbor);
+                p.tenant, p.neighbor, p.id);
     }
 
     /** The home as it would be with this tenant moving in. */
     public static PropertyStats withTenant(Property p, Tenant t) {
         return of(p.tier(), p.market(), climate(p.climateId), p.condition, p.setting(), p.features(), p.decorRaw(true), t,
-                p.neighbor);
+                p.neighbor, p.id);
     }
 
     /** A home for sale: new, at Normal rent, no tenant. */
@@ -108,7 +108,7 @@ public final class PropertyStats {
             if (d != null) decor += d.decor;
         }
         return of(t, market, climate(l.climateId), l.condition(), RentSetting.NORMAL, features, decor, null,
-                l.neighbor);
+                l.neighbor, l.id);
     }
 
     public static PropertyStats of(Tier tier, MarketAPI m, Climate climate, float condition, RentSetting setting,
@@ -118,6 +118,12 @@ public final class PropertyStats {
 
     public static PropertyStats of(Tier tier, MarketAPI m, Climate climate, float condition, RentSetting setting,
             List<String> houseTraits, float decor, Tenant tenant, String neighborId) {
+        return of(tier, m, climate, condition, setting, houseTraits, decor, tenant, neighborId, null);
+    }
+
+    /** homeId (1.0.1): the home's own id, for the scores each home rolls (the commute). */
+    public static PropertyStats of(Tier tier, MarketAPI m, Climate climate, float condition, RentSetting setting,
+            List<String> houseTraits, float decor, Tenant tenant, String neighborId, String homeId) {
         PropertyStats s = new PropertyStats();
         s.decor = Pricing.clamp(decor, 0f, 100f);
         float tierDecor = Pricing.clamp(tier.decor, 0f, 100f);
@@ -161,7 +167,7 @@ public final class PropertyStats {
         s.nextTo = Surroundings.nextTo(m, neighborId);
         s.area = Surroundings.area(m, neighborId);
         levels(s, m, conds, houseTraits);
-        environment(s, m, conds, houseTraits, climate == Climate.STATION);
+        environment(s, m, conds, houseTraits, climate == Climate.STATION, homeId);
         float condComfort = 0f, condHappy = 0f, condSecurity = 0f;
         List<String[]> condComfortLines = new ArrayList<>(), condHappyLines = new ArrayList<>(),
                 condSecurityLines = new ArrayList<>(), condPriceLines = new ArrayList<>();
@@ -452,6 +458,48 @@ public final class PropertyStats {
         }
     }
 
+    /**
+     * 1.0.1: a home's level of heat, cold or radiation from its world and its house traits alone, before upgrades
+     * and furniture.
+     */
+    public static int baseLevel(MarketAPI m, List<String> features, Levels.Def ld) {
+        if (m == null || ld == null) return 0;
+        float v = Levels.fromPlace(ld, Tenants.conditions(m), m.getSize(), m::hasIndustry);
+        if (features != null) {
+            for (String id : features) {
+                if (landlordsector.data.Upgrades.get(id) != null) continue;
+                HouseTraits.Def d = HouseTraits.get(id);
+                if (d == null) continue;
+                Float w = d.levels.get(ld.id);
+                if (w != null && w != 0f) v += Levels.severity(ld, w);
+            }
+        }
+        return Levels.clamp(v);
+    }
+
+    /**
+     * 1.0.1 (Andrzej: "No point having heated floors as a selling point on a hot planet"): true when an upgrade made
+     * to lower heat, cold or radiation goes into a home that has none of them. Such upgrades are not offered and add
+     * nothing to the value. An upgrade that also does something else (Better insulation is quieter too) stays.
+     */
+    public static boolean noUse(landlordsector.data.Upgrades.Def u, MarketAPI m, List<String> features) {
+        if (u == null || m == null) return false;
+        HouseTraits.Def fx = u.effects;
+        if (!fx.env.isEmpty() || fx.happiness != 0f || fx.health != 0f || fx.security != 0f || !fx.events.isEmpty()
+                || !fx.tags.isEmpty() || !fx.kids.isEmpty() || !fx.cancels.isEmpty() || fx.wear != 1f
+                || !u.fixes.isEmpty()) {
+            return false;
+        }
+        boolean lowers = false;
+        for (java.util.Map.Entry<String, Float> e : u.effects.levels.entrySet()) {
+            Levels.Def ld = Levels.get(e.getKey());
+            if (ld == null || !Levels.helps(ld, e.getValue())) continue;
+            lowers = true;
+            if (baseLevel(m, features, ld) > 0) return false;
+        }
+        return lowers;
+    }
+
     /** "Very hot: Heat +2" from the place, or "Air conditioning: Heat -1" from a trait or upgrade, colored by help. */
     private static String[] levelLine(String source, Levels.Def ld, float amount, boolean written) {
         float sev = written ? Levels.severity(ld, amount) : amount;
@@ -540,11 +588,17 @@ public final class PropertyStats {
      * market's conditions, the building next door, the house traits and upgrades move it.
      */
     private static void environment(PropertyStats s, MarketAPI m, Set<String> conds, List<String> houseTraits,
-            boolean station) {
+            boolean station, String homeId) {
         for (Environment.Score sc : Environment.scores()) {
             List<String[]> lines = new ArrayList<>();
-            float v = sc.base;
-            lines.add(new String[] {"Base: " + Math.round(sc.base), null});
+            float v = Environment.start(sc, homeId, s.neighbor);
+            if (sc.rollMin >= 0f && homeId != null) {
+                // 1.0.1: where the home sits on the colony, from the outskirts (0) to the center (50).
+                lines.add(new String[] {"Spot on the colony: " + Math.round(v) + " of " + Math.round(sc.rollMax)
+                        + (s.neighbor.central ? " (by the center)" : ""), null});
+            } else {
+                lines.add(new String[] {"Base: " + Math.round(v), null});
+            }
             if (station && sc.station != 0f) {
                 v += sc.station;
                 lines.add(envLine("Station life", sc, sc.station));

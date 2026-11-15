@@ -141,6 +141,32 @@ public final class Art {
         return list.get(random.nextInt(list.size()));
     }
 
+    /**
+     * 1.0.1 (Andrzej: "alternate between sprites on a property list always ... when there are 2 shacks ... at least
+     * one of them is going to use the alt sprite"): the picture used least on this list, a random one of those.
+     *
+     * @param onList pictures of the homes already on the list
+     */
+    public static String pick(String tierId, PlanetType type, Random random, java.util.Collection<String> onList) {
+        Map<String, List<String>> map = exteriors.get(tierId);
+        if (map == null) return null;
+        List<String> list = map.get(type.id);
+        if (list == null || list.isEmpty()) list = map.get("default");
+        if (list == null || list.isEmpty()) return null;
+        int fewest = Integer.MAX_VALUE;
+        List<String> best = new java.util.ArrayList<>();
+        for (String path : list) {
+            int n = 0;
+            for (String used : onList) if (path.equals(used)) n++;
+            if (n < fewest) {
+                fewest = n;
+                best.clear();
+            }
+            if (n == fewest) best.add(path);
+        }
+        return best.get(random.nextInt(best.size()));
+    }
+
     /** True when this tier has a picture drawn for this planet type (not only the default one). */
     public static boolean hasOwn(String tierId, PlanetType type) {
         Map<String, List<String>> map = exteriors.get(tierId);

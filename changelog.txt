@@ -1,3 +1,14 @@
+Version 1.0.1 (2026-11-15)
+- Each home has its own spot on the colony, from 0 (the outskirts) to 50 (close to the center), which sets its commute. Homes next to the city center start at 50, so commutes now range from F to S+
+- Tenants are happy with a commute above 25 and unhappy below it
+- Homes are never next to a building in orbit (Orbital Works, Waystation, AoTD Terminus, Orbital Fleetwork Facility and others) or a building that does nothing for a home (such as IndEvo Restoration Docks). Homes already next to one count as Residential
+- Homes of the same size on one agent's list alternate between their two pictures
+- The Upgrades row tooltip shows what all the built upgrades do together
+- Upgrades that would do nothing in a home, such as Heated floors in a home without cold or Air conditioning without heat, are no longer offered and add nothing to the value
+- Removed the Night watchman service. Homes that had it lose it
+- A housewarming party takes 1% condition off the home
+- Most properties you can own: the default is now 5 (was no limit)
+
 Version 1.0.0 (2026-11-15)
 - Version 1.0.0: the mod is now considered stable. No gameplay changes.
 

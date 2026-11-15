@@ -19,13 +19,19 @@ public final class Settings {
         }
     }
 
+    /**
+     * 1.0.1 (Andrzej: "I want players to be incentivized to sell off shacks and studios in favour of better houses"):
+     * 5 by default.
+     */
+    public static final int DEFAULT_MAX_PROPERTIES = 5;
+
     /** The most properties the player may own, 0 for no limit. */
     public static int maxProperties() {
         try {
             Integer i = LunaSettings.getInt(MOD_ID, "lls_maxProperties");
-            return i == null ? 0 : Math.max(0, i);
+            return i == null ? DEFAULT_MAX_PROPERTIES : Math.max(0, i);
         } catch (Throwable t) {
-            return 0;
+            return DEFAULT_MAX_PROPERTIES;
         }
     }
 

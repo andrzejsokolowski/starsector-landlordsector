@@ -182,6 +182,7 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
             s.stats = st;
             s.traits.addAll(houseTraits(l.traits));
             s.upgrades.addAll(upgradeNames(l.upgrades));
+            if (l.upgrades != null) s.upgradeIds.addAll(l.upgrades);
             s.size = t != null ? t.name : l.tierId;
             s.furnitureSlots = t != null ? t.slots : 0;
             float maxImg = height - TOP - sheetTextHeight(s) - 56f;

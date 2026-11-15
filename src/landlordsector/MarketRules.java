@@ -77,6 +77,8 @@ public final class MarketRules {
         float m = 1f;
         if (traits == null) return m;
         for (String id : traits) {
+            // 1.0.1: an upgrade that does nothing in this home does not raise its value.
+            if (PropertyStats.noUse(landlordsector.data.Upgrades.get(id), market, traits)) continue;
             HouseTraits.Def d = HouseTraits.get(id);
             if (d != null) m *= d.price;
         }
@@ -106,7 +108,8 @@ public final class MarketRules {
         }
         float v = listing.basePrice * Surroundings.homeMult(market, listing.neighbor) * Pricing.decorValueMult(decor)
                 * traitPrice(listing.features(), market);
-        return v + landlordsector.data.Upgrades.flatValue(listing.upgrades, v);
+        return v + landlordsector.data.Upgrades.flatValue(listing.upgrades, v,
+                id -> !PropertyStats.noUse(landlordsector.data.Upgrades.get(id), market, listing.features()));
     }
 
     /**
@@ -189,6 +192,13 @@ public final class MarketRules {
         return ml;
     }
 
+    /** The pictures of the homes on this list (1.0.1: new homes take the one used least). */
+    private static List<String> pictures(MarketListings ml) {
+        List<String> out = new ArrayList<>();
+        for (Listing l : ml.list()) if (l.artPath != null) out.add(l.artPath);
+        return out;
+    }
+
     /** Adds {@code count} new homes for sale, then sorts the list cheapest first. */
     private static void add(MarketAPI market, MarketListings ml, int count, Random random) {
         List<Tier> tiers = new ArrayList<>();
@@ -209,7 +219,7 @@ public final class MarketRules {
             Tier t = i < first.size() ? first.get(i) : picker.pick();
             float base = t.min + (t.max - t.min) * random.nextFloat();
             Listing l = new Listing(Portfolio.get().newId(), t.id, climate.id,
-                    Art.pick(t.id, PlanetType.of(market), random), base);
+                    Art.pick(t.id, PlanetType.of(market), random, pictures(ml)), base);
             l.traits = HouseTraits.roll(Tenants.conditions(market), climate.id, climate == Climate.STATION, t.index,
                     world != null ? world.traits : null,
                     random);

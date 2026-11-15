@@ -348,6 +348,17 @@ public final class RuntimeCheck {
                 "the alarm adds a flat part of its cost to the value");
         landlordsector.data.Upgrades.Def insulation = landlordsector.data.Upgrades.get("insulation");
         expect(Actions.cannotBuild(home, insulation) == null, "no upgrade slots: a second upgrade fits (0.5.0)");
+        // 1.0.1: an upgrade made for the cold does nothing in a hot home: not offered, no value.
+        landlordsector.data.Upgrades.Def floors = landlordsector.data.Upgrades.get("heated_floors");
+        landlordsector.data.Upgrades.Def ac = landlordsector.data.Upgrades.get("air_conditioned");
+        expect(PropertyStats.noUse(floors, home.market(), home.features(false)), "heated floors do nothing in a hot home");
+        expect(!PropertyStats.noUse(ac, home.market(), home.features(false)), "air conditioning helps a hot home");
+        expect(!PropertyStats.noUse(insulation, home.market(), home.features(false)),
+                "insulation stays: it is quieter too");
+        expect(Actions.cannotBuild(home, floors) != null, "heated floors can't be built in a hot home");
+        float withoutFloors = MarketRules.traitPrice(java.util.List.of(), home.market());
+        expect(Math.abs(MarketRules.traitPrice(java.util.List.of("heated_floors"), home.market()) - withoutFloors) < 0.0001f,
+                "heated floors add nothing to a hot home's value");
         expect(Actions.remove(home, home.upgrades().get(0)).startsWith("Removed") && !home.has("alarm"),
                 "an upgrade can be removed");
         // A one-time job fixes a bad trait at once.
@@ -387,6 +398,17 @@ public final class RuntimeCheck {
         for (int i = 0; i < 400; i++) rolled.add(Surroundings.roll(a, nb));
         expect(rolled.contains("mining") && rolled.contains("population") && rolled.contains("none")
                 && !rolled.contains("orbitalstation"), "homes sit next to buildings or nothing, never a station: " + rolled);
+        // 1.0.1: never next to a building in orbit, or one that does nothing for a home.
+        expect(!landlordsector.data.Environment.pickable("orbitalworks", java.util.Set.of("heavyindustry", "industry")),
+                "no home sits next to the Orbital Works");
+        expect(!landlordsector.data.Environment.pickable("aotd_terminus", java.util.Set.of("waystation", "structure")),
+                "no home sits next to the Terminus");
+        expect(!landlordsector.data.Environment.pickable("waystation", java.util.Set.of("waystation", "structure")),
+                "no home sits next to a Waystation");
+        expect(!landlordsector.data.Environment.pickable("IndEvo_dryDock", java.util.Set.of("structure", "unraidable")),
+                "no home sits next to a building with no effect");
+        expect(landlordsector.data.Environment.pickable("mining", java.util.Set.of("mining", "industry")),
+                "homes still sit next to Mining");
         home.neighbor = "none";
         PropertyStats calm = home.stats();
         home.neighbor = "mining";
@@ -405,9 +427,15 @@ public final class RuntimeCheck {
         heg.industries.put("aotd_maglev", java.util.Set.of("trainstation", "structure"));
         expect(home.stats().env.get("commute") >= 85f, "a Maglev makes every commute S+");
         heg.industries.remove("aotd_maglev");
-        // A station home: base 50 plus the station's 10, a B, once the Maglev is gone.
-        expect(Math.abs(home.stats().env.get("commute") - 60f) < 0.01f,
-                "without the Maglev the station commute is back to 60: " + home.stats().env.get("commute"));
+        // A station home: its own rolled spot (1.0.1, 0 to 50) plus the station's 10, once the Maglev is gone.
+        landlordsector.data.Environment.Score commute = landlordsector.data.Environment.score("commute");
+        float spot = landlordsector.data.Environment.start(commute, home.id, null);
+        expect(spot >= 0f && spot <= 50f, "a home's spot on the colony is 0 to 50: " + spot);
+        expect(Math.abs(home.stats().env.get("commute") - (spot + 10f)) < 0.01f,
+                "without the Maglev the station commute is back to its spot plus 10: " + home.stats().env.get("commute"));
+        expect(spot == landlordsector.data.Environment.start(commute, home.id, null), "the same home rolls the same spot");
+        landlordsector.data.Environment.Neighbor cc = landlordsector.data.Environment.of("population", null);
+        expect(landlordsector.data.Environment.start(commute, home.id, cc) == 50f, "next to the city center the spot is 50");
         home.neighbor = "none";
 
         // Criminals like security, but hate the police on their colony (0.5.0).
@@ -467,6 +495,11 @@ public final class RuntimeCheck {
         LandlordsectorModPlugin.upgradeTo060(Portfolio.get());
         expect(!home.screeningService && home.services().contains("screening"), "the old screening flag becomes the service");
         Actions.toggleService(home, "screening");
+        // 1.0.1: the Night watchman is gone; a home that hired it loses it on load.
+        expect(landlordsector.data.Services.get("night_watch") == null, "no Night watchman service");
+        home.services().add("night_watch");
+        LandlordsectorModPlugin.upgradeTo101(Portfolio.get());
+        expect(!home.services().contains("night_watch"), "an old save's Night watchman is cancelled on load");
 
         // Furniture in the shops.
         FurnitureSources.stock(a, days);

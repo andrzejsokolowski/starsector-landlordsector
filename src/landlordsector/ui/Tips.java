@@ -123,6 +123,47 @@ public final class Tips {
         return id.replace('_', ' ');
     }
 
+    /**
+     * 1.0.1 (Andrzej: "list all the COMBINED effects of all upgrades, instead of '23 built'"): every built upgrade's
+     * effects added up, in the house trait tooltip format.
+     */
+    public static List<String[]> upgradeTotals(java.util.Collection<String> ids) {
+        HouseTraits.Def sum = new HouseTraits.Def();
+        java.util.Map<String, Float> levels = new java.util.LinkedHashMap<>(), env = new java.util.LinkedHashMap<>(),
+                kids = new java.util.LinkedHashMap<>(), events = new java.util.LinkedHashMap<>(),
+                cancels = new java.util.LinkedHashMap<>();
+        java.util.Set<String> tags = new java.util.LinkedHashSet<>();
+        if (ids != null) {
+            for (String id : ids) {
+                landlordsector.data.Upgrades.Def u = landlordsector.data.Upgrades.get(id);
+                if (u == null) continue;
+                HouseTraits.Def d = u.effects;
+                sum.comfort += d.comfort;
+                sum.decor += d.decor;
+                sum.happiness += d.happiness;
+                sum.health += d.health;
+                sum.security += d.security;
+                sum.price *= d.price;
+                sum.wear *= d.wear;
+                for (java.util.Map.Entry<String, Float> e : d.levels.entrySet()) levels.merge(e.getKey(), e.getValue(), Float::sum);
+                for (java.util.Map.Entry<String, Float> e : d.env.entrySet()) env.merge(e.getKey(), e.getValue(), Float::sum);
+                for (java.util.Map.Entry<String, Float> e : d.kids.entrySet()) kids.merge(e.getKey(), e.getValue(), Float::sum);
+                for (java.util.Map.Entry<String, Float> e : d.cancels.entrySet()) cancels.merge(e.getKey(), e.getValue(), Float::sum);
+                for (java.util.Map.Entry<String, Float> e : d.events.entrySet()) {
+                    events.merge(e.getKey(), e.getValue(), (a, b) -> a * b);
+                }
+                tags.addAll(d.tags);
+            }
+        }
+        sum.levels = levels;
+        sum.env = env;
+        sum.kids = kids;
+        sum.events = events;
+        sum.cancels = cancels;
+        sum.tags = tags;
+        return houseTrait(sum);
+    }
+
     /** What an upgrade does (0.4.0): its effects, then where it goes; the value line last (0.6.0). */
     public static List<String[]> upgrade(landlordsector.data.Upgrades.Def d) {
         List<String[]> out = houseTraitEffects(d.effects);
