@@ -1,3 +1,6 @@
+Version 0.9.0 (2026-11-15)
+- Updated for Starsector 0.98.5a.
+
 Version 0.8.1 (2026-11-15)
 - Homes for sale get house traits that fit their world's lore. Every home in Sindria's hive cities and on the bunker worlds Coatl, Sphinx and Culann is Underground; Chicomoztoc's are often Smoggy, Cramped or Thin-walled; Gilead's are Blooming, Leafy, Breezy and Sunny; Volturn's Seaside, Musty and Pondside; Mairaath's Historic and Drafty; and so on for all 33 worlds
 - Some traits never appear where the lore rules them out, such as Sunny or Breezy homes in Sindria's hive cities

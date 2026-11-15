@@ -1,6 +1,6 @@
 # Landlordsector
 
-A Starsector 0.98a mod by Oddisz. Buy homes from property agents on the worlds you visit, from shacks
+A Starsector 0.98.5a mod by Oddisz. Buy homes from property agents on the worlds you visit, from shacks
 to estates, and rent them out. Rent comes in every month. Keep the places in repair, set the rent and sell when the price is
 right.
 
