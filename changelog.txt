@@ -1,3 +1,7 @@
+Version 1.1.0 (2026-11-15)
+- Rare third pictures: about 1 new home in 7 shows an unusual picture of its home, a different kind of building in a different part of the colony
+- Every shack, studio and small house has one, and the house on Station, Terran and Jungle worlds. Homes already for sale or owned keep their picture
+
 Version 1.0.1 (2026-11-15)
 - Each home has its own spot on the colony, from 0 (the outskirts) to 50 (close to the center), which sets its commute. Homes next to the city center start at 50, so commutes now range from F to S+
 - Tenants are happy with a commute above 25 and unhappy below it

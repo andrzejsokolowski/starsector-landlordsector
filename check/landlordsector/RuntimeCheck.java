@@ -620,6 +620,41 @@ public final class RuntimeCheck {
         expect(textureUnloads.size() == 3 && textureUnloads.contains("graphics/landlordsector/exteriors/test_1.jpg")
                 && !textureUnloads.contains("graphics/landlordsector/exteriors/test_0.jpg"),
                 "after a second the least recently drawn pictures above 12 are unloaded, found " + textureUnloads);
+        checkRarePictures110();
+    }
+
+    /** 1.1.0 (Andrzej: "make them rarer"): the third picture shows on about rareChance of new homes, one per list. */
+    private static void checkRarePictures110() throws Exception {
+        String a = "graphics/landlordsector/exteriors/shack_terran.jpg";
+        String b = "graphics/landlordsector/exteriors/shack_terran_2.jpg";
+        String c = "graphics/landlordsector/exteriors/shack_terran_3.jpg";
+        org.json.JSONObject json = new org.json.JSONObject();
+        json.put("exteriors", new org.json.JSONObject().put("shack", new org.json.JSONObject()
+                .put("default", new org.json.JSONArray().put("graphics/landlordsector/exteriors/shack.png"))
+                .put("terran", new org.json.JSONArray().put(a).put(b))));
+        json.put("rare", new org.json.JSONObject().put("shack", new org.json.JSONObject()
+                .put("terran", new org.json.JSONArray().put(c))));
+        json.put("rareChance", 0.15d);
+        landlordsector.Art.load(json);
+        expect(landlordsector.Art.isKnown(c), "a rare picture is known like the others");
+        java.util.Random random = new java.util.Random(7);
+        int rareCount = 0, n = 4000;
+        for (int i = 0; i < n; i++) {
+            if (c.equals(landlordsector.Art.pick("shack", landlordsector.PlanetType.TERRAN, random))) rareCount++;
+        }
+        float share = rareCount / (float) n;
+        expect(share > 0.11f && share < 0.19f, "the rare picture shows on about 15% of homes, found " + share);
+        int alone = 0;
+        for (int i = 0; i < 2000; i++) {
+            String p = landlordsector.Art.pick("shack", landlordsector.PlanetType.TERRAN, random,
+                    java.util.Arrays.asList(c, a));
+            if (c.equals(p)) alone++;
+        }
+        expect(alone == 0, "a list never shows the rare picture twice, found " + alone);
+        String other = landlordsector.Art.pick("shack", landlordsector.PlanetType.DESERT, random,
+                java.util.Collections.<String>emptyList());
+        expect("graphics/landlordsector/exteriors/shack.png".equals(other), "a planet type with no pictures keeps the default");
+        landlordsector.Art.load(new org.json.JSONObject());
     }
 
     /** Thirty days, the last economy tick, then the month-end payment like CoreScript. */

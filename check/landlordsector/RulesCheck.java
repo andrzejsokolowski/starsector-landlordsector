@@ -545,6 +545,35 @@ public final class RulesCheck {
             }
         }
         expect(pictures >= 168, "art.json: at least 168 pictures listed (0.7.1), found " + pictures);
+        // 1.1.0: the rare third pictures, real tiers and planet types only, every file there and 1024 x 640.
+        JSONObject all = json(dir.resolve("art.json"));
+        double chance = all.optDouble("rareChance", -1d);
+        expect(chance > 0d && chance <= 0.3d, "art.json: rareChance makes the third picture rare (0 to 0.3), found " + chance);
+        JSONObject rare = all.optJSONObject("rare");
+        expect(rare != null, "art.json: a rare section (1.1.0)");
+        int rarePictures = 0;
+        java.util.Iterator<?> rareTiers = rare == null ? java.util.Collections.emptyIterator() : rare.keys();
+        while (rareTiers.hasNext()) {
+            String tier = String.valueOf(rareTiers.next());
+            expect(TierTable.get(tier) != null, "art.json rare: " + tier + " is a tier");
+            JSONObject byType = rare.getJSONObject(tier);
+            java.util.Iterator<?> keys = byType.keys();
+            while (keys.hasNext()) {
+                String k = String.valueOf(keys.next());
+                expect(types.contains(k) && !"default".equals(k), "art.json rare: " + tier + "." + k + " is a planet type");
+                org.json.JSONArray list = byType.getJSONArray(k);
+                for (int i = 0; i < list.length(); i++) {
+                    java.nio.file.Path f = root.resolve(list.getString(i));
+                    expect(java.nio.file.Files.isRegularFile(f), "art.json rare: " + list.getString(i) + " exists");
+                    if (!java.nio.file.Files.isRegularFile(f)) continue;
+                    java.awt.image.BufferedImage im = javax.imageio.ImageIO.read(f.toFile());
+                    expect(im != null && im.getWidth() == 1024 && im.getHeight() == 640,
+                            "art.json rare: " + list.getString(i) + " is 1024 x 640");
+                    rarePictures++;
+                }
+            }
+        }
+        expect(rarePictures >= 45, "art.json: at least 45 rare pictures (1.1.0), found " + rarePictures);
     }
 
     /** 0.4.0 and 0.5.0: upgrades, levels, environment and health: every entry names real things, the math holds. */

@@ -27,6 +27,13 @@ public final class Art {
 
     /** tier id -> climate id (or "default") -> picture paths. */
     private static final Map<String, Map<String, List<String>>> exteriors = new HashMap<>();
+    /**
+     * 1.1.0 (Andrzej, about the third "wild" pictures: "since they are more whacky, can we make them rarer?"):
+     * tier id -> planet type id -> rare pictures, picked instead of the usual ones only {@link #rareChance} of the time.
+     */
+    private static final Map<String, Map<String, List<String>>> rare = new HashMap<>();
+    /** Chance that a new home shows its rare picture, from art.json "rareChance" (1.1.0). */
+    static float rareChance = 0.15f;
     /** Pictures that stay loaded for the whole session (furniture icons). */
     private static final Set<String> loaded = new HashSet<>();
     /**
@@ -42,8 +49,15 @@ public final class Art {
 
     public static void load(JSONObject json) {
         exteriors.clear();
+        rare.clear();
         listed.clear();
-        JSONObject ext = json.optJSONObject("exteriors");
+        readLists(json.optJSONObject("exteriors"), exteriors);
+        readLists(json.optJSONObject("rare"), rare);
+        rareChance = (float) Math.max(0d, Math.min(1d, json.optDouble("rareChance", 0.15d)));
+    }
+
+    /** One section of art.json: tier -> planet type (or "default") -> picture paths. */
+    private static void readLists(JSONObject ext, Map<String, Map<String, List<String>>> into) {
         if (ext == null) return;
         Iterator<?> tiers = ext.keys();
         while (tiers.hasNext()) {
@@ -67,8 +81,15 @@ public final class Art {
                 }
                 map.put(climate, paths);
             }
-            exteriors.put(tierId, map);
+            into.put(tierId, map);
         }
+    }
+
+    /** The rare pictures of this tier and planet type, or an empty list (1.1.0). */
+    static List<String> rareFor(String tierId, PlanetType type) {
+        Map<String, List<String>> map = rare.get(tierId);
+        List<String> list = map == null ? null : map.get(type.id);
+        return list == null ? java.util.Collections.<String>emptyList() : list;
     }
 
     /** Loads every furniture icon, so the Furniture tab can draw them (0.5.0). */
@@ -133,6 +154,8 @@ public final class Art {
 
     /** A picture for this tier and planet type, or the tier's default; null when there is none at all. */
     public static String pick(String tierId, PlanetType type, Random random) {
+        List<String> rares = rareFor(tierId, type);
+        if (!rares.isEmpty() && random.nextFloat() < rareChance) return rares.get(random.nextInt(rares.size()));
         Map<String, List<String>> map = exteriors.get(tierId);
         if (map == null) return null;
         List<String> list = map.get(type.id);
@@ -145,9 +168,14 @@ public final class Art {
      * 1.0.1 (Andrzej: "alternate between sprites on a property list always ... when there are 2 shacks ... at least
      * one of them is going to use the alt sprite"): the picture used least on this list, a random one of those.
      *
+     * 1.1.0: a rare picture first, {@link #rareChance} of the time, unless one is already on the list.
+     *
      * @param onList pictures of the homes already on the list
      */
     public static String pick(String tierId, PlanetType type, Random random, java.util.Collection<String> onList) {
+        List<String> rares = new ArrayList<>(rareFor(tierId, type));
+        rares.removeAll(onList);
+        if (!rares.isEmpty() && random.nextFloat() < rareChance) return rares.get(random.nextInt(rares.size()));
         Map<String, List<String>> map = exteriors.get(tierId);
         if (map == null) return null;
         List<String> list = map.get(type.id);

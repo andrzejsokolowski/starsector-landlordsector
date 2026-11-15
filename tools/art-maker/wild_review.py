@@ -90,8 +90,28 @@ def do_build():
         print(n)
 
 
+def do_verdicts(folder):
+    """Copies the review page's choices (ArtifactData list with out_dir: one <stem>.json per picture) into
+    review.json, so export_art.py leaves rejected pictures out."""
+    n = 0
+    for f in glob.glob(os.path.join(folder, '*.json')):
+        stem = os.path.basename(f)[:-5]
+        body = json.load(open(f, encoding='utf-8'))
+        body = body.get('data', body)
+        status = body.get('status')
+        if status not in ('approved', 'rejected') or not artlib.find(stem):
+            continue
+        if artlib.load_review().get(stem, {}).get('status') != status:
+            artlib.update(stem, status=status, comment=body.get('note', '') if status == 'rejected' else '',
+                          event=status + ' on the review page')
+            n += 1
+    print(n, 'choices copied into review.json')
+
+
 if __name__ == '__main__':
-    if len(sys.argv) >= 3 and sys.argv[1] == 'map':
+    if len(sys.argv) >= 3 and sys.argv[1] == 'verdicts':
+        do_verdicts(sys.argv[2])
+    elif len(sys.argv) >= 3 and sys.argv[1] == 'map':
         do_map(sys.argv[2])
     elif len(sys.argv) >= 2 and sys.argv[1] == 'build':
         do_build()
