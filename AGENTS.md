@@ -193,3 +193,7 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   CUSTOM text1 and the GALLERY text2): homes, tier multipliers (0 = never), and an effect like a condition that
   `MarketRules.effects` adds after the conditions (named by the world's "name" in tooltips). `BuyScreen` shows the
   world's line, scrolls (`Canvas.onScroll`) and takes Up/Down. `upgradeTo080` re-rolls all listings once.
+- 0.8.1 (Andrzej: "the underground trait ... for sindria's apartments"): worlds.json `traits` multiply house trait
+  weights (`HouseTraits.roll` overload with the world map). A trait named with 1+ skips its anyCondition and climate
+  (`fitsLore`: tier and station only); 10+ (`MARK_MULT`) is on every home there. `upgradeTo080` re-rolls once more
+  (`upgraded081`).

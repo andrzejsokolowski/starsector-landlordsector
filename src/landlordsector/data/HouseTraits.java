@@ -177,17 +177,51 @@ public final class HouseTraits {
         return true;
     }
 
+    /** A world trait boosted this much is on every home of that world (0.8.1). */
+    public static final float MARK_MULT = 10f;
+
+    /** The size and planet-or-station rules only (0.8.1, for traits a world's lore boosts). */
+    public static boolean fitsLore(Def d, boolean station, int tier) {
+        if (tier < d.minTier || tier > d.maxTier) return false;
+        return d.station == null || d.station == station;
+    }
+
     /** 0 to 3 traits (Andrzej, 2026-11-12): none 20, one 35, two 30, three 15 percent of the time. */
     public static List<String> roll(Set<String> conditions, String climateId, boolean station, int tier,
             Random random) {
+        return roll(conditions, climateId, station, tier, null, random);
+    }
+
+    /**
+     * The same, with the world's own trait weights (0.8.1, worlds.json "traits"): each named trait's weight is
+     * multiplied, 0 keeps it out. Null or empty: the plain weights.
+     */
+    public static List<String> roll(Set<String> conditions, String climateId, boolean station, int tier,
+            Map<String, Float> worldMult, Random random) {
         float r0 = random.nextFloat();
         int count = r0 < 0.2f ? 0 : (r0 < 0.55f ? 1 : (r0 < 0.85f ? 2 : 3));
         List<String> out = new ArrayList<>();
+        // A world's mark (boosted 10 times or more: Underground in Sindria's hive cities) is on every home it fits,
+        // on top of the rolled traits.
+        if (worldMult != null) {
+            for (Map.Entry<String, Float> e : worldMult.entrySet()) {
+                Def d = defs.get(e.getKey());
+                if (d != null && e.getValue() >= MARK_MULT && fitsLore(d, station, tier)) out.add(d.id);
+            }
+            count += out.size();
+        }
         for (int n = 0; n < count; n++) {
             float total = 0f;
             List<Def> pool = new ArrayList<>();
+            List<Float> weights = new ArrayList<>();
             for (Def d : defs.values()) {
-                if (out.contains(d.id) || d.weight <= 0f || !fits(d, conditions, climateId, station, tier)) continue;
+                Float wm = worldMult != null ? worldMult.get(d.id) : null;
+                float w = d.weight * (wm != null ? wm : 1f);
+                // A trait the world's lore boosts (Underground on Sindria) needs no condition or climate of its own:
+                // the lore is the reason. Its size and planet-or-station rules still hold.
+                boolean lore = wm != null && wm >= 1f;
+                boolean ok = lore ? fitsLore(d, station, tier) : fits(d, conditions, climateId, station, tier);
+                if (out.contains(d.id) || w <= 0f || !ok) continue;
                 boolean clash = false;
                 for (String o : out) {
                     Def od = defs.get(o);
@@ -195,12 +229,14 @@ public final class HouseTraits {
                 }
                 if (clash) continue;
                 pool.add(d);
-                total += Math.max(0f, d.weight);
+                weights.add(w);
+                total += w;
             }
             if (pool.isEmpty() || total <= 0f) break;
             float r = random.nextFloat() * total;
-            for (Def d : pool) {
-                r -= Math.max(0f, d.weight);
+            for (int k = 0; k < pool.size(); k++) {
+                Def d = pool.get(k);
+                r -= weights.get(k);
                 if (r <= 0f) {
                     out.add(d.id);
                     break;

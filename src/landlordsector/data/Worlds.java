@@ -24,6 +24,8 @@ public final class Worlds {
         public ConditionTable.Effect effect;
         /** Tier id to weight multiplier; tiers not named are 1. */
         public final Map<String, Float> tiers = new HashMap<>();
+        /** House trait id to weight multiplier (0.8.1); traits not named keep their weight, 0 keeps one out. */
+        public final Map<String, Float> traits = new HashMap<>();
 
         public float tierMult(String tierId) {
             Float f = tiers.get(tierId);
@@ -59,6 +61,14 @@ public final class Worlds {
                     while (tk.hasNext()) {
                         String tid = String.valueOf(tk.next());
                         d.tiers.put(tid, (float) Math.max(0, t.optDouble(tid, 1)));
+                    }
+                }
+                JSONObject ht = e.optJSONObject("traits");
+                if (ht != null) {
+                    Iterator<?> hk = ht.keys();
+                    while (hk.hasNext()) {
+                        String hid = String.valueOf(hk.next());
+                        d.traits.put(hid, (float) Math.max(0, ht.optDouble(hid, 1)));
                     }
                 }
                 map.put(id, d);

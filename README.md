@@ -17,7 +17,8 @@ Requires LunaLib and OddiszCommons.
 - Bigger markets list better homes: shacks, studios and small houses from size 3, houses from 4, villas
   from 5 and estates from 6. A list with room for every size starts with one of each.
 - Worlds with their own housing (worlds.json, from each world's description in the game): crowded hive cities
-  on Sindria, the Tri-Tachyon capital Eochu Bres from shanties to estates, the paradise world Gilead and more. New homes come on the market every 90 days.
+  on Sindria, the Tri-Tachyon capital Eochu Bres from shanties to estates, the paradise world Gilead and more. Their homes get house traits that fit the lore
+  (every home in Sindria's hive cities is Underground). New homes come on the market every 90 days.
 - Every home has a name, often taken from its traits (names.json), for example Leafy Cottage.
 - Base prices: shack 1k to 10k, studio 30k to 50k, small house 100k to 300k, house 500k to 1M,
   villa 1.5M to 2.5M, estate 3M to 5M.

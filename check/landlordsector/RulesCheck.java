@@ -451,10 +451,32 @@ public final class RulesCheck {
             for (String tier : w.tiers.keySet()) {
                 expect(TierTable.get(tier) != null, "worlds.json: " + w.id + " names a real tier: " + tier);
             }
+            for (String trait : w.traits.keySet()) {
+                expect(landlordsector.data.HouseTraits.isTrait(trait), "worlds.json: " + w.id + " names a real house trait: "
+                        + trait);
+            }
         }
         landlordsector.data.Worlds.Def eb = landlordsector.data.Worlds.get("eochu_bres");
         expect(eb != null && Math.round(Pricing.housingRoom(6) * eb.homes) >= 20,
                 "Eochu Bres, size 6, has room for 20 or more homes");
+        // 0.8.1 (Andrzej: "the underground trait ... for sindria's apartments"): most Sindria homes are Underground,
+        // and none get Sunny; a plain world rolls Underground rarely.
+        landlordsector.data.Worlds.Def sin = landlordsector.data.Worlds.get("sindria");
+        java.util.Random wr = new java.util.Random(11);
+        int sinUnder = 0, plainUnder = 0, sinSunny = 0;
+        for (int i = 0; i < 1000; i++) {
+            // No condition at all: the lore alone makes Sindria's homes Underground.
+            java.util.List<String> a = landlordsector.data.HouseTraits.roll(java.util.Set.of(), "hostile", false, 1,
+                    sin.traits, wr);
+            if (a.contains("underground")) sinUnder++;
+            if (a.contains("sunny")) sinSunny++;
+            if (landlordsector.data.HouseTraits.roll(java.util.Set.of("no_atmosphere"), "hostile", false, 1, wr)
+                    .contains("underground")) {
+                plainUnder++;
+            }
+        }
+        expect(sinUnder == 1000 && plainUnder < 200 && sinSunny == 0, "every Sindria home is Underground, none Sunny: "
+                + sinUnder + " of 1000, plain " + plainUnder + ", sunny " + sinSunny);
         landlordsector.data.Worlds.Def gil = landlordsector.data.Worlds.get("gilead");
         expect(gil != null && gil.effect.price > 1.2f && gil.tierMult("estate") > 1f, "Gilead: dear, with more estates");
     }

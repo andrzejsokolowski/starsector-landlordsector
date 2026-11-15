@@ -63,9 +63,11 @@ public class LandlordsectorModPlugin extends BaseModPlugin {
      * 6 and each world's own mix at once instead of after the 90-day refresh. Public for the headless check.
      */
     public static void upgradeTo080(Portfolio p) {
-        if (p.upgraded080) return;
+        if (p.upgraded080 && p.upgraded081) return;
+        // 0.8.1: once more, so saves already on 0.8.0 get each world's lore traits on its homes for sale.
         p.listings().clear();
         p.upgraded080 = true;
+        p.upgraded081 = true;
     }
 
     /** 0.6.0: the old screening service flag becomes the screening service. Public for the headless check. */

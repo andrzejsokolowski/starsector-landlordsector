@@ -211,6 +211,7 @@ public final class MarketRules {
             Listing l = new Listing(Portfolio.get().newId(), t.id, climate.id,
                     Art.pick(t.id, PlanetType.of(market), random), base);
             l.traits = HouseTraits.roll(Tenants.conditions(market), climate.id, climate == Climate.STATION, t.index,
+                    world != null ? world.traits : null,
                     random);
             l.upgrades = landlordsector.data.Upgrades.roll(Tenants.conditions(market), climate.id,
                     climate == Climate.STATION, t.index, l.traits, random);

@@ -37,6 +37,8 @@ public class Portfolio {
     public boolean upgraded050;
     /** 0.8.0: true once every market's homes for sale were rolled again with the new room and the world table. */
     public boolean upgraded080;
+    /** 0.8.1: true once homes for sale were rolled again with each world's lore traits. */
+    public boolean upgraded081;
 
     public Map<String, Integer> furniture() {
         if (furniture == null) furniture = new java.util.LinkedHashMap<>();
