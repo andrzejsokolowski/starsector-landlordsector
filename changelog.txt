@@ -1,3 +1,6 @@
+Version 1.1.1 (2026-11-15)
+- Rare third pictures for every house, villa and estate too, on every planet type, so all homes can show one
+
 Version 1.1.0 (2026-11-15)
 - Rare third pictures: about 1 new home in 7 shows an unusual picture of its home, a different kind of building in a different part of the colony
 - Every shack, studio and small house has one, and the house on Station, Terran and Jungle worlds. Homes already for sale or owned keep their picture

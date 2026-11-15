@@ -35,6 +35,10 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   alt) and rewrites art.json. Exteriors load on demand: `Art.use` (called from `Canvas.sprite`) loads a picture
   when drawn and unloads the least recently drawn beyond 12 (never one drawn in the last second). On load, `repairArtPaths` swaps a default picture for
   the planet type's own once one exists. Gemini prompts: `art-prompts.txt` / `.html` (not packaged).
+  1.1.0 / 1.1.1: art.json "rare" holds a third, unusual picture per tier and type (all 84, `<tier>_<type>_3.jpg`
+  from art-source `<stem>_alt2.jpg`, never flipped), shown on "rareChance" (0.15) of new homes, never twice on one
+  agent list (`Art.pick`). Prompts: `tools/art-maker/wild_prompts.py` (art-prompts-wild.*); review page:
+  `tools/art-maker/wild_review.py` (map / build / verdicts).
   Picture maker (LLS ticket "Picture maker"): `tools/art-maker/make_art.py` runs Andrzej's own method through
   the Gemini API (variant 1 in a new chat, then only the VARIANT 2 text in the same chat, alt flipped left to
   right) into `art-source/` under his names (`shouse_`, `gasgiant`, `_alt`, .jpg). `gallery.py` (launch config

@@ -573,7 +573,8 @@ public final class RulesCheck {
                 }
             }
         }
-        expect(rarePictures >= 45, "art.json: at least 45 rare pictures (1.1.0), found " + rarePictures);
+        // 1.1.1: all 84 homes (6 tiers x 14 planet types) have their third picture.
+        expect(rarePictures == 84, "art.json: 84 rare pictures, one per tier and planet type (1.1.1), found " + rarePictures);
     }
 
     /** 0.4.0 and 0.5.0: upgrades, levels, environment and health: every entry names real things, the math holds. */
