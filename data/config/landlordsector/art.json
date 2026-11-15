@@ -261,11 +261,115 @@
 			"terran": [
 				"graphics/landlordsector/exteriors/villa_terran.jpg",
 				"graphics/landlordsector/exteriors/villa_terran_2.jpg"
+			],
+			"jungle": [
+				"graphics/landlordsector/exteriors/villa_jungle.jpg",
+				"graphics/landlordsector/exteriors/villa_jungle_2.jpg"
+			],
+			"water": [
+				"graphics/landlordsector/exteriors/villa_water.jpg",
+				"graphics/landlordsector/exteriors/villa_water_2.jpg"
+			],
+			"arid": [
+				"graphics/landlordsector/exteriors/villa_arid.jpg",
+				"graphics/landlordsector/exteriors/villa_arid_2.jpg"
+			],
+			"desert": [
+				"graphics/landlordsector/exteriors/villa_desert.jpg",
+				"graphics/landlordsector/exteriors/villa_desert_2.jpg"
+			],
+			"tundra": [
+				"graphics/landlordsector/exteriors/villa_tundra.jpg",
+				"graphics/landlordsector/exteriors/villa_tundra_2.jpg"
+			],
+			"frozen": [
+				"graphics/landlordsector/exteriors/villa_frozen.jpg",
+				"graphics/landlordsector/exteriors/villa_frozen_2.jpg"
+			],
+			"cryovolcanic": [
+				"graphics/landlordsector/exteriors/villa_cryovolcanic.jpg",
+				"graphics/landlordsector/exteriors/villa_cryovolcanic_2.jpg"
+			],
+			"barren": [
+				"graphics/landlordsector/exteriors/villa_barren.jpg",
+				"graphics/landlordsector/exteriors/villa_barren_2.jpg"
+			],
+			"toxic": [
+				"graphics/landlordsector/exteriors/villa_toxic.jpg",
+				"graphics/landlordsector/exteriors/villa_toxic_2.jpg"
+			],
+			"volcanic": [
+				"graphics/landlordsector/exteriors/villa_volcanic.jpg",
+				"graphics/landlordsector/exteriors/villa_volcanic_2.jpg"
+			],
+			"irradiated": [
+				"graphics/landlordsector/exteriors/villa_irradiated.jpg",
+				"graphics/landlordsector/exteriors/villa_irradiated_2.jpg"
+			],
+			"gas_giant": [
+				"graphics/landlordsector/exteriors/villa_gas_giant.jpg",
+				"graphics/landlordsector/exteriors/villa_gas_giant_2.jpg"
 			]
 		},
 		"estate": {
 			"default": [
 				"graphics/landlordsector/exteriors/estate.png"
+			],
+			"station": [
+				"graphics/landlordsector/exteriors/estate_station.jpg",
+				"graphics/landlordsector/exteriors/estate_station_2.jpg"
+			],
+			"terran": [
+				"graphics/landlordsector/exteriors/estate_terran.jpg",
+				"graphics/landlordsector/exteriors/estate_terran_2.jpg"
+			],
+			"jungle": [
+				"graphics/landlordsector/exteriors/estate_jungle.jpg",
+				"graphics/landlordsector/exteriors/estate_jungle_2.jpg"
+			],
+			"water": [
+				"graphics/landlordsector/exteriors/estate_water.jpg",
+				"graphics/landlordsector/exteriors/estate_water_2.jpg"
+			],
+			"arid": [
+				"graphics/landlordsector/exteriors/estate_arid.jpg",
+				"graphics/landlordsector/exteriors/estate_arid_2.jpg"
+			],
+			"desert": [
+				"graphics/landlordsector/exteriors/estate_desert.jpg",
+				"graphics/landlordsector/exteriors/estate_desert_2.jpg"
+			],
+			"tundra": [
+				"graphics/landlordsector/exteriors/estate_tundra.jpg",
+				"graphics/landlordsector/exteriors/estate_tundra_2.jpg"
+			],
+			"frozen": [
+				"graphics/landlordsector/exteriors/estate_frozen.jpg",
+				"graphics/landlordsector/exteriors/estate_frozen_2.jpg"
+			],
+			"cryovolcanic": [
+				"graphics/landlordsector/exteriors/estate_cryovolcanic.jpg",
+				"graphics/landlordsector/exteriors/estate_cryovolcanic_2.jpg"
+			],
+			"barren": [
+				"graphics/landlordsector/exteriors/estate_barren.jpg",
+				"graphics/landlordsector/exteriors/estate_barren_2.jpg"
+			],
+			"toxic": [
+				"graphics/landlordsector/exteriors/estate_toxic.jpg",
+				"graphics/landlordsector/exteriors/estate_toxic_2.jpg"
+			],
+			"volcanic": [
+				"graphics/landlordsector/exteriors/estate_volcanic.jpg",
+				"graphics/landlordsector/exteriors/estate_volcanic_2.jpg"
+			],
+			"irradiated": [
+				"graphics/landlordsector/exteriors/estate_irradiated.jpg",
+				"graphics/landlordsector/exteriors/estate_irradiated_2.jpg"
+			],
+			"gas_giant": [
+				"graphics/landlordsector/exteriors/estate_gas_giant.jpg",
+				"graphics/landlordsector/exteriors/estate_gas_giant_2.jpg"
 			]
 		}
 	}

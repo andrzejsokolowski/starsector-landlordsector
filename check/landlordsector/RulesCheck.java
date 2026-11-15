@@ -488,14 +488,14 @@ public final class RulesCheck {
                 }
             }
         }
-        for (String tier : new String[] {"shack", "studio", "small_house", "house"}) {
+        for (String tier : new String[] {"shack", "studio", "small_house", "house", "villa", "estate"}) {
             for (PlanetType t : PlanetType.values()) {
                 expect(ext.getJSONObject(tier).optJSONArray(t.id) != null
                         && ext.getJSONObject(tier).getJSONArray(t.id).length() == 2,
-                        "art.json: two " + tier + " pictures for " + t.id + " (0.7.0)");
+                        "art.json: two " + tier + " pictures for " + t.id + " (0.7.1)");
             }
         }
-        expect(pictures >= 116, "art.json: at least 116 pictures listed (0.7.0), found " + pictures);
+        expect(pictures >= 168, "art.json: at least 168 pictures listed (0.7.1), found " + pictures);
     }
 
     /** 0.4.0 and 0.5.0: upgrades, levels, environment and health: every entry names real things, the math holds. */

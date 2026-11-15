@@ -447,7 +447,7 @@ public final class PropertyStats {
             if (ld.happiness != 0f) per += Math.round(-ld.happiness) + " happiness";
             if (ld.health != 0f) per += (per.isEmpty() ? "" : " and ") + Math.round(-ld.health) + " health";
             if (!per.isEmpty()) lines.add(new String[] {"Each step costs the tenant " + per + ".", null});
-            if (lines.size() == (per.isEmpty() ? 0 : 1)) lines.add(0, new String[] {"Nothing here changes it.", null});
+            // 0.7.1 (Andrzej): no "Nothing here changes it." line when nothing changes the level.
             s.levelLines.put(ld.id, lines);
         }
     }

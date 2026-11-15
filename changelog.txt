@@ -1,3 +1,8 @@
+Version 0.7.1 (2026-11-15)
+- Villas and estates have their own pictures on all 14 planet types, two different pictures for each; every home size now has them
+- New picture for the studio on gas giants
+- The Heat, Cold and Radiation tooltips no longer say "Nothing here changes it"
+
 Version 0.7.0 (2026-11-14)
 - New pictures for shacks, studios, small houses and houses on all 14 planet types, two different pictures for each; every home picks one of the two
 - Villas on stations and Terran worlds have their own pictures; the other villas and all estates still use placeholders

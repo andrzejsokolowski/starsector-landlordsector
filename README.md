@@ -135,8 +135,7 @@ chosen one large on the right with its stat sheet, rent setting, Repair and Sell
 ## Compatibility
 
 - Can be added to a game in progress. Removing it from a game in progress breaks that save.
-- Shacks, studios, small houses and houses have two pictures for each planet type; villas and estates still
-  mostly use placeholders.
+- Every home size has two pictures for each planet type.
 
 ## For modders
 

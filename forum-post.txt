@@ -74,7 +74,7 @@ Needs LunaLib and OddiszCommons.
 [list]
 [li]LunaLib settings: rent multiplier, most properties you can own.[/li]
 [li]Can be added to a game in progress. Removing it from a game in progress breaks that save.[/li]
-[li]Shacks, studios, small houses and houses have two pictures for each planet type. Villas and estates still mostly use placeholder pictures.[/li]
+[li]Every home size has two pictures for each planet type.[/li]
 [/list]
 
 [spoiler=AI use disclaimer]Some or all assets and code in this mod were created using AI tools:
@@ -91,6 +91,12 @@ This mod is under the CC0 (Creative Commons Zero) License, allowing you to do wh
 [/spoiler]
 
 [spoiler=Version log]
+[b]0.7.1[/b]
+[list]
+[li]Villas and estates have their own pictures on all 14 planet types, two different pictures for each; every home size now has them[/li]
+[li]New picture for the studio on gas giants[/li]
+[li]The Heat, Cold and Radiation tooltips no longer say "Nothing here changes it"[/li]
+[/list]
 [b]0.7.0[/b]
 [list]
 [li]New pictures for shacks, studios, small houses and houses on all 14 planet types, two different pictures for each; every home picks one of the two[/li]

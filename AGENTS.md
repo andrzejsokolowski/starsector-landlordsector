@@ -29,8 +29,8 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   size, furniture slots, roll weight) and the "economy" numbers. `TierTable` reads it with getMergedJSON.
 - `data/config/landlordsector/art.json` - exterior pictures per tier and planet type (`PlanetType`, 14 types,
   pictures only; traits, upgrades and comfort keep the 7 `Climate`s), with a "default" list. `Art` loads each
-  texture at startup and drops paths that fail. 0.4.2: Andrzej's shacks for all 14 types; other tiers still
-  placeholders. His originals go in `art-source/` (gitignored). 0.7.0: `tools/art-maker/export_art.py` crops
+  texture at startup and drops paths that fail. 0.4.2: Andrzej's shacks for all 14 types. 0.7.1: all six tiers have
+  two pictures per type (168); the placeholders stay as the "default". His originals go in `art-source/` (gitignored). 0.7.0: `tools/art-maker/export_art.py` crops
   them (centered 16:10) to 1024x640 JPG `graphics/landlordsector/exteriors/<tier>_<type>.jpg` + `_2.jpg` (the
   alt) and rewrites art.json. Exteriors load on demand: `Art.use` (called from `Canvas.sprite`) loads a picture
   when drawn and unloads the least recently drawn beyond 12 (never one drawn in the last second). On load, `repairArtPaths` swaps a default picture for
