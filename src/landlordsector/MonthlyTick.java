@@ -92,6 +92,7 @@ public class MonthlyTick implements EconomyTickListener, ColonyPlayerHostileActL
             Property p = it.next();
             MarketAPI m = p.market();
             if (m == null) {
+                Family.release(p);
                 it.remove();
                 news.add("Your " + p.tier().name.toLowerCase() + " on " + p.marketName
                         + " is gone with the colony.");
@@ -166,6 +167,8 @@ public class MonthlyTick implements EconomyTickListener, ColonyPlayerHostileActL
 
         applyReputation(repByFaction);
         Agents.update(random, false);
+        // 1.2.0: what grown kids send home, alimony, and closer officers.
+        Family.monthly(report, root);
         float[] npc = runOwnColonies(portfolio, report, root, news);
 
         portfolio.lastRent = rentTotal;
@@ -173,7 +176,8 @@ public class MonthlyTick implements EconomyTickListener, ColonyPlayerHostileActL
         portfolio.lastTax = npc[1];
         if (!news.isEmpty()) portfolio.news = true;
 
-        if (rentTotal > 0f || npc[0] > 0f || npc[1] > 0f || !news.isEmpty()) {
+        if (rentTotal > 0f || npc[0] > 0f || npc[1] > 0f || !news.isEmpty() || portfolio.lastKidPay > 0f
+                || portfolio.lastAlimony > 0f) {
             MessageIntel msg = new MessageIntel("Real estate this month", Misc.getBasePlayerColor());
             if (rentTotal > 0f) {
                 msg.addLine("Rent: %s", Misc.getTextColor(), new String[] {Misc.getDGSCredits(rentTotal)},
@@ -186,6 +190,14 @@ public class MonthlyTick implements EconomyTickListener, ColonyPlayerHostileActL
             if (npc[1] > 0f) {
                 msg.addLine("Property tax: %s", Misc.getTextColor(), new String[] {Misc.getDGSCredits(npc[1])},
                         Misc.getHighlightColor());
+            }
+            if (portfolio.lastKidPay > 0f) {
+                msg.addLine("Sent home by your kids: %s", Misc.getTextColor(),
+                        new String[] {Misc.getDGSCredits(portfolio.lastKidPay)}, Misc.getHighlightColor());
+            }
+            if (portfolio.lastAlimony > 0f) {
+                msg.addLine("Alimony: %s", Misc.getTextColor(), new String[] {Misc.getDGSCredits(portfolio.lastAlimony)},
+                        Misc.getNegativeHighlightColor());
             }
             for (String line : news) msg.addLine(line);
             msg.setIcon(Global.getSettings().getSpriteName("intel", "monthly_income_report"));
@@ -260,6 +272,7 @@ public class MonthlyTick implements EconomyTickListener, ColonyPlayerHostileActL
             Property p = it.next();
             if (!market.getId().equals(p.marketId)) continue;
             if (destroy) {
+                Family.release(p);
                 it.remove();
                 Global.getSector().getCampaignUI().addMessage("Your " + p.tier().name.toLowerCase() + " on "
                         + market.getName() + " burned with the rest of the city.", Misc.getNegativeHighlightColor());

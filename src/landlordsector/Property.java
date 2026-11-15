@@ -96,6 +96,25 @@ public class Property {
     /** Services hired for this home (services.json ids). Null on older saves. */
     public List<String> services;
 
+    // ---- 1.2.0 family ----
+
+    /** The player lives here: no rent, no adverts, and a partner may move in with them. */
+    public boolean playerHome;
+    /** When the player last docked at this home's market (for their kids). */
+    public long lastVisit;
+    /** The player's children living here. Null on older saves. */
+    public List<Child> children;
+
+    public List<Child> children() {
+        if (children == null) children = new ArrayList<>();
+        return children;
+    }
+
+    /** The player's partner living here, or null. */
+    public Tenant partner() {
+        return tenant != null && tenant.isPartner() ? tenant : null;
+    }
+
     public List<String> services() {
         if (services == null) services = new ArrayList<>();
         return services;
@@ -165,7 +184,7 @@ public class Property {
     }
 
     public boolean isRented() {
-        return tenant != null && !condemned;
+        return tenant != null && !condemned && !playerHome;
     }
 
     public float decor() {

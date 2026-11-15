@@ -26,9 +26,37 @@ public class Tenant {
     /** "advert" or the finder's id. */
     public String source;
 
+    // ---- 1.2.0 family. New fields load as 0, false or null from older saves. ----
+
+    /** 0: a tenant. 1: the player's partner, living with them. 2: the player's wife or husband. */
+    public int partner;
+    /** The partner's own person (a former officer or administrator), in the market's comm directory. */
+    public com.fs.starfarer.api.characters.PersonAPI person;
+    /** When the player last docked at the partner's market. */
+    public long lastVisit;
+    /** When the player last tried for a child with them. */
+    public long lastTry;
+    /** When a child was conceived, 0 when none is on the way. */
+    public long conceivedAt;
+    /** True once the player was told a child is on the way. */
+    public boolean toldPregnant;
+    public long marriedAt;
+    /** Days the player was away before their last visit, for the greeting. */
+    public float lastGap;
+    /** Children living in the home, counted each day (kids' upgrades count for them). */
+    public int kidsAtHome;
+
     public List<String> traits() {
         if (traits == null) traits = new ArrayList<>();
         return traits;
+    }
+
+    public boolean isPartner() {
+        return partner > 0;
+    }
+
+    public boolean isSpouse() {
+        return partner >= 2;
     }
 
     public boolean isShown(int index) {
@@ -123,8 +151,9 @@ public class Tenant {
         return Math.max(0f, m);
     }
 
-    /** 0.4.0: true when the tenant has kids (Family with kids). */
+    /** 0.4.0: true when the tenant has kids (Family with kids, or 1.2.0: the player's own kids at home). */
     public boolean hasKids() {
+        if (kidsAtHome > 0) return true;
         for (String id : traits()) {
             TenantTraits.Def d = TenantTraits.get(id);
             if (d != null && d.kids) return true;

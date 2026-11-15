@@ -138,6 +138,22 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   0.4.1: furniture icons are Andrzej's, 80x80 in `graphics/icons/cargo/landlordsector/<id>.png`, cut from his sheet
   (first view of each piece, background already transparent). A new piece needs an icon there and its csv row.
 
+- 1.2.0 family (LLS-5, Andrzej's design of 2026-11-15, numbers in `Family`): `Property.playerHome` (no rent:
+  `isRented` is false, rent setting counts as Normal, no adverts), the partner is the home's `Tenant` with
+  `partner` 1 (partner) or 2 (spouse) and `person` (the former officer or administrator, placed in the market's
+  comm directory with `$lls_partner` / `$lls_homeId` and a post from default_ranks.json). `PropertyStats` gives
+  partners "Last visited" (`Family.visitPenalty`) instead of the rent and wealth penalties; `TenantDaily` skips
+  `Family.PARTNER_SKIP_EVENTS` for them and sends leaving and dying through `Family.leaves` (a spouse leaving =
+  divorce: the home is sold, the player gets half, every kid goes, young ones go to `Portfolio.exKids` for
+  alimony). Officers and admins have no relationship in the base game, so `Family.seedBonds` / `raiseBonds` grow
+  it (monthly in `MonthlyTick`, battles in `FamilyListener`, which also counts docking as a visit). Kids:
+  `Child` in `Property.children` (person in the comm directory, `$lls_child` / `$lls_childId`), born in
+  `Family.daily`, grown after `Settings.growUpCycles`, then `Family.startLife` by `path` (officer, admin, worker
+  pay and growth kids stay in `Portfolio.adultKids`). Dialogs: rules.csv `lls_partner_*`, `lls_child_*`,
+  `lls_fam_*`, `lls_kid_*` call `LLS_Family <verb>`. Spouse markets get tariff x0 and growth kids immigration
+  through `HomeownerScript` (ledger, never saved). Nexerelin agents only through `NexAgents` (compileOnly
+  ExerelinCore.jar).
+
 ## Known limits
 
 - The portfolio classes are in the save, so removing the mod mid-game breaks that save.

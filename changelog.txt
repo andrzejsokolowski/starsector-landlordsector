@@ -1,3 +1,14 @@
+Version 1.2.0 (2026-11-15)
+- Declare player home: a new button on a home's Tenants tab. You live there, it stops advertising and pays no rent
+- Move in with one of your officers or administrators of the opposite sex once your relationship is +70 or more. They leave your service and live with you
+- Officers and administrators grow closer to you: officers start at 10 per level and administrators at 30, everyone gains 10 a month, and officers 2 more for every battle you win
+- Your partner has their own traits, happiness, health and events like a tenant, pays no rent, and grows unhappy after 30 days without a visit (dock at that market). An unhappy partner leaves you
+- Talk to your partner in that market's comm directory: propose, try for a child, give a gift or break up. Gifts are sold and turned into upgrades for the house
+- Married: no tariffs on that market, happier kids, and more good events while you keep visiting
+- Divorce: the house is sold and you get half. Your ex takes the kids, and you pay alimony for each child until they grow up
+- Kids are born 30 days after a lucky try and show up in the comm directory with your name and Junior. Rename them and steer what they become: an officer, an administrator, a miner who sends money home, a Nexerelin agent (with Nexerelin), or a local celebrity who makes a colony grow
+- New settings: cycles for kids to grow up (5) and alimony per child (5,000 a month)
+
 Version 1.1.1 (2026-11-15)
 - Rare third pictures for every house, villa and estate too, on every planet type, so all homes can show one
 

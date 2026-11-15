@@ -17,3 +17,26 @@ lls_finder_options,PopulateOptions,"$isPerson
 $lls_isFinder",LLS_FinderOptions,,,
 lls_hire_finder_selected,DialogOptionSelected,$option == lls_hire_finder,"LLS_HireFinder
 FireAll PopulateOptions",,,
+# 1.2.0 family (Family.java, LLS_Family): your partner and your kids, in their market's comm directory.
+lls_partner_greeting,PickGreeting,"$lls_partner score:5","ShowPersonVisual
+LLS_Family greet
+FireAll PopulateOptions",,
+lls_partner_options,PopulateOptions,"$isPerson
+$lls_partner",LLS_Family options,,
+lls_fam_propose_sel,DialogOptionSelected,$option == lls_fam_propose,LLS_Family propose,,
+lls_fam_try_sel,DialogOptionSelected,$option == lls_fam_try,LLS_Family try,,
+lls_fam_gift_sel,DialogOptionSelected,$option == lls_fam_gift,LLS_Family gift,,
+lls_fam_breakup_sel,DialogOptionSelected,$option == lls_fam_breakup,LLS_Family breakup,,
+lls_fam_breakup_yes_sel,DialogOptionSelected,$option == lls_fam_breakup_yes,LLS_Family breakupYes,,
+lls_fam_breakup_no_sel,DialogOptionSelected,$option == lls_fam_breakup_no,LLS_Family breakupNo,,
+lls_child_greeting,PickGreeting,"$lls_child score:5","ShowPersonVisual
+LLS_Family greetChild
+FireAll PopulateOptions",,
+lls_child_options,PopulateOptions,"$isPerson
+$lls_child",LLS_Family childOptions,,
+lls_kid_rename_sel,DialogOptionSelected,$option == lls_kid_rename,LLS_Family rename,,
+lls_kid_officer_sel,DialogOptionSelected,$option == lls_kid_officer,LLS_Family path officer,,
+lls_kid_admin_sel,DialogOptionSelected,$option == lls_kid_admin,LLS_Family path admin,,
+lls_kid_worker_sel,DialogOptionSelected,$option == lls_kid_worker,LLS_Family path worker,,
+lls_kid_agent_sel,DialogOptionSelected,$option == lls_kid_agent,LLS_Family path agent,,
+lls_kid_growth_sel,DialogOptionSelected,$option == lls_kid_growth,LLS_Family path growth,,

@@ -72,6 +72,9 @@ public final class RuntimeCheck {
 
     /** 0.4.0: special items in the player's cargo, by id. */
     private static final Map<String, Float> cargoSpecials = new HashMap<>();
+    /** 1.2.0: the player's officers and administrators. */
+    private static final List<com.fs.starfarer.api.characters.PersonAPI> officers = new ArrayList<>();
+    private static final List<com.fs.starfarer.api.characters.AdminData> admins = new ArrayList<>();
 
     public static void main(String[] args) throws Exception {
         installGlobals();
@@ -559,6 +562,7 @@ public final class RuntimeCheck {
         expect(!Portfolio.get().npcHomes().containsKey(b.getId()), "NPC homes of a lost colony are dropped");
 
         checkPictureMemory070();
+        checkFamily120();
 
         // 0.8.0: a world from worlds.json. Eochu Bres, size 6, has room for 23 homes, lists every size and prices
         // like the Tri-Tachyon capital; the same market under another id is the plain size 6 rule.
@@ -686,7 +690,24 @@ public final class RuntimeCheck {
                 "getElapsedDaysSince", a -> (now - (Long) a[0]) / (float) DAY));
         MutableValue cr = credits;
         CargoAPI cargo = specialsCargo(cargoSpecials, Map.of("getCredits", a -> cr));
-        CampaignFleetAPI fleet = mock(CampaignFleetAPI.class, Map.of("getCargo", a -> cargo));
+        com.fs.starfarer.api.campaign.FleetDataAPI fleetData = mock(com.fs.starfarer.api.campaign.FleetDataAPI.class,
+                Map.of("getOfficersCopy", a -> {
+                    List<com.fs.starfarer.api.characters.OfficerDataAPI> out = new ArrayList<>();
+                    for (com.fs.starfarer.api.characters.PersonAPI p : officers) {
+                        out.add(mock(com.fs.starfarer.api.characters.OfficerDataAPI.class, Map.of("getPerson", b -> p)));
+                    }
+                    return out;
+                }, "removeOfficer", a -> officers.remove(a[0]), "addOfficer", a -> {
+                    if (a[0] instanceof com.fs.starfarer.api.characters.PersonAPI) {
+                        officers.add((com.fs.starfarer.api.characters.PersonAPI) a[0]);
+                    }
+                    return null;
+                }));
+        CampaignFleetAPI fleet = mock(CampaignFleetAPI.class, Map.of("getCargo", a -> cargo, "getFleetData", a -> fleetData));
+        com.fs.starfarer.api.characters.PersonAPI me = familyPerson("Test Pilot",
+                com.fs.starfarer.api.characters.FullName.Gender.MALE, 5);
+        com.fs.starfarer.api.campaign.CharacterDataAPI chars = mock(com.fs.starfarer.api.campaign.CharacterDataAPI.class,
+                Map.of("getAdmins", a -> new ArrayList<>(admins), "removeAdmin", a -> admins.removeIf(d -> d.getPerson() == a[0])));
         EconomyAPI economy = mock(EconomyAPI.class, Map.of(
                 "getMarket", a -> markets.get((String) a[0]),
                 "getMarketsCopy", a -> new ArrayList<>(markets.values())));
@@ -699,7 +720,9 @@ public final class RuntimeCheck {
                 "getPlayerFaction", a -> player,
                 "getCampaignUI", a -> ui,
                 "getFaction", a -> faction(String.valueOf(a[0])),
-                "addTransientScript", a -> sectorScripts.add((com.fs.starfarer.api.EveryFrameScript) a[0])));
+                "addTransientScript", a -> sectorScripts.add((com.fs.starfarer.api.EveryFrameScript) a[0]),
+                "getPlayerPerson", a -> me,
+                "getCharacterData", a -> chars));
         // Made on first use: the item spec stand-in pulls in game classes that need the settings first.
         Object[] itemSpec = new Object[1];
         SettingsAPI settings = mock(SettingsAPI.class, Map.of(
@@ -742,6 +765,185 @@ public final class RuntimeCheck {
                 "getMemoryWithoutUpdate", a -> memory,
                 "setMarket", a -> market[0] = a[0],
                 "getMarket", a -> market[0]));
+    }
+
+    /** 1.2.0: an officer, administrator or the player: name, gender, level, a relationship and a memory. */
+    private static com.fs.starfarer.api.characters.PersonAPI familyPerson(String name,
+            com.fs.starfarer.api.characters.FullName.Gender gender, int level) {
+        Map<String, Object> mem = new HashMap<>();
+        float[] rel = new float[1];
+        Object[] market = new Object[1];
+        String[] parts = name.split(" ", 2);
+        com.fs.starfarer.api.characters.FullName full = new com.fs.starfarer.api.characters.FullName(parts[0],
+                parts.length > 1 ? parts[1] : "", gender);
+        com.fs.starfarer.api.campaign.rules.MemoryAPI memory = mock(com.fs.starfarer.api.campaign.rules.MemoryAPI.class,
+                Map.of("set", a -> mem.put((String) a[0], a[1]), "get", a -> mem.get(a[0]),
+                        "getBoolean", a -> Boolean.TRUE.equals(mem.get(a[0])), "unset", a -> mem.remove(a[0]),
+                        "contains", a -> mem.containsKey(a[0])));
+        com.fs.starfarer.api.characters.RelationshipAPI relApi = mock(com.fs.starfarer.api.characters.RelationshipAPI.class,
+                Map.of("getRel", a -> rel[0], "setRel", a -> rel[0] = (Float) a[0]));
+        com.fs.starfarer.api.characters.MutableCharacterStatsAPI stats = mock(
+                com.fs.starfarer.api.characters.MutableCharacterStatsAPI.class, Map.of("getLevel", a -> level));
+        Map<String, Function<Object[], Object>> h = new HashMap<>();
+        h.put("getMemoryWithoutUpdate", a -> memory);
+        h.put("getRelToPlayer", a -> relApi);
+        h.put("getStats", a -> stats);
+        h.put("getGender", a -> gender);
+        h.put("getName", a -> full);
+        h.put("getNameString", a -> name);
+        h.put("getId", a -> "person_" + name.replace(' ', '_'));
+        h.put("setMarket", a -> market[0] = a[0]);
+        h.put("getMarket", a -> market[0]);
+        return mock(com.fs.starfarer.api.characters.PersonAPI.class, h);
+    }
+
+    /**
+     * 1.2.0 family (LLS-5): your own home, moving in with an officer of the opposite sex at +70, no rent, the visit
+     * penalty, marriage and the spouse's tariff, a child 30 days after a lucky try, divorce for half the sale with
+     * the kids and alimony, alimony ending when the kid grows up, the 2% who are cheating, and a grown worker's pay.
+     */
+    private static void checkFamily120() {
+        Random yes = new Random() {
+            @Override
+            public float nextFloat() {
+                return 0f;
+            }
+        };
+        Random half = new Random(5) {
+            @Override
+            public float nextFloat() {
+                return 0.5f;
+            }
+        };
+        FakeMarket ff = new FakeMarket();
+        ff.id = "fake_family"; ff.name = "Hearth"; ff.factionId = "hegemony"; ff.size = 6;
+        ff.stability = 7f; ff.hazard = 1f; ff.habitable = true;
+        MarketAPI fm = market(ff);
+        Listing l = MarketRules.listings(fm).list().get(MarketRules.listings(fm).list().size() - 1);
+        String bought = Actions.buy(fm, l);
+        Property home = null;
+        for (Property p : Portfolio.get().properties()) if ("fake_family".equals(p.marketId)) home = p;
+        expect(home != null, "a home on the family test market: " + bought);
+        if (home == null) return;
+        expect(Family.cannotDeclare(home) == null && Family.declareHome(home).startsWith("You moved"),
+                "an empty home can be declared the player's home");
+        expect(home.playerHome && !home.advertising && home.applicants().isEmpty(), "your home stops advertising");
+        expect(Family.cannotDeclare(home) != null, "a home is declared once");
+
+        com.fs.starfarer.api.characters.PersonAPI she = familyPerson("Mira Vance",
+                com.fs.starfarer.api.characters.FullName.Gender.FEMALE, 7);
+        com.fs.starfarer.api.characters.PersonAPI he = familyPerson("Tom Hale",
+                com.fs.starfarer.api.characters.FullName.Gender.MALE, 7);
+        com.fs.starfarer.api.characters.PersonAPI shy = familyPerson("Ana Brask",
+                com.fs.starfarer.api.characters.FullName.Gender.FEMALE, 2);
+        officers.add(she);
+        officers.add(he);
+        officers.add(shy);
+        List<com.fs.starfarer.api.characters.PersonAPI> cands = Family.candidates();
+        expect(cands.contains(she) && cands.contains(shy) && !cands.contains(he),
+                "only officers of the opposite sex can move in with you");
+        expect(Family.bond(she) == 70 && Family.bond(shy) == 20, "officers start at 10 per level: "
+                + Family.bond(she) + ", " + Family.bond(shy));
+        expect(Family.cannotMoveIn(home, shy) != null, "+20 is not enough to move in together");
+        String moved = Family.moveInWith(home, she, new Random(3));
+        Tenant wife = home.partner();
+        expect(moved.contains("moved in with you") && wife != null && wife.person == she,
+                "an officer at +70 moves in with you: " + moved);
+        expect(!officers.contains(she) && ff.directory.contains(she), "your partner leaves the fleet for the comm directory");
+        if (wife == null) return;
+        for (String t : wife.traits()) expect(!Family.PARTNER_SKIP_TRAITS.contains(t), "no " + t + " partner");
+        expect(!home.isRented() && home.expectedRent() == 0f, "your partner pays no rent");
+        MonthlyTick tick = new MonthlyTick();
+        month(tick);
+        expect(home.lastRent == 0f, "no rent from your own home at the month's end");
+        expect(Family.bond(shy) == 30, "officers get 10 closer each month: " + Family.bond(shy));
+
+        Family.visit(fm);
+        float fresh = home.stats().happiness;
+        now += 90 * DAY;
+        PropertyStats away = home.stats();
+        boolean noted = false;
+        for (PropertyStats.Note n : away.notes) noted |= n.text.startsWith("Last visited: 90 days ago (-30)");
+        expect(noted, "the happiness tooltip says Last visited: 90 days ago (-30)");
+        expect(away.happiness < fresh || fresh <= 0f, "90 days away make your partner unhappier");
+        Family.visit(fm);
+        expect(Family.daysSince(wife.lastVisit) == 0f && wife.lastGap >= 89f, "docking there is a visit");
+
+        expect(Family.propose(home, half) && wife.isSpouse(), "a proposal is accepted");
+        expect(Family.spouseMarkets().contains("fake_family"), "no tariff where your wife lives");
+        for (int i = 0; i < 300; i++) {
+            landlordsector.data.TenantEvents.Def e = TenantDaily.pickTenantEvent(home, new Random(i));
+            expect(e == null || !Family.PARTNER_SKIP_EVENTS.contains(e.id), "no rent events for your wife: "
+                    + (e == null ? "" : e.id));
+        }
+
+        expect(Family.tryForChild(home, yes) == 2 && wife.conceivedAt > 0L, "a lucky try starts a child");
+        expect(Family.tryForChild(home, yes) == 0, "one try a day");
+        now += 21 * DAY;
+        Family.daily(half);
+        expect(wife.toldPregnant && home.children().isEmpty(), "pregnant after 20 days, not born yet");
+        now += 10 * DAY;
+        Family.daily(half);
+        expect(home.children().size() == 1 && wife.conceivedAt == 0L, "born 30 days after the try");
+        Child kid = home.children().isEmpty() ? null : home.children().get(0);
+        expect(kid != null && kid.name.equals("Test Pilot Junior"), "the first child is the player's name and Junior: "
+                + (kid == null ? null : kid.name));
+        if (kid == null) return;
+        for (String t : kid.traits()) expect(!Family.CHILD_SKIP_TRAITS.contains(t), "no " + t + " child");
+        Family.daily(half);
+        expect(kid.happyDays >= 1 && wife.kidsAtHome == 1 && wife.hasKids(), "a child's days are counted");
+        expect(Actions.cannotSell(home) != null, "you can't sell the home your family lives in");
+
+        float sale = home.saleValue(true);
+        float c0 = credits.get();
+        String split = Family.breakUp(home);
+        expect(!Portfolio.get().properties().contains(home), "a divorce sells the house: " + split);
+        expect(Math.abs(credits.get() - c0 - sale * 0.5f) < CREDIT_EPS, "a divorce pays you half the sale");
+        expect(Portfolio.get().exKids().contains(kid) && !ff.directory.contains(she),
+                "your ex takes the kids and leaves the comm directory");
+        month(tick);
+        expect(Portfolio.get().lastAlimony == Settings.DEFAULT_ALIMONY, "alimony for the child: "
+                + Portfolio.get().lastAlimony);
+        now += (long) (Family.growUpDays() * DAY) + DAY;
+        month(tick);
+        expect(Portfolio.get().exKids().isEmpty() && Portfolio.get().lastAlimony == 0f, "no alimony once the kid grows up");
+
+        Listing l2 = MarketRules.listings(fm).list().get(0);
+        Actions.buy(fm, l2);
+        Property home2 = null;
+        for (Property p : Portfolio.get().properties()) if ("fake_family".equals(p.marketId)) home2 = p;
+        if (home2 == null) {
+            expect(false, "a second home on the family test market");
+            return;
+        }
+        Family.declareHome(home2);
+        Family.raiseBonds(60f, false);
+        expect(Family.bond(shy) >= 70, "closer after many months: " + Family.bond(shy));
+        Family.moveInWith(home2, shy, new Random(4));
+        Random cheat = new Random() {
+            @Override
+            public float nextFloat() {
+                return 0.01f;
+            }
+        };
+        expect(!Family.propose(home2, cheat) && home2.partner() == null && Portfolio.get().properties().contains(home2)
+                && home2.playerHome, "2% are cheating and leave you, keeping no part of the house");
+
+        Child miner = new Child();
+        miner.id = "kid_test";
+        miner.name = "Test Miner";
+        miner.path = Child.WORKER;
+        miner.grown = true;
+        miner.happySum = 75f;
+        miner.happyDays = 1;
+        home2.children().add(miner);
+        expect(Family.startLife(home2, miner, half) && Portfolio.get().adultKids().contains(miner)
+                && miner.pay == Family.WORKER_PAY * 2.5f && home2.children().isEmpty(),
+                "a grown miner sends pay home: " + miner.pay);
+        month(tick);
+        expect(Portfolio.get().lastKidPay == miner.pay, "the miner's pay arrives at the month's end");
+        expect(Family.visitPenalty(10f) == 0f && Family.visitPenalty(130f) == Family.VISIT_PENALTY_MAX,
+                "visits: free for 30 days, at most -50");
     }
 
     private static MarketAPI market(FakeMarket f) {

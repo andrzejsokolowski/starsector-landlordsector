@@ -39,6 +39,8 @@ public class RealEstatePage implements ManagePage {
     private String selectedHome;
     private String selectedPool;
     private String selectedFinder;
+    /** 1.2.0: the "Move in with" list is open. */
+    private boolean choosingPartner;
 
     @Override
     public CustomPanelAPI createPanel(float width, float height) {
@@ -84,9 +86,11 @@ public class RealEstatePage implements ManagePage {
             text(all.size() + (all.size() == 1 ? " property" : " properties") + " worth "
                     + Misc.getDGSCredits(worth) + ". Credits: " + Misc.getDGSCredits(Actions.credits()) + ".",
                     10f, 38f, width - 20f);
+            String family = (portfolio.lastKidPay > 0f ? ", from your kids " + Misc.getDGSCredits(portfolio.lastKidPay)
+                    : "") + (portfolio.lastAlimony > 0f ? ", alimony " + Misc.getDGSCredits(portfolio.lastAlimony) : "");
             text("Last month: rent " + Misc.getDGSCredits(portfolio.lastRent) + ", home sales on your colonies "
                     + Misc.getDGSCredits(portfolio.lastSales) + ", property tax "
-                    + Misc.getDGSCredits(portfolio.lastTax) + ".", Misc.getGrayColor(), 10f, 56f, width - 20f);
+                    + Misc.getDGSCredits(portfolio.lastTax) + family + ".", Misc.getGrayColor(), 10f, 56f, width - 20f);
             text(message, messageColor, 10f, 74f, width - 20f);
 
             switch (mode) {
@@ -181,8 +185,8 @@ public class RealEstatePage implements ManagePage {
                 float y = rowY(i, range[0]);
                 area("home:" + pr.id, 8f, y, LIST_W, ROW_H, pr == chosen);
                 // Rented homes grey, vacant ones orange: the ones that need you stand out (0.3.8).
-                text(pr.displayName(), pr.tenant != null && !pr.condemned ? Misc.getGrayColor()
-                        : Misc.getHighlightColor(), 18f, y + 5f, LIST_W - 20f);
+                text(pr.displayName(), pr.playerHome ? Misc.getTextColor() : (pr.tenant != null && !pr.condemned
+                        ? Misc.getGrayColor() : Misc.getHighlightColor()), 18f, y + 5f, LIST_W - 20f);
                 text(homeStatus(pr), homeStatusColor(pr), 18f, y + 25f, LIST_W - 20f);
             }
 
@@ -190,8 +194,8 @@ public class RealEstatePage implements ManagePage {
             boolean sideLog = sideLog();
             Btn d = hotkeyButton("sub:DETAILS", "Details", "D", rx, TOP, 124f, 24f);
             d.selected = sub == Sub.DETAILS;
-            Btn t = hotkeyButton("sub:TENANT", chosen.tenant != null ? "Tenants" : "Tenants: "
-                    + chosen.applicants().size(), "T", rx + 128f, TOP, 124f, 24f);
+            Btn t = hotkeyButton("sub:TENANT", chosen.playerHome ? "Family" : (chosen.tenant != null ? "Tenants"
+                    : "Tenants: " + chosen.applicants().size()), "T", rx + 128f, TOP, 124f, 24f);
             t.selected = sub == Sub.TENANT;
             Btn f = hotkeyButton("sub:FURNITURE", "Furniture", "F", rx + 256f, TOP, 124f, 24f);
             f.selected = sub == Sub.FURNITURE;
@@ -236,6 +240,11 @@ public class RealEstatePage implements ManagePage {
         private String homeStatus(Property pr) {
             MarketAPI m = pr.market();
             if (pr.condemned) return "Condemned";
+            if (pr.playerHome) {
+                landlordsector.Tenant t = pr.partner();
+                return t != null ? "Your home, with " + t.firstName() + " (" + landlordsector.Family.noun(t) + ")"
+                        : "Your home";
+            }
             if (m != null && MarketRules.hostile(m) && pr.isRented()) return "Rent frozen";
             if (pr.tenant != null) return Misc.getDGSCredits(pr.expectedRent()) + " a month, " + pr.tenant.name;
             int a = pr.applicants().size();
@@ -245,6 +254,7 @@ public class RealEstatePage implements ManagePage {
 
         private Color homeStatusColor(Property pr) {
             if (pr.condemned) return Misc.getNegativeHighlightColor();
+            if (pr.playerHome) return Misc.getPositiveHighlightColor();
             if (pr.tenant == null) return Misc.getHighlightColor();
             return Misc.getGrayColor();
         }
@@ -271,6 +281,11 @@ public class RealEstatePage implements ManagePage {
             if (chosen.condemned) {
                 s.occupancy = "Condemned";
                 s.occupancyColor = Misc.getNegativeHighlightColor();
+            } else if (chosen.playerHome) {
+                landlordsector.Tenant pt = chosen.partner();
+                s.occupancy = pt != null ? "You live here with " + pt.name + ", your " + landlordsector.Family.noun(pt)
+                        : "You live here";
+                s.occupancyColor = Misc.getPositiveHighlightColor();
             } else if (chosen.tenant == null) {
                 s.occupancy = chosen.advertising ? "Vacant, advertising" : "Vacant";
                 s.occupancyColor = Misc.getHighlightColor();
@@ -287,7 +302,8 @@ public class RealEstatePage implements ManagePage {
             s.furniture.addAll(furnitureItems(chosen));
             s.size = chosen.tier().name;
             s.furnitureSlots = chosen.tier().slots;
-            s.tenant = chosen.tenant == null ? "" : nameAndFaction(chosen.tenant);
+            s.tenant = chosen.tenant == null ? "" : (chosen.tenant.isPartner() ? chosen.tenant.name + ", your "
+                    + landlordsector.Family.noun(chosen.tenant) : nameAndFaction(chosen.tenant));
             s.tenantRef = chosen.tenant;
             s.extra.add(new String[] {"Bought for", Misc.getDGSCredits(chosen.paidPrice)});
             s.extra.add(new String[] {"Rent so far", Misc.getDGSCredits(chosen.totalRent)
@@ -297,10 +313,12 @@ public class RealEstatePage implements ManagePage {
 
             float cy = Math.min(end + 8f, height - 36f);
             RentSetting set = chosen.setting();
-            label("Rent", Misc.getGrayColor(), rx, cy, 50f, 28f, Alignment.LMID, Fonts.DEFAULT_SMALL);
-            button("lower:" + chosen.id, "<", rx + 50f, cy, 30f, 28f, set != RentSetting.FREE);
-            label(set.label, Misc.getHighlightColor(), rx + 84f, cy, 90f, 28f, Alignment.MID, Fonts.DEFAULT_SMALL);
-            button("higher:" + chosen.id, ">", rx + 178f, cy, 30f, 28f, set != RentSetting.GREEDY);
+            if (!chosen.playerHome) {
+                label("Rent", Misc.getGrayColor(), rx, cy, 50f, 28f, Alignment.LMID, Fonts.DEFAULT_SMALL);
+                button("lower:" + chosen.id, "<", rx + 50f, cy, 30f, 28f, set != RentSetting.FREE);
+                label(set.label, Misc.getHighlightColor(), rx + 84f, cy, 90f, 28f, Alignment.MID, Fonts.DEFAULT_SMALL);
+                button("higher:" + chosen.id, ">", rx + 178f, cy, 30f, 28f, set != RentSetting.GREEDY);
+            }
             float cost = chosen.repairCost();
             button("repair:" + chosen.id, cost > 0f ? "Repair for " + Misc.getDGSCredits(cost) : "No repairs needed",
                     rx + 220f, cy, 200f, 28f, cost > 0f && Actions.credits() >= cost && m != null);
@@ -327,19 +345,24 @@ public class RealEstatePage implements ManagePage {
                 tip(rx + 660f, cy, fw, 28f, "Selling furnished", "The furniture stays in the home and the buyer pays"
                         + " its full price on top: " + Misc.getDGSCredits(chosen.furnitureValue()) + ".", noSale);
             }
-            tip(rx, cy, 210f, 28f, "Rent", "Free: no rent at all. Anyone can afford it, tenants are grateful, and rich"
+            if (!chosen.playerHome) tip(rx, cy, 210f, 28f, "Rent", "Free: no rent at all. Anyone can afford it, tenants are grateful, and rich"
                     + " ones take a smaller home than usual. Charity and Low: less rent, happier tenants, more reputation."
                     + " High and Greedy: more rent, unhappier tenants, lost reputation.");
         }
 
         private void buildTenantTab(Property p, float rx, float y0) {
             float cw = contentWidth(rightW());
+            if (p.playerHome) {
+                buildFamilyTab(p, rx, y0, cw);
+                return;
+            }
             if (p.tenant != null) {
                 float ny = tenantCard(p.tenant, p, rx, y0, cw);
                 float months = Global.getSector().getClock().getElapsedDaysSince(p.tenant.since) / 30f;
                 text("Living here " + Math.max(0, Math.round(months)) + (Math.round(months) == 1 ? " month." : " months."),
                         Misc.getGrayColor(), rx, ny + 4f, cw);
                 button("evict:" + p.id, "Evict " + p.tenant.name, rx, ny + 30f, 240f, 28f, true);
+                declareButton(p, rx + 250f, ny + 30f);
                 return;
             }
             if (p.condemned) {
@@ -369,6 +392,8 @@ public class RealEstatePage implements ManagePage {
             int pool = Portfolio.get().tenantPool().size();
             text(pool > 0 ? pool + (pool == 1 ? " tenant waits" : " tenants wait") + " in your tenant pool." : "",
                     Misc.getGrayColor(), rx, y0 + 36f, cw);
+            if (cw >= 790f) declareButton(p, rx + 580f, y0);
+            else declareButton(p, rx + cw - 200f, y0 + 32f);
 
             float y = y0 + 62f;
             title("Applicants", rx, y, cw);
@@ -397,6 +422,142 @@ public class RealEstatePage implements ManagePage {
                 poolRow(p, a, rx, y, cw);
                 y += 72f;
             }
+        }
+
+        /** 1.2.0: "Declare player home": you move in, the adverts stop. */
+        private void declareButton(Property p, float x, float y) {
+            String no = landlordsector.Family.cannotDeclare(p);
+            button("declare:" + p.id, "Declare player home", x, y, 200f, 28f, no == null);
+            if (no != null) tip(x, y, 200f, 28f, "Declare player home", no);
+        }
+
+        /**
+         * 1.2.0 (Andrzej's family design): the home you live in. Alone: move in with one of your officers or
+         * administrators. With a partner: their card. Then your kids.
+         */
+        private void buildFamilyTab(Property p, float rx, float y0, float cw) {
+            landlordsector.Tenant t = p.partner();
+            float y = y0;
+            if (t == null) {
+                text("You live here.", Misc.getGrayColor(), rx, y + 5f, 200f);
+                Btn mw = button("choose:" + p.id, "Move in with...", rx + 210f, y, 200f, 28f, !p.condemned);
+                mw.selected = choosingPartner;
+                String no = landlordsector.Family.cannotLeave(p);
+                button("leave:" + p.id, "Stop living here", rx + 420f, y, 200f, 28f, no == null);
+                if (no != null) tip(rx + 420f, y, 200f, 28f, "Stop living here", no);
+                y += 40f;
+                if (choosingPartner) y = partnerList(p, rx, y, cw);
+            } else {
+                y = partnerCard(p, t, rx, y, cw);
+            }
+            y = kidsList(p, rx, y + 8f, cw);
+            int away = Portfolio.get().exKids().size();
+            if (away > 0 && y < height - 30f) {
+                text(away + (away == 1 ? " child lives" : " children live") + " with a former partner. Alimony: "
+                        + Misc.getDGSCredits(away * landlordsector.Settings.alimony()) + " a month.",
+                        Misc.getGrayColor(), rx, y + 4f, cw);
+            }
+        }
+
+        /** Officers and administrators of the opposite sex, with their relationship and a Move in button. */
+        private float partnerList(Property p, float rx, float y, float cw) {
+            List<com.fs.starfarer.api.characters.PersonAPI> people = landlordsector.Family.candidates();
+            if (people.isEmpty()) {
+                text("No officers or administrators of the opposite sex.", Misc.getGrayColor(), rx, y, cw);
+                return y + 26f;
+            }
+            for (com.fs.starfarer.api.characters.PersonAPI who : people) {
+                if (y + 60f > height - 8f) break;
+                box(rx, y, cw, 56f);
+                portrait(who.getPortraitSprite(), rx + 4f, y + 4f, 48f);
+                text(who.getNameString(), Misc.getHighlightColor(), rx + 60f, y + 6f, cw - 300f);
+                text(landlordsector.Family.role(who), Misc.getGrayColor(), rx + 60f, y + 28f, 220f);
+                int bond = landlordsector.Family.bond(who);
+                text("Relationship " + (bond > 0 ? "+" : "") + bond, traitColor(bond >= landlordsector.Family.MIN_BOND
+                        ? Boolean.TRUE : null), rx + 290f, y + 28f, 200f);
+                String no = landlordsector.Family.cannotMoveIn(p, who);
+                float bx = rx + cw - 8f - 160f;
+                button("partner:" + p.id + ":" + who.getId(), "Move in", bx, y + 14f, 160f, 28f, no == null);
+                if (no != null) tip(bx, y + 14f, 160f, 28f, "Move in", no);
+                else tip(bx, y + 14f, 160f, 28f, "Move in", who.getNameString() + " leaves your service and lives"
+                        + " here with you.");
+                y += 60f;
+            }
+            return y;
+        }
+
+        /** The partner: portrait, how long together, traits, happiness and health with what makes them up. */
+        private float partnerCard(Property p, landlordsector.Tenant t, float x, float y, float w) {
+            float size = 86f;
+            portrait(t.portrait, x, y, size);
+            float tx = x + size + 12f;
+            float tw = w - size - 12f;
+            title(t.name, tx, y, tw);
+            float months = Global.getSector().getClock().getElapsedDaysSince(t.since) / 30f;
+            int mo = Math.max(0, Math.round(months));
+            text("Your " + landlordsector.Family.noun(t) + ". Together " + mo + (mo == 1 ? " month." : " months."),
+                    Misc.getGrayColor(), tx, y + 28f, tw);
+            text("Traits", Misc.getGrayColor(), tx, y + 48f, 60f);
+            coloredRow(tenantTraits(t), tx + 60f, y + 48f, tw - 60f);
+            float ny = y + size + 8f;
+            PropertyStats st = p.stats();
+            text("Happiness", Misc.getGrayColor(), x, ny, 120f);
+            Color happy = st.happiness >= 50f ? Misc.getPositiveHighlightColor()
+                    : (st.happiness >= 25f ? Misc.getHighlightColor() : Misc.getNegativeHighlightColor());
+            bar(x + 120f, ny + 5f, 110f, 10f, st.happiness / 100f, happy);
+            text(String.valueOf(Math.round(st.happiness)), x + 238f, ny, 40f);
+            tipColored(x, ny, 280f, 22f, "Happiness: " + Math.round(st.happiness), st.happinessLines);
+            ny += 22f;
+            text("Health", Misc.getGrayColor(), x, ny, 120f);
+            Color healthy = st.health >= landlordsector.data.Levels.sickBelow() ? Misc.getPositiveHighlightColor()
+                    : (st.health >= landlordsector.data.Levels.treatmentBelow() ? Misc.getHighlightColor()
+                            : Misc.getNegativeHighlightColor());
+            bar(x + 120f, ny + 5f, 110f, 10f, st.health / 100f, healthy);
+            text(String.valueOf(Math.round(st.health)), x + 238f, ny, 40f);
+            tipColored(x, ny, 280f, 22f, "Health: " + Math.round(st.health), st.healthLines);
+            ny += 22f;
+            for (PropertyStats.Note n : st.notes) {
+                com.fs.starfarer.api.ui.LabelAPI nl = text(n.text, traitColor(n.good), x + 12f, ny, w - 12f);
+                landlordsector.ui.Canvas.highlight(nl, n.text, n.line());
+                ny += 18f;
+            }
+            if (t.conceivedAt > 0L && t.toldPregnant) {
+                int days = Math.max(1, Math.round(landlordsector.Family.BIRTH_DAYS
+                        - landlordsector.Family.daysSince(t.conceivedAt)));
+                text("A baby is on the way: " + days + (days == 1 ? " day left." : " days left."),
+                        Misc.getPositiveHighlightColor(), x, ny + 4f, w);
+                ny += 22f;
+            }
+            return ny + 8f;
+        }
+
+        /** Your kids living here: name, age, happiness and what they want to be. */
+        private float kidsList(Property p, float x, float y, float w) {
+            if (p.children().isEmpty()) return y;
+            title("Kids", x, y, w);
+            y += 30f;
+            for (landlordsector.Child c : p.children()) {
+                if (y + 60f > height - 8f) break;
+                box(x, y, w, 56f);
+                portrait(c.portrait, x + 4f, y + 4f, 48f);
+                text(c.name, Misc.getHighlightColor(), x + 60f, y + 6f, w - 300f);
+                String what = landlordsector.Family.pathName(c.path);
+                text(landlordsector.Family.age(c) + (what != null ? ". Wants to be " + what + "." : "."),
+                        Misc.getGrayColor(), x + 60f, y + 28f, w - 300f);
+                float h = c.happiness;
+                text("Happiness " + Math.round(h), traitColor(h >= 50f ? Boolean.TRUE : (h < 25f ? Boolean.FALSE : null)),
+                        x + w - 230f, y + 6f, 220f);
+                coloredRow(kidTraits(c), x + w - 230f, y + 28f, 220f);
+                y += 60f;
+            }
+            return y;
+        }
+
+        private List<Object[]> kidTraits(landlordsector.Child c) {
+            landlordsector.Tenant fake = new landlordsector.Tenant();
+            fake.traits = c.traits();
+            fake.screened = true;
+            return tenantTraits(fake);
         }
 
         /**
@@ -744,7 +905,7 @@ public class RealEstatePage implements ManagePage {
             y += 28f;
             List<Property> empty = new ArrayList<>();
             for (Property p : Portfolio.get().properties()) {
-                if (p.tenant == null && !p.condemned && p.market() != null) empty.add(p);
+                if (p.tenant == null && !p.condemned && !p.playerHome && p.market() != null) empty.add(p);
             }
             if (empty.isEmpty()) {
                 text("You have no empty homes.", Misc.getGrayColor(), rx, y, cw);
@@ -868,6 +1029,7 @@ public class RealEstatePage implements ManagePage {
                     break;
                 case "home":
                     selectedHome = parts[1];
+                    choosingPartner = false;
                     message = "";
                     break;
                 case "pool":
@@ -977,6 +1139,27 @@ public class RealEstatePage implements ManagePage {
                 case "evict":
                     result(Actions.evict(pr));
                     break;
+                case "declare":
+                    result(landlordsector.Family.declareHome(pr));
+                    sub = Sub.TENANT;
+                    break;
+                case "leave":
+                    result(landlordsector.Family.stopLiving(pr));
+                    choosingPartner = false;
+                    break;
+                case "choose":
+                    choosingPartner = !choosingPartner;
+                    message = "";
+                    break;
+                case "partner": {
+                    com.fs.starfarer.api.characters.PersonAPI who = null;
+                    for (com.fs.starfarer.api.characters.PersonAPI c : landlordsector.Family.candidates()) {
+                        if (parts.length > 2 && c.getId().equals(parts[2])) who = c;
+                    }
+                    if (who != null) result(landlordsector.Family.moveInWith(pr, who, new java.util.Random()));
+                    choosingPartner = false;
+                    break;
+                }
                 default:
                     break;
             }
@@ -988,7 +1171,7 @@ public class RealEstatePage implements ManagePage {
                     || text.startsWith("Screened") || text.contains(" moved into ") || text.startsWith("Turned")
                     || text.startsWith("Evicted") || text.startsWith("Placed") || text.startsWith("Took back")
                     || text.startsWith("Built") || text.startsWith("Removed") || text.startsWith("Hired")
-                    || text.startsWith("Cancelled");
+                    || text.startsWith("Cancelled") || text.startsWith("You moved") || text.contains(" moved in with ");
             if (ok) good(text);
             else bad(text);
         }

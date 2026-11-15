@@ -122,6 +122,25 @@ Requires LunaLib and OddiszCommons.
 - Sell any time from the Manage page for the value minus a 5% broker fee and the local tariff.
 - Prices move with the market and drift a little each month.
 
+## Family
+
+- Declare one of your homes your own from its Tenants tab. You live there: no rent and no adverts.
+- Move in with one of your officers or administrators of the opposite sex once your relationship with them
+  is +70. They leave your service and live with you. Officers start at 10 per level and administrators at
+  30; everyone gains 10 a month, and officers 2 more for every battle you win.
+- Your partner lives like any tenant, with their own traits, happiness, health and events, and pays no rent.
+  After 30 days without a visit (dock at that market) they lose half a point of happiness a day, up to 50.
+  An unhappy partner leaves you.
+- Talk to your partner in that market's comm directory: propose, try for a child (a 1 in 4 chance, once a
+  day), give a gift or break up. Gifts are sold and the money goes into upgrades for the house, then repairs.
+- Married: no tariffs on that market, happier kids, and good events half again as likely while you visit.
+- Divorce: the house is sold and you get half. Your ex takes the kids. You pay alimony for each child until
+  they grow up.
+- A child is born 30 days after a lucky try, with your name and Junior, and lives in the comm directory.
+  Talk to them to rename them and steer what they become. At 5 cycles they grow up and become an officer,
+  an administrator, a miner who sends 2,000 to 6,000 a month home, a Nexerelin agent, or a local celebrity who
+  adds growth to one of your colonies. A happier childhood makes a better one.
+
 ## Your colonies
 
 - Homes you do not buy on your own colonies are bought by NPC buyers over time. The colony earns half
@@ -136,6 +155,8 @@ chosen one large on the right with its stat sheet, rent setting, Repair and Sell
 
 - Rent multiplier.
 - Most properties you can own (default 5, 0 for no limit).
+- Cycles for kids to grow up (default 5).
+- Alimony per child each month (default 5,000).
 
 ## Compatibility
 

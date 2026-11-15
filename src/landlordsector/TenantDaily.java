@@ -70,6 +70,10 @@ public class TenantDaily implements EveryFrameScript {
             if (p.tenant != null) {
                 p.tenant.mood = settle(p.tenant.mood);
                 if (p.condemned) {
+                    if (p.tenant.isPartner()) {
+                        Family.leaves(p, false, p.tenant.name + " left you: " + p.displayName() + " is falling apart.");
+                        continue;
+                    }
                     Notify.event(p, p.tenant.name + " moved out of " + p.displayName() + ": it is condemned.", false,
                             true);
                     p.tenant = null;
@@ -85,6 +89,8 @@ public class TenantDaily implements EveryFrameScript {
         }
         Finders.deliver(random);
         expirePool();
+        // 1.2.0: pregnancies, births and the kids growing up.
+        Family.daily(random);
     }
 
     private static float settle(float mood) {
@@ -128,7 +134,8 @@ public class TenantDaily implements EveryFrameScript {
         for (TenantEvents.Def d : TenantEvents.all()) {
             if (d.leave || d.tenant || !allowed(p, d)) continue;
             float w = TenantRules.eventWeight(d.good, d.damage, d.crime, d.weight, p.tenant.eventMult(d.id),
-                    st.happiness, p.setting(), p.tier().index, st.security);
+                    st.happiness, p.playerHome ? RentSetting.NORMAL : p.setting(), p.tier().index, st.security);
+            if (d.good) w *= spouseMult(p.tenant);
             // Traits and upgrades change the odds (Fire sprinkler system).
             w *= featureMult(features, d.id);
             if (w <= 0f) continue;
@@ -172,6 +179,7 @@ public class TenantDaily implements EveryFrameScript {
         for (TenantEvents.Def d : TenantEvents.all()) {
             if (d.leave || !d.tenant || !allowed(p, d)) continue;
             float w = tenantWeight(d, p.tenant.eventMult(d.id), st.health, st.security) * featureMult(features, d.id);
+            if (d.good) w *= spouseMult(p.tenant);
             if (w <= 0f) continue;
             pool.add(d);
             weights.add(w);
@@ -195,8 +203,16 @@ public class TenantDaily implements EveryFrameScript {
         return w;
     }
 
+    /** 1.2.0: a wife or husband you visit has more good events (Andrzej: "as long as she's visited"). */
+    static float spouseMult(Tenant t) {
+        if (t == null || !t.isSpouse()) return 1f;
+        return Family.visitPenalty(Family.daysSince(t.lastVisit)) <= 0f ? Family.SPOUSE_GOOD_EVENTS : 1f;
+    }
+
     /** True when the tenant has one of the event's required traits, and it would change something. */
     private static boolean allowed(Property p, TenantEvents.Def d) {
+        // 1.2.0: no rent, tips or new partners for the one who lives with you.
+        if (p.tenant != null && p.tenant.isPartner() && Family.PARTNER_SKIP_EVENTS.contains(d.id)) return false;
         if (!d.requires.isEmpty()) {
             boolean ok = false;
             for (String tr : d.requires) if (p.tenant.has(tr)) ok = true;
@@ -241,6 +257,10 @@ public class TenantDaily implements EveryFrameScript {
         if (e.rep != 0f && m != null && !MarketRules.isOwn(m)) {
             Global.getSector().getPlayerFaction().adjustRelationship(m.getFactionId(), e.rep / 100f);
         }
+        if ((e.leave || e.dies) && t != null && t.isPartner()) {
+            Family.leaves(p, e.dies, text);
+            return;
+        }
         String said = e.big && t != null && !e.dies
                 ? TenantEvents.say(e.id, t.traits(), t.factionId, new java.util.Random()) : null;
         Notify.event(p, text, e.good, e.big, t != null ? t.name : null, said);
@@ -284,6 +304,7 @@ public class TenantDaily implements EveryFrameScript {
 
     /** A very sick tenant may move out to get treatment (0.4.0: no deaths). */
     private static void maybeTreatment(Property p, Random random) {
+        if (p.tenant.isPartner()) return;
         PropertyStats st = p.stats();
         if (random.nextFloat() >= TenantRules.treatmentChance(st.health, Levels.treatmentBelow(), p.tenant.loyal())) {
             return;
@@ -296,6 +317,14 @@ public class TenantDaily implements EveryFrameScript {
     private static void maybeMoveOut(Property p, Random random) {
         PropertyStats st = p.stats();
         if (random.nextFloat() >= TenantRules.moveOutChance(st.happiness, p.tenant.loyal())) return;
+        if (p.tenant.isPartner()) {
+            Tenant t = p.tenant;
+            boolean away = Family.visitPenalty(Family.daysSince(t.lastVisit)) >= 20f;
+            Family.leaves(p, false, t.name + (t.isSpouse() ? " divorced you" : " left you")
+                    + (away ? ". " + Family.capital(Family.he(t)) + " got tired of waiting for you to come home."
+                            : "."));
+            return;
+        }
         Notify.event(p, p.tenant.name + " moved out of " + p.displayName() + ".", false, true);
         p.tenant = null;
         p.advertising = true;

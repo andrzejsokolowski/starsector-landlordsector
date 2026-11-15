@@ -1,10 +1,26 @@
 {
 	"ranks":{
 		"lls_property_agent":{"name":"Property Agent"},
-		"lls_tenant_finder":{"name":"Headhunter"}
+		"lls_tenant_finder":{"name":"Headhunter"},
+		"lls_girlfriend":{"name":"Girlfriend"},
+		"lls_boyfriend":{"name":"Boyfriend"},
+		"lls_partner":{"name":"Partner"},
+		"lls_wife":{"name":"Wife"},
+		"lls_husband":{"name":"Husband"},
+		"lls_spouse":{"name":"Spouse"},
+		"lls_son":{"name":"Son"},
+		"lls_daughter":{"name":"Daughter"}
 	},
 	"posts":{
 		"lls_property_agent":{"name":"Property Agent"},
-		"lls_tenant_finder":{"name":"Headhunter"}
+		"lls_tenant_finder":{"name":"Headhunter"},
+		"lls_girlfriend":{"name":"Girlfriend"},
+		"lls_boyfriend":{"name":"Boyfriend"},
+		"lls_partner":{"name":"Partner"},
+		"lls_wife":{"name":"Wife"},
+		"lls_husband":{"name":"Husband"},
+		"lls_spouse":{"name":"Spouse"},
+		"lls_son":{"name":"Son"},
+		"lls_daughter":{"name":"Daughter"}
 	}
 }

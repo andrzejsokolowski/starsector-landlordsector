@@ -82,6 +82,7 @@ public final class Actions {
 
     /** Null when the property can be sold now, or the reason it cannot. */
     public static String cannotSell(Property p) {
+        if (p.playerHome && (p.partner() != null || !p.children().isEmpty())) return "Your family lives here.";
         MarketAPI m = p.market();
         if (m != null && MarketRules.hostile(m)) return "No broker there will deal with you while you are hostile.";
         return null;
@@ -107,6 +108,7 @@ public final class Actions {
                 back++;
             }
         }
+        Family.release(p);
         Portfolio.get().properties().remove(p);
         Global.getSector().getPlayerFleet().getCargo().getCredits().add(pay);
         Global.getSoundPlayer().playUISound("ui_cargo_special_tech_drop", 1f, 1f);
@@ -230,6 +232,7 @@ public final class Actions {
     }
 
     public static void toggleAdvertising(Property p) {
+        if (p.playerHome) return;
         p.advertising = !p.advertising;
         p.addLog(p.advertising ? "Started advertising for tenants." : "Stopped advertising.");
     }
@@ -282,6 +285,7 @@ public final class Actions {
     /** Moves an applicant or a pool tenant into an empty home. */
     public static String moveIn(Property p, Tenant t) {
         if (p.tenant != null) return p.displayName() + " already has a tenant.";
+        if (p.playerHome) return "You live in " + p.displayName() + ".";
         String no = refusal(p, t);
         if (no != null) return t.name + " won't move into " + p.displayName() + ": " + no.toLowerCase() + ".";
         if (p.condemned) return p.displayName() + " is condemned. Repair it first.";
@@ -304,6 +308,7 @@ public final class Actions {
 
     public static String evict(Property p) {
         if (p.tenant == null) return "Nobody lives there.";
+        if (p.tenant.isPartner()) return "Talk to " + p.tenant.name + " instead.";
         String name = p.tenant.name;
         p.tenant = null;
         p.addLog("Evicted " + name + ".", false, "Evicted " + name + ".");

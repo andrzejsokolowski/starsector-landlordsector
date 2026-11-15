@@ -87,14 +87,19 @@ public final class PropertyStats {
 
     /** The home with its own tenant (or none). Its traits and finished upgrades count alike (0.4.0). */
     public static PropertyStats of(Property p) {
-        return of(p.tier(), p.market(), climate(p.climateId), p.condition, p.setting(), p.features(), p.decorRaw(true),
+        return of(p.tier(), p.market(), climate(p.climateId), p.condition, setting(p), p.features(), p.decorRaw(true),
                 p.tenant, p.neighbor, p.id);
     }
 
     /** The home as it would be with this tenant moving in. */
     public static PropertyStats withTenant(Property p, Tenant t) {
-        return of(p.tier(), p.market(), climate(p.climateId), p.condition, p.setting(), p.features(), p.decorRaw(true), t,
+        return of(p.tier(), p.market(), climate(p.climateId), p.condition, setting(p), p.features(), p.decorRaw(true), t,
                 p.neighbor, p.id);
+    }
+
+    /** 1.2.0: the player's own home has no rent, so its rent setting does nothing. */
+    private static RentSetting setting(Property p) {
+        return p.playerHome ? RentSetting.NORMAL : p.setting();
     }
 
     /** A home for sale: new, at Normal rent, no tenant. */
@@ -389,6 +394,17 @@ public final class PropertyStats {
             }
         }
         float flip = 0f;
+        if (t.isPartner()) {
+            // 1.2.0: your partner pays no rent, but misses you (Andrzej: "Last visited: X days ago").
+            int days = Math.round(Family.daysSince(t.lastVisit));
+            float away = Family.visitPenalty(days);
+            String when = days <= 0 ? "today" : (days == 1 ? "yesterday" : days + " days ago");
+            String num = away >= 0.5f ? " (-" + Math.round(away) + ")" : "";
+            s.notes.add(new Note("Last visited: " + when + num, away >= 0.5f ? Boolean.FALSE : null));
+            if (t.mood >= 5f) s.notes.add(new Note("In a good mood (+" + Math.round(t.mood) + ")", true));
+            if (t.mood <= -5f) s.notes.add(new Note("In a bad mood (" + Math.round(t.mood) + ")", false));
+            return TenantRules.tenantHappiness(home, t.traitHappiness() + levelExtra, liked, disliked, away, t.mood);
+        }
         int shift = t.homeShift();
         float price = TenantRules.pricePenalty(tier.index, setting, t.wealth, shift);
         float beneath = TenantRules.beneathPenalty(tier.index, t.wealth, shift, setting);

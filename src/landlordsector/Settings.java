@@ -35,6 +35,29 @@ public final class Settings {
         }
     }
 
+    /** 1.2.0: cycles a child takes to grow up. */
+    public static final int DEFAULT_GROW_UP_CYCLES = 5;
+    /** 1.2.0: alimony per child per month while they grow up. */
+    public static final int DEFAULT_ALIMONY = 5000;
+
+    public static int growUpCycles() {
+        try {
+            Integer i = LunaSettings.getInt(MOD_ID, "lls_growUpCycles");
+            return i == null ? DEFAULT_GROW_UP_CYCLES : Math.max(1, i);
+        } catch (Throwable t) {
+            return DEFAULT_GROW_UP_CYCLES;
+        }
+    }
+
+    public static float alimony() {
+        try {
+            Integer i = LunaSettings.getInt(MOD_ID, "lls_alimony");
+            return i == null ? DEFAULT_ALIMONY : Math.max(0, i);
+        } catch (Throwable t) {
+            return DEFAULT_ALIMONY;
+        }
+    }
+
     /** "Kaysaar's Demise" (Andrzej, 0.3.8): off by default and does nothing yet. */
     public static boolean kaysaarsDemise() {
         try {

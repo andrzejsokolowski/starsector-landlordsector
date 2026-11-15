@@ -40,6 +40,26 @@ public class Portfolio {
     /** 0.8.1: true once homes for sale were rolled again with each world's lore traits. */
     public boolean upgraded081;
 
+    /** 1.2.0: grown kids who work in the mines or inspire a colony, kept for their pay and bonus. */
+    public List<Child> adultKids;
+    /** 1.2.0: kids who left with a former partner: alimony until they grow up. */
+    public List<Child> exKids;
+    /** 1.2.0: children born so far, for "Junior II", "Junior III". */
+    public int kidsBorn;
+    /** 1.2.0: last month's alimony and the pay grown kids sent home. */
+    public float lastAlimony;
+    public float lastKidPay;
+
+    public List<Child> adultKids() {
+        if (adultKids == null) adultKids = new ArrayList<>();
+        return adultKids;
+    }
+
+    public List<Child> exKids() {
+        if (exKids == null) exKids = new ArrayList<>();
+        return exKids;
+    }
+
     public Map<String, Integer> furniture() {
         if (furniture == null) furniture = new java.util.LinkedHashMap<>();
         return furniture;

@@ -1,0 +1,424 @@
+package com.fs.starfarer.api.impl.campaign.rulecmd;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
+import com.fs.starfarer.api.Global;
+import com.fs.starfarer.api.campaign.CargoAPI;
+import com.fs.starfarer.api.campaign.CargoPickerListener;
+import com.fs.starfarer.api.campaign.CargoStackAPI;
+import com.fs.starfarer.api.campaign.CustomDialogDelegate;
+import com.fs.starfarer.api.campaign.CustomUIPanelPlugin;
+import com.fs.starfarer.api.campaign.InteractionDialogAPI;
+import com.fs.starfarer.api.campaign.OptionPanelAPI;
+import com.fs.starfarer.api.campaign.TextPanelAPI;
+import com.fs.starfarer.api.campaign.rules.MemoryAPI;
+import com.fs.starfarer.api.characters.PersonAPI;
+import com.fs.starfarer.api.ui.CustomPanelAPI;
+import com.fs.starfarer.api.ui.TextFieldAPI;
+import com.fs.starfarer.api.ui.TooltipMakerAPI;
+import com.fs.starfarer.api.util.Misc;
+import com.fs.starfarer.api.util.Misc.Token;
+
+import landlordsector.Child;
+import landlordsector.Family;
+import landlordsector.HomeownerScript;
+import landlordsector.Property;
+import landlordsector.Tenant;
+
+/**
+ * 1.2.0: talking to your partner or one of your kids over the comm link. One command, the first parameter says what
+ * to do: greet, options, propose, try, gift, breakup, breakupYes, breakupNo, greetChild, childOptions, rename, path.
+ */
+public class LLS_Family extends BaseCommandPlugin {
+
+    private static final Random RANDOM = new Random();
+
+    @Override
+    public boolean doesCommandAddOptions() {
+        return true;
+    }
+
+    @Override
+    public boolean execute(String ruleId, InteractionDialogAPI dialog, List<Token> params,
+            Map<String, MemoryAPI> memoryMap) {
+        if (dialog == null || params.isEmpty()) return false;
+        PersonAPI who = dialog.getInteractionTarget() != null ? dialog.getInteractionTarget().getActivePerson() : null;
+        Property p = Family.homeOf(who);
+        if (p == null) return false;
+        String verb = params.get(0).getString(memoryMap);
+        TextPanelAPI text = dialog.getTextPanel();
+        OptionPanelAPI opts = dialog.getOptionPanel();
+        Tenant t = p.partner();
+        Child c = Family.childOf(who);
+        switch (verb) {
+            case "greet":
+                if (t != null) say(text, partnerGreeting(p, t));
+                return true;
+            case "options":
+                return t != null && partnerOptions(opts, t);
+            case "propose":
+                return t != null && propose(dialog, memoryMap, p, t);
+            case "try":
+                return t != null && tryForChild(dialog, memoryMap, p, t);
+            case "gift":
+                return t != null && gift(dialog, memoryMap, p, t);
+            case "breakup":
+                if (t == null) return false;
+                opts.clearOptions();
+                opts.addOption("Yes. It's over.", "lls_fam_breakup_yes");
+                if (t.isSpouse()) {
+                    opts.setTooltip("lls_fam_breakup_yes", "The house is sold and you get half. The kids go with "
+                            + him(t) + ".");
+                } else if (!p.children().isEmpty()) {
+                    opts.setTooltip("lls_fam_breakup_yes", capital(Family.his(t)) + " kids go with " + him(t) + ".");
+                }
+                opts.addOption("No. Forget I said anything.", "lls_fam_breakup_no");
+                return true;
+            case "breakupYes": {
+                if (t == null) return false;
+                boolean spouse = t.isSpouse();
+                say(text, spouse ? "Fine. My lawyer will call you." : "Fine. I'll pack my things.");
+                text.addPara(Family.breakUp(p));
+                HomeownerScript.refresh();
+                end(opts);
+                return true;
+            }
+            case "breakupNo":
+                FireAll.fire(null, dialog, memoryMap, "PopulateOptions");
+                return true;
+            case "greetChild":
+                if (c != null) childGreeting(text, c);
+                return true;
+            case "childOptions":
+                return c != null && childOptions(opts, c);
+            case "rename":
+                return c != null && rename(dialog, memoryMap, c);
+            case "path":
+                return c != null && params.size() > 1 && path(dialog, memoryMap, p, c, params.get(1).getString(memoryMap));
+            default:
+                return false;
+        }
+    }
+
+    // ---- Partner ----
+
+    private static String partnerGreeting(Property p, Tenant t) {
+        float h = p.stats().happiness;
+        if (t.conceivedAt > 0L && t.toldPregnant) {
+            return pick("Not long now. The baby kicks all night.", "I keep thinking about names.");
+        }
+        if (t.lastGap > 60f) {
+            return pick("Look who finally remembered where they live.", "Oh, you're alive. Good to know.");
+        }
+        if (h < 25f) return pick("Oh. It's you.", "What do you want?");
+        if (h >= 60f && t.isSpouse()) return pick("There you are. I missed you.", "Hey, love. Staying for dinner?");
+        if (h >= 60f) return pick("Hey, you. I was hoping you'd call.", "Good timing. I just made coffee.");
+        return pick("Hi. How was the trip?", "Hey. You look tired.");
+    }
+
+    private static boolean partnerOptions(OptionPanelAPI opts, Tenant t) {
+        if (!t.isSpouse()) opts.addOption("Will you marry me?", "lls_fam_propose");
+        opts.addOption("Let's try for a child.", "lls_fam_try");
+        if (t.conceivedAt > 0L && t.toldPregnant) {
+            opts.setEnabled("lls_fam_try", false);
+            opts.setTooltip("lls_fam_try", "A child is already on the way.");
+        } else if (t.lastTry > 0L && Family.daysSince(t.lastTry) < 1f) {
+            opts.setEnabled("lls_fam_try", false);
+            opts.setTooltip("lls_fam_try", "Not again today.");
+        }
+        opts.addOption("I got you something.", "lls_fam_gift");
+        if (Family.giftable().isEmpty()) {
+            opts.setEnabled("lls_fam_gift", false);
+            opts.setTooltip("lls_fam_gift", "You have nothing to give.");
+        }
+        opts.addOption(t.isSpouse() ? "I want a divorce." : "I think we should break up.", "lls_fam_breakup");
+        return true;
+    }
+
+    private static boolean propose(InteractionDialogAPI dialog, Map<String, MemoryAPI> memoryMap, Property p,
+            Tenant t) {
+        TextPanelAPI text = dialog.getTextPanel();
+        String name = t.name;
+        if (Family.propose(p, RANDOM)) {
+            say(text, pick("Yes! Yes, of course!", "I thought you'd never ask. Yes!"));
+            text.addPara(name + " is now your " + Family.noun(t) + ".", Misc.getPositiveHighlightColor());
+            HomeownerScript.refresh();
+            FireAll.fire(null, dialog, memoryMap, "PopulateOptions");
+        } else {
+            say(text, "Actually... I'm cheating on you.");
+            text.addPara(capital(Family.he(t)) + " packs " + Family.his(t) + " things and leaves.",
+                    Misc.getNegativeHighlightColor());
+            end(dialog.getOptionPanel());
+        }
+        return true;
+    }
+
+    private static boolean tryForChild(InteractionDialogAPI dialog, Map<String, MemoryAPI> memoryMap, Property p,
+            Tenant t) {
+        TextPanelAPI text = dialog.getTextPanel();
+        int r = Family.tryForChild(p, RANDOM);
+        if (r == 0) say(text, "Not tonight. I'm exhausted.");
+        else if (r == 1) say(text, "We already have one on the way, remember?");
+        else text.addPara("You spend the night together.");
+        FireAll.fire(null, dialog, memoryMap, "PopulateOptions");
+        return true;
+    }
+
+    private static boolean gift(final InteractionDialogAPI dialog, final Map<String, MemoryAPI> memoryMap,
+            final Property p, final Tenant t) {
+        CargoAPI cargo = Family.giftable();
+        dialog.showCargoPickerDialog("Pick a gift", "Give", "Cancel", true, 310f, cargo, new CargoPickerListener() {
+            @Override
+            public void pickedCargo(CargoAPI picked) {
+                if (picked == null || picked.isEmpty()) return;
+                Family.Gift g = Family.gift(p, picked, RANDOM);
+                TextPanelAPI text = dialog.getTextPanel();
+                if (g.value <= 0f) return;
+                say(text, reaction(g));
+                String he = capital(Family.he(t));
+                StringBuilder sb = new StringBuilder(he + " sells it for " + Misc.getDGSCredits(g.value));
+                if (!g.built.isEmpty()) sb.append(" and has ").append(list(g.built)).append(" built");
+                if (g.repairs > 0f) sb.append(g.built.isEmpty() ? " and has" : ", then has").append(" the house repaired");
+                sb.append(".");
+                if (g.kept >= 1f) {
+                    sb.append(" ").append(he).append(" keeps the rest: ").append(Misc.getDGSCredits(g.kept)).append(".");
+                }
+                text.addPara(sb.toString());
+                FireAll.fire(null, dialog, memoryMap, "PopulateOptions");
+            }
+
+            @Override
+            public void cancelledCargoSelection() {
+            }
+
+            @Override
+            public void recreateTextPanel(TooltipMakerAPI panel, CargoAPI cargo, CargoStackAPI pickedUp,
+                    boolean pickedUpFromSource, CargoAPI combined) {
+                float value = 0f;
+                for (CargoStackAPI s : combined.getStacksCopy()) value += s.getBaseValuePerUnit() * s.getSize();
+                panel.addPara("Worth about %s.", 0f, Misc.getHighlightColor(), Misc.getDGSCredits(value));
+            }
+        });
+        return true;
+    }
+
+    private static String reaction(Family.Gift g) {
+        String id = g.firstItem == null ? "" : g.firstItem;
+        switch (id) {
+            case "pristine_nanoforge":
+            case "corrupted_nanoforge":
+                return "A nanoforge? Where am I supposed to put a nanoforge?";
+            case "orbital_fusion_lamp":
+                return "A fusion lamp. For the living room. Sure.";
+            case "synchrotron":
+                return "What does it do? No, don't tell me.";
+            case "soil_nanites":
+                return "Is this dirt? Expensive dirt?";
+            case "cryoarithmetic_engine":
+                return "It's so cold. Why is it so cold?";
+            case "coronal_portal":
+                return "It's humming. Should it be humming?";
+            case "mantle_bore":
+                return "You want me to drill a hole in the planet?";
+            case "biofactory_embryo":
+                return "Did it just move?";
+            case "drone_replicator":
+                return "It's making more of itself. Make it stop.";
+            case "dealmaker_holosuite":
+                return "Finally, something for the living room.";
+            case "fullerene_spool":
+                return "Thread? You got me thread?";
+            case "plasma_dynamo":
+                return "Don't plug that in here.";
+            case "catalytic_core":
+                return "It smells like a refinery.";
+            default:
+                break;
+        }
+        if (g.value < 20000f) return "Oh. Thanks, I guess.";
+        if (g.value < 200000f) return "For me? You shouldn't have.";
+        if (g.value < 1000000f) return "Do you know what this is worth? I know exactly what to do with it.";
+        return "Are you out of your mind? This could buy a moon!";
+    }
+
+    // ---- Kids ----
+
+    private static void childGreeting(TextPanelAPI text, Child c) {
+        String dad = Family.parentWord();
+        if (!c.grown && Family.ageDays(c) < Family.DAYS_PER_CYCLE) {
+            text.addPara(c.name + " grabs at the screen and giggles.");
+            return;
+        }
+        if (c.grown && c.path == null) {
+            say(text, "So, " + dad + ". What now?");
+            return;
+        }
+        String path = c.path == null ? "" : c.path;
+        switch (path) {
+            case Child.OFFICER:
+                say(text, dad + "! When can we take the Kite out again?");
+                break;
+            case Child.ADMIN:
+                say(text, dad + ", did you know a gamma core can run a whole farm?");
+                break;
+            case Child.WORKER:
+                say(text, "I dug all the way down to bedrock today!");
+                break;
+            case Child.AGENT:
+                say(text, "I've been practicing my spy walk. Watch.");
+                break;
+            case Child.GROWTH:
+                say(text, "Everyone at school says I'm the prettiest.");
+                break;
+            default:
+                say(text, "Hi, " + dad + "!");
+        }
+    }
+
+    private static boolean childOptions(OptionPanelAPI opts, Child c) {
+        opts.addOption("Let's pick a new name for you.", "lls_kid_rename");
+        opts.addOption("Wanna go for a drive in the Kite I bought, " + c.noun() + "?", "lls_kid_officer");
+        opts.addOption("I see you're reading \"AI Cores in Industry\"?", "lls_kid_admin");
+        opts.addOption("I see you're playing Minecraft...", "lls_kid_worker");
+        if (Family.nexerelin()) opts.addOption("That 007 movie is pretty cool, eh?", "lls_kid_agent");
+        opts.addOption("Wow, you're so pretty!", "lls_kid_growth");
+        return true;
+    }
+
+    private static boolean path(InteractionDialogAPI dialog, Map<String, MemoryAPI> memoryMap, Property p, Child c,
+            String path) {
+        TextPanelAPI text = dialog.getTextPanel();
+        c.path = path;
+        if (!c.grown && Family.ageDays(c) < Family.DAYS_PER_CYCLE) {
+            text.addPara(c.name + " giggles.");
+        } else {
+            switch (path) {
+                case Child.OFFICER:
+                    say(text, "Yes! Can I fly it this time?");
+                    break;
+                case Child.ADMIN:
+                    say(text, "It's really good. I want to run a colony one day.");
+                    break;
+                case Child.WORKER:
+                    say(text, "I'm going to dig the biggest mine ever.");
+                    break;
+                case Child.AGENT:
+                    say(text, "I want to be a spy when I grow up.");
+                    break;
+                default:
+                    say(text, "Thanks, " + Family.parentWord() + "! Everyone says that.");
+            }
+        }
+        if (c.grown) {
+            if (Family.startLife(p, c, RANDOM)) {
+                text.addPara(c.name + " moves out.");
+                end(dialog.getOptionPanel());
+                return true;
+            }
+            text.addPara(waitReason(path), Misc.getHighlightColor());
+        }
+        FireAll.fire(null, dialog, memoryMap, "PopulateOptions");
+        return true;
+    }
+
+    private static String waitReason(String path) {
+        switch (path) {
+            case Child.OFFICER:
+                return "There's no room for another officer in your fleet yet.";
+            case Child.ADMIN:
+                return "You have no room for another administrator yet.";
+            case Child.GROWTH:
+                return "You have no colony for them to move to yet.";
+            default:
+                return "They'll wait at home for now.";
+        }
+    }
+
+    private static boolean rename(final InteractionDialogAPI dialog, final Map<String, MemoryAPI> memoryMap,
+            final Child c) {
+        dialog.showCustomDialog(420f, 70f, new CustomDialogDelegate() {
+            private TextFieldAPI field;
+
+            @Override
+            public void createCustomDialog(CustomPanelAPI panel, CustomDialogCallback callback) {
+                TooltipMakerAPI tt = panel.createUIElement(420f, 70f, false);
+                tt.addPara("New name", 0f);
+                field = tt.addTextField(400f, 8f);
+                field.setText(c.name);
+                panel.addUIElement(tt).inTL(0f, 0f);
+                field.grabFocus(false);
+            }
+
+            @Override
+            public boolean hasCancelButton() {
+                return true;
+            }
+
+            @Override
+            public String getConfirmText() {
+                return "Rename";
+            }
+
+            @Override
+            public String getCancelText() {
+                return "Cancel";
+            }
+
+            @Override
+            public void customDialogConfirm() {
+                if (field == null || field.getText() == null || field.getText().trim().isEmpty()) return;
+                Family.rename(c, field.getText());
+                TextPanelAPI text = dialog.getTextPanel();
+                if (!c.grown && Family.ageDays(c) < Family.DAYS_PER_CYCLE) text.addPara(c.name + " giggles.");
+                else say(text, c.name.split(" ")[0] + "? I like it.");
+                FireAll.fire(null, dialog, memoryMap, "PopulateOptions");
+            }
+
+            @Override
+            public void customDialogCancel() {
+            }
+
+            @Override
+            public CustomUIPanelPlugin getCustomPanelPlugin() {
+                return null;
+            }
+        });
+        return true;
+    }
+
+    // ---- Text ----
+
+    private static void say(TextPanelAPI text, String line) {
+        text.addPara("\"" + line + "\"");
+    }
+
+    private static void end(OptionPanelAPI opts) {
+        opts.clearOptions();
+        opts.addOption("Cut the comm link", "cutCommLink");
+    }
+
+    private static String pick(String... lines) {
+        return lines[RANDOM.nextInt(lines.length)];
+    }
+
+    private static String him(Tenant t) {
+        String he = Family.he(t);
+        return "she".equals(he) ? "her" : ("he".equals(he) ? "him" : "them");
+    }
+
+    private static String capital(String s) {
+        return s == null || s.isEmpty() ? s : Character.toUpperCase(s.charAt(0)) + s.substring(1);
+    }
+
+    private static String list(List<String> items) {
+        if (items.size() == 1) return items.get(0);
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < items.size(); i++) {
+            if (i > 0) sb.append(i == items.size() - 1 ? " and " : ", ");
+            sb.append(items.get(i));
+        }
+        return sb.toString();
+    }
+}

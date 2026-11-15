@@ -35,6 +35,8 @@ dependencies {
     compileOnly commonsJar
     // LunaLib supplies the settings page. Found wherever the mod happens to be installed.
     compileOnly fileTree(dir: "${starsectorPath}/mods", include: '**/LunaLib.jar')
+    // 1.2.0: Nexerelin is optional (a grown child can become one of its agents). Only NexAgents names its classes.
+    compileOnly fileTree(dir: "${starsectorPath}/mods", include: '**/ExerelinCore.jar')
     checkImplementation gameJars
     checkImplementation files(sourceSets.main.output)
     checkImplementation commonsJar

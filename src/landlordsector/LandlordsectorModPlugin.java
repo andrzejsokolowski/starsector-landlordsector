@@ -43,6 +43,7 @@ public class LandlordsectorModPlugin extends BaseModPlugin {
         Global.getSector().getListenerManager().addListener(new MonthlyTick(), true);
         HomeownerScript.install();
         Global.getSector().addTransientScript(new TenantDaily());
+        Global.getSector().addTransientListener(new FamilyListener());
         FurnitureSources.install();
         repairArtPaths();
         Portfolio p = Portfolio.get();

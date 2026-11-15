@@ -21,6 +21,8 @@ import oddiszcommons.ledger.Ledger;
 public class HomeownerScript implements EveryFrameScript, MarketImmigrationModifier {
 
     private static final String MOD_ID = "landlordsector_homeowners";
+    private static final String WIFE_ID = "landlordsector_family";
+    private static final String KIDS_ID = "landlordsector_kids";
     private static HomeownerScript current;
 
     private final Ledger ledger = new Ledger("Landlordsector");
@@ -39,6 +41,11 @@ public class HomeownerScript implements EveryFrameScript, MarketImmigrationModif
 
     public static void afterSave() {
         // Put the bonuses back on the next frame, not a day later.
+        if (current != null) current.lastPass = Long.MIN_VALUE;
+    }
+
+    /** Puts a change on at once (a wedding, a divorce) instead of the next day. */
+    public static void refresh() {
         if (current != null) current.lastPass = Long.MIN_VALUE;
     }
 
@@ -65,12 +72,24 @@ public class HomeownerScript implements EveryFrameScript, MarketImmigrationModif
             ledger.flat(m.getStability(), MOD_ID, stability, "Homeowners", m);
             if (withGrowth.add(m)) m.addTransientImmigrationModifier(this);
         }
+        // 1.2.0: no tariff where your wife or husband lives with you; growth where your kids inspire people.
+        for (String id : Family.spouseMarkets()) {
+            MarketAPI m = Global.getSector().getEconomy().getMarket(id);
+            if (m != null) ledger.mult(m.getTariff(), WIFE_ID, 0f, "Your family lives here", m);
+        }
+        for (Child c : Portfolio.get().adultKids()) {
+            if (c.marketId == null) continue;
+            MarketAPI m = Global.getSector().getEconomy().getMarket(c.marketId);
+            if (m != null && MarketRules.isOwn(m) && withGrowth.add(m)) m.addTransientImmigrationModifier(this);
+        }
         ledger.sweep();
     }
 
     @Override
     public void modifyIncoming(MarketAPI market, PopulationComposition incoming) {
         if (!MarketRules.isOwn(market)) return;
+        float kids = Family.growthAt(market.getId());
+        if (kids > 0f) incoming.getWeight().modifyFlat(KIDS_ID, kids, "Your kids");
         List<Float> homes = Portfolio.get().npcHomes().get(market.getId());
         if (homes == null || homes.isEmpty()) return;
         Economy eco = TierTable.economy();
