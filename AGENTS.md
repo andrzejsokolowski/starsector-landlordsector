@@ -185,3 +185,11 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   size a market grew. Pirate markets sell homes. `FurnitureSources.special` skips loot from Omega, Threat and Dweller
   fleets or objects and fleets with `$noShipRecovery`. `Notify.news` and big `Notify.event`s post only the intel
   message (it already shows in the corner; the plain line doubled it). The sheet always shows the Upgrades row.
+
+- 0.8.0 (Andrzej: estates impossible to find, too few homes, "Unique planets should matter"): `Pricing.housingRoom`
+  (4, 6, 9, 13, 18, 24, then +6 per size) times `Worlds.Def.homes` is `MarketRules.housingSlots`. Tiers: small house
+  from 3, house 4, villa 5, estate 6 (tiers.json). `MarketRules.add` lists one of each tier first when the count
+  allows. `data/Worlds` (worlds.json, keyed by market id, written from the game's descriptions.csv: `planet_<id>`
+  CUSTOM text1 and the GALLERY text2): homes, tier multipliers (0 = never), and an effect like a condition that
+  `MarketRules.effects` adds after the conditions (named by the world's "name" in tooltips). `BuyScreen` shows the
+  world's line, scrolls (`Canvas.onScroll`) and takes Up/Down. `upgradeTo080` re-rolls all listings once.

@@ -9,12 +9,15 @@ Requires LunaLib and OddiszCommons.
 ## Buying
 
 - Homes are sold by **property agents**: every market of size 3 or more that is not Luddic Path
-  has one in its comm directory (a new colony gets one the next day). A market has room for one home per point of size (owned and for sale together) and
+  has one in its comm directory (a new colony gets one the next day). A market has room for more homes the bigger it is (4 at size 3, 13 at size 6, 24 at size 8; owned and for
+  sale together, times the world's own number in worlds.json) and
   lists half to all of the free ones.
 - The property screen lists the homes on the left and shows the chosen one large on the right, with its
   stat sheet.
-- Bigger markets list better homes: shacks and studios from size 3, small houses from 4, houses from 5,
-  villas from 6 and estates from 7. New homes come on the market every 90 days.
+- Bigger markets list better homes: shacks, studios and small houses from size 3, houses from 4, villas
+  from 5 and estates from 6. A list with room for every size starts with one of each.
+- Worlds with their own housing (worlds.json, from each world's description in the game): crowded hive cities
+  on Sindria, the Tri-Tachyon capital Eochu Bres from shanties to estates, the paradise world Gilead and more. New homes come on the market every 90 days.
 - Every home has a name, often taken from its traits (names.json), for example Leafy Cottage.
 - Base prices: shack 1k to 10k, studio 30k to 50k, small house 100k to 300k, house 500k to 1M,
   villa 1.5M to 2.5M, estate 3M to 5M.

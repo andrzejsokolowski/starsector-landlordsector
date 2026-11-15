@@ -35,6 +35,8 @@ public class Portfolio {
     public Map<String, Integer> furniture;
     /** 0.5.0: true once the save was moved to 0.5.0 (listings rolled again with neighbours and new counts). */
     public boolean upgraded050;
+    /** 0.8.0: true once every market's homes for sale were rolled again with the new room and the world table. */
+    public boolean upgraded080;
 
     public Map<String, Integer> furniture() {
         if (furniture == null) furniture = new java.util.LinkedHashMap<>();

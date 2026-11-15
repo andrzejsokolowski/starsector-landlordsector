@@ -119,8 +119,11 @@ public final class RuntimeCheck {
         expect(col.directory.size() == 1 && Agents.hasAgent(a) && Agents.hasAgent(b), "every eligible market keeps its agent");
 
         MarketListings la = MarketRules.listings(a);
-        expect(la.list().size() >= 3 && la.list().size() <= 6, "a size 6 market lists 3 to 6 homes (0.5.0), got "
+        expect(la.list().size() >= 7 && la.list().size() <= 13, "a size 6 market lists 7 to 13 homes (0.8.0), got "
                 + la.list().size());
+        java.util.Set<String> sizes = new java.util.HashSet<>();
+        for (Listing l : la.list()) sizes.add(l.tierId);
+        expect(sizes.size() == 6, "a size 6 market lists every home size, estates too (0.8.0): " + sizes);
         for (Listing l : la.list()) {
             Tier t = TierTable.get(l.tierId);
             expect(t != null && t.minSize <= 6, "listing tier fits the market size: " + l.tierId);
@@ -523,6 +526,30 @@ public final class RuntimeCheck {
         expect(!Portfolio.get().npcHomes().containsKey(b.getId()), "NPC homes of a lost colony are dropped");
 
         checkPictureMemory070();
+
+        // 0.8.0: a world from worlds.json. Eochu Bres, size 6, has room for 23 homes, lists every size and prices
+        // like the Tri-Tachyon capital; the same market under another id is the plain size 6 rule.
+        FakeMarket ebf = new FakeMarket();
+        ebf.id = "eochu_bres"; ebf.name = "Eochu Bres"; ebf.factionId = "tritachyon"; ebf.size = 6;
+        ebf.stability = 7f; ebf.hazard = 1f; ebf.habitable = true;
+        MarketAPI eb = market(ebf);
+        FakeMarket plainF = new FakeMarket();
+        plainF.id = "fake_plain6"; plainF.name = "Plain"; plainF.factionId = "tritachyon"; plainF.size = 6;
+        plainF.stability = 7f; plainF.hazard = 1f; plainF.habitable = true;
+        MarketAPI plain = market(plainF);
+        expect(MarketRules.housingSlots(eb) == 23 && MarketRules.housingSlots(plain) == 13,
+                "Eochu Bres has room for 23 homes, a plain size 6 world 13: " + MarketRules.housingSlots(eb));
+        expect(Math.abs(MarketRules.mult(eb) / MarketRules.mult(plain) - 1.3f) < 0.01f, "Eochu Bres prices x1.3");
+        MarketListings ebl = MarketRules.listings(eb);
+        java.util.Set<String> ebSizes = new java.util.HashSet<>();
+        for (Listing l : ebl.list()) ebSizes.add(l.tierId);
+        expect(ebl.list().size() >= 12 && ebSizes.contains("estate"), "Eochu Bres lists 12+ homes with an estate: "
+                + ebl.list().size() + " " + ebSizes);
+        boolean named = false;
+        for (String[] line : PropertyStats.of(ebl.list().get(0), eb).gradeLines) {
+            named |= line[0] != null && line[0].startsWith("Tri-Tachyon capital");
+        }
+        expect(named, "the location tooltip names the Tri-Tachyon capital");
 
         if (!problems.isEmpty()) {
             for (String p : problems) System.err.println("FAIL: " + p);

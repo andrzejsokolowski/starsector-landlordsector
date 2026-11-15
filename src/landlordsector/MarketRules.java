@@ -13,6 +13,7 @@ import com.fs.starfarer.api.util.WeightedRandomPicker;
 
 import landlordsector.data.ConditionTable;
 import landlordsector.data.HouseTraits;
+import landlordsector.data.Worlds;
 
 /** The hidden rule: which markets sell homes, what they list and what it costs. */
 public final class MarketRules {
@@ -49,8 +50,16 @@ public final class MarketRules {
     /** The price rule times every market condition in conditions.json that this market has. */
     public static float mult(MarketAPI market) {
         float m = baseMult(market);
-        for (ConditionTable.Effect e : ConditionTable.matching(Tenants.conditions(market), market.getFactionId())) m *= e.price;
+        for (ConditionTable.Effect e : effects(market)) m *= e.price;
         return Pricing.clamp(m, Pricing.MULT_MIN, Pricing.MULT_MAX);
+    }
+
+    /** The market's condition effects, plus its world's own effect (0.8.0, worlds.json) last. */
+    public static List<ConditionTable.Effect> effects(MarketAPI market) {
+        List<ConditionTable.Effect> out = ConditionTable.matching(Tenants.conditions(market), market.getFactionId());
+        Worlds.Def w = Worlds.get(market.getId());
+        if (w != null) out.add(w.effect);
+        return out;
     }
 
     private static float baseMult(MarketAPI market) {
@@ -101,11 +110,15 @@ public final class MarketRules {
     }
 
     /**
-     * Homes a market has room for (0.5.0, Andrzej: "Size 8 = 8 properties potentially", and a growing colony gets
-     * more): one per point of market size, owned and for sale together.
+     * Homes a market has room for, owned and for sale together. 0.5.0 had one per point of size; 0.8.0 (Andrzej: "the
+     * amount of properties is still too low, even on big planets such as eochu bres") has many more on big markets,
+     * times the world's own "homes" (worlds.json): Eochu Bres, size 6, has room for 23.
      */
     public static int housingSlots(MarketAPI market) {
-        return Math.max(0, market.getSize());
+        int base = Pricing.housingRoom(market.getSize());
+        if (base <= 0) return 0;
+        Worlds.Def w = Worlds.get(market.getId());
+        return Math.max(1, Math.round(base * (w != null ? w.homes : 1f)));
     }
 
     /** Homes for sale to roll: half to all of the free room, at least one while there is room. */
@@ -178,13 +191,22 @@ public final class MarketRules {
 
     /** Adds {@code count} new homes for sale, then sorts the list cheapest first. */
     private static void add(MarketAPI market, MarketListings ml, int count, Random random) {
-        List<Tier> tiers = tiersFor(market);
-        if (tiers.isEmpty()) return;
+        List<Tier> tiers = new ArrayList<>();
+        Worlds.Def world = Worlds.get(market.getId());
         WeightedRandomPicker<Tier> picker = new WeightedRandomPicker<>(random);
-        for (Tier t : tiers) picker.add(t, Math.max(0.01f, t.weight));
+        for (Tier t : tiersFor(market)) {
+            float w = Math.max(0.01f, t.weight) * (world != null ? world.tierMult(t.id) : 1f);
+            if (w <= 0f) continue;
+            tiers.add(t);
+            picker.add(t, w);
+        }
+        if (tiers.isEmpty()) return;
+        // 0.8.0 (Andrzej: "filled with tons of property from all ranges"): a list with room for every size the
+        // market has starts with one of each, so a big market always shows its estates; the rest are rolled.
+        List<Tier> first = count >= tiers.size() ? tiers : new ArrayList<>();
         Climate climate = Climate.of(market);
         for (int i = 0; i < count; i++) {
-            Tier t = picker.pick();
+            Tier t = i < first.size() ? first.get(i) : picker.pick();
             float base = t.min + (t.max - t.min) * random.nextFloat();
             Listing l = new Listing(Portfolio.get().newId(), t.id, climate.id,
                     Art.pick(t.id, PlanetType.of(market), random), base);

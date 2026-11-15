@@ -46,6 +46,9 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
     private String message = "";
     private Color messageColor = Misc.getTextColor();
     private int selected;
+    /** The first home shown in the list (0.8.0: big markets list more homes than fit). */
+    private int first;
+    private int rowsShown = 1;
     private boolean closed;
 
     public BuyScreen(MarketAPI market, Runnable onClose) {
@@ -100,6 +103,11 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
         String terms = own ? "Your colony: homes cost half, with no tariff."
                 : "Prices include the " + Math.round(tariff * 100f) + "% tariff. Rent pays the same tariff.";
         text("Credits: " + Misc.getDGSCredits(Actions.credits()) + ".   " + terms, MARGIN, 42f, width - 2 * MARGIN);
+        // 0.8.0: the world's own line (worlds.json), "Crowded underground hive cities: ...".
+        landlordsector.data.Worlds.Def world = landlordsector.data.Worlds.get(market.getId());
+        if (world != null && world.line != null) {
+            text(world.line, Misc.getGrayColor(), MARGIN, 58f, width - 2 * MARGIN);
+        }
 
         // The list.
         if (shown.isEmpty()) {
@@ -110,11 +118,15 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
                     TOP + 26f, LIST_W);
         }
         selected = Math.max(0, Math.min(selected, shown.size() - 1));
-        int rows = Math.max(4, (int) ((height - TOP - 110f) / (ROW_H + 4f)));
-        for (int i = 0; i < shown.size() && i < rows; i++) {
+        int rows = Math.max(4, (int) ((height - TOP - 130f) / (ROW_H + 4f)));
+        rowsShown = rows;
+        first = Math.max(0, Math.min(first, shown.size() - rows));
+        int visible = Math.min(rows, shown.size() - first);
+        for (int k = 0; k < visible; k++) {
+            int i = first + k;
             Listing l = shown.get(i);
             Tier t = TierTable.get(l.tierId);
-            float y = TOP + i * (ROW_H + 4f);
+            float y = TOP + k * (ROW_H + 4f);
             area(i, MARGIN, y, LIST_W, ROW_H, i == selected);
             text(l.name != null ? l.name : (t != null ? t.name : l.tierId), Misc.getHighlightColor(), MARGIN + 10f,
                     y + 6f, LIST_W - 20f);
@@ -124,7 +136,12 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
         int ownedHere = Portfolio.get().countAt(market.getId());
         int cap = Settings.maxProperties();
         // Below the list, or below the "nothing for sale" lines when there is none (0.3.8: they overlapped).
-        float oy = shown.isEmpty() ? TOP + 60f : TOP + Math.min(shown.size(), rows) * (ROW_H + 4f) + 6f;
+        float oy = shown.isEmpty() ? TOP + 60f : TOP + visible * (ROW_H + 4f) + 6f;
+        if (shown.size() > rows) {
+            text((first + 1) + " to " + (first + visible) + " of " + shown.size() + " homes. Scroll for more.",
+                    Misc.getGrayColor(), MARGIN, oy, LIST_W);
+            oy += 18f;
+        }
         text("You own " + ownedHere + (ownedHere == 1 ? " home" : " homes") + " here,", Misc.getGrayColor(),
                 MARGIN, oy, LIST_W);
         text(Portfolio.get().properties().size() + " in all" + (cap > 0 ? " (most allowed " + cap + ")." : "."),
@@ -208,6 +225,30 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
                     : Misc.getNegativeHighlightColor();
             rebuild();
         }
+    }
+
+    /** The mouse wheel over the list moves it (0.8.0). */
+    @Override
+    protected boolean onScroll(int dir, float x, float y) {
+        if (x > MARGIN + LIST_W + 8f) return false;
+        first -= dir;
+        rebuild();
+        return true;
+    }
+
+    /** Up and down arrows pick the next or previous home and keep it in view (0.8.0). */
+    @Override
+    protected boolean onKey(int key) {
+        int step = key == org.lwjgl.input.Keyboard.KEY_UP ? -1 : key == org.lwjgl.input.Keyboard.KEY_DOWN ? 1 : 0;
+        if (step == 0) return false;
+        int n = MarketRules.listings(market).list().size();
+        if (n == 0) return true;
+        selected = Math.max(0, Math.min(n - 1, selected + step));
+        if (selected < first) first = selected;
+        if (selected >= first + rowsShown) first = selected - rowsShown + 1;
+        message = "";
+        rebuild();
+        return true;
     }
 
     @Override

@@ -165,7 +165,7 @@ public final class PropertyStats {
         float condComfort = 0f, condHappy = 0f, condSecurity = 0f;
         List<String[]> condComfortLines = new ArrayList<>(), condHappyLines = new ArrayList<>(),
                 condSecurityLines = new ArrayList<>(), condPriceLines = new ArrayList<>();
-        for (ConditionTable.Effect e : ConditionTable.matching(conds, m.getFactionId())) {
+        for (ConditionTable.Effect e : MarketRules.effects(m)) {
             condComfort += e.comfort;
             condHappy += e.happiness;
             condSecurity += e.security;

@@ -1,3 +1,12 @@
+Version 0.8.0 (2026-11-15)
+- Markets have room for many more homes: 4 at size 3, 9 at size 5, 13 at size 6, 18 at size 7, 24 at size 8
+- Estates are sold from size 6 and villas from size 5; small houses from size 3 and houses from size 4
+- A market with room for every size it sells lists at least one of each, so big worlds always show an estate
+- 33 core worlds have their own housing from their lore: how many homes, which sizes, price, comfort, happiness and security. Examples: crowded hive cities on Sindria and megacities on Chicomoztoc, the Tri-Tachyon capital Eochu Bres from shanties to estates, the paradise world Gilead, aristocratic estates on Eventide, unrest on Volturn
+- The agent's screen shows the world's own line under the title, and the location tooltip names the world's effect
+- The agent's list scrolls with the mouse wheel, and the up and down arrows pick the next home
+- Homes for sale on every market are listed again once when you load a save, with the new numbers
+
 Version 0.7.2 (2026-11-15)
 - Pirate markets now have a property agent and homes for sale, like other markets; Luddic Path markets still have none
 - A new colony gets its property agent the next day instead of at the end of the month

@@ -71,6 +71,17 @@ public final class Pricing {
     }
 
     /** Homes a market of this size has room for (0.5.0: one per point of size). */
+    /**
+     * Homes a market of this size has room for before its world's own multiplier (0.8.0): size 3 has 4, 4 has 6,
+     * 5 has 9, 6 has 13, 7 has 18, 8 has 24, then 6 more per size. Below size 3: none.
+     */
+    public static int housingRoom(int size) {
+        if (size < 3) return 0;
+        int[] room = {4, 6, 9, 13, 18, 24};
+        if (size - 3 < room.length) return room[size - 3];
+        return 24 + 6 * (size - 8);
+    }
+
     public static int listingCount(int size) {
         if (size < 3) return 0;
         return size;

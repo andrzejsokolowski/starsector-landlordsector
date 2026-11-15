@@ -395,6 +395,7 @@ public final class RulesCheck {
                 && Climate.ofType("lava") == Climate.HOSTILE && Climate.ofType("rocky_metallic") == Climate.HOSTILE,
                 "barren, toxic, lava and rocky worlds are hostile");
         checkPlanetTypes042(java.nio.file.Paths.get(args[0]).getParent());
+        checkWorlds080();
 
         if (!problems.isEmpty()) {
             for (String p : problems) System.err.println("FAIL: " + p);
@@ -430,6 +431,32 @@ public final class RulesCheck {
         landlordsector.data.Levels.load(json(dir.resolve("levels.json")));
         landlordsector.data.Environment.load(json(dir.resolve("environment.json")));
         landlordsector.data.Services.load(json(dir.resolve("services.json")));
+        landlordsector.data.Worlds.load(json(dir.resolve("worlds.json")));
+    }
+
+    /**
+     * 0.8.0 (Andrzej: more homes, findable estates, unique worlds): the room per size, estates from size 6, and a
+     * world table that names only real tiers, with a name and a line for each world.
+     */
+    static void checkWorlds080() {
+        expect(Pricing.housingRoom(2) == 0 && Pricing.housingRoom(3) == 4 && Pricing.housingRoom(6) == 13
+                && Pricing.housingRoom(8) == 24 && Pricing.housingRoom(10) == 36, "room per size 0, 4, 13, 24, 36");
+        Tier estate = TierTable.get("estate");
+        expect(estate != null && estate.minSize <= 6, "estates are listed from size 6 (0.8.0)");
+        expect(landlordsector.data.Worlds.all().size() >= 30, "at least 30 worlds in worlds.json");
+        for (landlordsector.data.Worlds.Def w : landlordsector.data.Worlds.all().values()) {
+            expect(w.name != null && !w.name.isEmpty() && w.line != null && !w.line.isEmpty(),
+                    "worlds.json: " + w.id + " has a name and a line");
+            expect(w.homes > 0f && w.effect.price > 0f, "worlds.json: " + w.id + " homes and price above 0");
+            for (String tier : w.tiers.keySet()) {
+                expect(TierTable.get(tier) != null, "worlds.json: " + w.id + " names a real tier: " + tier);
+            }
+        }
+        landlordsector.data.Worlds.Def eb = landlordsector.data.Worlds.get("eochu_bres");
+        expect(eb != null && Math.round(Pricing.housingRoom(6) * eb.homes) >= 20,
+                "Eochu Bres, size 6, has room for 20 or more homes");
+        landlordsector.data.Worlds.Def gil = landlordsector.data.Worlds.get("gilead");
+        expect(gil != null && gil.effect.price > 1.2f && gil.tierMult("estate") > 1f, "Gilead: dear, with more estates");
     }
 
     /**

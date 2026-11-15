@@ -224,6 +224,14 @@ public abstract class Canvas implements CustomUIPanelPlugin {
         dropZones.add(new Drag(key, null, x, y, w, h));
     }
 
+    /**
+     * The mouse wheel over the panel (0.8.0): {@code dir} 1 up, -1 down, at x, y from the panel's top left. True when
+     * used.
+     */
+    protected boolean onScroll(int dir, float x, float y) {
+        return false;
+    }
+
     /** A key was pressed (an LWJGL key code). Return true to take it. */
     protected boolean onKey(int key) {
         return false;
@@ -571,7 +579,15 @@ public abstract class Canvas implements CustomUIPanelPlugin {
     public void processInput(List<InputEventAPI> events) {
         if (events == null) return;
         for (InputEventAPI e : events) {
-            if (e.isConsumed() || !e.isKeyDownEvent()) continue;
+            if (e.isConsumed()) continue;
+            if (e.isMouseScrollEvent()) {
+                // 0.8.0: the mouse wheel, positive up.
+                if (onScroll(e.getEventValue() > 0 ? 1 : -1, mouseX, mouseY)) {
+                    e.consume();
+                }
+                continue;
+            }
+            if (!e.isKeyDownEvent()) continue;
             if (e.getEventValue() == Keyboard.KEY_ESCAPE) {
                 // Only take Escape when this panel uses it, so the Manage screen can still close on it.
                 if (onEscape()) e.consume();

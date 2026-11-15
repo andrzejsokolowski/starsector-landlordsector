@@ -33,6 +33,7 @@ public class LandlordsectorModPlugin extends BaseModPlugin {
         landlordsector.data.Environment.load(
                 Global.getSettings().getMergedJSON(landlordsector.data.Environment.PATH));
         landlordsector.data.Services.load(Global.getSettings().getMergedJSON(landlordsector.data.Services.PATH));
+        landlordsector.data.Worlds.load(Global.getSettings().getMergedJSON(landlordsector.data.Worlds.PATH));
         Art.loadFurnitureIcons();
         Manage.addPage(Settings.MOD_ID, "Real estate", new Color(200, 170, 80), new RealEstatePage());
     }
@@ -54,6 +55,17 @@ public class LandlordsectorModPlugin extends BaseModPlugin {
         upgradeTo040(p);
         upgradeTo050(p, random);
         upgradeTo060(p);
+        upgradeTo080(p);
+    }
+
+    /**
+     * 0.8.0: every market's homes for sale are rolled again once, so old saves get the bigger lists, estates from size
+     * 6 and each world's own mix at once instead of after the 90-day refresh. Public for the headless check.
+     */
+    public static void upgradeTo080(Portfolio p) {
+        if (p.upgraded080) return;
+        p.listings().clear();
+        p.upgraded080 = true;
     }
 
     /** 0.6.0: the old screening service flag becomes the screening service. Public for the headless check. */
