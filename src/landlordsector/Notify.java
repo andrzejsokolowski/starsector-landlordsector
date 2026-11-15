@@ -7,7 +7,8 @@ import com.fs.starfarer.api.impl.campaign.intel.MessageIntel;
 import com.fs.starfarer.api.util.Misc;
 
 /**
- * Messages: one line in the fleet log, and for big news a message in the intel screen too. The event part of
+ * Messages: one line in the fleet log, or for big news a message in the intel screen instead (it shows in the
+ * corner like a line). The event part of
  * a line is colored (red for bad, green for good) and the home's name stays plain, as Andrzej asked:
  * "(red) Burglars broke into (red end) Leafy Cottage on Jangala".
  */
@@ -52,7 +53,7 @@ public final class Notify {
      * screen, with a sound.
      */
     public static void news(String text, String highlight, Boolean good) {
-        line(text, good, highlight);
+        // 0.7.2 (Andrzej): the intel message already shows in the corner, so no second plain line.
         Portfolio.get().news = true;
         try {
             MessageIntel msg = new MessageIntel(text, Misc.getTextColor(),
@@ -76,13 +77,14 @@ public final class Notify {
     public static void event(Property p, String text, boolean good, boolean big, String who, String said) {
         String colored = coloredPart(text, p);
         p.addLog(text, good, colored);
-        line(text, good, colored);
         String quote = said == null || who == null ? null : who + ": \"" + said + "\"";
-        if (quote != null) {
-            p.addLog(quote, null, "");
-            line(quote, null, null);
+        if (quote != null) p.addLog(quote, null, "");
+        // 0.7.2 (Andrzej): a big event's intel message already shows in the corner, so it gets no plain line too.
+        if (!big) {
+            line(text, good, colored);
+            if (quote != null) line(quote, null, null);
+            return;
         }
-        if (!big) return;
         Portfolio.get().news = true;
         try {
             MessageIntel msg = new MessageIntel(text, Misc.getTextColor(), new String[] {colored}, color(good));

@@ -296,7 +296,7 @@ public abstract class PropertyView extends Canvas {
     protected static float sheetTextHeight(Sheet s) {
         int rows = 7;
         return 8f + 30f + rows * ROW + (s.traits.isEmpty() ? 0f : ROW) + (s.stats != null ? 2 * ROW : 0f)
-                + (s.upgrades.isEmpty() ? 0f : ROW) + (s.furnitureSlots > 0 ? ROW : 0f) + s.extra.size() * ROW;
+                + ROW + (s.furnitureSlots > 0 ? ROW : 0f) + s.extra.size() * ROW;
     }
 
     /** Where the right column (the bars) starts, from the sheet's left edge (0.5.0: nearer the middle). */
@@ -409,11 +409,14 @@ public abstract class PropertyView extends Canvas {
             coloredRow(climateItems(st), lx + 120f, er, rowW);
             er += ROW;
         }
-        if (!s.upgrades.isEmpty()) {
-            text("Upgrades", Misc.getGrayColor(), lx, er, 120f);
+        // 0.7.2 (Andrzej): the row shows in gray with 0 when nothing is built, like Furniture.
+        text("Upgrades", Misc.getGrayColor(), lx, er, 120f);
+        if (s.upgrades.isEmpty()) {
+            text("0 built", Misc.getGrayColor(), lx + 120f, er, rowW);
+        } else {
             coloredRow(countItem(s.upgrades, s.upgrades.size() + " built", "Upgrades"), lx + 120f, er, rowW);
-            er += ROW;
         }
+        er += ROW;
         if (s.furnitureSlots > 0) {
             text("Furniture", Misc.getGrayColor(), lx, er, 120f);
             if (s.furniture.isEmpty()) {

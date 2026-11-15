@@ -8,8 +8,8 @@ Requires LunaLib and OddiszCommons.
 
 ## Buying
 
-- Homes are sold by **property agents**: every market of size 3 or more that is not pirate or Luddic
-  Path has one in its comm directory. A market has room for one home per point of size (owned and for sale together) and
+- Homes are sold by **property agents**: every market of size 3 or more that is not Luddic Path
+  has one in its comm directory (a new colony gets one the next day). A market has room for one home per point of size (owned and for sale together) and
   lists half to all of the free ones.
 - The property screen lists the homes on the left and shows the chosen one large on the right, with its
   stat sheet.

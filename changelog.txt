@@ -1,3 +1,11 @@
+Version 0.7.2 (2026-11-15)
+- Pirate markets now have a property agent and homes for sale, like other markets; Luddic Path markets still have none
+- A new colony gets its property agent the next day instead of at the end of the month
+- A market that grows puts one new home up for sale for each size it grew
+- Special encounters, such as the Omega tesseracts, no longer drop furniture
+- The home sheet always shows Upgrades, in gray with 0 built when there are none
+- Headhunter returns and big tenant events show one message instead of two
+
 Version 0.7.1 (2026-11-15)
 - Villas and estates have their own pictures on all 14 planet types, two different pictures for each; every home size now has them
 - New picture for the studio on gas giants

@@ -51,6 +51,13 @@ public class TenantDaily implements EveryFrameScript {
         } catch (Throwable t) {
             log.error("Landlordsector: the daily tenant pass failed", t);
         }
+        // 0.7.2 (Andrzej: "I didn't get the property agent" on a new colony): a market that starts selling homes (a
+        // new colony, a market that grew to size 3) gets its agent the next day instead of at the end of the month.
+        try {
+            Agents.update(random, false);
+        } catch (Throwable t) {
+            log.error("Landlordsector: placing property agents failed", t);
+        }
     }
 
     /** One day for every home. Public for the headless check. */

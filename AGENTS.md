@@ -40,8 +40,8 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   right) into `art-source/` under his names (`shouse_`, `gasgiant`, `_alt`, .jpg). `gallery.py` (launch config
   `lls-art-gallery`, port 8765) reviews them into `art-source/review.json`; `make_art.py redo` remakes rejected
   ones from the comment (fix = edit that picture, start over = new picture). Key: GEMINI_API_KEY, his to set.
-- `MarketRules` - the hidden rule. Eligible: in economy, not hidden, size 3+, not pirate (also
-  `Misc.isPirateFaction`) and not Luddic Path. `Pricing` holds the math as plain numbers: market multiplier
+- `MarketRules` - the hidden rule. Eligible: in economy, not hidden, size 3+ and not Luddic Path (pirate
+  markets too since 0.7.2). `Pricing` holds the math as plain numbers: market multiplier
   0.25 to 4 from size, stability, hazard, habitable, mild climate and pollution.
 - `Portfolio` (sector persistent data `landlordsector_portfolio`) - owned `Property` objects, per-market
   `MarketListings` (rolled again after `listingRefreshDays`), NPC homes on player colonies, last month's
@@ -180,3 +180,8 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   `"messages"` in tenant_events.json (groups by traits, then factions, then plain), `TenantEvents.say`,
   `Notify.event(..., who, said)` puts it in the home log, fleet log and the intel message.
 
+- 0.7.2 (Andrzej's notes after 0.7.1): `Agents.update` also runs daily from `TenantDaily.advance` (a new colony
+  waited for the month end). `MarketListings.size` (0 in old saves) lets `MarketRules.grow` add one listing per
+  size a market grew. Pirate markets sell homes. `FurnitureSources.special` skips loot from Omega, Threat and Dweller
+  fleets or objects and fleets with `$noShipRecovery`. `Notify.news` and big `Notify.event`s post only the intel
+  message (it already shows in the corner; the plain line doubled it). The sheet always shows the Upgrades row.

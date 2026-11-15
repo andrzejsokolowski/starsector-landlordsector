@@ -90,9 +90,12 @@ public final class RuntimeCheck {
         MarketAPI c = market(pir);
 
         expect(MarketRules.isEligible(a) && MarketRules.isEligible(b), "Hegemony and player markets sell homes");
-        expect(!MarketRules.isEligible(c), "pirate markets do not sell homes");
+        expect(MarketRules.isEligible(c), "pirate markets sell homes (0.7.2)");
+        FakeMarket path = new FakeMarket();
+        path.id = "fake_path"; path.name = "Fake Path"; path.factionId = "luddic_path"; path.size = 5;
+        expect(!MarketRules.isEligible(market(path)), "Luddic Path markets do not sell homes");
 
-        // Property agents: everyone eligible gets one when the dice always say yes, the pirates never.
+        // Property agents: everyone eligible gets one when the dice always say yes, pirates too (0.7.2), the Path never.
         Random yes = new Random() {
             @Override
             public float nextFloat() {
@@ -107,7 +110,8 @@ public final class RuntimeCheck {
         };
         Agents.update(yes, true);
         expect(heg.directory.size() == 1 && col.directory.size() == 1, "eligible markets get a property agent");
-        expect(pir.directory.isEmpty(), "pirate markets get no property agent");
+        expect(pir.directory.size() == 1, "pirate markets get a property agent (0.7.2)");
+        expect(path.directory.isEmpty(), "Luddic Path markets get no property agent");
         Object agentPerson = heg.directory.isEmpty() ? null : heg.directory.get(0);
         now += 24 * 30 * DAY;
         Agents.update(no, false);
@@ -124,6 +128,13 @@ public final class RuntimeCheck {
             expect("station".equals(l.climateId), "a market with no planet is a station");
         }
         expect(MarketRules.listings(a) == la, "listings stay the same until the refresh");
+        // 0.7.2: a market that grows lists one new home per size it grew, as far as the room allows.
+        while (la.list().size() > 2) la.list().remove(la.list().size() - 1);
+        heg.size = 8;
+        expect(MarketRules.listings(a) == la && la.list().size() == 4 && la.size == 8,
+                "a market that grew from 6 to 8 lists 2 more homes, got " + la.list().size());
+        heg.size = 6;
+        expect(MarketRules.listings(a).list().size() == 4, "a market that shrinks keeps its homes for sale");
 
         // Buy the cheapest on the Hegemony world: the price includes the 30 percent tariff.
         Listing cheap = la.list().get(0);
@@ -261,8 +272,10 @@ public final class RuntimeCheck {
         Finders.State rook = Portfolio.get().finders().get("hh_kantas_den");
         expect(rook != null && pir.id.equals(rook.marketId), "the Kanta's Den headhunter sits on Kanta's Den");
         expect(Portfolio.get().finders().size() == 1, "headhunters whose market is missing do not appear");
-        expect(pir.directory.size() == 1, "the headhunter is in Kanta's Den's comm directory");
-        expect(Finders.hire(rook) == null && rook.hired && pir.directory.isEmpty(), "hiring takes the finder out of the directory");
+        expect(pir.directory.contains(rook.person) && pir.directory.size() == 2,
+                "the headhunter is in Kanta's Den's comm directory, next to its property agent");
+        expect(Finders.hire(rook) == null && rook.hired && !pir.directory.contains(rook.person),
+                "hiring takes the finder out of the directory");
         expect(Finders.startSearch(rook) == null && rook.searching, "a search starts");
         int poolBefore = Portfolio.get().tenantPool().size();
         now += 11 * DAY;

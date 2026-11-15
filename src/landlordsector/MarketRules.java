@@ -9,7 +9,6 @@ import com.fs.starfarer.api.campaign.FactionAPI;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Conditions;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
-import com.fs.starfarer.api.util.Misc;
 import com.fs.starfarer.api.util.WeightedRandomPicker;
 
 import landlordsector.data.ConditionTable;
@@ -25,7 +24,10 @@ public final class MarketRules {
     private MarketRules() {
     }
 
-    /** Markets that sell homes: real, visible, size 3 or more, not pirate and not Luddic Path. */
+    /**
+     * Markets that sell homes: real, visible, size 3 or more and not Luddic Path. Pirate markets sell homes too
+     * since 0.7.2 (Andrzej: "No property agent on pirate market?").
+     */
     public static boolean isEligible(MarketAPI market) {
         if (market == null || !market.isInEconomy() || market.isHidden() || market.isPlanetConditionMarketOnly()) {
             return false;
@@ -33,8 +35,7 @@ public final class MarketRules {
         if (market.getSize() < MIN_SIZE) return false;
         FactionAPI faction = market.getFaction();
         if (faction == null) return false;
-        if (Factions.LUDDIC_PATH.equals(faction.getId()) || Factions.PIRATES.equals(faction.getId())) return false;
-        return !Misc.isPirateFaction(faction);
+        return !Factions.LUDDIC_PATH.equals(faction.getId());
     }
 
     public static boolean hostile(MarketAPI market) {
@@ -147,18 +148,41 @@ public final class MarketRules {
             ml = roll(market, new Random());
             ml.rolledAt = now;
             p.listings().put(market.getId(), ml);
+        } else {
+            grow(market, ml, new Random());
         }
+        ml.size = market.getSize();
         return ml;
+    }
+
+    /**
+     * 0.7.2 (Andrzej: "spawn some ... each time the market increases in size"): a market that grew since its homes
+     * were listed puts one new home up for sale per size it grew, as far as the new room allows. The new homes may
+     * be of the bigger sizes the market now has.
+     */
+    public static void grow(MarketAPI market, MarketListings ml, Random random) {
+        int size = market.getSize();
+        if (ml.size <= 0 || size <= ml.size) return;
+        int free = housingSlots(market) - Portfolio.get().countAt(market.getId()) - ml.list().size();
+        int count = Math.min(size - ml.size, free);
+        if (count <= 0) return;
+        add(market, ml, count, random);
     }
 
     public static MarketListings roll(MarketAPI market, Random random) {
         MarketListings ml = new MarketListings();
+        add(market, ml, listingRoll(housingSlots(market) - Portfolio.get().countAt(market.getId()), random), random);
+        ml.size = market.getSize();
+        return ml;
+    }
+
+    /** Adds {@code count} new homes for sale, then sorts the list cheapest first. */
+    private static void add(MarketAPI market, MarketListings ml, int count, Random random) {
         List<Tier> tiers = tiersFor(market);
-        if (tiers.isEmpty()) return ml;
+        if (tiers.isEmpty()) return;
         WeightedRandomPicker<Tier> picker = new WeightedRandomPicker<>(random);
         for (Tier t : tiers) picker.add(t, Math.max(0.01f, t.weight));
         Climate climate = Climate.of(market);
-        int count = listingRoll(housingSlots(market) - Portfolio.get().countAt(market.getId()), random);
         for (int i = 0; i < count; i++) {
             Tier t = picker.pick();
             float base = t.min + (t.max - t.min) * random.nextFloat();
@@ -182,6 +206,5 @@ public final class MarketRules {
         }
         // Cheapest first, so the screen reads like a price list.
         ml.list().sort((a, b) -> Float.compare(a.basePrice, b.basePrice));
-        return ml;
     }
 }
