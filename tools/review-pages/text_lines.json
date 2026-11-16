@@ -1122,7 +1122,7 @@
 			"id": "set_icon_size_desc",
 			"version": "1.5.1",
 			"line": "Size of the condition icons under each home's picture, in pixels. Icons that do not fit in one row go on to the next.",
-			"when": "LunaLib settings: the description of Home icon size (40 to 128, 120 by default).",
+			"when": "LunaLib settings: the description of Home icon size (40 to 128, 60 by default).",
 			"area": "Settings"
 		},
 		{

@@ -27,8 +27,10 @@ U = SIZE / 40.0  # the drawings below are laid out on a 40 grid
 GRADES = ["S+", "S", "A", "B", "C", "D", "E", "F"]
 # Background per grade, like the colored squares of the game's colony-size icons: gold at the top, slate in the
 # middle, rust and red at the bottom.
-GRADE_BG = {"S+": (138, 109, 26), "S": (98, 122, 38), "A": (52, 110, 66), "B": (42, 92, 96), "C": (44, 62, 76),
-            "D": (92, 70, 44), "E": (110, 52, 36), "F": (112, 30, 30)}
+# 1.5.2 (Andrzej): "S+: Light blue, S: dark Green, A: brighter green, B: Yellow, C: orange, D: brown-ish, E: Light red,
+# F: Deep red." Each a little dark, so the light letters stay readable.
+GRADE_BG = {"S+": (52, 138, 186), "S": (30, 98, 50), "A": (66, 150, 58), "B": (176, 150, 28), "C": (196, 106, 30),
+            "D": (112, 76, 44), "E": (196, 78, 70), "F": (118, 22, 24)}
 STATS = [("location", "LOC"), ("commute", "COMM"), ("air", "AIR"), ("noise", "NOISE")]
 
 
@@ -43,7 +45,7 @@ def grade_key(g):
 
 
 ICON_STYLE = """ICON STYLE (the same for every icon of this set):
-- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown small, about 100 x 100 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown small, about 60 x 60 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
 - Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
 - Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
 - A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
@@ -102,6 +104,19 @@ def gemini_icons():
     out.append({"key": "world", "name": "Lore world", "group": "Places", "good": None,
                 "subject": "a planet seen from orbit with the lights of big cities on its night side",
                 "tone": "Mood: famous and important, a known world of the sector."})
+    # 1.5.2 (Andrzej: "We can also make icons for the climate: Heat, cold, radiation"). One picture each; the build
+    # adds 1 to 3 marks for the level (Hot, Very hot, Scorching). The game's own icons show until a file is there.
+    out.append({"key": "climate_heat", "name": "Heat", "group": "Climate", "good": False,
+                "subject": "the harsh orange glare of a scorching sun through a habitat window, hot air shimmering "
+                           "over a sun-baked metal sill",
+                "tone": "Mood: oppressive, too hot to live comfortably."})
+    out.append({"key": "climate_cold", "name": "Cold", "group": "Climate", "good": False,
+                "subject": "a small round habitat window thick with frost, a pale blue snowstorm outside",
+                "tone": "Mood: bitter and cold, too cold to live comfortably."})
+    out.append({"key": "climate_radiation", "name": "Radiation", "group": "Climate", "good": False,
+                "subject": "a sealed habitat airlock under a flashing yellow hazard lamp, a sickly green haze in the "
+                           "air outside its window",
+                "tone": "Mood: dangerous and unhealthy, the air outside can hurt you."})
     for i in out:
         i["prompt"] = ICON_STYLE + "\n\nTHE ICON: " + i["name"] + ". Show " + i["subject"] + ".\n" + i["tone"] + \
             "\n\nSave it as " + i["key"] + ".png"
@@ -150,6 +165,23 @@ def from_art(src, path):
     im.resize((SIZE, SIZE), Image.LANCZOS).save(path)
 
 
+def climate(src, key):
+    """Three files from one picture: climate_<id>_1..3, with 1 to 3 marks in the lower right for the level."""
+    base = Image.open(src).convert("RGBA")
+    w, h = base.size
+    s = min(w, h)
+    base = base.crop(((w - s) // 2, (h - s) // 2, (w - s) // 2 + s, (h - s) // 2 + s)).resize((SIZE, SIZE), Image.LANCZOS)
+    for n in (1, 2, 3):
+        im = base.copy()
+        d = ImageDraw.Draw(im)
+        m, gap = int(7 * U), int(2 * U)
+        for k in range(n):
+            x1 = SIZE - int(3 * U) - k * (m + gap)
+            y1 = SIZE - int(3 * U)
+            d.rectangle([x1 - m, y1 - m, x1, y1], fill=(235, 90, 50, 255), outline=(20, 10, 8, 255), width=max(1, int(U)))
+        im.save(os.path.join(OUT, "%s_%d.png" % (key, n)))
+
+
 def build():
     os.makedirs(OUT, exist_ok=True)
     n_script = n_art = n_place = 0
@@ -170,6 +202,16 @@ def build():
             names.append(i["key"][len("trait_"):])
         src = next((os.path.join(SRC, n + e) for n in names for e in (".png", ".jpg", ".jpeg", ".webp")
                     if os.path.exists(os.path.join(SRC, n + e))), None)
+        if i["group"] == "Climate":
+            # No placeholder: the game draws its own climate icon until Andrzej's is in.
+            for n in (1, 2, 3):
+                old = os.path.join(OUT, "%s_%d.png" % (i["key"], n))
+                if not src and os.path.exists(old):
+                    os.remove(old)
+            if src:
+                climate(src, i["key"])
+                n_art += 1
+            continue
         if src:
             from_art(src, dst)
             n_art += 1

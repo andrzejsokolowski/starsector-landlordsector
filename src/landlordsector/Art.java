@@ -106,6 +106,27 @@ public final class Art {
         loadTexture(path);
     }
 
+    /** Pictures that could not be loaded, so they are tried once only. */
+    private static final Set<String> missing = new HashSet<>();
+
+    /**
+     * 1.5.2: true when the picture exists and is loaded. For icons that are only there once Andrzej's art is in
+     * (the climate icons); a missing one is tried once and the caller draws something else.
+     */
+    public static boolean has(String path) {
+        if (path == null || missing.contains(path)) return false;
+        if (loaded.contains(path)) return true;
+        try {
+            Global.getSettings().loadTexture(path);
+            loaded.add(path);
+            ensured.add(path);
+            return true;
+        } catch (Throwable t) {
+            missing.add(path);
+            return false;
+        }
+    }
+
     public static void loadFurnitureIcons() {
         for (landlordsector.data.Upgrades.Def d : landlordsector.data.Upgrades.of(
                 landlordsector.data.Upgrades.Kind.FURNITURE)) {

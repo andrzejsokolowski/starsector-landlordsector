@@ -1,3 +1,10 @@
+Version 1.5.2 (2026-11-16)
+- Home icons are 60 pixels by default (Home icon size setting)
+- The icons replace the Size, Location, Area, Traits, Environment and Climate rows; hover an icon for the same details
+- New grade colors: S+ light blue, S dark green, A green, B yellow, C orange, D brown, E light red, F deep red
+- The home picture keeps its size however many icons a home has
+- Removed the Storage row from the home sheet
+
 Version 1.5.1 (2026-11-16)
 - Home condition icons are bigger: 120 pixels by default, set by the new Home icon size setting (40 to 128). Icons that don't fit in one row go on to the next
 - The first painted icons: Blooming, Clean, Cramped, Dusty, Freezing and Geothermal

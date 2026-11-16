@@ -37,9 +37,9 @@ public final class Settings {
 
     /**
      * 1.5.1 (Andrzej: "40x40 is pretty small. The icons are legible from 120x120"): size of the home condition icons,
-     * 120 by default. The icon files are 128 x 128.
+     * 120 by default. The icon files are 128 x 128. 1.5.2 (Andrzej: "Let's lower the size to maybe 60x60"): 60.
      */
-    public static final int DEFAULT_ICON_SIZE = 120;
+    public static final int DEFAULT_ICON_SIZE = 60;
 
     public static float iconSize() {
         try {

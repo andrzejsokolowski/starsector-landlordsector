@@ -370,7 +370,10 @@ public abstract class PropertyView extends Canvas {
             for (landlordsector.data.Levels.Def ld : landlordsector.data.Levels.all()) {
                 int lvl = st.levels.getOrDefault(ld.id, 0);
                 if (lvl <= 0) continue;
-                String path = levelIcon(ld.id, lvl);
+                // 1.5.2 (Andrzej: "We can also make icons for the climate"): his painted icon once it is in, the
+                // game's own condition icon until then.
+                String own = ic + "climate_" + ld.id + "_" + Math.min(3, lvl) + ".png";
+                String path = landlordsector.Art.has(own) ? own : levelIcon(ld.id, lvl);
                 if (path != null) out.add(new IconSpec(path, 1f, landlordsector.data.Levels.label(ld, lvl),
                         st.levelLines.get(ld.id)));
             }
@@ -434,9 +437,9 @@ public abstract class PropertyView extends Canvas {
 
     /** Height the sheet needs under its picture. */
     protected static float sheetTextHeight(Sheet s, float w) {
-        int rows = 7;
-        return 8f + 30f + iconRowsHeight(s, contentWidth(w)) + 6f + rows * ROW + (s.traits.isEmpty() ? 0f : ROW) + (s.stats != null ? 2 * ROW : 0f)
-                + ROW + (s.furnitureSlots > 0 ? ROW : 0f) + s.extra.size() * ROW;
+        // 1.5.2 (Andrzej: "when there are 3 rows of icons, the image of the house downscales. That's not good."):
+        // room for two icon rows and seven text rows whatever the home has, so the picture keeps one size.
+        return 6f + 2f * iconSize() + ICON_GAP + 8f + 30f + 7 * ROW + s.extra.size() * ROW;
     }
 
     /** Where the right column (the bars) starts, from the sheet's left edge (0.5.0: nearer the middle). */
@@ -473,7 +476,7 @@ public abstract class PropertyView extends Canvas {
         }
 
         // 1.5.0 (Andrzej, LLS-16: "home conditions as icons like market conditions"): a row of icons under the
-        // picture, like the conditions on a colony screen. Each icon has the same tooltip as its row below.
+        // picture, like the conditions on a colony screen. 1.5.2: they replace the text rows, with the same tooltips.
         iconRow(s, x, y + imgH + 6f, cw);
         float ty = y + imgH + 6f + iconRowsHeight(s, cw) + 8f;
         title(s.title, x, ty, cw);
@@ -491,10 +494,10 @@ public abstract class PropertyView extends Canvas {
         bar(lx + 120f, r + 2 * ROW + 5f, 110f, 10f, s.condition, cond);
         text(Math.round(s.condition * 100f) + "%", lx + 238f, r + 2 * ROW, 90f);
         row("Occupancy", s.occupancy, s.occupancyColor, lx, r + 3 * ROW, vw);
-        row("Size", s.size, Misc.getTextColor(), lx, r + 4 * ROW, vw);
-
         PropertyStats st = s.stats;
+        float rightEnd = r;
         if (st != null) {
+            rightEnd = r + (s.tenant != null ? 7 : 3) * ROW;
             stat("Comfort", st.comfort, GOLD, rx, r);
             tipColored(rx, r, 280f, ROW, "Comfort " + Math.round(st.comfort), st.comfortLines);
             stat("Decor", st.decor, GOLD, rx, r + ROW);
@@ -521,37 +524,12 @@ public abstract class PropertyView extends Canvas {
                             st.happinessLines);
                 }
             }
-
-            text("Location", Misc.getGrayColor(), lx, r + 5 * ROW, 120f);
-            text("[" + st.grade + "]", Misc.getHighlightColor(), lx + 120f, r + 5 * ROW, 50f);
-            List<String[]> gl = st.gradeLines;
-            if (gl.isEmpty()) {
-                gl = new ArrayList<>();
-                gl.add(new String[] {st.gradeReason, null});
-            }
-            tipColored(lx, r + 5 * ROW, 172f, ROW, landlordsector.PropertyStats.graded("Location", st.grade), gl);
-            // Andrzej, 0.6.0: the building nearby as its own row, "Area: Heavy Batteries".
-            float p = st.neighbor.price;
-            Color ac = Math.abs(p - 1f) < 0.001f ? Misc.getTextColor()
-                    : (p > 1f ? Misc.getPositiveHighlightColor() : Misc.getNegativeHighlightColor());
-            row("Area", st.area, ac, lx, r + 6 * ROW, vw);
-            tipColored(lx, r + 6 * ROW, 300f, ROW, "Area: " + st.area, st.neighborLines);
         }
-        float er = r + 7 * ROW;
-        float rowW = cw - 120f;
-        if (!s.traits.isEmpty()) {
-            text("Traits", Misc.getGrayColor(), lx, er, 120f);
-            coloredRow(s.traits, lx + 120f, er, rowW);
-            er += ROW;
-        }
-        if (st != null) {
-            text("Environment", Misc.getGrayColor(), lx, er, 120f);
-            coloredRow(environmentItems(st), lx + 120f, er, rowW);
-            er += ROW;
-            text("Climate", Misc.getGrayColor(), lx, er, 120f);
-            coloredRow(climateItems(st), lx + 120f, er, rowW);
-            er += ROW;
-        }
+        // 1.5.2 (Andrzej: "With the icons incoming, we can remove the text ... The only thing we keep are: 1. The bars
+        // 2. The text that is not covered by the icons"): Size, Location, Area, Traits, Environment and Climate are
+        // icons now, with the same tooltips.
+        float er = r + 4 * ROW;
+        float rowW = vw;
         // 0.7.2 (Andrzej): the row shows in gray with 0 when nothing is built, like Furniture.
         text("Upgrades", Misc.getGrayColor(), lx, er, 120f);
         if (s.upgrades.isEmpty()) {
@@ -574,6 +552,7 @@ public abstract class PropertyView extends Canvas {
             }
             er += ROW;
         }
+        er = Math.max(er, rightEnd);
         for (String[] pair : s.extra) {
             row(pair[0], pair[1], Misc.getTextColor(), lx, er, w - 130f);
             er += ROW;

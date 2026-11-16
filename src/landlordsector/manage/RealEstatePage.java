@@ -309,9 +309,6 @@ public class RealEstatePage implements ManagePage {
                     + landlordsector.Family.noun(chosen.tenant) : nameAndFaction(chosen.tenant));
             s.tenantRef = chosen.tenant;
             s.extra.add(new String[] {"Bought for", Misc.getDGSCredits(chosen.paidPrice)});
-            if (chosen.market() != null && !chosen.market().isPlayerOwned()) {
-                s.extra.add(new String[] {"Storage", "Free"});
-            }
             s.extra.add(new String[] {"Rent so far", Misc.getDGSCredits(chosen.totalRent)
                     + " (last month " + Misc.getDGSCredits(chosen.lastRent) + ")"});
             float maxImg = height - y0 - sheetTextHeight(s, rw) - 48f;
