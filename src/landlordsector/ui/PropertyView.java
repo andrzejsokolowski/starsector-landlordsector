@@ -34,6 +34,10 @@ public abstract class PropertyView extends Canvas {
         public final List<String[]> extra = new ArrayList<>();
         /** House traits: name and good (green), bad (red). */
         public final List<Object[]> traits = new ArrayList<>();
+        /** 1.5.0 icons: the home's size id, its house trait ids, and the nearby building's picture (null: none). */
+        public String tierId;
+        public final List<String> traitIds = new ArrayList<>();
+        public String areaPicture;
         /** 0.4.0: installed upgrades, the same shape as traits. */
         public final List<Object[]> upgrades = new ArrayList<>();
         /** 1.0.1: the ids of those upgrades, for the combined effects in the row's tooltip. */
@@ -294,10 +298,94 @@ public abstract class PropertyView extends Canvas {
         return m.getName() + ", " + landlordsector.PropertyStats.article(world) + owner;
     }
 
+    /** Size of a condition icon, the same as the game's own on the colony screen. */
+    public static final float ICON = 40f;
+
+    /** The picture of the building a home sits next to (its industry picture), or null for none. */
+    public static String areaPicture(MarketAPI m, String neighborId) {
+        String id = landlordsector.Surroundings.current(m, neighborId);
+        if (landlordsector.data.Environment.NOTHING.equals(id)) return null;
+        try {
+            com.fs.starfarer.api.loading.IndustrySpecAPI spec = com.fs.starfarer.api.Global.getSettings()
+                    .getIndustrySpec(id);
+            return spec != null ? spec.getImageName() : null;
+        } catch (Throwable t) {
+            return null;
+        }
+    }
+
+    private static String gradeIcon(String stat, String letter) {
+        return landlordsector.Art.ICONS + "grade_" + stat + "_" + letter.toLowerCase().replace("+", "plus") + ".png";
+    }
+
+    /** The game's own climate icons: Heat, Cold, Radiation. Null for any other level. */
+    private static String levelIcon(String id, int level) {
+        String base = "graphics/icons/markets/";
+        if ("heat".equals(id)) return base + (level >= 2 ? "hot_extreme.png" : "hot.png");
+        if ("cold".equals(id)) return base + (level >= 2 ? "cold_extreme.png" : "cold.png");
+        if ("radiation".equals(id)) return base + "irradiated.png";
+        return null;
+    }
+
+    /** One icon with its tooltip; returns the x after it, or the same x when it would not fit. */
+    private float oneIcon(String path, float x, float y, float w, float aspect, float right, String title,
+            List<String[]> lines) {
+        if (path == null || x + w > right) return x;
+        icon(path, x, y, w, ICON, aspect);
+        tipColored(x, y, w, ICON, title, lines != null ? lines : new ArrayList<>());
+        return x + w + 4f;
+    }
+
+    /** Size, Location, Commute, Air, Noise, climate, Area, the world, then each house trait. */
+    protected void iconRow(Sheet s, float x, float y, float w) {
+        float right = x + w;
+        float cx = x;
+        String ic = landlordsector.Art.ICONS;
+        if (s.tierId != null) cx = oneIcon(ic + "size_" + s.tierId + ".png", cx, y, ICON, 1f, right, "Size: " + s.size, null);
+        PropertyStats st = s.stats;
+        if (st != null) {
+            List<String[]> gl = st.gradeLines;
+            if (gl.isEmpty()) {
+                gl = new ArrayList<>();
+                gl.add(new String[] {st.gradeReason, null});
+            }
+            cx = oneIcon(gradeIcon("location", st.grade), cx, y, ICON, 1f, right,
+                    PropertyStats.graded("Location", st.grade), gl);
+            for (landlordsector.data.Environment.Score sc : landlordsector.data.Environment.scores()) {
+                Float v = st.env.get(sc.id);
+                if (v == null) continue;
+                String letter = landlordsector.data.Environment.letter(v);
+                cx = oneIcon(gradeIcon(sc.id, letter), cx, y, ICON, 1f, right,
+                        PropertyStats.graded(sc.name, letter) + " (" + Math.round(v) + ")", st.envLines.get(sc.id));
+            }
+            for (landlordsector.data.Levels.Def ld : landlordsector.data.Levels.all()) {
+                int lvl = st.levels.getOrDefault(ld.id, 0);
+                if (lvl <= 0) continue;
+                cx = oneIcon(levelIcon(ld.id, lvl), cx, y, ICON, 1f, right, landlordsector.data.Levels.label(ld, lvl),
+                        st.levelLines.get(ld.id));
+            }
+            if (s.areaPicture != null) {
+                cx = oneIcon(s.areaPicture, cx, y, ICON * 2f, 2f, right, "Area: " + st.area, st.neighborLines);
+            } else {
+                cx = oneIcon(ic + "area_residential.png", cx, y, ICON, 1f, right, "Area: " + st.area, st.neighborLines);
+            }
+            if (st.loreName != null) {
+                List<String[]> ll = new ArrayList<>();
+                if (st.loreLine != null) ll.add(new String[] {st.loreLine, null});
+                cx = oneIcon(ic + "world.png", cx, y, ICON, 1f, right, st.loreName, ll);
+            }
+        }
+        for (String id : s.traitIds) {
+            landlordsector.data.HouseTraits.Def d = landlordsector.data.HouseTraits.get(id);
+            if (d == null || landlordsector.data.Upgrades.get(id) != null) continue;
+            cx = oneIcon(ic + "trait_" + id + ".png", cx, y, ICON, 1f, right, d.name, Tips.houseTrait(d));
+        }
+    }
+
     /** Height the sheet needs under its picture. */
     protected static float sheetTextHeight(Sheet s) {
         int rows = 7;
-        return 8f + 30f + rows * ROW + (s.traits.isEmpty() ? 0f : ROW) + (s.stats != null ? 2 * ROW : 0f)
+        return 8f + 30f + ICON + 6f + rows * ROW + (s.traits.isEmpty() ? 0f : ROW) + (s.stats != null ? 2 * ROW : 0f)
                 + ROW + (s.furnitureSlots > 0 ? ROW : 0f) + s.extra.size() * ROW;
     }
 
@@ -334,7 +422,10 @@ public abstract class PropertyView extends Canvas {
                     com.fs.starfarer.api.ui.Fonts.DEFAULT_SMALL);
         }
 
-        float ty = y + imgH + 8f;
+        // 1.5.0 (Andrzej, LLS-16: "home conditions as icons like market conditions"): a row of icons under the
+        // picture, like the conditions on a colony screen. Each icon has the same tooltip as its row below.
+        iconRow(s, x, y + imgH + 6f, cw);
+        float ty = y + imgH + 6f + ICON + 8f;
         title(s.title, x, ty, cw);
 
         float r = ty + 30f;

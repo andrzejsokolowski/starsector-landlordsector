@@ -1,0 +1,601 @@
+LANDLORDSECTOR - GEMINI PROMPTS FOR THE HOME CONDITION ICONS
+============================================================
+
+One prompt per icon. New Gemini chat for each. Save as the name on the last line into
+art-source/icons/. Claude crops the middle square and shrinks it to 40x40.
+
+####################################################################################################
+### trait_flowers.png  (Blooming)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Blooming. Show a window box overflowing with bright flowers on a pale prefab metal wall, warm evening light.
+Mood: inviting and pleasant, a place you would like to live.
+
+Save it as trait_flowers.png
+
+####################################################################################################
+### trait_garden.png  (Leafy)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Leafy. Show a small lush patch of leafy plants growing beside a habitat door, soft green glow of a grow lamp.
+Mood: inviting and pleasant, a place you would like to live.
+
+Save it as trait_garden.png
+
+####################################################################################################
+### trait_ocean_view.png  (Seaside)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Seaside. Show the view from a metal balcony railing over a calm ocean at dusk, one distant shuttle light in the sky.
+Mood: inviting and pleasant, a place you would like to live.
+
+Save it as trait_ocean_view.png
+
+####################################################################################################
+### trait_lakeside.png  (Lakefront)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Lakefront. Show a short metal jetty reaching into a perfectly still lake at dusk, its lamp reflected in the water.
+Mood: inviting and pleasant, a place you would like to live.
+
+Save it as trait_lakeside.png
+
+####################################################################################################
+### trait_mountain_view.png  (Panoramic)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Panoramic. Show a wide rounded-rectangle window framing a jagged mountain range at sunset.
+Mood: inviting and pleasant, a place you would like to live.
+
+Save it as trait_mountain_view.png
+
+####################################################################################################
+### trait_starview.png  (Starlit)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Starlit. Show a big curved station window full of stars, with a ringed planet hanging outside.
+Mood: inviting and pleasant, a place you would like to live.
+
+Save it as trait_starview.png
+
+####################################################################################################
+### trait_recycled_air.png  (Stale)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Stale. Show a grimy ceiling air vent breathing out stale grey haze, lit by a dim flickering amber lamp.
+Mood: gloomy and unpleasant, a flaw of the home.
+
+Save it as trait_recycled_air.png
+
+####################################################################################################
+### trait_lava_lake.png  (Scorched)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Scorched. Show the orange glow of a lava field behind a heat-warped metal wall, shimmering hot air.
+Mood: gloomy and unpleasant, a flaw of the home.
+
+Save it as trait_lava_lake.png
+
+####################################################################################################
+### trait_frozen_pipes.png  (Freezing)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Freezing. Show frost-covered pipes with icicles and a cracked frozen valve, cold blue light.
+Mood: gloomy and unpleasant, a flaw of the home.
+
+Save it as trait_frozen_pipes.png
+
+####################################################################################################
+### trait_geothermal.png  (Geothermal)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Geothermal. Show a chunky heat exchanger fed by a hot steam vent from the ground, warm pipes and rising steam.
+Mood: inviting and pleasant, a place you would like to live.
+
+Save it as trait_geothermal.png
+
+####################################################################################################
+### trait_damp.png  (Musty)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Musty. Show dark green-black mold spreading over a wet corner of a metal wall, water dripping.
+Mood: gloomy and unpleasant, a flaw of the home.
+
+Save it as trait_damp.png
+
+####################################################################################################
+### trait_smog.png  (Smoggy)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Smoggy. Show a window looking out into thick brown smog with dim factory stacks and red warning lights.
+Mood: gloomy and unpleasant, a flaw of the home.
+
+Save it as trait_smog.png
+
+####################################################################################################
+### trait_dust.png  (Dusty)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Dusty. Show dust piled on a windowsill and blowing in through a gap, dry yellow light.
+Mood: gloomy and unpleasant, a flaw of the home.
+
+Save it as trait_dust.png
+
+####################################################################################################
+### trait_spaceport.png  (Thunderous)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Thunderous. Show a heavy cargo freighter lifting off just above the rooftops, a roaring engine flare.
+Mood: gloomy and unpleasant, a flaw of the home.
+
+Save it as trait_spaceport.png
+
+####################################################################################################
+### trait_quiet_street.png  (Tranquil)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Tranquil. Show an empty, calm colony street at night lit by a single warm streetlamp.
+Mood: inviting and pleasant, a place you would like to live.
+
+Save it as trait_quiet_street.png
+
+####################################################################################################
+### trait_market_nearby.png  (Bustling)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Bustling. Show a lively market stall with striped awnings, hanging lamps and stacked crates.
+Mood: inviting and pleasant, a place you would like to live.
+
+Save it as trait_market_nearby.png
+
+####################################################################################################
+### trait_thin_walls.png  (Thin-walled)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Thin-walled. Show a thin dented wall panel with a crack, light and shadows of a noisy neighbor showing through.
+Mood: gloomy and unpleasant, a flaw of the home.
+
+Save it as trait_thin_walls.png
+
+####################################################################################################
+### trait_cramped.png  (Cramped)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Cramped. Show a tiny room crammed full with a bunk, boxes and pipes, no free floor left.
+Mood: gloomy and unpleasant, a flaw of the home.
+
+Save it as trait_cramped.png
+
+####################################################################################################
+### trait_leaky_roof.png  (Leaky)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Leaky. Show water dripping from a patched metal roof into a dented bucket.
+Mood: gloomy and unpleasant, a flaw of the home.
+
+Save it as trait_leaky_roof.png
+
+####################################################################################################
+### trait_ruins.png  (Historic)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Historic. Show a weathered old facade of stone and metal from a fallen age, with a worn ancient emblem shape.
+Mood: inviting and pleasant, a place you would like to live.
+
+Save it as trait_ruins.png
+
+####################################################################################################
+### trait_fungus_cellar.png  (Mushroomy)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Mushroomy. Show a damp cellar shelf of pale cultivated mushrooms under a dim hanging lamp (the mushrooms do not glow).
+Mood: inviting and pleasant, a place you would like to live.
+
+Save it as trait_fungus_cellar.png
+
+####################################################################################################
+### trait_lobster_pond.png  (Pondside)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Pondside. Show a small pond with a big dark-red lobster climbing onto its stone edge.
+Mood: inviting and pleasant, a place you would like to live.
+
+Save it as trait_lobster_pond.png
+
+####################################################################################################
+### trait_clean.png  (Clean)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Clean. Show a spotless, gleaming kitchen counter with a bright clean highlight.
+Mood: inviting and pleasant, a place you would like to live.
+
+Save it as trait_clean.png
+
+####################################################################################################
+### trait_dirty.png  (Dirty)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Dirty. Show a filthy floor with trash, stains and a pile of dirty dishes.
+Mood: gloomy and unpleasant, a flaw of the home.
+
+Save it as trait_dirty.png
+
+####################################################################################################
+### trait_infested.png  (Infested)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Infested. Show small roach-like bugs crawling out of a crack in a wall.
+Mood: gloomy and unpleasant, a flaw of the home.
+
+Save it as trait_infested.png
+
+####################################################################################################
+### trait_asbestos.png  (Asbestos)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Asbestos. Show a crumbling grey insulation panel behind a yellow and black hazard stripe.
+Mood: gloomy and unpleasant, a flaw of the home.
+
+Save it as trait_asbestos.png
+
+####################################################################################################
+### trait_spacious.png  (Spacious)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Spacious. Show a large open room with a high ceiling and a huge bright window, airy and empty.
+Mood: inviting and pleasant, a place you would like to live.
+
+Save it as trait_spacious.png
+
+####################################################################################################
+### trait_drafty.png  (Drafty)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Drafty. Show cold wind blowing snow in through the gap under a door.
+Mood: gloomy and unpleasant, a flaw of the home.
+
+Save it as trait_drafty.png
+
+####################################################################################################
+### trait_sunny.png  (Sunny)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Sunny. Show strong sunbeams pouring through a window onto a warm floor.
+Mood: inviting and pleasant, a place you would like to live.
+
+Save it as trait_sunny.png
+
+####################################################################################################
+### trait_underground.png  (Underground)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Underground. Show a habitat corridor cut into solid rock, held up by reinforced metal arches, warm lamps.
+Mood: inviting and pleasant, a place you would like to live.
+
+Save it as trait_underground.png
+
+####################################################################################################
+### trait_fresh_air.png  (Breezy)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Breezy. Show light curtains blowing in a fresh breeze at an open window with green hills outside.
+Mood: inviting and pleasant, a place you would like to live.
+
+Save it as trait_fresh_air.png
+
+####################################################################################################
+### trait_graffiti.png  (Graffiti)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Graffiti. Show a metal wall covered in colorful spray-paint shapes and drips, without any letters.
+Mood: gloomy and unpleasant, a flaw of the home.
+
+Save it as trait_graffiti.png
+
+####################################################################################################
+### trait_blossoms.png  (Blossoming)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Blossoming. Show a branch of pink blossoms right in front of a habitat window.
+Mood: inviting and pleasant, a place you would like to live.
+
+Save it as trait_blossoms.png
+
+####################################################################################################
+### area_residential.png  (Residential area)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Residential area. Show a quiet row of small prefab homes with warm lit windows at dusk.
+Mood: calm and ordinary.
+
+Save it as area_residential.png
+
+####################################################################################################
+### world.png  (Lore world)
+
+ICON STYLE (the same for every icon of this set):
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
+- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
+- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
+- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
+
+WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
+
+THE ICON: Lore world. Show a planet seen from orbit with the lights of big cities on its night side.
+Mood: famous and important, a known world of the sector.
+
+Save it as world.png
+

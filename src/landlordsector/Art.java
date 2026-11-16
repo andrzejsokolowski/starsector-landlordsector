@@ -93,6 +93,19 @@ public final class Art {
     }
 
     /** Loads every furniture icon, so the Furniture tab can draw them (0.5.0). */
+    /** 1.5.0 home condition icons (LLS-16), 40x40, made by tools/art-maker/icons.py. */
+    public static final String ICONS = "graphics/landlordsector/icons/";
+
+    /** Pictures the mod asked the game to load once (icons, the game's own condition and building pictures). */
+    private static final Set<String> ensured = new HashSet<>();
+
+    /** Loads a small picture the first time a screen wants it, and keeps it (icons are tiny). */
+    public static void ensure(String path) {
+        if (path == null || ensured.contains(path)) return;
+        ensured.add(path);
+        loadTexture(path);
+    }
+
     public static void loadFurnitureIcons() {
         for (landlordsector.data.Upgrades.Def d : landlordsector.data.Upgrades.of(
                 landlordsector.data.Upgrades.Kind.FURNITURE)) {

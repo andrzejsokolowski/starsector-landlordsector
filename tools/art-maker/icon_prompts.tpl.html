@@ -1,0 +1,150 @@
+<title>Landlordsector Icon Prompts</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oxanium:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap">
+<style>
+/* Layout: one column of prompt cards, a sticky progress bar, navy and gold from the mod's icon. */
+:root{
+  --bg:#f3f4f8; --panel:#ffffff; --ink:#151a2b; --muted:#5b6278; --line:#d9dce8; --field:#f7f8fb;
+  --gold:#a77a12; --gold-soft:#f4ead2; --good:#1f7a45; --good-soft:#e2f2e8; --bad:#b0352b; --bad-soft:#f8e3e0;
+  --display:"Oxanium","Segoe UI",system-ui,sans-serif; --body:"Inter","Segoe UI",system-ui,sans-serif;
+  --mono:"JetBrains Mono",Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0c1222; --panel:#141c31; --ink:#e7e9f2; --muted:#9aa2bd; --line:#26304d; --field:#0f1628;
+  --gold:#e3b54a; --gold-soft:#2b2615; --good:#5fcf8c; --good-soft:#132a1f; --bad:#f07a6d; --bad-soft:#331917; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0c1222; --panel:#141c31; --ink:#e7e9f2; --muted:#9aa2bd; --line:#26304d; --field:#0f1628;
+  --gold:#e3b54a; --gold-soft:#2b2615; --good:#5fcf8c; --good-soft:#132a1f; --bad:#f07a6d; --bad-soft:#331917; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font:15px/1.55 var(--body)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:860px;margin:0 auto;padding-block:32px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:22px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
+h1{font-size:30px} h1 span{color:var(--gold)} h2{font-size:22px} h3{font-size:18px}
+.lede{color:var(--muted);margin:6px 0 0;max-width:68ch}
+ol.steps{margin:0;padding:14px 16px 14px 34px;background:var(--panel);border:1px solid var(--line);border-radius:8px;display:grid;gap:6px}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:10px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;font-variant-numeric:tabular-nums}
+.meter{flex:1 1 200px;height:8px;border-radius:4px;background:var(--field);border:1px solid var(--line);overflow:hidden}
+.meter i{display:block;height:100%;background:var(--good);width:0}
+.chip{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:999px;padding:5px 12px;font:500 13px var(--body);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--gold-soft);border-color:var(--gold)}
+.group{display:flex;flex-direction:column;gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--side,var(--muted));border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.card.good{--side:var(--good)} .card.bad{--side:var(--bad)}
+.card[data-done="1"]{opacity:.62}
+.head{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline}
+.file{font:13px var(--mono);color:var(--muted);user-select:all}
+.subject{margin:0;max-width:68ch}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+button.act{border:1px solid var(--line);background:var(--field);color:var(--ink);border-radius:6px;padding:6px 14px;font:600 13px var(--body);cursor:pointer}
+button.act.primary{background:var(--gold-soft);border-color:var(--gold)}
+label.done{display:flex;gap:6px;align-items:center;font-size:14px;cursor:pointer;margin-left:auto}
+.status{font-size:12px;color:var(--muted)}
+details{font-size:13.5px} details summary{cursor:pointer;color:var(--muted)}
+pre{white-space:pre-wrap;word-break:break-word;margin:8px 0 0;padding:10px 12px;background:var(--field);border:1px solid var(--line);border-radius:6px;font:12.5px/1.5 var(--mono);max-height:320px;overflow:auto}
+.banner{font-size:13px;color:var(--muted);padding:10px 12px;border:1px dashed var(--line);border-radius:6px}
+button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+</style>
+<div class="wrap">
+  <header>
+    <h1>Icon prompts <span>/ Landlordsector</span></h1>
+    <p class="lede">Gemini prompts for the painted home condition icons: one per house trait, plus Residential area and Lore world. The grade and size icons are made by a script and are already done.</p>
+  </header>
+  <ol class="steps">
+    <li>New Gemini chat for every icon. Click <b>Copy prompt</b> and paste it; attach nothing.</li>
+    <li>Save the picture into <span class="file">art-source/icons/</span> under the name on the card (png or jpg).</li>
+    <li>Tick <b>Done</b>. Claude crops the middle square and shrinks it to 40 x 40, the size of the game's own condition icons.</li>
+    <li>If it comes out too busy at that size, one short correction in the same chat: "simpler, one big shape".</li>
+  </ol>
+  <div class="banner" id="banner" hidden></div>
+  <div class="bar">
+    <span><b id="n-done">0</b> of <b id="n-all">0</b> done</span>
+    <div class="meter" aria-hidden="true"><i id="m-done"></i></div>
+    <button class="chip" type="button" id="f-todo" aria-pressed="false">Only not done</button>
+  </div>
+  <div id="groups"></div>
+</div>
+<script>
+const DATA = __DATA__;
+const $ = s => document.querySelector(s);
+const el = (t, cls, txt) => { const e = document.createElement(t); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+const done = {};
+let onlyTodo = false;
+
+function render() {
+  const groups = [...new Set(DATA.icons.map(i => i.group))];
+  groups.forEach(g => {
+    const sec = el("section", "group");
+    sec.appendChild(el("h2", null, g));
+    DATA.icons.filter(i => i.group === g).forEach(i => {
+      const c = el("article", "card " + (i.good === true ? "good" : (i.good === false ? "bad" : "")));
+      c.dataset.key = i.key;
+      const h = el("div", "head");
+      h.appendChild(el("h3", null, i.name));
+      h.appendChild(el("span", "file", i.key + ".png"));
+      c.appendChild(h);
+      c.appendChild(el("p", "subject", "Shows " + i.subject + "."));
+      const row = el("div", "row");
+      const copy = el("button", "act primary", "Copy prompt"); copy.type = "button";
+      const st = el("span", "status");
+      const pre = el("pre", null, i.prompt);
+      copy.addEventListener("click", () => {
+        navigator.clipboard.writeText(i.prompt).then(() => { st.textContent = "Copied"; },
+          () => { const r = document.createRange(); r.selectNodeContents(pre); const s = getSelection(); s.removeAllRanges(); s.addRange(r); det.open = true; st.textContent = "Selected: press Ctrl+C"; });
+      });
+      const lab = el("label", "done");
+      const box = el("input"); box.type = "checkbox"; box.id = "done-" + i.key; box.dataset.key = i.key;
+      lab.append(box, document.createTextNode("Done"));
+      row.append(copy, st, lab);
+      c.appendChild(row);
+      const det = el("details");
+      det.appendChild(el("summary", null, "Show the full prompt"));
+      det.appendChild(pre);
+      c.appendChild(det);
+      sec.appendChild(c);
+    });
+    $("#groups").appendChild(sec);
+  });
+}
+function refresh() {
+  let n = 0;
+  document.querySelectorAll(".card").forEach(c => {
+    const d = !!done[c.dataset.key];
+    if (d) n++;
+    c.dataset.done = d ? "1" : "";
+    c.hidden = onlyTodo && d;
+    const b = document.getElementById("done-" + c.dataset.key);
+    if (b) b.checked = d;
+  });
+  $("#n-done").textContent = n; $("#n-all").textContent = DATA.icons.length;
+  $("#m-done").style.width = (100 * n / DATA.icons.length) + "%";
+}
+render();
+refresh();
+$("#f-todo").addEventListener("click", e => { onlyTodo = !onlyTodo; e.currentTarget.setAttribute("aria-pressed", String(onlyTodo)); refresh(); });
+
+(async () => {
+  let db = null;
+  try { db = await window.claude?.use?.("db"); } catch (_) { db = null; }
+  const boxes = document.querySelectorAll("input[type=checkbox][data-key]");
+  if (!db) {
+    $("#banner").hidden = false;
+    $("#banner").textContent = "Done marks can't be saved in this view. The prompts still copy.";
+    boxes.forEach(b => b.disabled = true);
+    return;
+  }
+  const col = db.collection("progress");
+  const t = setTimeout(() => { $("#banner").hidden = false; $("#banner").textContent = "Saved marks can't be reached yet."; }, 10000);
+  col.onSnapshot(snap => {
+    clearTimeout(t); $("#banner").hidden = true;
+    snap.docs.forEach(d => { done[d.id] = !!(d.data() || {}).done; });
+    refresh();
+  }, err => { clearTimeout(t); $("#banner").hidden = false; $("#banner").textContent = "Saved marks could not be loaded (" + err.code + ")."; });
+  boxes.forEach(b => b.addEventListener("change", async () => {
+    const key = b.dataset.key, v = b.checked;
+    done[key] = v; refresh();
+    try { await col.doc(key).set({ done: v, at: new Date().toISOString() }); }
+    catch (e) { done[key] = !v; refresh(); $("#banner").hidden = false; $("#banner").textContent = "Couldn't save that mark. Try again."; }
+  }));
+})();
+</script>

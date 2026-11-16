@@ -1103,6 +1103,13 @@
 			"line": "The storage here is open to you now, free of charge.",
 			"when": "Home log when you buy a home on a market whose storage you had not paid to open yet.",
 			"area": "Free storage"
+		},
+		{
+			"id": "i_size_title",
+			"version": "1.5.0",
+			"line": "Size: Shack",
+			"when": "Tooltip title of the size icon, the first icon in the row under a home's picture. The other icons show the same tooltips as the rows below them (Location, Commute, Air, Noise, Heat, Cold, Radiation, Area, the world, each house trait).",
+			"area": "Icons"
 		}
 	]
 }

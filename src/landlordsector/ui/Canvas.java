@@ -300,6 +300,13 @@ public abstract class Canvas implements CustomUIPanelPlugin {
         if (path != null) pics.add(new Pic(path, x, y, w, h, PICTURE_ASPECT));
     }
 
+    /** A small icon (1.5.0): any shape, loaded on first use and kept. */
+    protected void icon(String path, float x, float y, float w, float h, float aspect) {
+        if (path == null) return;
+        landlordsector.Art.ensure(path);
+        pics.add(new Pic(path, x, y, w, h, aspect));
+    }
+
     /** A square picture (a portrait). */
     protected void portrait(String path, float x, float y, float size) {
         if (path != null) pics.add(new Pic(path, x, y, size, size, 1f));

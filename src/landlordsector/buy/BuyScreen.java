@@ -181,6 +181,9 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
             s.occupancy = "For sale";
             s.stats = st;
             s.traits.addAll(houseTraits(l.traits));
+            if (l.traits != null) s.traitIds.addAll(l.traits);
+            s.tierId = l.tierId;
+            s.areaPicture = areaPicture(market, l.neighbor);
             s.upgrades.addAll(upgradeNames(l.upgrades));
             if (l.upgrades != null) s.upgradeIds.addAll(l.upgrades);
             s.size = t != null ? t.name : l.tierId;

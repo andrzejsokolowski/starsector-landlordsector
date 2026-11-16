@@ -31,3 +31,5 @@ jars/
 
 # Andrzej's full-size picture originals; the trimmed copies go to graphics/.
 /art-source/
+tools/art-maker/icon-prompts.html
+tools/art-maker/icon-prompts.json

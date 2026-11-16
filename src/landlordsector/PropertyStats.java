@@ -74,6 +74,8 @@ public final class PropertyStats {
     public String nextTo = "Residential area";
     /** 0.6.0: the Area row, "Heavy Batteries" or "Residential". */
     public String area = "Residential";
+    /** 1.5.0: the world's own housing from worlds.json (its name and line), or null on other markets. */
+    public String loreName, loreLine;
     public Environment.Neighbor neighbor = Environment.of(null, null);
     public final List<String[]> neighborLines = new ArrayList<>();
     /** 0.4.0: home levels after traits and upgrades, 0 to 3, by level id, and what makes each up. */
@@ -307,6 +309,11 @@ public final class PropertyStats {
         s.gradeLines.add(new String[] {total, null});
 
         s.world = worldName(m);
+        landlordsector.data.Worlds.Def lore = landlordsector.data.Worlds.get(m.getId());
+        if (lore != null) {
+            s.loreName = lore.name;
+            s.loreLine = lore.line;
+        }
         return s;
     }
 

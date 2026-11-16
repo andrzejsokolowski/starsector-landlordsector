@@ -1,3 +1,6 @@
+Version 1.5.0 (2026-11-16)
+- A row of condition icons under each home's picture, like the conditions on a colony screen: size, the Location, Commute, Air and Noise grades, heat, cold and radiation, the building nearby, the world, and each house trait. Hover one for its details. House traits, Residential and the world show placeholders until their art is done
+
 Version 1.4.0 (2026-11-16)
 - Owning a home on a market opens its storage for free, with no monthly fee for what you keep there while you own a home on that market
 

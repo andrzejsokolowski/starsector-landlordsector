@@ -297,6 +297,9 @@ public class RealEstatePage implements ManagePage {
             }
             s.stats = st;
             s.traits.addAll(houseTraits(chosen.traits()));
+            s.traitIds.addAll(chosen.traits());
+            s.tierId = chosen.tier().id;
+            if (chosen.market() != null) s.areaPicture = areaPicture(chosen.market(), chosen.neighbor);
             s.upgrades.addAll(upgradeItems(chosen));
             s.upgradeIds.addAll(chosen.renovationIds());
             s.furniture.addAll(furnitureItems(chosen));
