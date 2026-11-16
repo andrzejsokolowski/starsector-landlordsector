@@ -1,3 +1,6 @@
+Version 1.6.0 (2026-11-16)
+- Console commands (with the Console Commands mod; optional): lls_homes, lls_info, lls_givehome, lls_listings, lls_condition, lls_repairall, lls_tenant, lls_evict, lls_applicants, lls_mood, lls_wealth, lls_housetrait, lls_tenanttrait, lls_event, lls_upgrade, lls_furniture, lls_service, lls_month, lls_marry, lls_baby, lls_growup, lls_sell and lls_ids. Type help lls_homes (or any of them) in the console for what each does
+
 Version 1.5.3 (2026-11-16)
 - Home icons sit in one row and use the free width on the right; with many icons they get a little smaller instead of wrapping
 - Grade icons spell out LOCATION and COMMUTE

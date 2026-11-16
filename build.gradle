@@ -35,6 +35,9 @@ dependencies {
     compileOnly commonsJar
     // LunaLib supplies the settings page. Found wherever the mod happens to be installed.
     compileOnly fileTree(dir: "${starsectorPath}/mods", include: '**/LunaLib.jar')
+    // 1.6.0: Console Commands is optional for players. Only landlordsector.console touches it, and only
+    // Console Commands loads those classes (from data/console/commands.csv).
+    compileOnly fileTree(dir: "${starsectorPath}/mods", include: '**/lw_Console.jar')
     // 1.2.0: Nexerelin is optional (a grown child can become one of its agents). Only NexAgents names its classes.
     compileOnly fileTree(dir: "${starsectorPath}/mods", include: '**/ExerelinCore.jar')
     // 1.2.2: AoTD Vaults of Knowledge is optional (Sophia Anderson). Only AotdScience names its classes.

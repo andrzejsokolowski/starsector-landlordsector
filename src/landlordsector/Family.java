@@ -722,7 +722,8 @@ public final class Family {
         return Pricing.clamp(h, 0f, 100f);
     }
 
-    private static void birth(Property p, Tenant parent, Random random) {
+    /** A child is born (public since 1.6.0 for the console's lls_baby). */
+    public static void birth(Property p, Tenant parent, Random random) {
         MarketAPI m = p.market();
         Child c = new Child();
         c.id = Portfolio.get().newId();

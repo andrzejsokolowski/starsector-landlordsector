@@ -33,12 +33,21 @@ public final class Actions {
     public static String buy(MarketAPI market, Listing listing) {
         String no = cannotBuy(market, listing);
         if (no != null) return no;
-        Portfolio portfolio = Portfolio.get();
         MarketListings ml = MarketRules.listings(market);
         if (!ml.list().remove(listing)) return "That home is no longer for sale.";
         float price = MarketRules.buyPrice(market, listing);
         Global.getSector().getPlayerFleet().getCargo().getCredits().subtract(price);
+        Property p = own(market, listing, price);
+        Global.getSoundPlayer().playUISound("ui_upgrade_industry", 1f, 1f);
+        return "Bought: " + p.displayName() + " for " + Misc.getDGSCredits(price) + ".";
+    }
 
+    /**
+     * Makes the listing the player's home and logs it, without taking money or checking anything (1.6.0: split
+     * out of {@link #buy} for the console's lls_givehome).
+     */
+    public static Property own(MarketAPI market, Listing listing, float price) {
+        Portfolio portfolio = Portfolio.get();
         Property p = new Property();
         p.id = listing.id;
         p.marketId = market.getId();
@@ -61,8 +70,7 @@ public final class Actions {
         if (!market.isPlayerOwned() && FreeStorage.unlock(market)) {
             p.addLog("The storage here is open to you now, free of charge.", true, "storage");
         }
-        Global.getSoundPlayer().playUISound("ui_upgrade_industry", 1f, 1f);
-        return "Bought: " + p.displayName() + " for " + Misc.getDGSCredits(price) + ".";
+        return p;
     }
 
     public static String repair(Property p) {

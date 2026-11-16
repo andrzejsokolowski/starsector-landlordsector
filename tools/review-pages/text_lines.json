@@ -1131,6 +1131,167 @@
 			"line": "Display",
 			"when": "LunaLib settings: the new header above Home icon size.",
 			"area": "Settings"
+		},
+		{
+			"id": "con_lls_homes",
+			"version": "1.6.0",
+			"line": "lls_homes: Lists every home you own with its number, condition, tenant and rent. The other lls_ commands take that number.",
+			"when": "Console Commands: the help text of lls_homes (help lls_homes in the console).",
+			"area": "Console"
+		},
+		{
+			"id": "con_lls_info",
+			"version": "1.6.0",
+			"line": "lls_info [home]: Shows everything about one home: value, condition, stats, traits, upgrades, services, tenant, children and the last log lines. A home is its number from lls_homes or \"here\" (where you are docked).",
+			"when": "Console Commands: the help text of lls_info (help lls_info in the console).",
+			"area": "Console"
+		},
+		{
+			"id": "con_lls_givehome",
+			"version": "1.6.0",
+			"line": "lls_givehome [size]: Gives you a new home on the market you are docked at, for free. Size is shack, studio, small_house, house, villa or estate (or 1 to 6). With no size, one this market sells.",
+			"when": "Console Commands: the help text of lls_givehome (help lls_givehome in the console).",
+			"area": "Console"
+		},
+		{
+			"id": "con_lls_listings",
+			"version": "1.6.0",
+			"line": "lls_listings [reroll]: Lists the homes for sale on the market you are docked at. With reroll, a new list replaces it.",
+			"when": "Console Commands: the help text of lls_listings (help lls_listings in the console).",
+			"area": "Console"
+		},
+		{
+			"id": "con_lls_condition",
+			"version": "1.6.0",
+			"line": "lls_condition [home] <0-100>: Sets a home's condition. 0 condemns it.",
+			"when": "Console Commands: the help text of lls_condition (help lls_condition in the console).",
+			"area": "Console"
+		},
+		{
+			"id": "con_lls_repairall",
+			"version": "1.6.0",
+			"line": "lls_repairall: Repairs every home you own to 100% for free and cleans off graffiti and dirt.",
+			"when": "Console Commands: the help text of lls_repairall (help lls_repairall in the console).",
+			"area": "Console"
+		},
+		{
+			"id": "con_lls_tenant",
+			"version": "1.6.0",
+			"line": "lls_tenant [home] [faction id]: A new tenant moves into an empty home at once, with all traits known. The faction is the market's own unless you name one.",
+			"when": "Console Commands: the help text of lls_tenant (help lls_tenant in the console).",
+			"area": "Console"
+		},
+		{
+			"id": "con_lls_evict",
+			"version": "1.6.0",
+			"line": "lls_evict [home]: The tenant leaves the home at once.",
+			"when": "Console Commands: the help text of lls_evict (help lls_evict in the console).",
+			"area": "Console"
+		},
+		{
+			"id": "con_lls_applicants",
+			"version": "1.6.0",
+			"line": "lls_applicants [home] [1-10]: People apply to rent an empty home, 3 unless you give a number. See them on the home's Tenants tab.",
+			"when": "Console Commands: the help text of lls_applicants (help lls_applicants in the console).",
+			"area": "Console"
+		},
+		{
+			"id": "con_lls_mood",
+			"version": "1.6.0",
+			"line": "lls_mood [home] <-30 to 30>: Sets the tenant's mood, which adds to their happiness and drifts back to 0 by 1 a day.",
+			"when": "Console Commands: the help text of lls_mood (help lls_mood in the console).",
+			"area": "Console"
+		},
+		{
+			"id": "con_lls_wealth",
+			"version": "1.6.0",
+			"line": "lls_wealth [home] <1-6>: Sets the tenant's wealth, from E (1) to S (6).",
+			"when": "Console Commands: the help text of lls_wealth (help lls_wealth in the console).",
+			"area": "Console"
+		},
+		{
+			"id": "con_lls_housetrait",
+			"version": "1.6.0",
+			"line": "lls_housetrait <home> <add|remove> <trait id>: Adds or removes a house trait. lls_ids housetraits lists them.",
+			"when": "Console Commands: the help text of lls_housetrait (help lls_housetrait in the console).",
+			"area": "Console"
+		},
+		{
+			"id": "con_lls_tenanttrait",
+			"version": "1.6.0",
+			"line": "lls_tenanttrait <home> <add|remove|reveal> [trait id]: Adds or removes a tenant trait, or reveals all of the tenant's traits. lls_ids tenanttraits lists them.",
+			"when": "Console Commands: the help text of lls_tenanttrait (help lls_tenanttrait in the console).",
+			"area": "Console"
+		},
+		{
+			"id": "con_lls_event",
+			"version": "1.6.0",
+			"line": "lls_event <home> <event id>: Makes a house or tenant event happen now, whatever its odds. lls_ids events lists them.",
+			"when": "Console Commands: the help text of lls_event (help lls_event in the console).",
+			"area": "Console"
+		},
+		{
+			"id": "con_lls_upgrade",
+			"version": "1.6.0",
+			"line": "lls_upgrade <home> <add|remove> <upgrade id>: Builds an upgrade at once for free, or removes it. lls_ids upgrades lists them.",
+			"when": "Console Commands: the help text of lls_upgrade (help lls_upgrade in the console).",
+			"area": "Console"
+		},
+		{
+			"id": "con_lls_furniture",
+			"version": "1.6.0",
+			"line": "lls_furniture <furniture id|all> [1-100]: Puts furniture in your furniture storage, 1 unless you give a number. all gives every piece. lls_ids furniture lists them.",
+			"when": "Console Commands: the help text of lls_furniture (help lls_furniture in the console).",
+			"area": "Console"
+		},
+		{
+			"id": "con_lls_service",
+			"version": "1.6.0",
+			"line": "lls_service <home> <service id>: Hires a service for a home, or cancels it if it is already hired. lls_ids services lists them.",
+			"when": "Console Commands: the help text of lls_service (help lls_service in the console).",
+			"area": "Console"
+		},
+		{
+			"id": "con_lls_month",
+			"version": "1.6.0",
+			"line": "lls_month: Runs the end-of-month pass now: rent, wear, reputation and your family's money. The rent shows in this month's income report.",
+			"when": "Console Commands: the help text of lls_month (help lls_month in the console).",
+			"area": "Console"
+		},
+		{
+			"id": "con_lls_marry",
+			"version": "1.6.0",
+			"line": "lls_marry <home> <name>: One of your officers or administrators marries you and moves into the home, whatever their level. You move into the home first if it is empty.",
+			"when": "Console Commands: the help text of lls_marry (help lls_marry in the console).",
+			"area": "Console"
+		},
+		{
+			"id": "con_lls_baby",
+			"version": "1.6.0",
+			"line": "lls_baby [home]: Your partner has a baby now.",
+			"when": "Console Commands: the help text of lls_baby (help lls_baby in the console).",
+			"area": "Console"
+		},
+		{
+			"id": "con_lls_growup",
+			"version": "1.6.0",
+			"line": "lls_growup [home]: Every child in the home grows up now. Talk to them to choose their path.",
+			"when": "Console Commands: the help text of lls_growup (help lls_growup in the console).",
+			"area": "Console"
+		},
+		{
+			"id": "con_lls_sell",
+			"version": "1.6.0",
+			"line": "lls_sell [home]: Sells a home at its price, like the Sell button on the Real estate tab.",
+			"when": "Console Commands: the help text of lls_sell (help lls_sell in the console).",
+			"area": "Console"
+		},
+		{
+			"id": "con_lls_ids",
+			"version": "1.6.0",
+			"line": "lls_ids <sizes|housetraits|tenanttraits|events|upgrades|furniture|services>: Lists the ids the other lls_ commands take.",
+			"when": "Console Commands: the help text of lls_ids (help lls_ids in the console).",
+			"area": "Console"
 		}
 	]
 }

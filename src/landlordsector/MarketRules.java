@@ -200,6 +200,34 @@ public final class MarketRules {
     }
 
     /** Adds {@code count} new homes for sale, then sorts the list cheapest first. */
+    /**
+     * One home of this tier for sale on this market, not yet on any list (1.6.0: split out for the console's
+     * lls_givehome). {@code mayBeWorn} false gives a home in full condition.
+     */
+    public static Listing make(MarketAPI market, Tier t, MarketListings ml, boolean mayBeWorn, Random random) {
+        Worlds.Def world = Worlds.get(market.getId());
+        Climate climate = Climate.of(market);
+        float base = t.min + (t.max - t.min) * random.nextFloat();
+        Listing l = new Listing(Portfolio.get().newId(), t.id, climate.id,
+                Art.pick(t.id, PlanetType.of(market), random, ml != null ? pictures(ml) : new ArrayList<>()), base);
+        l.traits = HouseTraits.roll(Tenants.conditions(market), climate.id, climate == Climate.STATION, t.index,
+                world != null ? world.traits : null,
+                random);
+        l.upgrades = landlordsector.data.Upgrades.roll(Tenants.conditions(market), climate.id,
+                climate == Climate.STATION, t.index, l.traits, random);
+        l.name = landlordsector.data.Names.make(t.id, l.features(), random);
+        l.neighbor = Surroundings.roll(market, random);
+        // House flipping (Andrzej, 0.6.0): some homes come worn, the worst ones dirty or covered in graffiti.
+        if (mayBeWorn && random.nextFloat() < WORN_CHANCE) {
+            l.wear = 0.2f + random.nextFloat() * 0.5f;
+            if (l.wear > 0.45f && random.nextFloat() < 0.6f) {
+                String mark = random.nextBoolean() ? "graffiti" : "dirty";
+                if (!l.traits.contains(mark) && HouseTraits.get(mark) != null) l.traits.add(mark);
+            }
+        }
+        return l;
+    }
+
     private static void add(MarketAPI market, MarketListings ml, int count, Random random) {
         List<Tier> tiers = new ArrayList<>();
         Worlds.Def world = Worlds.get(market.getId());
@@ -214,28 +242,9 @@ public final class MarketRules {
         // 0.8.0 (Andrzej: "filled with tons of property from all ranges"): a list with room for every size the
         // market has starts with one of each, so a big market always shows its estates; the rest are rolled.
         List<Tier> first = count >= tiers.size() ? tiers : new ArrayList<>();
-        Climate climate = Climate.of(market);
         for (int i = 0; i < count; i++) {
             Tier t = i < first.size() ? first.get(i) : picker.pick();
-            float base = t.min + (t.max - t.min) * random.nextFloat();
-            Listing l = new Listing(Portfolio.get().newId(), t.id, climate.id,
-                    Art.pick(t.id, PlanetType.of(market), random, pictures(ml)), base);
-            l.traits = HouseTraits.roll(Tenants.conditions(market), climate.id, climate == Climate.STATION, t.index,
-                    world != null ? world.traits : null,
-                    random);
-            l.upgrades = landlordsector.data.Upgrades.roll(Tenants.conditions(market), climate.id,
-                    climate == Climate.STATION, t.index, l.traits, random);
-            l.name = landlordsector.data.Names.make(t.id, l.features(), random);
-            l.neighbor = Surroundings.roll(market, random);
-            // House flipping (Andrzej, 0.6.0): some homes come worn, the worst ones dirty or covered in graffiti.
-            if (random.nextFloat() < WORN_CHANCE) {
-                l.wear = 0.2f + random.nextFloat() * 0.5f;
-                if (l.wear > 0.45f && random.nextFloat() < 0.6f) {
-                    String mark = random.nextBoolean() ? "graffiti" : "dirty";
-                    if (!l.traits.contains(mark) && HouseTraits.get(mark) != null) l.traits.add(mark);
-                }
-            }
-            ml.list().add(l);
+            ml.list().add(make(market, t, ml, true, random));
         }
         // Cheapest first, so the screen reads like a price list.
         ml.list().sort((a, b) -> Float.compare(a.basePrice, b.basePrice));

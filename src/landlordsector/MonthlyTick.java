@@ -73,7 +73,8 @@ public class MonthlyTick implements EconomyTickListener, ColonyPlayerHostileActL
     public void reportEconomyMonthEnd() {
     }
 
-    void runMonth() {
+    /** The month's rent pass (public since 1.6.0 for the console's lls_month). */
+    public void runMonth() {
         Portfolio portfolio = Portfolio.get();
         Economy eco = TierTable.economy();
         MonthlyReport report = SharedData.getData().getCurrentReport();
