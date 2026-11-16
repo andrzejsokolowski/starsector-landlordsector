@@ -58,18 +58,26 @@ const DATA = __DATA__;
 /*__COMMON__*/
 
 const versions = [...new Set(DATA.lines.map(l => l.version))].sort((a, b) => b.localeCompare(a, undefined, { numeric: true }));
+const areas = [...new Set(DATA.lines.filter(l => l.area).map(l => l.area))];
+const slug = s => "a-" + s.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 const kinds = $("#f-kind");
 kinds.appendChild(el("span", "label", "Show"));
-[["all", "All"]].concat(versions.map(v => ["v" + v, v])).forEach(([f, t], i) => {
+[["all", "All"]].concat(versions.map(v => ["v" + v, v])).concat(areas.map(a => [slug(a), a])).forEach(([f, t], i) => {
   const b = el("button", "chip", t); b.type = "button"; b.dataset.f = f; b.setAttribute("aria-pressed", String(i === 0));
   kinds.appendChild(b);
 });
+const sections = [];
 versions.forEach(v => {
+  const inV = DATA.lines.filter(l => l.version === v);
+  [...new Set(inV.map(l => l.area || ""))].forEach(a => sections.push([v, a, inV.filter(l => (l.area || "") === a)]));
+});
+sections.forEach(([v, a, lines]) => {
   const g = el("section", "group");
-  g.appendChild(el("h2", null, v === DATA.version ? "New in " + v : "From " + v));
+  g.appendChild(el("h2", null, (v === DATA.version ? "New in " + v : "From " + v) + (a ? ": " + a : "")));
   const list = el("div", "list");
-  DATA.lines.filter(l => l.version === v).forEach(l => {
+  lines.forEach(l => {
     const c = card({ id: l.id, good: null }, "v" + v, l.line);
+    if (l.area) c.dataset.side = slug(l.area);
     c.classList.add("tline");
     c.innerHTML = "";
     c.appendChild(el("p", "line", l.line));

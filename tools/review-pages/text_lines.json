@@ -1,17 +1,1037 @@
 {
 	"_about": "Every player-facing line Claude adds or rewords in Landlordsector (Andrzej, 2026-11-16). text_review.py builds text.html from this list. id: the review page's key, never reused. version: the release that added or changed it. Example values in the line are shown as they appear in game.",
 	"lines": [
-		{"id": "x_commute_proximity", "version": "1.2.1",
+		{
+			"id": "x_commute_proximity",
+			"version": "1.2.1",
 			"line": "Commute: +32 from proximity to city center",
-			"when": "First line of the Commute tooltip on a home sheet (agent's screen and Real estate tab). The number is the home's own spot, 0 (outskirts) to 50. Homes next to the city center always show +50."},
-		{"id": "x_upgrades_title", "version": "1.0.1",
+			"when": "First line of the Commute tooltip on a home sheet (agent's screen and Real estate tab). The number is the home's own spot, 0 (outskirts) to 50. Homes next to the city center always show +50."
+		},
+		{
+			"id": "x_upgrades_title",
+			"version": "1.0.1",
 			"line": "Upgrades: 4 built",
-			"when": "Title of the Upgrades row's tooltip on a home sheet. Below it, what all the built upgrades do together."},
-		{"id": "x_housewarming", "version": "1.0.1",
+			"when": "Title of the Upgrades row's tooltip on a home sheet. Below it, what all the built upgrades do together."
+		},
+		{
+			"id": "x_housewarming",
+			"version": "1.0.1",
 			"line": "Jana Okoye threw a party at Leafy Cottage. It left a few scuffs.",
-			"when": "Housewarming tenant event, in the home's log (the home loses 1% condition)."},
-		{"id": "x_service_cancelled", "version": "1.0.1",
+			"when": "Housewarming tenant event, in the home's log (the home loses 1% condition)."
+		},
+		{
+			"id": "x_service_cancelled",
+			"version": "1.0.1",
 			"line": "A service you hired is no longer offered and was cancelled.",
-			"when": "Home log, once, when you load a save where that home had the Night watchman."}
+			"when": "Home log, once, when you load a save where that home had the Night watchman."
+		},
+		{
+			"id": "f_greet_baby1",
+			"version": "1.2.0",
+			"line": "Not long now. The baby kicks all night.",
+			"when": "Your partner greets you when you open their comm link, while a baby is on the way.",
+			"area": "Talking with your partner"
+		},
+		{
+			"id": "f_greet_baby2",
+			"version": "1.2.0",
+			"line": "I keep thinking about names.",
+			"when": "Your partner greets you when you open their comm link, while a baby is on the way (the other of two picked at random).",
+			"area": "Talking with your partner"
+		},
+		{
+			"id": "f_greet_away1",
+			"version": "1.2.0",
+			"line": "Look who finally remembered where they live.",
+			"when": "Your partner greets you when you open their comm link, when you have not visited in a long time.",
+			"area": "Talking with your partner"
+		},
+		{
+			"id": "f_greet_away2",
+			"version": "1.2.0",
+			"line": "Oh, you're alive. Good to know.",
+			"when": "Your partner greets you when you open their comm link, when you have not visited in a long time (other pick).",
+			"area": "Talking with your partner"
+		},
+		{
+			"id": "f_greet_sad1",
+			"version": "1.2.0",
+			"line": "Oh. It's you.",
+			"when": "Your partner greets you when you open their comm link, when their happiness is below 25.",
+			"area": "Talking with your partner"
+		},
+		{
+			"id": "f_greet_sad2",
+			"version": "1.2.0",
+			"line": "What do you want?",
+			"when": "Your partner greets you when you open their comm link, when their happiness is below 25 (other pick).",
+			"area": "Talking with your partner"
+		},
+		{
+			"id": "f_greet_wife1",
+			"version": "1.2.0",
+			"line": "There you are. I missed you.",
+			"when": "Your partner greets you when you open their comm link: your wife or husband, happiness 60 or more.",
+			"area": "Talking with your partner"
+		},
+		{
+			"id": "f_greet_wife2",
+			"version": "1.2.0",
+			"line": "Hey, love. Staying for dinner?",
+			"when": "Your partner greets you when you open their comm link: your wife or husband, happiness 60 or more (other pick).",
+			"area": "Talking with your partner"
+		},
+		{
+			"id": "f_greet_gf1",
+			"version": "1.2.0",
+			"line": "Hey, you. I was hoping you'd call.",
+			"when": "Your partner greets you when you open their comm link: not married yet, happiness 60 or more.",
+			"area": "Talking with your partner"
+		},
+		{
+			"id": "f_greet_gf2",
+			"version": "1.2.0",
+			"line": "Good timing. I just made coffee.",
+			"when": "Your partner greets you when you open their comm link: not married yet, happiness 60 or more (other pick).",
+			"area": "Talking with your partner"
+		},
+		{
+			"id": "f_greet_plain1",
+			"version": "1.2.0",
+			"line": "Hi. How was the trip?",
+			"when": "Your partner greets you when you open their comm link, any other time.",
+			"area": "Talking with your partner"
+		},
+		{
+			"id": "f_greet_plain2",
+			"version": "1.2.0",
+			"line": "Hey. You look tired.",
+			"when": "Your partner greets you when you open their comm link, any other time (other pick).",
+			"area": "Talking with your partner"
+		},
+		{
+			"id": "f_opt_propose",
+			"version": "1.2.0",
+			"line": "Will you marry me?",
+			"when": "Option in your partner's comm link, until you are married.",
+			"area": "Talking with your partner"
+		},
+		{
+			"id": "f_opt_try",
+			"version": "1.2.0",
+			"line": "Let's try for a child.",
+			"when": "Option in your partner's comm link.",
+			"area": "Talking with your partner"
+		},
+		{
+			"id": "f_tip_try_baby",
+			"version": "1.2.0",
+			"line": "A child is already on the way.",
+			"when": "Tooltip on \"Let's try for a child.\" when a baby is on the way (the option is greyed out).",
+			"area": "Talking with your partner"
+		},
+		{
+			"id": "f_tip_try_today",
+			"version": "1.2.0",
+			"line": "Not again today.",
+			"when": "Tooltip on \"Let's try for a child.\" when you already tried today.",
+			"area": "Talking with your partner"
+		},
+		{
+			"id": "f_opt_gift",
+			"version": "1.2.0",
+			"line": "I got you something.",
+			"when": "Option in your partner's comm link. Opens a cargo picker for a gift.",
+			"area": "Talking with your partner"
+		},
+		{
+			"id": "f_tip_gift_none",
+			"version": "1.2.0",
+			"line": "You have nothing to give.",
+			"when": "Tooltip on \"I got you something.\" when your cargo holds nothing they would take.",
+			"area": "Talking with your partner"
+		},
+		{
+			"id": "f_opt_breakup",
+			"version": "1.2.0",
+			"line": "I think we should break up.",
+			"when": "Option in your partner's comm link, when you are not married.",
+			"area": "Talking with your partner"
+		},
+		{
+			"id": "f_opt_divorce",
+			"version": "1.2.0",
+			"line": "I want a divorce.",
+			"when": "Option in your partner's comm link, when you are married.",
+			"area": "Talking with your partner"
+		},
+		{
+			"id": "f_propose_yes1",
+			"version": "1.2.0",
+			"line": "Yes! Yes, of course!",
+			"when": "Your partner's answer when they accept your proposal.",
+			"area": "Talking with your partner"
+		},
+		{
+			"id": "f_propose_yes2",
+			"version": "1.2.0",
+			"line": "I thought you'd never ask. Yes!",
+			"when": "Your partner's answer when they accept your proposal (other pick).",
+			"area": "Talking with your partner"
+		},
+		{
+			"id": "f_propose_now",
+			"version": "1.2.0",
+			"line": "Mira Okoye is now your wife.",
+			"when": "In the dialog and the home's log after they say yes. \"husband\" or \"spouse\" for others.",
+			"area": "Talking with your partner"
+		},
+		{
+			"id": "f_propose_cheat",
+			"version": "1.2.0",
+			"line": "Actually... I'm cheating on you.",
+			"when": "Your partner's answer in the rare (2%) case they turn the proposal down.",
+			"area": "Talking with your partner"
+		},
+		{
+			"id": "f_propose_leaves",
+			"version": "1.2.0",
+			"line": "She packs her things and leaves.",
+			"when": "In the dialog right after \"Actually... I'm cheating on you.\"",
+			"area": "Talking with your partner"
+		},
+		{
+			"id": "f_propose_left",
+			"version": "1.2.0",
+			"line": "Mira Okoye turned down your proposal and left you. She was seeing someone else.",
+			"when": "Home log and intel message after the rejected proposal.",
+			"area": "Talking with your partner"
+		},
+		{
+			"id": "f_try_no1",
+			"version": "1.2.0",
+			"line": "Not tonight. I'm exhausted.",
+			"when": "Your partner's answer to \"Let's try for a child.\" (one of three outcomes).",
+			"area": "Talking with your partner"
+		},
+		{
+			"id": "f_try_no2",
+			"version": "1.2.0",
+			"line": "We already have one on the way, remember?",
+			"when": "Your partner's answer to \"Let's try for a child.\" (one of three outcomes).",
+			"area": "Talking with your partner"
+		},
+		{
+			"id": "f_try_yes",
+			"version": "1.2.0",
+			"line": "You spend the night together.",
+			"when": "Dialog text after \"Let's try for a child.\" (one of three outcomes).",
+			"area": "Talking with your partner"
+		},
+		{
+			"id": "f_gift_title",
+			"version": "1.2.0",
+			"line": "Pick a gift",
+			"when": "Title of the cargo picker after \"I got you something.\" Buttons: Give, Cancel.",
+			"area": "Gifts"
+		},
+		{
+			"id": "f_gift_worth",
+			"version": "1.2.0",
+			"line": "Worth about 120,000 credits.",
+			"when": "Side text of the gift picker: the value of what you picked.",
+			"area": "Gifts"
+		},
+		{
+			"id": "f_gift_nanoforge",
+			"version": "1.2.0",
+			"line": "A nanoforge? Where am I supposed to put a nanoforge?",
+			"when": "Your partner's reaction when the gift is a nanoforge.",
+			"area": "Gifts"
+		},
+		{
+			"id": "f_gift_lamp",
+			"version": "1.2.0",
+			"line": "A fusion lamp. For the living room. Sure.",
+			"when": "Your partner's reaction when the gift is an Orbital Fusion Lamp.",
+			"area": "Gifts"
+		},
+		{
+			"id": "f_gift_synchrotron",
+			"version": "1.2.0",
+			"line": "What does it do? No, don't tell me.",
+			"when": "Your partner's reaction when the gift is a Synchrotron Core.",
+			"area": "Gifts"
+		},
+		{
+			"id": "f_gift_nanites",
+			"version": "1.2.0",
+			"line": "Is this dirt? Expensive dirt?",
+			"when": "Your partner's reaction when the gift is Soil Nanites.",
+			"area": "Gifts"
+		},
+		{
+			"id": "f_gift_cryo",
+			"version": "1.2.0",
+			"line": "It's so cold. Why is it so cold?",
+			"when": "Your partner's reaction when the gift is a Cryoarithmetic Engine.",
+			"area": "Gifts"
+		},
+		{
+			"id": "f_gift_portal",
+			"version": "1.2.0",
+			"line": "It's humming. Should it be humming?",
+			"when": "Your partner's reaction when the gift is a Coronal Hypershunt Tap.",
+			"area": "Gifts"
+		},
+		{
+			"id": "f_gift_bore",
+			"version": "1.2.0",
+			"line": "You want me to drill a hole in the planet?",
+			"when": "Your partner's reaction when the gift is a Mantle Bore.",
+			"area": "Gifts"
+		},
+		{
+			"id": "f_gift_embryo",
+			"version": "1.2.0",
+			"line": "Did it just move?",
+			"when": "Your partner's reaction when the gift is a Biofactory Embryo.",
+			"area": "Gifts"
+		},
+		{
+			"id": "f_gift_drones",
+			"version": "1.2.0",
+			"line": "It's making more of itself. Make it stop.",
+			"when": "Your partner's reaction when the gift is a Drone Replicator.",
+			"area": "Gifts"
+		},
+		{
+			"id": "f_gift_holosuite",
+			"version": "1.2.0",
+			"line": "Finally, something for the living room.",
+			"when": "Your partner's reaction when the gift is a Dealmaker Holosuite.",
+			"area": "Gifts"
+		},
+		{
+			"id": "f_gift_spool",
+			"version": "1.2.0",
+			"line": "Thread? You got me thread?",
+			"when": "Your partner's reaction when the gift is a Fullerene Spool.",
+			"area": "Gifts"
+		},
+		{
+			"id": "f_gift_dynamo",
+			"version": "1.2.0",
+			"line": "Don't plug that in here.",
+			"when": "Your partner's reaction when the gift is a Plasma Dynamo.",
+			"area": "Gifts"
+		},
+		{
+			"id": "f_gift_catalytic",
+			"version": "1.2.0",
+			"line": "It smells like a refinery.",
+			"when": "Your partner's reaction when the gift is a Catalytic Core.",
+			"area": "Gifts"
+		},
+		{
+			"id": "f_gift_low",
+			"version": "1.2.0",
+			"line": "Oh. Thanks, I guess.",
+			"when": "Reaction to any other gift worth under 20,000 credits.",
+			"area": "Gifts"
+		},
+		{
+			"id": "f_gift_mid",
+			"version": "1.2.0",
+			"line": "For me? You shouldn't have.",
+			"when": "Reaction to any other gift worth 20,000 to 200,000 credits.",
+			"area": "Gifts"
+		},
+		{
+			"id": "f_gift_high",
+			"version": "1.2.0",
+			"line": "Do you know what this is worth? I know exactly what to do with it.",
+			"when": "Reaction to any other gift worth 200,000 to 1,000,000 credits.",
+			"area": "Gifts"
+		},
+		{
+			"id": "f_gift_huge",
+			"version": "1.2.0",
+			"line": "Are you out of your mind? This could buy a moon!",
+			"when": "Reaction to any other gift worth 1,000,000 credits or more.",
+			"area": "Gifts"
+		},
+		{
+			"id": "f_gift_spent",
+			"version": "1.2.0",
+			"line": "She sells it for 120,000 credits and has Air conditioning and a Pool built, then has the house repaired. She keeps the rest: 8,000 credits.",
+			"when": "Dialog text after a gift: what your partner did with the money (parts left out when they don't apply).",
+			"area": "Gifts"
+		},
+		{
+			"id": "f_breakup_yes",
+			"version": "1.2.0",
+			"line": "Yes. It's over.",
+			"when": "Option after \"I think we should break up.\" or \"I want a divorce.\"",
+			"area": "Breaking up"
+		},
+		{
+			"id": "f_breakup_no",
+			"version": "1.2.0",
+			"line": "No. Forget I said anything.",
+			"when": "Option after \"I think we should break up.\" or \"I want a divorce.\" Goes back.",
+			"area": "Breaking up"
+		},
+		{
+			"id": "f_tip_divorce",
+			"version": "1.2.0",
+			"line": "The house is sold and you get half. The kids go with her.",
+			"when": "Tooltip on \"Yes. It's over.\" when you are married.",
+			"area": "Breaking up"
+		},
+		{
+			"id": "f_tip_breakup_kids",
+			"version": "1.2.0",
+			"line": "Her kids go with her.",
+			"when": "Tooltip on \"Yes. It's over.\" when you are not married and have kids with them.",
+			"area": "Breaking up"
+		},
+		{
+			"id": "f_breakup_spouse",
+			"version": "1.2.0",
+			"line": "Fine. My lawyer will call you.",
+			"when": "Their answer when you divorce them.",
+			"area": "Breaking up"
+		},
+		{
+			"id": "f_breakup_partner",
+			"version": "1.2.0",
+			"line": "Fine. I'll pack my things.",
+			"when": "Their answer when you break up (not married).",
+			"area": "Breaking up"
+		},
+		{
+			"id": "f_broke_up",
+			"version": "1.2.0",
+			"line": "You broke up with Mira Okoye. She took the kids with her.",
+			"when": "Dialog, home log and intel after a break-up (the kids part only if any).",
+			"area": "Breaking up"
+		},
+		{
+			"id": "f_divorced",
+			"version": "1.2.0",
+			"line": "You and Mira Okoye are divorced. She took the kids with her. Leafy Cottage was sold. Your half: 210,000 credits.",
+			"when": "Dialog and intel message after a divorce.",
+			"area": "Breaking up"
+		},
+		{
+			"id": "f_left_falling",
+			"version": "1.2.0",
+			"line": "Mira Okoye left you: Leafy Cottage is falling apart.",
+			"when": "Home log and intel when your partner leaves because the home is in very bad condition.",
+			"area": "Breaking up"
+		},
+		{
+			"id": "f_left_waiting",
+			"version": "1.2.0",
+			"line": "Mira Okoye divorced you. She got tired of waiting for you to come home.",
+			"when": "Home log and intel when an unhappy partner leaves on their own after long without a visit. \"left you\" if not married.",
+			"area": "Breaking up"
+		},
+		{
+			"id": "f_pregnant_her",
+			"version": "1.2.0",
+			"line": "Mira Okoye is pregnant.",
+			"when": "Home log and intel when a baby is on the way (partner is a woman).",
+			"area": "Babies"
+		},
+		{
+			"id": "f_pregnant_you",
+			"version": "1.2.0",
+			"line": "You're pregnant. Ivan Reyes is the father.",
+			"when": "Home log and intel when a baby is on the way (you are a woman).",
+			"area": "Babies"
+		},
+		{
+			"id": "f_born_her",
+			"version": "1.2.0",
+			"line": "Mira Okoye gave birth to your son, Tomas.",
+			"when": "Home log and intel when the baby is born (partner is a woman).",
+			"area": "Babies"
+		},
+		{
+			"id": "f_born_you",
+			"version": "1.2.0",
+			"line": "You had a daughter with Ivan Reyes: Lena.",
+			"when": "Home log and intel when the baby is born (you are a woman).",
+			"area": "Babies"
+		},
+		{
+			"id": "f_grown",
+			"version": "1.2.0",
+			"line": "Tomas is all grown up.",
+			"when": "Home log and intel when a child grows up (after the LunaLib cycles).",
+			"area": "Babies"
+		},
+		{
+			"id": "f_kid_baby",
+			"version": "1.2.0",
+			"line": "Tomas grabs at the screen and giggles.",
+			"when": "Your child greets you when you open their comm link, under 1 cycle old.",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_kid_grown",
+			"version": "1.2.0",
+			"line": "So, Dad. What now?",
+			"when": "Your child greets you when you open their comm link: grown up and has not picked what to be. \"Mom\" if you are a woman.",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_kid_officer",
+			"version": "1.2.0",
+			"line": "Dad! When can we take the Kite out again?",
+			"when": "Your child greets you when you open their comm link: wants to be an officer.",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_kid_admin",
+			"version": "1.2.0",
+			"line": "Dad, did you know a gamma core can run a whole farm?",
+			"when": "Your child greets you when you open their comm link: wants to be an administrator.",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_kid_worker",
+			"version": "1.2.0",
+			"line": "I dug all the way down to bedrock today!",
+			"when": "Your child greets you when you open their comm link: wants to be a miner.",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_kid_agent",
+			"version": "1.2.0",
+			"line": "I've been practicing my spy walk. Watch.",
+			"when": "Your child greets you when you open their comm link: wants to be an agent.",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_kid_growth",
+			"version": "1.2.0",
+			"line": "Everyone at school says I'm the prettiest.",
+			"when": "Your child greets you when you open their comm link: wants to be a local celebrity.",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_kid_hi",
+			"version": "1.2.0",
+			"line": "Hi, Dad!",
+			"when": "Your child greets you when you open their comm link, any other time.",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_kopt_rename",
+			"version": "1.2.0",
+			"line": "Let's pick a new name for you.",
+			"when": "Option in your child's comm link. Opens a box titled \"New name\".",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_kopt_officer",
+			"version": "1.2.0",
+			"line": "Wanna go for a drive in the Kite I bought, son?",
+			"when": "Option in your child's comm link: pushes them toward being an officer. \"daughter\" for a girl.",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_kopt_admin",
+			"version": "1.2.0",
+			"line": "I see you're reading \"AI Cores in Industry\"?",
+			"when": "Option in your child's comm link: toward being an administrator.",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_kopt_worker",
+			"version": "1.2.0",
+			"line": "I see you're playing Minecraft...",
+			"when": "Option in your child's comm link: toward being a miner.",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_kopt_agent",
+			"version": "1.2.0",
+			"line": "That 007 movie is pretty cool, eh?",
+			"when": "Option in your child's comm link: toward being an agent. Only with Nexerelin.",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_kopt_growth",
+			"version": "1.2.0",
+			"line": "Wow, you're so pretty!",
+			"when": "Option in your child's comm link: toward being a local celebrity (colony growth).",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_kid_giggles",
+			"version": "1.2.0",
+			"line": "Tomas giggles.",
+			"when": "Answer to any of those options from a baby under 1 cycle old.",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_kans_officer",
+			"version": "1.2.0",
+			"line": "Yes! Can I fly it this time?",
+			"when": "Your child's answer to the officer option.",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_kans_admin",
+			"version": "1.2.0",
+			"line": "It's really good. I want to run a colony one day.",
+			"when": "Your child's answer to the administrator option.",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_kans_worker",
+			"version": "1.2.0",
+			"line": "I'm going to dig the biggest mine ever.",
+			"when": "Your child's answer to the miner option.",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_kans_agent",
+			"version": "1.2.0",
+			"line": "I want to be a spy when I grow up.",
+			"when": "Your child's answer to the agent option.",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_kans_growth",
+			"version": "1.2.0",
+			"line": "Thanks, Dad! Everyone says that.",
+			"when": "Your child's answer to the celebrity option.",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_kid_moves_out",
+			"version": "1.2.0",
+			"line": "Tomas moves out.",
+			"when": "Dialog text when a grown-up child picks a path and starts it at once.",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_wait_officer",
+			"version": "1.2.0",
+			"line": "There's no room for another officer in your fleet yet.",
+			"when": "Dialog text when a grown-up child wants to be an officer and your fleet is full.",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_wait_admin",
+			"version": "1.2.0",
+			"line": "You have no room for another administrator yet.",
+			"when": "Dialog text when a grown-up child wants to be an administrator and you have no room.",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_wait_growth",
+			"version": "1.2.0",
+			"line": "You have no colony for them to move to yet.",
+			"when": "Dialog text when a grown-up child wants to be a celebrity and you have no colony.",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_wait_other",
+			"version": "1.2.0",
+			"line": "They'll wait at home for now.",
+			"when": "Dialog text when a grown-up child can't start their path yet for another reason.",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_cut_link",
+			"version": "1.2.0",
+			"line": "Cut the comm link",
+			"when": "Last option in your partner's or child's comm link.",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_news_officer",
+			"version": "1.2.0",
+			"line": "Tomas joined your fleet as an officer.",
+			"when": "Intel message when a grown-up child becomes an officer.",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_news_admin",
+			"version": "1.2.0",
+			"line": "Tomas is one of your administrators now.",
+			"when": "Intel message when a grown-up child becomes an administrator.",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_news_worker",
+			"version": "1.2.0",
+			"line": "Tomas went to work in the mines and will send you 2,000 credits a month.",
+			"when": "Intel message when a grown-up child becomes a miner.",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_news_agent",
+			"version": "1.2.0",
+			"line": "Tomas is your agent now.",
+			"when": "Intel message when a grown-up child becomes a Nexerelin agent.",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_news_growth",
+			"version": "1.2.0",
+			"line": "Tomas moved to Jangala. Everyone there wants a family now.",
+			"when": "Intel message when a grown-up child becomes a local celebrity (colony growth).",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_btn_declare",
+			"version": "1.2.0",
+			"line": "Declare player home",
+			"when": "Real estate tab: button on an empty home you own.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_no_live_already",
+			"version": "1.2.0",
+			"line": "You already live here.",
+			"when": "Tooltip on \"Declare player home\" when it is already your home.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_no_world_gone",
+			"version": "1.2.0",
+			"line": "The world is gone.",
+			"when": "Tooltip on family buttons when the home's world no longer exists.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_no_repair",
+			"version": "1.2.0",
+			"line": "Repair it first.",
+			"when": "Tooltip on family buttons when the home is condemned.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_no_tenant",
+			"version": "1.2.0",
+			"line": "Jana Okoye lives here.",
+			"when": "Tooltip on \"Declare player home\" when a tenant lives there.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_log_moved_in",
+			"version": "1.2.0",
+			"line": "You moved in.",
+			"when": "Home log after \"Declare player home\".",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_st_moved_in",
+			"version": "1.2.0",
+			"line": "You moved into Leafy Cottage.",
+			"when": "Real estate tab: message at the bottom after \"Declare player home\".",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_lbl_live_here",
+			"version": "1.2.0",
+			"line": "You live here.",
+			"when": "Real estate tab: label on your home, next to the family buttons.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_btn_move_in_with",
+			"version": "1.2.0",
+			"line": "Move in with...",
+			"when": "Real estate tab: button on your home. Opens the list of officers and administrators.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_btn_stop",
+			"version": "1.2.0",
+			"line": "Stop living here",
+			"when": "Real estate tab: button on your home.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_no_not_home",
+			"version": "1.2.0",
+			"line": "You don't live here.",
+			"when": "Tooltip on family buttons on a home that is not yours.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_no_partner_here",
+			"version": "1.2.0",
+			"line": "Mira Okoye lives here with you.",
+			"when": "Tooltip on \"Stop living here\" while your partner lives there.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_no_kids_here",
+			"version": "1.2.0",
+			"line": "Your kids live here.",
+			"when": "Tooltip on \"Stop living here\" while your kids live there.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_log_moved_out",
+			"version": "1.2.0",
+			"line": "You moved out.",
+			"when": "Home log after \"Stop living here\".",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_st_moved_out",
+			"version": "1.2.0",
+			"line": "You moved out of Leafy Cottage.",
+			"when": "Real estate tab: message at the bottom after \"Stop living here\".",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_list_none",
+			"version": "1.2.0",
+			"line": "No officers or administrators of the opposite sex.",
+			"when": "\"Move in with...\" list when nobody can be picked.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_list_bond",
+			"version": "1.2.0",
+			"line": "Relationship +72",
+			"when": "\"Move in with...\" list: each officer's or administrator's relationship with you. Green at +70 or more.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_btn_partner_move_in",
+			"version": "1.2.0",
+			"line": "Move in",
+			"when": "\"Move in with...\" list: button next to each officer or administrator.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_tip_partner_move_in",
+			"version": "1.2.0",
+			"line": "Mira Okoye leaves your service and lives here with you.",
+			"when": "Tooltip on that \"Move in\" button when they can.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_no_someone",
+			"version": "1.2.0",
+			"line": "Someone already lives here with you.",
+			"when": "Tooltip on \"Move in\" when you already have a partner there.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_no_bond",
+			"version": "1.2.0",
+			"line": "Needs a relationship of +70",
+			"when": "Tooltip on \"Move in\" when the relationship is too low.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_log_partner_in",
+			"version": "1.2.0",
+			"line": "Mira Okoye moved in with you.",
+			"when": "Home log when your partner moves in.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_st_partner_in",
+			"version": "1.2.0",
+			"line": "Mira Okoye moved in with you at Leafy Cottage.",
+			"when": "Real estate tab: message at the bottom when your partner moves in.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_partner_line",
+			"version": "1.2.0",
+			"line": "Your wife. Together 7 months.",
+			"when": "Real estate tab: family section, under your partner's name.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_partner_happy",
+			"version": "1.2.0",
+			"line": "Happiness: 64",
+			"when": "Real estate tab: family section, title of your partner's happiness tooltip (Health: 80 the same way).",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_baby_due",
+			"version": "1.2.0",
+			"line": "A baby is on the way: 12 days left.",
+			"when": "Real estate tab: family section while a baby is on the way.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_kid_age",
+			"version": "1.2.0",
+			"line": "3 cycles old. Wants to be an officer.",
+			"when": "Real estate tab: family section, a child's line. Ages: Newborn, 8 months old, 3 cycles old, Grown up. Paths: an officer, an administrator, a miner, an agent, a local celebrity.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_kid_happy",
+			"version": "1.2.0",
+			"line": "Happiness 64",
+			"when": "Real estate tab: family section, a child's happiness.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_alimony_line",
+			"version": "1.2.0",
+			"line": "2 children live with a former partner. Alimony: 10,000 credits a month.",
+			"when": "Real estate tab: family section when you pay alimony.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_tab_family",
+			"version": "1.2.0",
+			"line": "Family",
+			"when": "Real estate tab: the Tenants tab (T) is called Family on your own home.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_hdr_home",
+			"version": "1.2.0",
+			"line": "Your home, with Mira (wife)",
+			"when": "Real estate tab: your home's name in the list on the left. \"Your home\" when you live alone.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_occ_home",
+			"version": "1.2.0",
+			"line": "You live here with Mira Okoye, your wife",
+			"when": "Home sheet: the occupancy line of your home. \"You live here\" when alone.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_tenant_partner",
+			"version": "1.2.0",
+			"line": "Mira Okoye, your wife",
+			"when": "Home sheet: the Tenant section on your home shows your partner like this.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_note_visit",
+			"version": "1.2.0",
+			"line": "Last visited: 12 days ago (-6)",
+			"when": "Home sheet: your partner's notes. \"today\", \"yesterday\"; the happiness cost shows once it starts.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_note_mood_good",
+			"version": "1.2.0",
+			"line": "In a good mood (+8)",
+			"when": "Home sheet: your partner's notes after a good event.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_note_mood_bad",
+			"version": "1.2.0",
+			"line": "In a bad mood (-7)",
+			"when": "Home sheet: your partner's notes after a bad event.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_no_sell",
+			"version": "1.2.0",
+			"line": "Your family lives here.",
+			"when": "Tooltip on Sell for your home while your partner or kids live there.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_no_advert",
+			"version": "1.2.0",
+			"line": "You live in Leafy Cottage.",
+			"when": "Reason shown when you try to move a tenant into your own home.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_no_evict",
+			"version": "1.2.0",
+			"line": "Talk to Mira Okoye instead.",
+			"when": "Tooltip on Evict when your partner lives there.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_month_family",
+			"version": "1.2.0",
+			"line": "Last month: rent 12,000 credits, ..., from your kids 2,000 credits, alimony 5,000 credits",
+			"when": "Real estate tab: the last-month line at the top (the family parts only when they apply).",
+			"area": "Monthly, settings and names"
+		},
+		{
+			"id": "f_msg_kids_pay",
+			"version": "1.2.0",
+			"line": "Sent home by your kids: 2,000 credits",
+			"when": "Monthly real estate message: money from kids who work in the mines.",
+			"area": "Monthly, settings and names"
+		},
+		{
+			"id": "f_msg_alimony",
+			"version": "1.2.0",
+			"line": "Alimony: 5,000 credits",
+			"when": "Monthly real estate message.",
+			"area": "Monthly, settings and names"
+		},
+		{
+			"id": "f_report_alimony",
+			"version": "1.2.0",
+			"line": "Alimony for Tomas",
+			"when": "Monthly income report (the colony report screen): one row per child you pay alimony for.",
+			"area": "Monthly, settings and names"
+		},
+		{
+			"id": "f_tariff_family",
+			"version": "1.2.0",
+			"line": "Your family lives here",
+			"when": "Tooltip of the market's tariff: why it is 0% where your wife or husband lives.",
+			"area": "Monthly, settings and names"
+		},
+		{
+			"id": "f_growth_kids",
+			"version": "1.2.0",
+			"line": "Your kids",
+			"when": "Colony growth tooltip: growth from kids who became local celebrities there.",
+			"area": "Monthly, settings and names"
+		},
+		{
+			"id": "f_set_header",
+			"version": "1.2.0",
+			"line": "Family",
+			"when": "LunaLib settings: the header above the two family settings.",
+			"area": "Monthly, settings and names"
+		},
+		{
+			"id": "f_set_grow",
+			"version": "1.2.0",
+			"line": "Cycles to grow up",
+			"when": "LunaLib settings: name. Description: \"How many cycles your children take to grow up.\"",
+			"area": "Monthly, settings and names"
+		},
+		{
+			"id": "f_set_alimony",
+			"version": "1.2.0",
+			"line": "Alimony per child",
+			"when": "LunaLib settings: name. Description: \"Credits you pay each month for every child who left with a former partner, until they grow up.\"",
+			"area": "Monthly, settings and names"
+		},
+		{
+			"id": "f_posts",
+			"version": "1.2.0",
+			"line": "Girlfriend, Boyfriend, Partner, Wife, Husband, Spouse, Son, Daughter",
+			"when": "Comm directory: the post under your partner's or child's name.",
+			"area": "Monthly, settings and names"
+		}
 	]
 }
