@@ -298,8 +298,13 @@ public abstract class PropertyView extends Canvas {
         return m.getName() + ", " + landlordsector.PropertyStats.article(world) + owner;
     }
 
-    /** Size of a condition icon, the same as the game's own on the colony screen. */
-    public static final float ICON = 40f;
+    /** Gap between two icons, across and down. */
+    private static final float ICON_GAP = 4f;
+
+    /** Size of a condition icon (1.5.1: the LunaLib setting, 120 by default; the game's own are 40). */
+    public static float iconSize() {
+        return landlordsector.Settings.iconSize();
+    }
 
     /** The picture of the building a home sits next to (its industry picture), or null for none. */
     public static String areaPicture(MarketAPI m, String neighborId) {
@@ -327,21 +332,26 @@ public abstract class PropertyView extends Canvas {
         return null;
     }
 
-    /** One icon with its tooltip; returns the x after it, or the same x when it would not fit. */
-    private float oneIcon(String path, float x, float y, float w, float aspect, float right, String title,
-            List<String[]> lines) {
-        if (path == null || x + w > right) return x;
-        icon(path, x, y, w, ICON, aspect);
-        tipColored(x, y, w, ICON, title, lines != null ? lines : new ArrayList<>());
-        return x + w + 4f;
+    /** One icon of the row: its picture, how many icon widths it takes, and its tooltip. */
+    private static final class IconSpec {
+        final String path;
+        final float span;
+        final String title;
+        final List<String[]> lines;
+
+        IconSpec(String path, float span, String title, List<String[]> lines) {
+            this.path = path;
+            this.span = span;
+            this.title = title;
+            this.lines = lines != null ? lines : new ArrayList<>();
+        }
     }
 
     /** Size, Location, Commute, Air, Noise, climate, Area, the world, then each house trait. */
-    protected void iconRow(Sheet s, float x, float y, float w) {
-        float right = x + w;
-        float cx = x;
+    private static List<IconSpec> icons(Sheet s) {
+        List<IconSpec> out = new ArrayList<>();
         String ic = landlordsector.Art.ICONS;
-        if (s.tierId != null) cx = oneIcon(ic + "size_" + s.tierId + ".png", cx, y, ICON, 1f, right, "Size: " + s.size, null);
+        if (s.tierId != null) out.add(new IconSpec(ic + "size_" + s.tierId + ".png", 1f, "Size: " + s.size, null));
         PropertyStats st = s.stats;
         if (st != null) {
             List<String[]> gl = st.gradeLines;
@@ -349,43 +359,83 @@ public abstract class PropertyView extends Canvas {
                 gl = new ArrayList<>();
                 gl.add(new String[] {st.gradeReason, null});
             }
-            cx = oneIcon(gradeIcon("location", st.grade), cx, y, ICON, 1f, right,
-                    PropertyStats.graded("Location", st.grade), gl);
+            out.add(new IconSpec(gradeIcon("location", st.grade), 1f, PropertyStats.graded("Location", st.grade), gl));
             for (landlordsector.data.Environment.Score sc : landlordsector.data.Environment.scores()) {
                 Float v = st.env.get(sc.id);
                 if (v == null) continue;
                 String letter = landlordsector.data.Environment.letter(v);
-                cx = oneIcon(gradeIcon(sc.id, letter), cx, y, ICON, 1f, right,
-                        PropertyStats.graded(sc.name, letter) + " (" + Math.round(v) + ")", st.envLines.get(sc.id));
+                out.add(new IconSpec(gradeIcon(sc.id, letter), 1f,
+                        PropertyStats.graded(sc.name, letter) + " (" + Math.round(v) + ")", st.envLines.get(sc.id)));
             }
             for (landlordsector.data.Levels.Def ld : landlordsector.data.Levels.all()) {
                 int lvl = st.levels.getOrDefault(ld.id, 0);
                 if (lvl <= 0) continue;
-                cx = oneIcon(levelIcon(ld.id, lvl), cx, y, ICON, 1f, right, landlordsector.data.Levels.label(ld, lvl),
-                        st.levelLines.get(ld.id));
+                String path = levelIcon(ld.id, lvl);
+                if (path != null) out.add(new IconSpec(path, 1f, landlordsector.data.Levels.label(ld, lvl),
+                        st.levelLines.get(ld.id)));
             }
             if (s.areaPicture != null) {
-                cx = oneIcon(s.areaPicture, cx, y, ICON * 2f, 2f, right, "Area: " + st.area, st.neighborLines);
+                out.add(new IconSpec(s.areaPicture, 2f, "Area: " + st.area, st.neighborLines));
             } else {
-                cx = oneIcon(ic + "area_residential.png", cx, y, ICON, 1f, right, "Area: " + st.area, st.neighborLines);
+                out.add(new IconSpec(ic + "area_residential.png", 1f, "Area: " + st.area, st.neighborLines));
             }
             if (st.loreName != null) {
                 List<String[]> ll = new ArrayList<>();
                 if (st.loreLine != null) ll.add(new String[] {st.loreLine, null});
-                cx = oneIcon(ic + "world.png", cx, y, ICON, 1f, right, st.loreName, ll);
+                out.add(new IconSpec(ic + "world.png", 1f, st.loreName, ll));
             }
         }
         for (String id : s.traitIds) {
             landlordsector.data.HouseTraits.Def d = landlordsector.data.HouseTraits.get(id);
             if (d == null || landlordsector.data.Upgrades.get(id) != null) continue;
-            cx = oneIcon(ic + "trait_" + id + ".png", cx, y, ICON, 1f, right, d.name, Tips.houseTrait(d));
+            out.add(new IconSpec(ic + "trait_" + id + ".png", 1f, d.name, Tips.houseTrait(d)));
+        }
+        return out;
+    }
+
+    /** 1.5.1: {x, y} of each icon in a row {@code w} wide; an icon that does not fit starts the next row. */
+    private static float[][] iconLayout(List<IconSpec> list, float w) {
+        float size = iconSize();
+        float[][] at = new float[list.size()][];
+        float cx = 0f;
+        int row = 0;
+        for (int i = 0; i < list.size(); i++) {
+            float iw = size * list.get(i).span;
+            if (cx > 0f && cx + iw > w) {
+                cx = 0f;
+                row++;
+            }
+            at[i] = new float[] {cx, row * (size + ICON_GAP)};
+            cx += iw + ICON_GAP;
+        }
+        return at;
+    }
+
+    /** Height of the icon rows for a sheet {@code cw} wide. */
+    protected static float iconRowsHeight(Sheet s, float cw) {
+        List<IconSpec> list = icons(s);
+        if (list.isEmpty()) return 0f;
+        float[][] at = iconLayout(list, cw);
+        return at[at.length - 1][1] + iconSize();
+    }
+
+    /** The icons under the picture; each has the same tooltip as its row below. */
+    protected void iconRow(Sheet s, float x, float y, float w) {
+        float size = iconSize();
+        List<IconSpec> list = icons(s);
+        float[][] at = iconLayout(list, w);
+        for (int i = 0; i < list.size(); i++) {
+            IconSpec ic = list.get(i);
+            float ix = x + at[i][0], iy = y + at[i][1], iw = size * ic.span;
+            icon(ic.path, ix, iy, iw, size, ic.span);
+            tipColored(ix, iy, iw, size, ic.title, ic.lines);
         }
     }
 
     /** Height the sheet needs under its picture. */
-    protected static float sheetTextHeight(Sheet s) {
+    protected static float sheetTextHeight(Sheet s, float w) {
         int rows = 7;
-        return 8f + 30f + ICON + 6f + rows * ROW + (s.traits.isEmpty() ? 0f : ROW) + (s.stats != null ? 2 * ROW : 0f)
+        return 8f + 30f + iconRowsHeight(s, contentWidth(w)) + 6f + rows * ROW + (s.traits.isEmpty() ? 0f : ROW) + (s.stats != null ? 2 * ROW : 0f)
                 + ROW + (s.furnitureSlots > 0 ? ROW : 0f) + s.extra.size() * ROW;
     }
 
@@ -425,7 +475,7 @@ public abstract class PropertyView extends Canvas {
         // 1.5.0 (Andrzej, LLS-16: "home conditions as icons like market conditions"): a row of icons under the
         // picture, like the conditions on a colony screen. Each icon has the same tooltip as its row below.
         iconRow(s, x, y + imgH + 6f, cw);
-        float ty = y + imgH + 6f + ICON + 8f;
+        float ty = y + imgH + 6f + iconRowsHeight(s, cw) + 8f;
         title(s.title, x, ty, cw);
 
         float r = ty + 30f;

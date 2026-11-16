@@ -1,3 +1,7 @@
+Version 1.5.1 (2026-11-16)
+- Home condition icons are bigger: 120 pixels by default, set by the new Home icon size setting (40 to 128). Icons that don't fit in one row go on to the next
+- The first painted icons: Blooming, Clean, Cramped, Dusty, Freezing and Geothermal
+
 Version 1.5.0 (2026-11-16)
 - A row of condition icons under each home's picture, like the conditions on a colony screen: size, the Location, Commute, Air and Noise grades, heat, cold and radiation, the building nearby, the world, and each house trait. Hover one for its details. House traits, Residential and the world show placeholders until their art is done
 

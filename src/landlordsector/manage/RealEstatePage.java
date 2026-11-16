@@ -314,7 +314,7 @@ public class RealEstatePage implements ManagePage {
             }
             s.extra.add(new String[] {"Rent so far", Misc.getDGSCredits(chosen.totalRent)
                     + " (last month " + Misc.getDGSCredits(chosen.lastRent) + ")"});
-            float maxImg = height - y0 - sheetTextHeight(s) - 48f;
+            float maxImg = height - y0 - sheetTextHeight(s, rw) - 48f;
             float end = sheet(s, rx, y0, rw, maxImg);
 
             float cy = Math.min(end + 8f, height - 36f);

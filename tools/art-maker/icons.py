@@ -1,13 +1,13 @@
 """Landlordsector home condition icons (LLS-16, Andrzej 2026-11-16: "home conditions as icons like market conditions").
 
-    python icons.py build     writes every icon to graphics/landlordsector/icons/ (40x40 like the game's own)
+    python icons.py build     writes every icon to graphics/landlordsector/icons/ (128x128; the game draws them at the LunaLib icon size)
     python icons.py prompts   writes art-prompts-icons.txt and icon-prompts.json (the Gemini prompts page data)
 
 Three kinds:
 - script: grade icons (Location, Commute, Air, Noise from S+ to F) and size icons, drawn here in the flat style of the
   game's colony-size icons (graphics/icons/markets/population0N.png). Final art, no Gemini needed.
 - gemini: one painted icon per house trait, plus Residential area and Lore world. Andrzej makes them in Gemini from the
-  prompts and saves them as art-source/icons/<key>.png (or .jpg). Until a file is there, build writes a placeholder
+  prompts and saves them as art-source/icons/<key>.png (or .jpg; the icon's name alone works too, like blooming.jpg). Until a file is there, build writes a placeholder
   (dark square, a border in the trait's color, its first letters).
 - The game's own: heat, cold and radiation reuse graphics/icons/markets/hot, cold and irradiated; the nearby building
   uses its industry picture. Those are not made here.
@@ -21,7 +21,8 @@ MOD = os.path.abspath(os.path.join(HERE, "..", ".."))
 CFG = os.path.join(MOD, "data", "config", "landlordsector")
 OUT = os.path.join(MOD, "graphics", "landlordsector", "icons")
 SRC = os.path.join(MOD, "art-source", "icons")
-SIZE = 40
+SIZE = 128  # 1.5.1 (Andrzej: "40x40 is pretty small. The icons are legible from 120x120")
+U = SIZE / 40.0  # the drawings below are laid out on a 40 grid
 
 GRADES = ["S+", "S", "A", "B", "C", "D", "E", "F"]
 # Background per grade, like the colored squares of the game's colony-size icons: gold at the top, slate in the
@@ -42,7 +43,7 @@ def grade_key(g):
 
 
 ICON_STYLE = """ICON STYLE (the same for every icon of this set):
-- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown at only 40 x 40 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
+- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown small, about 100 x 100 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
 - Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
 - Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
 - A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
@@ -116,19 +117,16 @@ def font(size, bold=True):
 
 
 def text_icon(path, big, small, bg, fg=(225, 230, 220)):
-    """The game's colony-size style: a colored square, a big character and a small label, crisp pixels."""
-    scale = 4
-    im = Image.new("RGBA", (SIZE * scale, SIZE * scale), bg + (255,))
+    """The game's colony-size style: a colored square, a big character and a small label."""
+    im = Image.new("RGBA", (SIZE, SIZE), bg + (255,))
     d = ImageDraw.Draw(im)
-    d.fontmode = "1"
-    fb = font(26 * scale if len(big) == 1 else 21 * scale)
+    fb = font(int((26 if len(big) == 1 else 21) * U))
     w = d.textbbox((0, 0), big, font=fb)
-    bx = SIZE * scale - (w[2] - w[0]) - 4 * scale - w[0]
-    d.text((bx, 1 * scale - w[1]), big, font=fb, fill=fg)
-    fs = font(9 * scale)
+    bx = SIZE - (w[2] - w[0]) - 4 * U - w[0]
+    d.text((bx, 1 * U - w[1]), big, font=fb, fill=fg)
+    fs = font(int(9 * U))
     s = d.textbbox((0, 0), small, font=fs)
-    d.text((3 * scale - s[0], SIZE * scale - (s[3] - s[1]) - 3 * scale - s[1]), small, font=fs, fill=fg)
-    im = im.resize((SIZE, SIZE), Image.NEAREST)
+    d.text((3 * U - s[0], SIZE - (s[3] - s[1]) - 3 * U - s[1]), small, font=fs, fill=fg)
     im.save(path)
 
 
@@ -136,9 +134,9 @@ def placeholder(path, name, good):
     border = (70, 170, 90) if good is True else ((190, 70, 60) if good is False else (140, 145, 160))
     im = Image.new("RGBA", (SIZE, SIZE), (24, 30, 44, 255))
     d = ImageDraw.Draw(im)
-    d.rectangle([0, 0, SIZE - 1, SIZE - 1], outline=border, width=2)
+    d.rectangle([0, 0, SIZE - 1, SIZE - 1], outline=border, width=int(2 * U))
     letters = re.sub(r"[^A-Za-z]", "", name)[:3].upper()
-    f = font(13)
+    f = font(int(13 * U))
     b = d.textbbox((0, 0), letters, font=f)
     d.text(((SIZE - (b[2] - b[0])) / 2 - b[0], (SIZE - (b[3] - b[1])) / 2 - b[1]), letters, font=f, fill=border)
     im.save(path)
@@ -166,8 +164,12 @@ def build():
         n_script += 1
     for i in gemini_icons():
         dst = os.path.join(OUT, i["key"] + ".png")
-        src = next((os.path.join(SRC, i["key"] + e) for e in (".png", ".jpg", ".jpeg", ".webp")
-                    if os.path.exists(os.path.join(SRC, i["key"] + e))), None)
+        # Andrzej names files by the trait's name ("blooming.jpg"); the id ("flowers") and the key work too.
+        names = [i["key"], i["name"].lower(), i["name"].lower().replace("-", "_").replace(" ", "_")]
+        if i["key"].startswith("trait_"):
+            names.append(i["key"][len("trait_"):])
+        src = next((os.path.join(SRC, n + e) for n in names for e in (".png", ".jpg", ".jpeg", ".webp")
+                    if os.path.exists(os.path.join(SRC, n + e))), None)
         if src:
             from_art(src, dst)
             n_art += 1
@@ -182,7 +184,7 @@ def prompts():
     with io.open(os.path.join(MOD, "art-prompts-icons.txt"), "w", encoding="utf-8", newline="\n") as f:
         f.write("LANDLORDSECTOR - GEMINI PROMPTS FOR THE HOME CONDITION ICONS\n")
         f.write("=" * 60 + "\n\nOne prompt per icon. New Gemini chat for each. Save as the name on the last line into\n"
-                "art-source/icons/. Claude crops the middle square and shrinks it to 40x40.\n\n")
+                "art-source/icons/. Claude crops the middle square and shrinks it to 128x128.\n\n")
         for i in items:
             f.write("#" * 100 + "\n### " + i["key"] + ".png  (" + i["name"] + ")\n\n" + i["prompt"] + "\n\n")
     json.dump({"style": ICON_STYLE, "icons": items}, io.open(os.path.join(HERE, "icon-prompts.json"), "w",

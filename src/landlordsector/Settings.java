@@ -35,6 +35,21 @@ public final class Settings {
         }
     }
 
+    /**
+     * 1.5.1 (Andrzej: "40x40 is pretty small. The icons are legible from 120x120"): size of the home condition icons,
+     * 120 by default. The icon files are 128 x 128.
+     */
+    public static final int DEFAULT_ICON_SIZE = 120;
+
+    public static float iconSize() {
+        try {
+            Integer i = LunaSettings.getInt(MOD_ID, "lls_iconSize");
+            return i == null ? DEFAULT_ICON_SIZE : Math.max(40, Math.min(128, i));
+        } catch (Throwable t) {
+            return DEFAULT_ICON_SIZE;
+        }
+    }
+
     /** 1.2.0: cycles a child takes to grow up. */
     public static final int DEFAULT_GROW_UP_CYCLES = 5;
     /** 1.2.0: alimony per child per month while they grow up. */
