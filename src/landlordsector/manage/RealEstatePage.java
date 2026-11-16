@@ -538,7 +538,7 @@ public class RealEstatePage implements ManagePage {
                 landlordsector.ui.Canvas.highlight(nl, n.text, n.line());
                 ny += 18f;
             }
-            if (t.conceivedAt > 0L && t.toldPregnant) {
+            if (t.conceivedAt != 0L && t.toldPregnant) {
                 int days = Math.max(1, Math.round(landlordsector.Family.BIRTH_DAYS
                         - landlordsector.Family.daysSince(t.conceivedAt)));
                 text("A baby is on the way: " + days + (days == 1 ? " day left." : " days left."),

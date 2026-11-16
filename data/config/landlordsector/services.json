@@ -17,6 +17,8 @@
 		{"id":"maintenance", "name":"Maintenance contract", "share":0.12, "min":200, "repairs":0.03},
 		{"id":"gardener", "name":"Gardener", "station":false, "share":0.04, "min":100, "decor":4, "comfort":2, "tags":["garden"]},
 		{"id":"concierge", "name":"Concierge", "minTier":3, "share":0.10, "min":500, "happiness":6},
-		{"id":"pest_control_plan", "name":"Pest control plan", "share":0.03, "min":100, "events":{"pests":0.1}}
+		{"id":"pest_control_plan", "name":"Pest control plan", "share":0.03, "min":100, "events":{"pests":0.1}},
+		# 1.7.0 (a fan, via Andrzej): runs the tenants for you (Manager.java). A flat fee: share 0, min is the price.
+		{"id":"tenant_manager", "name":"Tenant manager", "share":0, "min":5000}
 	]
 }

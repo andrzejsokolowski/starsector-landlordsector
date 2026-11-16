@@ -39,14 +39,6 @@ public class LlsIds implements BaseCommand {
                 for (Upgrades.Def d : Upgrades.of(Upgrades.Kind.RENOVATION)) sb.append("  ").append(d.id).append(" (")
                         .append(d.name).append(")\n");
                 break;
-            case "furniture":
-                for (Upgrades.Def d : Upgrades.of(Upgrades.Kind.FURNITURE)) sb.append("  ").append(d.id).append(" (")
-                        .append(d.name).append(")\n");
-                break;
-            case "services":
-                for (Services.Def d : Services.all()) sb.append("  ").append(d.id).append(" (").append(d.name)
-                        .append(")\n");
-                break;
             default:
                 return CommandResult.BAD_SYNTAX;
         }

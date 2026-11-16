@@ -131,9 +131,9 @@ public final class Family {
 
     private static boolean fits(PersonAPI me, PersonAPI p) {
         if (p == null || p == me || p.isPlayer() || p.isAICore() || Misc.isUnremovable(p)) return false;
-        Gender g = p.getGender();
+        Gender g = genderOf(p);
         if (g != Gender.MALE && g != Gender.FEMALE) return false;
-        Gender mine = me != null ? me.getGender() : Gender.ANY;
+        Gender mine = playerGender();
         if (mine == Gender.MALE) return g == Gender.FEMALE;
         if (mine == Gender.FEMALE) return g == Gender.MALE;
         return true;
@@ -373,11 +373,33 @@ public final class Family {
     // ---- Names ----
 
     public static boolean female(Tenant t) {
-        return t != null && t.person != null && t.person.getGender() == Gender.FEMALE;
+        return t != null && t.person != null && genderOf(t.person) == Gender.FEMALE;
     }
 
     private static boolean male(Tenant t) {
-        return t != null && t.person != null && t.person.getGender() == Gender.MALE;
+        return t != null && t.person != null && genderOf(t.person) == Gender.MALE;
+    }
+
+    /**
+     * 1.7.0: AoTD's Sophia Anderson is stored as a man (Andrzej's screenshot: "Rank: Husband", "Meet him in person"),
+     * so she counts as a woman here.
+     */
+    public static Gender genderOf(PersonAPI p) {
+        if (p == null) return Gender.ANY;
+        return isSophia(p) ? Gender.FEMALE : p.getGender();
+    }
+
+    /**
+     * 1.7.0 (Andrzej: "a lunasettings override to treat your character as male or female ... They can select their
+     * partner's sex by selecting their sex, but keep their portrait"): the player's sex for the family, the setting
+     * first, else the character's.
+     */
+    public static Gender playerGender() {
+        String s = Settings.playerSex();
+        if ("Male".equals(s)) return Gender.MALE;
+        if ("Female".equals(s)) return Gender.FEMALE;
+        PersonAPI me = Global.getSector().getPlayerPerson();
+        return me != null ? me.getGender() : Gender.ANY;
     }
 
     /** "girlfriend", "wife", "boyfriend", "husband", "partner" or "spouse". */
@@ -402,8 +424,7 @@ public final class Family {
 
     /** "Dad" or "Mom" for the player, as their kids say it. */
     public static String parentWord() {
-        PersonAPI me = Global.getSector().getPlayerPerson();
-        return me != null && me.getGender() == Gender.FEMALE ? "Mom" : "Dad";
+        return playerGender() == Gender.FEMALE ? "Mom" : "Dad";
     }
 
     /** "{playerName} Junior", then Junior II, Junior III... */
@@ -427,7 +448,7 @@ public final class Family {
     }
 
     public static float daysSince(long when) {
-        if (when <= 0L) return 0f;
+        if (when == 0L) return 0f; // 1.7.0: game timestamps are negative (cycle 206 is before 1970), 0 means never
         return Math.max(0f, Global.getSector().getClock().getElapsedDaysSince(when));
     }
 
@@ -477,10 +498,14 @@ public final class Family {
     public static void marryEveryPartner() {
         for (Property p : Portfolio.get().properties()) {
             Tenant t = p.partner();
-            if (t == null || t.isSpouse()) continue;
-            t.partner = 2;
-            t.marriedAt = now();
+            if (t == null) continue;
+            if (!t.isSpouse()) {
+                t.partner = 2;
+                t.marriedAt = now();
+            }
+            // 1.7.0: Wife or Husband shown again on every load (Sophia showed as Husband).
             if (t.person != null) {
+                if (isSophia(t.person) && t.person.getGender() != Gender.FEMALE) t.person.setGender(Gender.FEMALE);
                 t.person.setRankId(post(t));
                 t.person.setPostId(post(t));
             }
@@ -510,12 +535,12 @@ public final class Family {
     public static int tryForChild(Property p, Random random) {
         Tenant t = p.partner();
         if (t == null) return 0;
-        if (t.conceivedAt > 0L && t.toldPregnant) return 1;
+        if (t.conceivedAt != 0L && t.toldPregnant) return 1;
         if (cannotTry(p) != null) return 3;
-        if (t.lastTry > 0L && daysSince(t.lastTry) < 1f) return 0;
+        if (t.lastTry != 0L && daysSince(t.lastTry) < 1f) return 0;
         t.lastTry = now();
         t.mood = Pricing.clamp(t.mood + 3f, -30f, 30f);
-        if (t.conceivedAt <= 0L && random.nextFloat() < CHILD_CHANCE) {
+        if (t.conceivedAt == 0L && random.nextFloat() < CHILD_CHANCE) {
             t.conceivedAt = now();
             t.toldPregnant = false;
         }
@@ -877,7 +902,7 @@ public final class Family {
         for (Property p : new ArrayList<>(Portfolio.get().properties())) {
             if (!p.playerHome) continue;
             Tenant t = p.partner();
-            if (t != null && t.conceivedAt > 0L) {
+            if (t != null && t.conceivedAt != 0L) {
                 float d = daysSince(t.conceivedAt);
                 if (!t.toldPregnant && d >= TELL_DAYS) {
                     t.toldPregnant = true;

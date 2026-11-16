@@ -296,6 +296,12 @@ public final class Actions {
 
     /** Moves an applicant or a pool tenant into an empty home. */
     public static String moveIn(Property p, Tenant t) {
+        String no = moveIn(p, t, true);
+        return no != null ? no : t.name + " moved into " + p.displayName() + ".";
+    }
+
+    /** Moves the tenant in; null when they moved in, else why not. 1.7.0: the tenant manager moves in quietly. */
+    public static String moveIn(Property p, Tenant t, boolean sound) {
         if (p.tenant != null) return p.displayName() + " already has a tenant.";
         if (p.playerHome) return "You live in " + p.displayName() + ".";
         String no = refusal(p, t);
@@ -309,8 +315,8 @@ public final class Actions {
         p.advertising = false;
         p.applicants().clear();
         p.addLog(t.name + " moved in.", true, t.name + " moved in.");
-        Global.getSoundPlayer().playUISound("ui_upgrade_industry", 1f, 1f);
-        return t.name + " moved into " + p.displayName() + ".";
+        if (sound) Global.getSoundPlayer().playUISound("ui_upgrade_industry", 1f, 1f);
+        return null;
     }
 
     public static String reject(Property p, Tenant a) {

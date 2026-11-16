@@ -66,7 +66,8 @@ Requires LunaLib and OddiszCommons.
   raises the reputation its rent earns or costs.
 - **Services** (0.6.0, services.json): hired per home on the Services tab (S), paid monthly as a share of the
   Normal rent: security patrol, cleaning crew (cleans graffiti and dirt), maintenance contract (repairs), gardener,
-  concierge, pest control plan and the screening service.
+  concierge, pest control plan and the screening service. 1.7.0: the tenant manager (flat 5,000 a month,
+  Manager.java) fills an empty home with the best applicant and moves the rent between Low and High.
 - **House flipping** (0.6.0): about a third of homes for sale come worn, some with graffiti or dirt. Worn price plus
   repairs stays under the price new, and the repaired home sells for more than the worn price before tariffs.
 - **Tenant happiness and health** (0.6.0) are the tenant's own bars, in the Tenant section of the home sheet.

@@ -1182,13 +1182,6 @@
 			"area": "Console"
 		},
 		{
-			"id": "con_lls_evict",
-			"version": "1.6.0",
-			"line": "lls_evict [home]: The tenant leaves the home at once.",
-			"when": "Console Commands: the help text of lls_evict (help lls_evict in the console).",
-			"area": "Console"
-		},
-		{
 			"id": "con_lls_applicants",
 			"version": "1.6.0",
 			"line": "lls_applicants [home] [1-10]: People apply to rent an empty home, 3 unless you give a number. See them on the home's Tenants tab.",
@@ -1238,20 +1231,6 @@
 			"area": "Console"
 		},
 		{
-			"id": "con_lls_furniture",
-			"version": "1.6.0",
-			"line": "lls_furniture <furniture id|all> [1-100]: Puts furniture in your furniture storage, 1 unless you give a number. all gives every piece. lls_ids furniture lists them.",
-			"when": "Console Commands: the help text of lls_furniture (help lls_furniture in the console).",
-			"area": "Console"
-		},
-		{
-			"id": "con_lls_service",
-			"version": "1.6.0",
-			"line": "lls_service <home> <service id>: Hires a service for a home, or cancels it if it is already hired. lls_ids services lists them.",
-			"when": "Console Commands: the help text of lls_service (help lls_service in the console).",
-			"area": "Console"
-		},
-		{
 			"id": "con_lls_month",
 			"version": "1.6.0",
 			"line": "lls_month: Runs the end-of-month pass now: rent, wear, reputation and your family's money. The rent shows in this month's income report.",
@@ -1280,18 +1259,74 @@
 			"area": "Console"
 		},
 		{
-			"id": "con_lls_sell",
+			"id": "con_lls_ids",
 			"version": "1.6.0",
-			"line": "lls_sell [home]: Sells a home at its price, like the Sell button on the Real estate tab.",
-			"when": "Console Commands: the help text of lls_sell (help lls_sell in the console).",
+			"line": "lls_ids <sizes|housetraits|tenanttraits|events|upgrades>: Lists the ids the other lls_ commands take.",
+			"when": "Console Commands: the help text of lls_ids (help lls_ids in the console).",
 			"area": "Console"
 		},
 		{
-			"id": "con_lls_ids",
-			"version": "1.6.0",
-			"line": "lls_ids <sizes|housetraits|tenanttraits|events|upgrades|furniture|services>: Lists the ids the other lls_ commands take.",
-			"when": "Console Commands: the help text of lls_ids (help lls_ids in the console).",
-			"area": "Console"
+			"id": "svc_tenant_manager",
+			"version": "1.7.0",
+			"line": "Tenant manager",
+			"when": "Name of the new service on a home's Services tab.",
+			"area": "Services"
+		},
+		{
+			"id": "svc_manager_tip_fill",
+			"version": "1.7.0",
+			"line": "Advertises the home when it is empty and moves in the best applicant",
+			"when": "Tenant manager tooltip on the Services tab.",
+			"area": "Services"
+		},
+		{
+			"id": "svc_manager_tip_rent",
+			"version": "1.7.0",
+			"line": "Lowers the rent when the tenant is unhappy and raises it when they are happy, from Low to High",
+			"when": "Tenant manager tooltip on the Services tab.",
+			"area": "Services"
+		},
+		{
+			"id": "svc_flat_cost",
+			"version": "1.7.0",
+			"line": "Costs 5,000 a month.",
+			"when": "Last tooltip line of a service with a flat price (only the tenant manager).",
+			"area": "Services"
+		},
+		{
+			"id": "mgr_advert",
+			"version": "1.7.0",
+			"line": "Your tenant manager started advertising.",
+			"when": "Home log, when the manager turns on advertising for an empty home.",
+			"area": "Services"
+		},
+		{
+			"id": "mgr_move_in",
+			"version": "1.7.0",
+			"line": "Your tenant manager moved {tenant} into {home}.",
+			"when": "Message when the manager moves an applicant in.",
+			"area": "Services"
+		},
+		{
+			"id": "mgr_rent",
+			"version": "1.7.0",
+			"line": "Your tenant manager set the rent to {Low/Normal/High}.",
+			"when": "Home log, when the manager changes the rent.",
+			"area": "Services"
+		},
+		{
+			"id": "set_player_sex_name",
+			"version": "1.7.0",
+			"line": "Your sex",
+			"when": "LunaLib setting name, Family section. Options: From your character, Male, Female.",
+			"area": "Settings"
+		},
+		{
+			"id": "set_player_sex_desc",
+			"version": "1.7.0",
+			"line": "Who you can marry and whether your kids call you Mom or Dad. Your portrait stays the same.",
+			"when": "LunaLib setting description.",
+			"area": "Settings"
 		}
 	]
 }

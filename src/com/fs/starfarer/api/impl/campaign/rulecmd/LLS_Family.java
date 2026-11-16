@@ -104,7 +104,7 @@ public class LLS_Family extends BaseCommandPlugin {
 
     private static String partnerGreeting(Property p, Tenant t) {
         float h = p.stats().happiness;
-        if (t.conceivedAt > 0L && t.toldPregnant) {
+        if (t.conceivedAt != 0L && t.toldPregnant) {
             return pick("Not long now. The baby kicks all night.", "I keep thinking about names.");
         }
         if (t.lastGap > 60f) {
@@ -118,13 +118,13 @@ public class LLS_Family extends BaseCommandPlugin {
     private static boolean partnerOptions(OptionPanelAPI opts, Property p, Tenant t) {
         opts.addOption("Let's try for a child.", "lls_fam_try");
         String needs = Family.cannotTry(p);
-        if (t.conceivedAt > 0L && t.toldPregnant) {
+        if (t.conceivedAt != 0L && t.toldPregnant) {
             opts.setEnabled("lls_fam_try", false);
             opts.setTooltip("lls_fam_try", "A child is already on the way.");
         } else if (needs != null) {
             opts.setEnabled("lls_fam_try", false);
             opts.setTooltip("lls_fam_try", needs);
-        } else if (t.lastTry > 0L && Family.daysSince(t.lastTry) < 1f) {
+        } else if (t.lastTry != 0L && Family.daysSince(t.lastTry) < 1f) {
             opts.setEnabled("lls_fam_try", false);
             opts.setTooltip("lls_fam_try", "Again? Not today, give me some time to rest...");
         }
@@ -154,10 +154,16 @@ public class LLS_Family extends BaseCommandPlugin {
         dialog.showCargoPickerDialog("Pick a gift", "Give", "Cancel", true, 310f, cargo, new CargoPickerListener() {
             @Override
             public void pickedCargo(CargoAPI picked) {
-                if (picked == null || picked.isEmpty()) return;
+                if (picked == null || picked.isEmpty()) {
+                    back(dialog, memoryMap);
+                    return;
+                }
                 Family.Gift g = Family.gift(p, picked, RANDOM);
                 TextPanelAPI text = dialog.getTextPanel();
-                if (g.value <= 0f) return;
+                if (g.value <= 0f) {
+                    back(dialog, memoryMap);
+                    return;
+                }
                 say(text, reaction(g));
                 String he = capital(Family.he(t));
                 StringBuilder sb = new StringBuilder(he + " sells it for " + Misc.getDGSCredits(g.value));
@@ -168,11 +174,14 @@ public class LLS_Family extends BaseCommandPlugin {
                     sb.append(" ").append(he).append(" keeps the rest: ").append(Misc.getDGSCredits(g.kept)).append(".");
                 }
                 text.addPara(sb.toString());
-                FireAll.fire(null, dialog, memoryMap, "PopulateOptions");
+                back(dialog, memoryMap);
             }
 
             @Override
             public void cancelledCargoSelection() {
+                // 1.7.0 (Andrzej: "cancel makes an unescapable dialog"): the options were cleared when the gift was
+                // chosen, so they come back here.
+                back(dialog, memoryMap);
             }
 
             @Override
@@ -368,16 +377,20 @@ public class LLS_Family extends BaseCommandPlugin {
 
             @Override
             public void customDialogConfirm() {
-                if (field == null || field.getText() == null || field.getText().trim().isEmpty()) return;
+                if (field == null || field.getText() == null || field.getText().trim().isEmpty()) {
+                    back(dialog, memoryMap);
+                    return;
+                }
                 Family.rename(c, field.getText());
                 TextPanelAPI text = dialog.getTextPanel();
                 if (!c.grown && Family.ageDays(c) < Family.DAYS_PER_CYCLE) text.addPara(c.name + " giggles.");
                 else say(text, c.name.split(" ")[0] + "? I like it.");
-                FireAll.fire(null, dialog, memoryMap, "PopulateOptions");
+                back(dialog, memoryMap);
             }
 
             @Override
             public void customDialogCancel() {
+                back(dialog, memoryMap);
             }
 
             @Override
@@ -392,6 +405,12 @@ public class LLS_Family extends BaseCommandPlugin {
 
     private static void say(TextPanelAPI text, String line) {
         text.addPara("\"" + line + "\"");
+    }
+
+    /** The partner's or child's options again, after a picker or a name box closes. */
+    private static void back(InteractionDialogAPI dialog, Map<String, MemoryAPI> memoryMap) {
+        dialog.getOptionPanel().clearOptions();
+        FireAll.fire(null, dialog, memoryMap, "PopulateOptions");
     }
 
     private static void end(OptionPanelAPI opts) {

@@ -85,4 +85,14 @@ public final class Settings {
             return false;
         }
     }
+
+    /** 1.7.0: "From your character", "Male" or "Female". */
+    public static String playerSex() {
+        try {
+            String v = LunaSettings.getString(MOD_ID, "lls_playerSex");
+            return v == null ? "From your character" : v;
+        } catch (Throwable t) {
+            return "From your character";
+        }
+    }
 }

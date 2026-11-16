@@ -696,7 +696,8 @@ public final class RulesCheck {
                 && landlordsector.data.Services.get("security_patrol").effects.security >= 20f,
                 "services load: screening and a security patrol");
         for (landlordsector.data.Services.Def sv : landlordsector.data.Services.all()) {
-            expect(sv.share > 0f && sv.share < 0.5f && sv.min >= 0f, sv.id + ": a sane monthly price");
+            expect((sv.share > 0f && sv.share < 0.5f && sv.min >= 0f) || (sv.share == 0f && sv.min > 0f),
+                    sv.id + ": a sane monthly price (a share of the rent, or 1.7.0 a flat price)");
             expect(sv.effects.price == 1f, sv.id + ": a service never changes the value");
             for (String e : sv.effects.events.keySet()) {
                 expect(landlordsector.data.TenantEvents.get(e) != null, sv.id + " names unknown event " + e);

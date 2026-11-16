@@ -49,8 +49,12 @@ public final class RuntimeCheck {
     private static final MutableValue credits = new MutableValue(50_000_000f);
     /** Credits are a float: at tens of millions one step is several credits. */
     private static final float CREDIT_EPS = 16f;
-    private static long now = 1_000_000L;
-    private static final long DAY = 1000L;
+    /**
+     * 1.7.0: the game's own clock, cycle 206 counted in milliseconds from 1970, so a negative number. The mod once
+     * took timestamps above 0 for "set", and the old stand-in clock (1,000,000) hid that.
+     */
+    private static long now = new java.util.GregorianCalendar(206, 0, 1).getTimeInMillis();
+    private static final long DAY = 86_400_000L;
 
     /** Fields of one stand-in market. */
     static final class FakeMarket {
@@ -576,6 +580,7 @@ public final class RuntimeCheck {
 
         checkPictureMemory070();
         checkFamily120();
+        checkManager161();
 
         // 0.8.0: a world from worlds.json. Eochu Bres, size 6, has room for 23 homes, lists every size and prices
         // like the Tri-Tachyon capital; the same market under another id is the plain size 6 rule.
@@ -700,7 +705,7 @@ public final class RuntimeCheck {
         FactionAPI player = faction("player");
         CampaignClockAPI clock = mock(CampaignClockAPI.class, Map.of(
                 "getTimestamp", a -> now,
-                "getElapsedDaysSince", a -> (now - (Long) a[0]) / (float) DAY));
+                "getElapsedDaysSince", a -> (Long) a[0] == 0L ? Float.MAX_VALUE : (now - (Long) a[0]) / (float) DAY));
         MutableValue cr = credits;
         CargoAPI cargo = specialsCargo(cargoSpecials, Map.of("getCredits", a -> cr));
         com.fs.starfarer.api.campaign.FleetDataAPI fleetData = mock(com.fs.starfarer.api.campaign.FleetDataAPI.class,
@@ -815,6 +820,62 @@ public final class RuntimeCheck {
      * penalty, marriage and the spouse's tariff, a child 30 days after a lucky try, divorce for half the sale with
      * the kids and alimony, alimony ending when the kid grows up, the 2% who are cheating, and a grown worker's pay.
      */
+    /** 1.7.0: the tenant manager service waits for a clean applicant, moves them in and advertises. */
+    private static void checkManager161() {
+        FakeMarket fm0 = new FakeMarket();
+        fm0.id = "fake_manager"; fm0.name = "Agency"; fm0.factionId = "hegemony"; fm0.size = 6;
+        fm0.stability = 7f; fm0.hazard = 1f; fm0.habitable = true;
+        MarketAPI mm = market(fm0);
+        Listing l = MarketRules.listings(mm).list().get(0);
+        Actions.buy(mm, l);
+        Property p = null;
+        for (Property q : Portfolio.get().properties()) if ("fake_manager".equals(q.marketId)) p = q;
+        expect(p != null, "a home on the manager test market");
+        if (p == null) return;
+        expect(Actions.toggleService(p, Manager.ID).startsWith("Hired") && Manager.manages(p), "the manager is hired");
+        landlordsector.data.Services.Def sd = landlordsector.data.Services.get(Manager.ID);
+        expect(sd != null && Math.abs(Actions.servicePrice(p, sd) - 5000f) < 1f, "the manager costs 5,000 a month");
+        String badId = null;
+        for (landlordsector.data.TenantTraits.Def d : landlordsector.data.TenantTraits.all()) {
+            if (Boolean.FALSE.equals(d.good) && d.homeShift == 0 && badId == null) badId = d.id;
+        }
+        Random r = new Random(4);
+        Tenant bad = Tenants.create("independent", mm, 1f, true, "advert", r);
+        bad.traits().clear();
+        bad.traits().add(badId);
+        bad.wealth = p.tier().index + 1;
+        bad.since = now;
+        p.advertising = false;
+        p.applicants().clear();
+        p.applicants().add(bad);
+        Manager.day(p);
+        expect(p.advertising && p.tenant == null && bad.screened, "the manager advertises, checks and waits");
+        Tenant good = Tenants.create("independent", mm, 1f, true, "advert", r);
+        good.traits().clear();
+        good.wealth = p.tier().index + 1;
+        good.since = now;
+        p.applicants().add(good);
+        Manager.day(p);
+        expect(p.tenant == good && !p.advertising, "the manager moves in the applicant with no bad traits");
+        p.tenant = null;
+        p.applicants().clear();
+        bad.since = now - 6 * DAY;
+        p.applicants().add(bad);
+        Manager.day(p);
+        expect(p.tenant == bad, "after 5 days the manager takes the best applicant there is");
+        Actions.setRent(p, RentSetting.NORMAL);
+        float h = p.stats().happiness;
+        Manager.day(p);
+        RentSetting want = h < Manager.UNHAPPY ? RentSetting.LOW
+                : (h >= Manager.HAPPY && TenantRules.canAfford(p.tier().index, RentSetting.HIGH, bad.wealth)
+                        ? RentSetting.HIGH : RentSetting.NORMAL);
+        expect(p.setting() == want, "the manager sets the rent by happiness " + h + ": " + p.setting());
+        Actions.setRent(p, RentSetting.CHARITY);
+        Manager.day(p);
+        expect(p.setting() == RentSetting.CHARITY, "the manager leaves Charity rent alone");
+        Actions.sell(p);
+    }
+
     private static void checkFamily120() {
         Random yes = new Random() {
             @Override
@@ -913,7 +974,7 @@ public final class RuntimeCheck {
                     + (e == null ? "" : e.id));
         }
 
-        expect(Family.tryForChild(home, yes) == 2 && wife.conceivedAt > 0L, "a lucky try starts a child");
+        expect(Family.tryForChild(home, yes) == 2 && wife.conceivedAt != 0L && now < 0L, "a lucky try starts a child");
         expect(Family.tryForChild(home, yes) == 0, "one try a day");
         now += 21 * DAY;
         Family.daily(half);
@@ -972,11 +1033,14 @@ public final class RuntimeCheck {
         expect(no.contains("cheating on you") && home2.partner() == null && Family.isAdmin(gov)
                 && "Seeing someone else.".equals(Family.wouldRefuse(gov)),
                 "2% are cheating on you, stay in your service and say no for good: " + no);
+        // 1.7.0: AoTD stores Sophia as a man; she is still a wife.
         com.fs.starfarer.api.characters.PersonAPI sophia = familyPerson("Sophia Anderson",
-                com.fs.starfarer.api.characters.FullName.Gender.FEMALE, 1);
+                com.fs.starfarer.api.characters.FullName.Gender.MALE, 1);
         String yes2 = Family.propose(home2, sophia, cheat);
         expect(Family.isSophia(sophia) && yes2.contains(" is now your ") && home2.partner() != null
                 && home2.partner().person == sophia, "Sophia always says yes: " + yes2);
+        expect("wife".equals(Family.noun(home2.partner())) && "she".equals(Family.he(home2.partner())),
+                "Sophia is a wife: " + Family.noun(home2.partner()));
         for (int i = 0; i < 300; i++) {
             landlordsector.data.TenantEvents.Def e = TenantDaily.pickTenantEvent(home2, new Random(i));
             expect(e == null || !e.dies, "tenant events never kill Sophia: " + (e == null ? "" : e.id));

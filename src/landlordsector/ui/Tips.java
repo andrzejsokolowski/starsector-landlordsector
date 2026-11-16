@@ -206,8 +206,17 @@ public final class Tips {
         if (d.screening) add(out, "Applicants are half as likely to have bad traits", "+");
         if (d.cleans) add(out, "Cleans off graffiti and dirt every month", "+");
         if (d.repairs > 0f) add(out, "Repairs " + Math.round(d.repairs * 100f) + "% condition every month", "+");
-        add(out, "Costs " + Math.round(d.share * 100f) + "% of the Normal rent a month, at least "
-                + com.fs.starfarer.api.util.Misc.getDGSCredits(d.min) + ".", null);
+        if (landlordsector.Manager.ID.equals(d.id)) {
+            add(out, "Advertises the home when it is empty and moves in the best applicant", "+");
+            add(out, "Lowers the rent when the tenant is unhappy and raises it when they are happy, from Low to High",
+                    "+");
+        }
+        if (d.share <= 0f) {
+            add(out, "Costs " + com.fs.starfarer.api.util.Misc.getDGSCredits(d.min) + " a month.", null);
+        } else {
+            add(out, "Costs " + Math.round(d.share * 100f) + "% of the Normal rent a month, at least "
+                    + com.fs.starfarer.api.util.Misc.getDGSCredits(d.min) + ".", null);
+        }
         return out;
     }
 

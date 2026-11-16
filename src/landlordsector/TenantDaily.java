@@ -86,6 +86,8 @@ public class TenantDaily implements EveryFrameScript {
             } else {
                 applicants(p, m, random);
             }
+            // 1.7.0: the tenant manager service.
+            Manager.day(p);
         }
         Finders.deliver(random);
         expirePool();

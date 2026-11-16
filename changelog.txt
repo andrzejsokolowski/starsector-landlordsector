@@ -1,3 +1,11 @@
+Version 1.7.0 (2026-11-16)
+- New service: Tenant manager, 5,000 a month. It advertises an empty home, moves in the best applicant (one with no bad traits, or the best one after 5 days) and moves the rent between Low and High to keep the tenant happy
+- New setting: Your sex (Family). Choose Male or Female to decide who you can marry and whether your kids call you Mom or Dad; your portrait stays the same
+- Fixed: trying for a child could be repeated without limit and never led to a baby. Children now also grow up, and a spouse now notices how long you have been away
+- Fixed: cancelling the gift picker or the rename box left the call with no options
+- Fixed: Sophia Anderson showed as Husband
+- Removed the console commands lls_furniture, lls_service, lls_sell and lls_evict
+
 Version 1.6.0 (2026-11-16)
 - Console commands (with the Console Commands mod; optional): lls_homes, lls_info, lls_givehome, lls_listings, lls_condition, lls_repairall, lls_tenant, lls_evict, lls_applicants, lls_mood, lls_wealth, lls_housetrait, lls_tenanttrait, lls_event, lls_upgrade, lls_furniture, lls_service, lls_month, lls_marry, lls_baby, lls_growup, lls_sell and lls_ids. Type help lls_homes (or any of them) in the console for what each does
 

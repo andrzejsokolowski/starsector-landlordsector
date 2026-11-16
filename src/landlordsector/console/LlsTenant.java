@@ -27,7 +27,7 @@ public class LlsTenant implements BaseCommand {
             return CommandResult.ERROR;
         }
         if (p.tenant != null) {
-            Console.showMessage(p.tenant.name + " already lives there. lls_evict first.");
+            Console.showMessage(p.tenant.name + " already lives there. Evict them first.");
             return CommandResult.ERROR;
         }
         String faction = w.length > 1 ? w[1] : m.getFactionId();
