@@ -57,6 +57,10 @@ public final class Actions {
         p.advertising = true;
         p.addLog("Bought for " + Misc.getDGSCredits(price) + ". Advertising for tenants.");
         portfolio.properties().add(p);
+        // 1.4.0 (Andrzej): owning a home opens the market's storage, free.
+        if (!market.isPlayerOwned() && FreeStorage.unlock(market)) {
+            p.addLog("The storage here is open to you now, free of charge.", true, "storage");
+        }
         Global.getSoundPlayer().playUISound("ui_upgrade_industry", 1f, 1f);
         return "Bought: " + p.displayName() + " for " + Misc.getDGSCredits(price) + ".";
     }

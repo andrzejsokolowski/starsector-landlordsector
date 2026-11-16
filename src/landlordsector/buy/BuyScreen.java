@@ -185,6 +185,7 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
             if (l.upgrades != null) s.upgradeIds.addAll(l.upgrades);
             s.size = t != null ? t.name : l.tierId;
             s.furnitureSlots = t != null ? t.slots : 0;
+            if (!market.isPlayerOwned()) s.extra.add(new String[] {"Storage", "Free while you own a home here"});
             float maxImg = height - TOP - sheetTextHeight(s) - 56f;
             sheet(s, rx, TOP, rw, maxImg);
 

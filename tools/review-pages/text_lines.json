@@ -1082,6 +1082,27 @@
 			"line": "Bought with Tomas's money: Air conditioning.",
 			"when": "Home log when a grown miner's money pays for furniture or an upgrade in that home.",
 			"area": "Monthly, settings and names"
+		},
+		{
+			"id": "s_storage_buy",
+			"version": "1.4.0",
+			"line": "Storage: Free while you own a home here",
+			"when": "Agent's screen: a row on the home sheet of every home for sale, except on your own colonies.",
+			"area": "Free storage"
+		},
+		{
+			"id": "s_storage_owned",
+			"version": "1.4.0",
+			"line": "Storage: Free",
+			"when": "Real estate tab: a row on the home sheet of a home you own, except on your own colonies.",
+			"area": "Free storage"
+		},
+		{
+			"id": "s_storage_log",
+			"version": "1.4.0",
+			"line": "The storage here is open to you now, free of charge.",
+			"when": "Home log when you buy a home on a market whose storage you had not paid to open yet.",
+			"area": "Free storage"
 		}
 	]
 }

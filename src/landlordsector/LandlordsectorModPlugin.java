@@ -43,6 +43,9 @@ public class LandlordsectorModPlugin extends BaseModPlugin {
         Global.getSector().getListenerManager().addListener(new MonthlyTick(), true);
         HomeownerScript.install();
         Global.getSector().addTransientScript(new TenantDaily());
+        // 1.4.0: free storage where you own a home.
+        Global.getSector().addTransientListener(new FreeStorage.Listener());
+        FreeStorage.unlockAll();
         Global.getSector().addTransientListener(new FamilyListener());
         FurnitureSources.install();
         repairArtPaths();
