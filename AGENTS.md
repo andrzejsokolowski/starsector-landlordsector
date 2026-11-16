@@ -169,6 +169,13 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   through `HomeownerScript` (ledger, never saved). Nexerelin agents only through `NexAgents` (compileOnly
   ExerelinCore.jar).
 
+- 1.6.0 console commands (LLS-26): `data/console/commands.csv` lists 23 `lls_` commands, one class each in
+  `landlordsector.console` (`Lls` holds the shared helpers: a home is its lls_homes number, its id or "here").
+  Console Commands is optional: only that package touches `org.lazywizard.console` (compileOnly `lw_Console.jar`),
+  and only Console Commands loads it. Commands reuse the game's code (`MarketRules.make`, `Actions.own`,
+  `Family.birth`, `MonthlyTick.runMonth`); a new command adds its class, its csv row and its help line to
+  `tools/review-pages/text_lines.json`.
+
 ## Known limits
 
 - The portfolio classes are in the save, so removing the mod mid-game breaks that save.
