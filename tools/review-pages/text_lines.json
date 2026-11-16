@@ -14,16 +14,10 @@
 			"when": "Title of the Upgrades row's tooltip on a home sheet. Below it, what all the built upgrades do together."
 		},
 		{
-			"id": "x_housewarming",
-			"version": "1.0.1",
-			"line": "Jana Okoye threw a party at Leafy Cottage. It left a few scuffs.",
-			"when": "Housewarming tenant event, in the home's log (the home loses 1% condition)."
-		},
-		{
-			"id": "x_service_cancelled",
-			"version": "1.0.1",
-			"line": "A service you hired is no longer offered and was cancelled.",
-			"when": "Home log, once, when you load a save where that home had the Night watchman."
+			"id": "x_housewarming_v2",
+			"version": "1.3.0",
+			"line": "Jana Okoye threw a party at Leafy Cottage. She's still cleaning up the leftover mess.",
+			"when": "Housewarming tenant event, in the home's log (the home loses 1% condition). \"He's\" or \"They're\" for others."
 		},
 		{
 			"id": "f_greet_baby1",
@@ -110,9 +104,9 @@
 			"area": "Talking with your partner"
 		},
 		{
-			"id": "f_tip_try_today",
-			"version": "1.2.0",
-			"line": "Not again today.",
+			"id": "f_tip_try_today_v2",
+			"version": "1.3.0",
+			"line": "Again? Not today, give me some time to rest...",
 			"when": "Tooltip on \"Let's try for a child.\" when you already tried today.",
 			"area": "Talking with your partner"
 		},
@@ -180,13 +174,6 @@
 			"area": "Talking with your partner"
 		},
 		{
-			"id": "f_try_no2",
-			"version": "1.2.0",
-			"line": "We already have one on the way, remember?",
-			"when": "Your partner's answer to \"Let's try for a child.\" (one of three outcomes).",
-			"area": "Talking with your partner"
-		},
-		{
 			"id": "f_try_yes",
 			"version": "1.2.0",
 			"line": "You spend the night together.",
@@ -208,10 +195,10 @@
 			"area": "Gifts"
 		},
 		{
-			"id": "f_gift_nanoforge",
-			"version": "1.2.0",
-			"line": "A nanoforge? Where am I supposed to put a nanoforge?",
-			"when": "Your partner's reaction when the gift is a nanoforge.",
+			"id": "f_gift_nanoforge_v2",
+			"version": "1.3.0",
+			"line": "Where did you find this? I'm going to open up a business with this that loses 10k a month!",
+			"when": "Your partner's reaction when the gift is a pristine nanoforge.",
 			"area": "Gifts"
 		},
 		{
@@ -222,86 +209,86 @@
 			"area": "Gifts"
 		},
 		{
-			"id": "f_gift_synchrotron",
-			"version": "1.2.0",
-			"line": "What does it do? No, don't tell me.",
+			"id": "f_gift_synchrotron_v2",
+			"version": "1.3.0",
+			"line": "We will never have to pay for gas again!",
 			"when": "Your partner's reaction when the gift is a Synchrotron Core.",
 			"area": "Gifts"
 		},
 		{
-			"id": "f_gift_nanites",
-			"version": "1.2.0",
-			"line": "Is this dirt? Expensive dirt?",
+			"id": "f_gift_nanites_v2",
+			"version": "1.3.0",
+			"line": "Oh my god, the flowers are going to be so beautiful!",
 			"when": "Your partner's reaction when the gift is Soil Nanites.",
 			"area": "Gifts"
 		},
 		{
-			"id": "f_gift_cryo",
-			"version": "1.2.0",
-			"line": "It's so cold. Why is it so cold?",
+			"id": "f_gift_cryo_v2",
+			"version": "1.3.0",
+			"line": "Why is it so cold suddenly?",
 			"when": "Your partner's reaction when the gift is a Cryoarithmetic Engine.",
 			"area": "Gifts"
 		},
 		{
-			"id": "f_gift_portal",
-			"version": "1.2.0",
-			"line": "It's humming. Should it be humming?",
+			"id": "f_gift_portal_v2",
+			"version": "1.3.0",
+			"line": "What in the goddamn?",
 			"when": "Your partner's reaction when the gift is a Coronal Hypershunt Tap.",
 			"area": "Gifts"
 		},
 		{
-			"id": "f_gift_bore",
-			"version": "1.2.0",
-			"line": "You want me to drill a hole in the planet?",
+			"id": "f_gift_bore_v2",
+			"version": "1.3.0",
+			"line": "Going to mount this on our truck and mow through traffic.",
 			"when": "Your partner's reaction when the gift is a Mantle Bore.",
 			"area": "Gifts"
 		},
 		{
-			"id": "f_gift_embryo",
-			"version": "1.2.0",
-			"line": "Did it just move?",
+			"id": "f_gift_embryo_v2",
+			"version": "1.3.0",
+			"line": "Can we use this next time you want a child?",
 			"when": "Your partner's reaction when the gift is a Biofactory Embryo.",
 			"area": "Gifts"
 		},
 		{
-			"id": "f_gift_drones",
-			"version": "1.2.0",
-			"line": "It's making more of itself. Make it stop.",
+			"id": "f_gift_drones_v2",
+			"version": "1.3.0",
+			"line": "Am I going to be put on a list now?",
 			"when": "Your partner's reaction when the gift is a Drone Replicator.",
 			"area": "Gifts"
 		},
 		{
-			"id": "f_gift_holosuite",
-			"version": "1.2.0",
-			"line": "Finally, something for the living room.",
+			"id": "f_gift_holosuite_v2",
+			"version": "1.3.0",
+			"line": "I'm selling all our used clothes for 40% more tomorrow!",
 			"when": "Your partner's reaction when the gift is a Dealmaker Holosuite.",
 			"area": "Gifts"
 		},
 		{
-			"id": "f_gift_spool",
-			"version": "1.2.0",
-			"line": "Thread? You got me thread?",
+			"id": "f_gift_spool_v2",
+			"version": "1.3.0",
+			"line": "A perfect gift if you ever decide to leave me. I could strangle you with it. Haha, just kidding. Unless?",
 			"when": "Your partner's reaction when the gift is a Fullerene Spool.",
 			"area": "Gifts"
 		},
 		{
-			"id": "f_gift_dynamo",
-			"version": "1.2.0",
-			"line": "Don't plug that in here.",
+			"id": "f_gift_dynamo_v2",
+			"version": "1.3.0",
+			"line": "Can I use this as an air filter?",
 			"when": "Your partner's reaction when the gift is a Plasma Dynamo.",
 			"area": "Gifts"
 		},
 		{
-			"id": "f_gift_catalytic",
-			"version": "1.2.0",
-			"line": "It smells like a refinery.",
+			"id": "f_gift_catalytic_v2",
+			"version": "1.3.0",
+			"line": "Uhh... thanks. But this is quite useless...",
 			"when": "Your partner's reaction when the gift is a Catalytic Core.",
 			"area": "Gifts"
 		},
 		{
-			"id": "f_gift_low",
-			"version": "1.2.0",
-			"line": "Oh. Thanks, I guess.",
+			"id": "f_gift_low_v2",
+			"version": "1.3.0",
+			"line": "Thank you!",
 			"when": "Reaction to any other gift worth under 20,000 credits.",
 			"area": "Gifts"
 		},
@@ -313,9 +300,9 @@
 			"area": "Gifts"
 		},
 		{
-			"id": "f_gift_high",
-			"version": "1.2.0",
-			"line": "Do you know what this is worth? I know exactly what to do with it.",
+			"id": "f_gift_high_v2",
+			"version": "1.3.0",
+			"line": "Oh my god, you might as well buy a yacht!",
 			"when": "Reaction to any other gift worth 200,000 to 1,000,000 credits.",
 			"area": "Gifts"
 		},
@@ -439,10 +426,10 @@
 			"area": "Babies"
 		},
 		{
-			"id": "f_kid_baby",
-			"version": "1.2.0",
-			"line": "Tomas grabs at the screen and giggles.",
-			"when": "Your child greets you when you open their comm link, under 1 cycle old.",
+			"id": "f_kid_baby_v2",
+			"version": "1.3.0",
+			"line": "Tomas grabs your finger and giggles.",
+			"when": "Your child greets you when you visit, under 1 cycle old.",
 			"area": "Your kids"
 		},
 		{
@@ -474,9 +461,9 @@
 			"area": "Your kids"
 		},
 		{
-			"id": "f_kid_agent",
-			"version": "1.2.0",
-			"line": "I've been practicing my spy walk. Watch.",
+			"id": "f_kid_agent_v2",
+			"version": "1.3.0",
+			"line": "I followed the neighbor around all day and he never saw me.",
 			"when": "Your child greets you when you open their comm link: wants to be an agent.",
 			"area": "Your kids"
 		},
@@ -635,9 +622,9 @@
 			"area": "Your kids"
 		},
 		{
-			"id": "f_news_worker",
-			"version": "1.2.0",
-			"line": "Tomas went to work in the mines and will send you 2,000 credits a month.",
+			"id": "f_news_worker_v2",
+			"version": "1.3.0",
+			"line": "Tomas went to work in the mines and will send 2,000 credits home every month.",
 			"when": "Intel message when a grown-up child becomes a miner.",
 			"area": "Your kids"
 		},
@@ -649,9 +636,9 @@
 			"area": "Your kids"
 		},
 		{
-			"id": "f_news_growth",
-			"version": "1.2.0",
-			"line": "Tomas moved to Jangala. Everyone there wants a family now.",
+			"id": "f_news_growth_v2",
+			"version": "1.3.0",
+			"line": "Tomas moved to Jangala. His beauty inspires many people to start a family of their own.",
 			"when": "Intel message when a grown-up child becomes a local celebrity (colony growth).",
 			"area": "Your kids"
 		},
@@ -670,10 +657,10 @@
 			"area": "Real estate tab"
 		},
 		{
-			"id": "f_no_world_gone",
-			"version": "1.2.0",
-			"line": "The world is gone.",
-			"when": "Tooltip on family buttons when the home's world no longer exists.",
+			"id": "f_no_world_gone_v2",
+			"version": "1.3.0",
+			"line": "The colony is gone.",
+			"when": "Tooltip on family and home buttons when the home's colony no longer exists (saturation bombardment).",
 			"area": "Real estate tab"
 		},
 		{
@@ -712,9 +699,9 @@
 			"area": "Real estate tab"
 		},
 		{
-			"id": "f_btn_stop",
-			"version": "1.2.0",
-			"line": "Stop living here",
+			"id": "f_btn_stop_v2",
+			"version": "1.3.0",
+			"line": "Move out",
 			"when": "Real estate tab: button on your home.",
 			"area": "Real estate tab"
 		},
@@ -880,9 +867,9 @@
 			"area": "Real estate tab"
 		},
 		{
-			"id": "f_month_family",
-			"version": "1.2.0",
-			"line": "Last month: rent 12,000 credits, ..., from your kids 2,000 credits, alimony 5,000 credits",
+			"id": "f_month_family_v2",
+			"version": "1.3.0",
+			"line": "Last month: rent 12,000 credits, ..., your kids sent home 2,000 credits, alimony 5,000 credits",
 			"when": "Real estate tab: the last-month line at the top (the family parts only when they apply).",
 			"area": "Monthly, settings and names"
 		},
@@ -1052,6 +1039,48 @@
 			"version": "1.2.2",
 			"line": "With AoTD Vaults of Knowledge: you can marry Sophia Anderson once she is on your research council.",
 			"when": "LunaLib settings: the description of Kaysaar's Demise.",
+			"area": "Monthly, settings and names"
+		},
+		{
+			"id": "f_gift_nanoforge_bad_v2",
+			"version": "1.3.0",
+			"line": "A ruined nanoforge? I can't even print furniture with this.",
+			"when": "Your partner's reaction when the gift is a corrupted nanoforge.",
+			"area": "Gifts"
+		},
+		{
+			"id": "f_tip_kite",
+			"version": "1.3.0",
+			"line": "You need a Kite in your fleet.",
+			"when": "Tooltip on the Kite drive option in your child's comm link when no Kite is in your fleet (the option is greyed out).",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_kite_crash",
+			"version": "1.3.0",
+			"line": "The Kite's engine failed on takeoff. Tomas died in the explosion.",
+			"when": "Dialog text when the Kite drive goes wrong: 2% plus 5% for each D-mod on the Kite. The Kite is lost too.",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_kite_crash_log",
+			"version": "1.3.0",
+			"line": "Tomas died when the Kite exploded.",
+			"when": "Home log and intel message after the Kite crash.",
+			"area": "Your kids"
+		},
+		{
+			"id": "f_home_repaired",
+			"version": "1.3.0",
+			"line": "Repaired with Tomas's money.",
+			"when": "Home log when a grown miner's money pays for repairs to the home they grew up in.",
+			"area": "Monthly, settings and names"
+		},
+		{
+			"id": "f_home_bought",
+			"version": "1.3.0",
+			"line": "Bought with Tomas's money: Air conditioning.",
+			"when": "Home log when a grown miner's money pays for furniture or an upgrade in that home.",
 			"area": "Monthly, settings and names"
 		}
 	]

@@ -251,7 +251,7 @@ public final class Family {
     /** Null when the player can move into this home, or why not. */
     public static String cannotDeclare(Property p) {
         if (p.playerHome) return "You already live here.";
-        if (p.market() == null) return "The world is gone.";
+        if (p.market() == null) return "The colony is gone.";
         if (p.condemned) return "Repair it first.";
         if (p.tenant != null) return p.tenant.name + " lives here.";
         return null;
@@ -289,7 +289,7 @@ public final class Family {
         if (!p.playerHome) return "You don't live here.";
         if (p.tenant != null) return "Someone already lives here with you.";
         if (p.condemned) return "Repair it first.";
-        if (p.market() == null) return "The world is gone.";
+        if (p.market() == null) return "The colony is gone.";
         if (partnerHome(who) != null) return "Already married to you.";
         return wouldRefuse(who);
     }
@@ -801,8 +801,9 @@ public final class Family {
                 case Child.WORKER:
                     c.pay = WORKER_PAY * (1f + q * 0.5f);
                     Portfolio.get().adultKids().add(c);
-                    news(c.name + " went to work in the mines and will send you " + Misc.getDGSCredits(c.pay)
-                            + " a month.");
+                    c.homeId = p.id;
+                    news(c.name + " went to work in the mines and will send " + Misc.getDGSCredits(c.pay)
+                            + " home every month.");
                     break;
                 case Child.AGENT: {
                     if (!nexerelin() || c.person == null) return false;
@@ -817,7 +818,7 @@ public final class Family {
                     c.growth = GROWTH * (1f + q * 0.5f);
                     c.marketId = colony.getId();
                     Portfolio.get().adultKids().add(c);
-                    news(c.name + " moved to " + colony.getName() + ". Everyone there wants a family now.");
+                    news(c.name + " moved to " + colony.getName() + ". " + (c.female ? "Her" : "His") + " beauty inspires many people to start a family of their own.");
                     break;
                 }
                 default:
@@ -914,6 +915,13 @@ public final class Family {
         for (Child c : portfolio.adultKids()) {
             if (c.pay <= 0f) continue;
             pay += c.pay;
+            // 1.3.0 (Andrzej: "Make the kid send the money HOME - For repairs, new furniture, upgrades, etc."):
+            // the pay goes to the home they grew up in, or your home now. Only with no home at all is it yours.
+            Property home = kidHome(c);
+            if (home != null) {
+                sendHome(home, c, c.pay, RANDOM_HOME);
+                continue;
+            }
             if (report != null) {
                 FDNode n = report.getNode(root, "kid_" + c.id);
                 n.name = c.name + ", mines";
@@ -938,6 +946,132 @@ public final class Family {
         }
         portfolio.lastKidPay = pay;
         portfolio.lastAlimony = alimony;
+    }
+
+    private static final Random RANDOM_HOME = new Random();
+
+    /** The home a grown miner sends money to: the one they grew up in, else any home you live in, else null. */
+    public static Property kidHome(Child c) {
+        Property any = null;
+        for (Property p : Portfolio.get().properties()) {
+            if (p.market() == null) continue;
+            if (c.homeId != null && c.homeId.equals(p.id)) return p;
+            if (any == null && p.playerHome) any = p;
+        }
+        return any;
+    }
+
+    /**
+     * 1.3.0: money a grown kid sends home. It goes into the home's fund, which pays for repairs first, then
+     * furniture for empty slots, then upgrades the home can use. What is left waits for next month.
+     */
+    public static void sendHome(Property p, Child c, float amount, Random random) {
+        p.homeFund += amount;
+        float repair = p.repairCost();
+        if (repair > 0f && repair <= p.homeFund) {
+            p.homeFund -= repair;
+            p.condition = 1f;
+            p.condemned = false;
+            p.traits().removeIf(id -> {
+                landlordsector.data.HouseTraits.Def d = landlordsector.data.HouseTraits.get(id);
+                return d != null && d.mark;
+            });
+            p.addLog("Repaired with " + c.name + "'s money.", true, "Repaired");
+        }
+        List<Upgrades.Def> furniture = new ArrayList<>(Upgrades.of(Upgrades.Kind.FURNITURE));
+        Collections.shuffle(furniture, random);
+        for (Upgrades.Def d : furniture) {
+            if (p.furnitureCount() >= p.tier().slots) break;
+            if (p.hasFurniture(d.id) || !Upgrades.fits(d, p.tier().index, p.onStation(), p.traits())) continue;
+            float price = furniturePrice(d);
+            if (price > p.homeFund) continue;
+            p.homeFund -= price;
+            p.upgrades().add(new Installed(d.id, true, 0f));
+            p.addLog("Bought with " + c.name + "'s money: " + d.name + ".", true, d.name);
+        }
+        List<Upgrades.Def> pool = new ArrayList<>(Upgrades.of(Upgrades.Kind.RENOVATION));
+        Collections.shuffle(pool, random);
+        for (Upgrades.Def d : pool) {
+            if (d.oneTime || !wouldBuy(p, d)) continue;
+            float cost = Actions.renovationCost(p, d);
+            if (cost > p.homeFund) continue;
+            p.homeFund -= cost;
+            if (!d.fixes.isEmpty()) p.traits().removeAll(d.fixes);
+            p.upgrades().add(Installed.done(d.id));
+            p.addLog("Bought with " + c.name + "'s money: " + d.name + ".", true, d.name);
+        }
+    }
+
+    /** What a piece of furniture costs in the shops (its item's base price), 3,000 when the game can't say. */
+    static float furniturePrice(Upgrades.Def d) {
+        try {
+            float v = Global.getSettings().getSpecialItemSpec(d.itemId()).getBasePrice();
+            return v > 0f ? v : 3000f;
+        } catch (Throwable t) {
+            return 3000f;
+        }
+    }
+
+    // ---- The Kite drive (1.3.0) ----
+
+    /** Crash chance of a Kite drive: 2%, plus 5% for each D-mod on the ship. */
+    public static final float KITE_CRASH = 0.02f, KITE_CRASH_PER_DMOD = 0.05f;
+
+    /** The Kite in your fleet with the fewest D-mods, or null when you have none. */
+    public static FleetMemberAPI kite() {
+        FleetMemberAPI best = null;
+        int bestD = Integer.MAX_VALUE;
+        try {
+            for (FleetMemberAPI m : Global.getSector().getPlayerFleet().getFleetData().getMembersListCopy()) {
+                if (m.isFighterWing() || m.getHullSpec() == null) continue;
+                String base = m.getHullSpec().getBaseHullId();
+                String hull = m.getHullSpec().getHullId();
+                if (!(base != null && base.startsWith("kite")) && !(hull != null && hull.startsWith("kite"))) continue;
+                int d = dmods(m);
+                if (d < bestD) {
+                    best = m;
+                    bestD = d;
+                }
+            }
+        } catch (Throwable ignored) {
+            // No player fleet (a headless check).
+        }
+        return best;
+    }
+
+    static int dmods(FleetMemberAPI m) {
+        try {
+            return com.fs.starfarer.api.impl.campaign.DModManager.getNumDMods(m.getVariant());
+        } catch (Throwable t) {
+            return 0;
+        }
+    }
+
+    public static float crashChance(int dmods) {
+        return KITE_CRASH + KITE_CRASH_PER_DMOD * Math.max(0, dmods);
+    }
+
+    /**
+     * The drive in your Kite. Null when it went fine; otherwise the Kite exploded and the child died, and this is the
+     * line to show. The ship is lost too.
+     */
+    public static String kiteDrive(Property p, Child c, Random random) {
+        FleetMemberAPI k = kite();
+        if (k == null) return null;
+        if (random.nextFloat() >= crashChance(dmods(k))) return null;
+        try {
+            Global.getSector().getPlayerFleet().getFleetData().removeFleetMember(k);
+        } catch (Throwable ignored) {
+            // A headless check without a fleet.
+        }
+        p.children().remove(c);
+        if (c.person != null) removePerson(c.person);
+        c.person = null;
+        Tenant t = p.partner();
+        if (t != null) t.mood = Pricing.clamp(t.mood - 30f, -30f, 30f);
+        String line = "The Kite's engine failed on takeoff. " + c.name + " died in the explosion.";
+        Notify.event(p, c.name + " died when the Kite exploded.", false, true);
+        return line;
     }
 
     /** Markets where your wife or husband lives with you: no tariff there. */

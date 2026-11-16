@@ -86,7 +86,7 @@ public class RealEstatePage implements ManagePage {
             text(all.size() + (all.size() == 1 ? " property" : " properties") + " worth "
                     + Misc.getDGSCredits(worth) + ". Credits: " + Misc.getDGSCredits(Actions.credits()) + ".",
                     10f, 38f, width - 20f);
-            String family = (portfolio.lastKidPay > 0f ? ", from your kids " + Misc.getDGSCredits(portfolio.lastKidPay)
+            String family = (portfolio.lastKidPay > 0f ? ", your kids sent home " + Misc.getDGSCredits(portfolio.lastKidPay)
                     : "") + (portfolio.lastAlimony > 0f ? ", alimony " + Misc.getDGSCredits(portfolio.lastAlimony) : "");
             text("Last month: rent " + Misc.getDGSCredits(portfolio.lastRent) + ", home sales on your colonies "
                     + Misc.getDGSCredits(portfolio.lastSales) + ", property tax "
@@ -443,8 +443,8 @@ public class RealEstatePage implements ManagePage {
                 Btn mw = button("choose:" + p.id, "Propose to...", rx + 210f, y, 200f, 28f, !p.condemned);
                 mw.selected = choosingPartner;
                 String no = landlordsector.Family.cannotLeave(p);
-                button("leave:" + p.id, "Stop living here", rx + 420f, y, 200f, 28f, no == null);
-                if (no != null) tip(rx + 420f, y, 200f, 28f, "Stop living here", no);
+                button("leave:" + p.id, "Move out", rx + 420f, y, 200f, 28f, no == null);
+                if (no != null) tip(rx + 420f, y, 200f, 28f, "Move out", no);
                 y += 40f;
                 if (choosingPartner) y = partnerList(p, rx, y, cw);
             } else {

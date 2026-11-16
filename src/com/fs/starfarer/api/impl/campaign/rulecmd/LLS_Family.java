@@ -126,7 +126,7 @@ public class LLS_Family extends BaseCommandPlugin {
             opts.setTooltip("lls_fam_try", needs);
         } else if (t.lastTry > 0L && Family.daysSince(t.lastTry) < 1f) {
             opts.setEnabled("lls_fam_try", false);
-            opts.setTooltip("lls_fam_try", "Not again today.");
+            opts.setTooltip("lls_fam_try", "Again? Not today, give me some time to rest...");
         }
         opts.addOption("I got you something.", "lls_fam_gift");
         if (Family.giftable().isEmpty()) {
@@ -141,9 +141,9 @@ public class LLS_Family extends BaseCommandPlugin {
             Tenant t) {
         TextPanelAPI text = dialog.getTextPanel();
         int r = Family.tryForChild(p, RANDOM);
-        if (r == 0 || r == 3) say(text, "Not tonight. I'm exhausted.");
-        else if (r == 1) say(text, "We already have one on the way, remember?");
-        else text.addPara("You spend the night together.");
+        // 1.3.0 (Andrzej, text review): "We already have one on the way, remember?" removed.
+        if (r == 2) text.addPara("You spend the night together.");
+        else say(text, "Not tonight. I'm exhausted.");
         FireAll.fire(null, dialog, memoryMap, "PopulateOptions");
         return true;
     }
@@ -189,39 +189,40 @@ public class LLS_Family extends BaseCommandPlugin {
     private static String reaction(Family.Gift g) {
         String id = g.firstItem == null ? "" : g.firstItem;
         switch (id) {
-            case "pristine_nanoforge":
             case "corrupted_nanoforge":
-                return "A nanoforge? Where am I supposed to put a nanoforge?";
+                return "A ruined nanoforge? I can't even print furniture with this.";
+            case "pristine_nanoforge":
+                return "Where did you find this? I'm going to open up a business with this that loses 10k a month!";
             case "orbital_fusion_lamp":
                 return "A fusion lamp. For the living room. Sure.";
             case "synchrotron":
-                return "What does it do? No, don't tell me.";
+                return "We will never have to pay for gas again!";
             case "soil_nanites":
-                return "Is this dirt? Expensive dirt?";
+                return "Oh my god, the flowers are going to be so beautiful!";
             case "cryoarithmetic_engine":
-                return "It's so cold. Why is it so cold?";
+                return "Why is it so cold suddenly?";
             case "coronal_portal":
-                return "It's humming. Should it be humming?";
+                return "What in the goddamn?";
             case "mantle_bore":
-                return "You want me to drill a hole in the planet?";
+                return "Going to mount this on our truck and mow through traffic.";
             case "biofactory_embryo":
-                return "Did it just move?";
+                return "Can we use this next time you want a child?";
             case "drone_replicator":
-                return "It's making more of itself. Make it stop.";
+                return "Am I going to be put on a list now?";
             case "dealmaker_holosuite":
-                return "Finally, something for the living room.";
+                return "I'm selling all our used clothes for 40% more tomorrow!";
             case "fullerene_spool":
-                return "Thread? You got me thread?";
+                return "A perfect gift if you ever decide to leave me. I could strangle you with it. Haha, just kidding. Unless?";
             case "plasma_dynamo":
-                return "Don't plug that in here.";
+                return "Can I use this as an air filter?";
             case "catalytic_core":
-                return "It smells like a refinery.";
+                return "Uhh... thanks. But this is quite useless...";
             default:
                 break;
         }
-        if (g.value < 20000f) return "Oh. Thanks, I guess.";
+        if (g.value < 20000f) return "Thank you!";
         if (g.value < 200000f) return "For me? You shouldn't have.";
-        if (g.value < 1000000f) return "Do you know what this is worth? I know exactly what to do with it.";
+        if (g.value < 1000000f) return "Oh my god, you might as well buy a yacht!";
         return "Are you out of your mind? This could buy a moon!";
     }
 
@@ -230,7 +231,8 @@ public class LLS_Family extends BaseCommandPlugin {
     private static void childGreeting(TextPanelAPI text, Child c) {
         String dad = Family.parentWord();
         if (!c.grown && Family.ageDays(c) < Family.DAYS_PER_CYCLE) {
-            text.addPara(c.name + " grabs at the screen and giggles.");
+            // 1.3.0 (Andrzej): you are in the home, visiting in person.
+            text.addPara(c.name + " grabs your finger and giggles.");
             return;
         }
         if (c.grown && c.path == null) {
@@ -249,7 +251,7 @@ public class LLS_Family extends BaseCommandPlugin {
                 say(text, "I dug all the way down to bedrock today!");
                 break;
             case Child.AGENT:
-                say(text, "I've been practicing my spy walk. Watch.");
+                say(text, "I followed the neighbor around all day and he never saw me.");
                 break;
             case Child.GROWTH:
                 say(text, "Everyone at school says I'm the prettiest.");
@@ -262,6 +264,11 @@ public class LLS_Family extends BaseCommandPlugin {
     private static boolean childOptions(OptionPanelAPI opts, Child c) {
         opts.addOption("Let's pick a new name for you.", "lls_kid_rename");
         opts.addOption("Wanna go for a drive in the Kite I bought, " + c.noun() + "?", "lls_kid_officer");
+        // 1.3.0 (Andrzej: "Needs a Kite-class frigate in fleet.").
+        if (Family.kite() == null) {
+            opts.setEnabled("lls_kid_officer", false);
+            opts.setTooltip("lls_kid_officer", "You need a Kite in your fleet.");
+        }
         opts.addOption("I see you're reading \"AI Cores in Industry\"?", "lls_kid_admin");
         opts.addOption("I see you're playing Minecraft...", "lls_kid_worker");
         if (Family.nexerelin()) opts.addOption("That 007 movie is pretty cool, eh?", "lls_kid_agent");
@@ -272,6 +279,17 @@ public class LLS_Family extends BaseCommandPlugin {
     private static boolean path(InteractionDialogAPI dialog, Map<String, MemoryAPI> memoryMap, Property p, Child c,
             String path) {
         TextPanelAPI text = dialog.getTextPanel();
+        // 1.3.0 (Andrzej: "a 2% chance of your kid crashing and dying in an explosion due to a malfunction,
+        // increased by 5% per D-MOD on the shuttle"). Babies only giggle and stay home.
+        if (Child.OFFICER.equals(path) && (c.grown || Family.ageDays(c) >= Family.DAYS_PER_CYCLE)) {
+            String crash = Family.kiteDrive(p, c, RANDOM);
+            if (crash != null) {
+                text.addPara(crash, Misc.getNegativeHighlightColor());
+                HomeownerScript.refresh();
+                end(dialog.getOptionPanel());
+                return true;
+            }
+        }
         c.path = path;
         if (!c.grown && Family.ageDays(c) < Family.DAYS_PER_CYCLE) {
             text.addPara(c.name + " giggles.");

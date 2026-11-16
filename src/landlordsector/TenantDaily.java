@@ -234,7 +234,8 @@ public class TenantDaily implements EveryFrameScript {
         if (e.tenant) p.lastTenantEventAt = Global.getSector().getClock().getTimestamp();
         else p.lastEventAt = Global.getSector().getClock().getTimestamp();
         Tenant t = p.tenant;
-        String text = e.text.replace("$tenant", t != null ? t.name : "The tenant").replace("$home", p.displayName());
+        String text = e.text.replace("$tenant", t != null ? t.name : "The tenant").replace("$home", p.displayName())
+                .replace("$HeIs", heIs(t));
         if (e.condition != 0f && !p.condemned) {
             p.condition = Pricing.clamp(p.condition + e.condition, 0f, 1f);
             if (p.condition <= 0f) p.condemned = true;
@@ -305,6 +306,13 @@ public class TenantDaily implements EveryFrameScript {
     }
 
     /** A very sick tenant may move out to get treatment (0.4.0: no deaths). */
+    /** "She's", "He's" or "They're" for event text ($HeIs, 1.3.0). */
+    static String heIs(Tenant t) {
+        String he = t == null ? "they" : (t.person != null ? Family.he(t) : ("F".equals(t.gender) ? "she"
+                : ("M".equals(t.gender) ? "he" : "they")));
+        return "she".equals(he) ? "She's" : ("he".equals(he) ? "He's" : "They're");
+    }
+
     private static void maybeTreatment(Property p, Random random) {
         if (p.tenant.isPartner()) return;
         PropertyStats st = p.stats();

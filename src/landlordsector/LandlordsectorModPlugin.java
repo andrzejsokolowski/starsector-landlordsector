@@ -71,8 +71,8 @@ public class LandlordsectorModPlugin extends BaseModPlugin {
             while (it.hasNext()) {
                 String id = it.next();
                 if (landlordsector.data.Services.get(id) != null) continue;
+                // 1.3.0 (Andrzej: no log for things removed during development).
                 it.remove();
-                pr.addLog("A service you hired is no longer offered and was cancelled.");
             }
         }
     }

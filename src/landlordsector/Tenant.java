@@ -11,6 +11,8 @@ public class Tenant {
     public String id;
     public String name;
     public String portrait;
+    /** 1.3.0: "F" or "M" from the person the game made for them, null on older saves (then "they"). */
+    public String gender;
     /** The faction the tenant comes from. */
     public String factionId;
     public List<String> traits = new ArrayList<>();

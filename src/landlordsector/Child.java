@@ -38,6 +38,8 @@ public class Child {
     /** Grown workers and inspirers: what they give, set when they grow up. */
     public float pay;
     public float growth;
+    /** 1.3.0: grown miners send their pay to this home (a property id), not to you. */
+    public String homeId;
     /** Grown inspirers: the colony they live on. */
     public String marketId;
 

@@ -993,8 +993,23 @@ public final class RuntimeCheck {
         expect(Family.startLife(home2, miner, half) && Portfolio.get().adultKids().contains(miner)
                 && miner.pay == Family.WORKER_PAY * 2.5f && home2.children().isEmpty(),
                 "a grown miner sends pay home: " + miner.pay);
+        expect(home2.id.equals(miner.homeId), "a miner sends money to the home they grew up in");
+        float fundBefore = home2.homeFund;
+        int upgradesBefore = home2.upgrades().size();
         month(tick);
         expect(Portfolio.get().lastKidPay == miner.pay, "the miner's pay arrives at the month's end");
+        expect(home2.homeFund > fundBefore || home2.upgrades().size() > upgradesBefore,
+                "1.3.0: the pay goes to the home (its fund or what it bought): fund " + home2.homeFund);
+        // 1.3.0 Kite drive: 2% plus 5% a D-mod; no Kite in the headless fleet, so the drive is always safe here.
+        expect(Math.abs(Family.crashChance(0) - 0.02f) < 1e-6f && Math.abs(Family.crashChance(3) - 0.17f) < 1e-6f,
+                "a Kite crashes 2% of the time, plus 5% per D-mod");
+        expect(Family.kiteDrive(home2, miner, new Random(1)) == null, "no Kite, no crash");
+        // 1.3.0: "$HeIs" in event text.
+        landlordsector.Tenant woman = new landlordsector.Tenant();
+        woman.gender = "F";
+        landlordsector.Tenant old = new landlordsector.Tenant();
+        expect("She's".equals(TenantDaily.heIs(woman)) && "They're".equals(TenantDaily.heIs(old)),
+                "event text says She's, He's or They're");
         expect(Family.visitPenalty(10f) == 0f && Family.visitPenalty(130f) == Family.VISIT_PENALTY_MAX,
                 "visits: free for 30 days, at most -50");
     }

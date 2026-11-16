@@ -67,6 +67,9 @@ public class Property {
     /** When the tenant last had a tenant event (house events use lastEventAt). */
     public long lastTenantEventAt;
 
+    /** 1.3.0: money your grown kids sent home and nobody has spent yet (repairs, furniture, upgrades). */
+    public float homeFund;
+
     public List<Installed> upgrades() {
         if (upgrades == null) upgrades = new ArrayList<>();
         return upgrades;

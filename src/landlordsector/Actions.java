@@ -62,7 +62,7 @@ public final class Actions {
     }
 
     public static String repair(Property p) {
-        if (p.market() == null) return "The world is gone. There is nothing left to repair.";
+        if (p.market() == null) return "The colony is gone. There is nothing left to repair.";
         float cost = p.repairCost();
         if (cost <= 0f) return "It needs no repairs.";
         if (credits() < cost) return "Not enough credits for the repairs (" + Misc.getDGSCredits(cost) + ").";
@@ -146,7 +146,7 @@ public final class Actions {
 
     /** Null when this furniture can go into this home now, or the reason it cannot. */
     public static String cannotPlace(Property p, landlordsector.data.Upgrades.Def d) {
-        if (p.market() == null) return "The world is gone.";
+        if (p.market() == null) return "The colony is gone.";
         if (!landlordsector.data.Upgrades.fits(d, p.tier().index, p.onStation(), p.traits())) {
             return "It does not fit " + PropertyStats.article(p.tier().name.toLowerCase()) + ".";
         }
@@ -182,7 +182,7 @@ public final class Actions {
 
     /** Null when this upgrade can be built in this home now, or the reason it cannot. */
     public static String cannotBuild(Property p, landlordsector.data.Upgrades.Def d) {
-        if (p.market() == null) return "The world is gone.";
+        if (p.market() == null) return "The colony is gone.";
         if (p.condemned) return "Repair the home first.";
         if (p.has(d.id)) return "Already there.";
         if (!landlordsector.data.Upgrades.fits(d, p.tier().index, p.onStation(), p.traits())) {

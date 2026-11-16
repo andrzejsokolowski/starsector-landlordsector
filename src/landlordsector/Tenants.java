@@ -97,6 +97,8 @@ public final class Tenants {
             if (p != null) {
                 t.name = p.getNameString();
                 t.portrait = p.getPortraitSprite();
+                if (p.getGender() == com.fs.starfarer.api.characters.FullName.Gender.FEMALE) t.gender = "F";
+                else if (p.getGender() == com.fs.starfarer.api.characters.FullName.Gender.MALE) t.gender = "M";
             }
         } catch (Throwable ignored) {
             // A faction that cannot make people still gets tenants, with a plain name.
