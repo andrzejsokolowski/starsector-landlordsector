@@ -351,17 +351,28 @@ public final class RuntimeCheck {
                 "the alarm adds a flat part of its cost to the value");
         landlordsector.data.Upgrades.Def insulation = landlordsector.data.Upgrades.get("insulation");
         expect(Actions.cannotBuild(home, insulation) == null, "no upgrade slots: a second upgrade fits (0.5.0)");
-        // 1.0.1: an upgrade made for the cold does nothing in a hot home: not offered, no value.
+        // 1.2.1 (Andrzej): heated floors stay on a merely hot world (a tenant who loves heat may want them); only a
+        // very hot world hides them and takes them out of the value.
         landlordsector.data.Upgrades.Def floors = landlordsector.data.Upgrades.get("heated_floors");
         landlordsector.data.Upgrades.Def ac = landlordsector.data.Upgrades.get("air_conditioned");
-        expect(PropertyStats.noUse(floors, home.market(), home.features(false)), "heated floors do nothing in a hot home");
-        expect(!PropertyStats.noUse(ac, home.market(), home.features(false)), "air conditioning helps a hot home");
+        landlordsector.data.Upgrades.Def lead = landlordsector.data.Upgrades.get("lead_lined");
+        expect(!PropertyStats.noUse(floors, home.market(), home.features(false)), "heated floors stay on a hot world");
+        expect(PropertyStats.noUse(lead, home.market(), home.features(false)), "lead lining is hidden without radiation");
+        heg.conditions.remove("hot");
+        heg.conditions.add("very_hot");
+        expect(PropertyStats.noUse(floors, home.market(), home.features(false)), "heated floors are hidden on a very hot world");
+        expect(!PropertyStats.noUse(ac, home.market(), home.features(false)), "air conditioning helps a very hot home");
         expect(!PropertyStats.noUse(insulation, home.market(), home.features(false)),
                 "insulation stays: it is quieter too");
-        expect(Actions.cannotBuild(home, floors) != null, "heated floors can't be built in a hot home");
+        expect(Actions.cannotBuild(home, floors) != null, "heated floors can't be built on a very hot world");
         float withoutFloors = MarketRules.traitPrice(java.util.List.of(), home.market());
         expect(Math.abs(MarketRules.traitPrice(java.util.List.of("heated_floors"), home.market()) - withoutFloors) < 0.0001f,
-                "heated floors add nothing to a hot home's value");
+                "heated floors add nothing to a very hot home's value");
+        heg.conditions.remove("very_hot");
+        heg.conditions.add("hot");
+        java.util.Set<String> loverLikes = new java.util.HashSet<>(landlordsector.data.TenantTraits.get("heat_lover").likes);
+        loverLikes.retainAll(floors.effects.tags);
+        expect(!loverLikes.isEmpty(), "a tenant who loves heat likes heated floors");
         expect(Actions.remove(home, home.upgrades().get(0)).startsWith("Removed") && !home.has("alarm"),
                 "an upgrade can be removed");
         // A one-time job fixes a bad trait at once.

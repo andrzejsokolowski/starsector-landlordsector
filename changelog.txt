@@ -1,3 +1,8 @@
+Version 1.2.1 (2026-11-16)
+- The commute tooltip reads "Commute: +32 from proximity to city center"
+- Heated floors, Air conditioning and the other heating or cooling upgrades are hidden only where no tenant could want them: warming on very hot worlds, cooling on very cold ones. Lead lining is still hidden where there is no radiation
+- Tenants who love heat like Heated floors and the Space heater
+
 Version 1.2.0 (2026-11-15)
 - Declare player home: a new button on a home's Tenants tab. You live there, it stops advertising and pays no rent
 - Move in with one of your officers or administrators of the opposite sex once your relationship is +70 or more. They leave your service and live with you

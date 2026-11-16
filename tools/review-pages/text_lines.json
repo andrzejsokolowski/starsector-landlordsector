@@ -1,0 +1,17 @@
+{
+	"_about": "Every player-facing line Claude adds or rewords in Landlordsector (Andrzej, 2026-11-16). text_review.py builds text.html from this list. id: the review page's key, never reused. version: the release that added or changed it. Example values in the line are shown as they appear in game.",
+	"lines": [
+		{"id": "x_commute_proximity", "version": "1.2.1",
+			"line": "Commute: +32 from proximity to city center",
+			"when": "First line of the Commute tooltip on a home sheet (agent's screen and Real estate tab). The number is the home's own spot, 0 (outskirts) to 50. Homes next to the city center always show +50."},
+		{"id": "x_upgrades_title", "version": "1.0.1",
+			"line": "Upgrades: 4 built",
+			"when": "Title of the Upgrades row's tooltip on a home sheet. Below it, what all the built upgrades do together."},
+		{"id": "x_housewarming", "version": "1.0.1",
+			"line": "Jana Okoye threw a party at Leafy Cottage. It left a few scuffs.",
+			"when": "Housewarming tenant event, in the home's log (the home loses 1% condition)."},
+		{"id": "x_service_cancelled", "version": "1.0.1",
+			"line": "A service you hired is no longer offered and was cancelled.",
+			"when": "Home log, once, when you load a save where that home had the Night watchman."}
+	]
+}

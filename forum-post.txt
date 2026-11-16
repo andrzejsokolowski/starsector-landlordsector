@@ -121,6 +121,12 @@ This mod is under the CC0 (Creative Commons Zero) License, allowing you to do wh
 [/spoiler]
 
 [spoiler=Version log]
+[b]1.2.1[/b]
+[list]
+[li]The commute tooltip reads "Commute: +32 from proximity to city center"[/li]
+[li]Heated floors, Air conditioning and the other heating or cooling upgrades are hidden only where no tenant could want them: warming on very hot worlds, cooling on very cold ones. Lead lining is still hidden where there is no radiation[/li]
+[li]Tenants who love heat like Heated floors and the Space heater[/li]
+[/list]
 [b]1.2.0[/b]
 [list]
 [li]Declare player home: a new button on a home's Tenants tab. You live there, it stops advertising and pays no rent[/li]

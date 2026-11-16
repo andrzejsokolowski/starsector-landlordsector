@@ -12,6 +12,15 @@ LLS-1 "Design answers" holds every rule from the design interview (2026-11-10). 
 how the mod plays. Working rules and game API notes: **Claude Information**
 (`collection://7bf9b1d6-b9e5-4b62-87f1-757bbaa51919`). Update the board during the work.
 
+## Text review (Andrzej, 2026-11-16)
+
+Every change that adds or rewords player-facing text (tooltips, messages, log lines, events, buttons, settings)
+also publishes a text review artifact: one row per line with **Line | When it is used | Accept | Reject with
+comment**, saved through the artifact `db` capability so his verdicts can be read back. Generator:
+`tools/review-pages/` (`text_review.py`, lines in `text_lines.json`), published at
+https://claude.ai/artifact/GyTt9U386E6H7vh5eg47MA (republish to that URL). Link it in the chat and on the ticket, and read the verdicts before
+the next text change.
+
 ## Build
 
 `./gradlew releaseZip` compiles against the game, LunaLib and `../OddiszCommons/jars/OddiszCommons.jar`

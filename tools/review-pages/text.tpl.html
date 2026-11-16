@@ -1,0 +1,89 @@
+<title>Landlordsector Text</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oxanium:wght@500;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+/*__CSS__*/
+/* Text review: one row per line, Line | When it is used | Accept | Reject with comment. */
+.thead,.card.tline{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr) minmax(0,1.1fr);gap:14px 18px;align-items:start}
+.thead{padding:0 18px 0 22px}
+.card.tline{padding:14px 18px}
+.tline .line{margin:0;font:600 15.5px/1.45 var(--body)}
+.tline .line::before{content:"\201C"} .tline .line::after{content:"\201D"}
+.tline .when{margin:0;color:var(--muted);font-size:13.5px}
+.tline .ver{display:inline-block;margin-top:6px;font:600 11px/1 var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--gold)}
+.tline .review{border-top:0;padding-top:0}
+.tline .vpill{display:none}
+.card.tline[data-verdict="approve"]{border-left-color:var(--good)}
+.card.tline[data-verdict="reject"]{border-left-color:var(--bad)}
+@media (max-width:640px){.thead{display:none}.card.tline{grid-template-columns:1fr}}
+</style>
+<div class="wrap">
+  <header>
+    <h1>Text <span>/ Landlordsector __VERSION__</span></h1>
+    <p class="lede">Every line Claude added or reworded, with where it shows up. Accept it, or reject it and say what it should say instead. Everything saves as you go, and Claude reads it back before the next change.</p>
+  </header>
+  <section class="progress" aria-label="Review progress">
+    <div class="counts">
+      <span><b class="ok" id="c-ok">0</b> accepted</span>
+      <span><b class="no" id="c-no">0</b> rejected</span>
+      <span><b id="c-todo">0</b> to review</span>
+      <span><b id="c-notes">0</b> with comments</span>
+    </div>
+    <div class="meter" aria-hidden="true"><i class="ok" id="m-ok"></i><i class="no" id="m-no"></i></div>
+  </section>
+  <section class="general">
+    <label class="label" for="note-general">General notes on wording</label>
+    <textarea id="note-general" data-id="general" placeholder="Anything about how the mod's text should sound"></textarea>
+    <div class="status" id="status-general"></div>
+  </section>
+  <div class="banner" id="banner" hidden></div>
+  <div class="toolbar">
+    <div class="chips" id="f-kind" role="group" aria-label="Show"></div>
+    <div class="chips" id="f-review" role="group" aria-label="Review">
+      <span class="label">Review</span>
+      <button class="chip" type="button" data-f="any" aria-pressed="true">Any</button>
+      <button class="chip" type="button" data-f="todo" aria-pressed="false">To review</button>
+      <button class="chip" type="button" data-f="approve" aria-pressed="false">Accepted</button>
+      <button class="chip" type="button" data-f="reject" aria-pressed="false">Rejected</button>
+      <button class="chip" type="button" data-f="noted" aria-pressed="false">With comments</button>
+    </div>
+  </div>
+  <p class="empty" id="empty" hidden>Nothing matches these filters.</p>
+  <div class="thead label" aria-hidden="true"><span>Line</span><span>When it is used</span><span>Accept / Reject with comment</span></div>
+  <div id="groups"></div>
+</div>
+<script>
+const DATA = __DATA__;
+/*__COMMON__*/
+
+const versions = [...new Set(DATA.lines.map(l => l.version))].sort((a, b) => b.localeCompare(a, undefined, { numeric: true }));
+const kinds = $("#f-kind");
+kinds.appendChild(el("span", "label", "Show"));
+[["all", "All"]].concat(versions.map(v => ["v" + v, v])).forEach(([f, t], i) => {
+  const b = el("button", "chip", t); b.type = "button"; b.dataset.f = f; b.setAttribute("aria-pressed", String(i === 0));
+  kinds.appendChild(b);
+});
+versions.forEach(v => {
+  const g = el("section", "group");
+  g.appendChild(el("h2", null, v === DATA.version ? "New in " + v : "From " + v));
+  const list = el("div", "list");
+  DATA.lines.filter(l => l.version === v).forEach(l => {
+    const c = card({ id: l.id, good: null }, "v" + v, l.line);
+    c.classList.add("tline");
+    c.innerHTML = "";
+    c.appendChild(el("p", "line", l.line));
+    const w = el("div");
+    w.appendChild(el("p", "when", l.when));
+    w.appendChild(el("span", "ver", l.version));
+    c.appendChild(w);
+    c.appendChild(c.pill);
+    c.appendChild(reviewBox(l.id, "this line", { ok: "Accept", no: "Reject", note: "Comment: why, or what it should say" }));
+    list.appendChild(c);
+  });
+  g.appendChild(list);
+  $("#groups").appendChild(g);
+});
+
+startStore();
+</script>

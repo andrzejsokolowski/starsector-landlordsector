@@ -38,7 +38,7 @@
 		{"id":"pet_owner", "name":"Pet owner", "weight":2, "wear":1.1, "likes":["garden","pets"], "events":{"pet_acquired":0}},
 		{"id":"faithful", "name":"Faithful", "weight":1, "factions":{"luddic_church":5,"luddic_path":2}, "likes":["quiet","faith"], "dislikes":["busy"]},
 		{"id":"tech_fan", "name":"Tech enthusiast", "weight":1, "factions":{"tritachyon":3}, "likes":["view","busy","tech"]},
-		{"id":"heat_lover", "name":"Loves heat", "weight":1, "levels":{"heat":0, "cold":1.5}, "likes":["heat"], "dislikes":["cold"]},
+		{"id":"heat_lover", "name":"Loves heat", "weight":1, "levels":{"heat":0, "cold":1.5}, "likes":["heat", "warmth"], "dislikes":["cold"]},
 		{"id":"water_lover", "name":"Loves water", "weight":1, "likes":["water","view"]},
 		{"id":"history_buff", "name":"History buff", "weight":1, "likes":["history"]},
 		{"id":"mycophile", "name":"Loves mushrooms", "weight":0.5, "likes":["fungus"]},

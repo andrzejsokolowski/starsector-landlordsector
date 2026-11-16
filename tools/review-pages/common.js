@@ -32,20 +32,21 @@ function metaList() {
 /* ---- review state: one doc per item in "notes": {text, verdict: "approve" | "reject" | null} ---- */
 const state = {};
 const cardIds = [];
-function reviewBox(id, name) {
+function reviewBox(id, name, labels) {
+  labels = labels || {};
   state[id] = state[id] || { text: "", verdict: null };
   cardIds.push(id);
   const box = el("div", "review");
   const row = el("div", "verdict");
   row.setAttribute("role", "group");
   row.setAttribute("aria-label", "Verdict on " + name);
-  const ok = el("button", "vbtn ok", "Approve"); ok.type = "button"; ok.dataset.v = "approve"; ok.dataset.id = id;
-  const no = el("button", "vbtn no", "Reject"); no.type = "button"; no.dataset.v = "reject"; no.dataset.id = id;
+  const ok = el("button", "vbtn ok", labels.ok || "Approve"); ok.type = "button"; ok.dataset.v = "approve"; ok.dataset.id = id;
+  const no = el("button", "vbtn no", labels.no || "Reject"); no.type = "button"; no.dataset.v = "reject"; no.dataset.id = id;
   ok.setAttribute("aria-pressed", "false"); no.setAttribute("aria-pressed", "false");
   const st = el("div", "status"); st.id = "status-" + id;
   row.append(ok, no, st);
   const ta = el("textarea"); ta.id = "note-" + id; ta.dataset.id = id;
-  ta.placeholder = "Notes on " + name + " (what to change, ideas)";
+  ta.placeholder = labels.note || ("Notes on " + name + " (what to change, ideas)");
   ta.setAttribute("aria-label", "Notes on " + name);
   box.append(row, ta);
   return box;
@@ -71,7 +72,7 @@ function showVerdict(id) {
   if (p) {
     p.hidden = !v;
     p.className = "vpill " + (v === "approve" ? "ok" : "no");
-    p.textContent = v === "approve" ? "Approved" : "Rejected";
+    p.textContent = v === "approve" ? (p.dataset.ok || "Approved") : (p.dataset.no || "Rejected");
   }
   const c = document.querySelector('.card[data-id="' + id + '"]');
   if (c) c.dataset.verdict = v || "";

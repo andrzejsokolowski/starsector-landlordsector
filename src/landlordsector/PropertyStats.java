@@ -495,14 +495,18 @@ public final class PropertyStats {
 
     /**
      * 1.0.1 (Andrzej: "No point having heated floors as a selling point on a hot planet"): true when an upgrade made
-     * to lower heat, cold or radiation goes into a home that has none of them. Such upgrades are not offered and add
-     * nothing to the value. An upgrade that also does something else (Better insulation is quieter too) stays.
+     * to lower heat, cold or radiation goes into a home where no tenant could want it. Such upgrades are not offered
+     * and add nothing to the value. An upgrade that also does something else (Better insulation is quieter too)
+     * stays. 1.2.1 (Andrzej: "a temperature of 0 should still keep the upgrade for heated floors - There are tenants
+     * who would like it ... Only when noone can see any reason to (like very hot world + heated floors)"): warming
+     * goes only where it is very hot (Heat 2 or more), cooling only where it is very cold; radiation shielding only
+     * where there is no radiation at all, since no tenant wants radiation.
      */
     public static boolean noUse(landlordsector.data.Upgrades.Def u, MarketAPI m, List<String> features) {
         if (u == null || m == null) return false;
         HouseTraits.Def fx = u.effects;
         if (!fx.env.isEmpty() || fx.happiness != 0f || fx.health != 0f || fx.security != 0f || !fx.events.isEmpty()
-                || !fx.tags.isEmpty() || !fx.kids.isEmpty() || !fx.cancels.isEmpty() || fx.wear != 1f
+                || !fx.kids.isEmpty() || !fx.cancels.isEmpty() || fx.wear != 1f
                 || !u.fixes.isEmpty()) {
             return false;
         }
@@ -512,6 +516,8 @@ public final class PropertyStats {
             if (ld == null || !Levels.helps(ld, e.getValue())) continue;
             lowers = true;
             if (baseLevel(m, features, ld) > 0) return false;
+            String opposite = "cold".equals(ld.id) ? "heat" : ("heat".equals(ld.id) ? "cold" : null);
+            if (opposite != null && baseLevel(m, features, Levels.get(opposite)) < 2) return false;
         }
         return lowers;
     }
@@ -609,9 +615,9 @@ public final class PropertyStats {
             List<String[]> lines = new ArrayList<>();
             float v = Environment.start(sc, homeId, s.neighbor);
             if (sc.rollMin >= 0f && homeId != null) {
-                // 1.0.1: where the home sits on the colony, from the outskirts (0) to the center (50).
-                lines.add(new String[] {"Spot on the colony: " + Math.round(v) + " of " + Math.round(sc.rollMax)
-                        + (s.neighbor.central ? " (by the center)" : ""), null});
+                // 1.0.1: where the home sits on the colony, from the outskirts (0) to the center (50). 1.2.1 wording
+                // (Andrzej: "Say normally: commute: +32 from proximity to city center").
+                lines.add(new String[] {sc.name + ": +" + Math.round(v) + " from proximity to city center", null});
             } else {
                 lines.add(new String[] {"Base: " + Math.round(v), null});
             }
