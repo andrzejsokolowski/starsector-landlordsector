@@ -131,6 +131,12 @@ public class RealEstatePage implements ManagePage {
             return true;
         }
 
+        /** 1.5.3: the icon row stops before the event log when the log sits right of the sheet. */
+        @Override
+        protected float iconRowWidth(float w, float cw) {
+            return sideLog() ? cw : w;
+        }
+
         private boolean sideLog() {
             return sideLogX() + 200f <= width - 8f;
         }

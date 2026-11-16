@@ -31,7 +31,8 @@ GRADES = ["S+", "S", "A", "B", "C", "D", "E", "F"]
 # F: Deep red." Each a little dark, so the light letters stay readable.
 GRADE_BG = {"S+": (52, 138, 186), "S": (30, 98, 50), "A": (66, 150, 58), "B": (176, 150, 28), "C": (196, 106, 30),
             "D": (112, 76, 44), "E": (196, 78, 70), "F": (118, 22, 24)}
-STATS = [("location", "LOC"), ("commute", "COMM"), ("air", "AIR"), ("noise", "NOISE")]
+# 1.5.3 (Andrzej: "COMM" reads as communications): full words, the font shrinks to fit when needed.
+STATS = [("location", "LOCATION"), ("commute", "COMMUTE"), ("air", "AIR"), ("noise", "NOISE")]
 
 
 def load(name):
@@ -101,9 +102,6 @@ def gemini_icons():
     out.append({"key": "area_residential", "name": "Residential area", "group": "Places", "good": None,
                 "subject": "a quiet row of small prefab homes with warm lit windows at dusk",
                 "tone": "Mood: calm and ordinary."})
-    out.append({"key": "world", "name": "Lore world", "group": "Places", "good": None,
-                "subject": "a planet seen from orbit with the lights of big cities on its night side",
-                "tone": "Mood: famous and important, a known world of the sector."})
     # 1.5.2 (Andrzej: "We can also make icons for the climate: Heat, cold, radiation"). One picture each; the build
     # adds 1 to 3 marks for the level (Hot, Very hot, Scorching). The game's own icons show until a file is there.
     out.append({"key": "climate_heat", "name": "Heat", "group": "Climate", "good": False,
@@ -139,7 +137,12 @@ def text_icon(path, big, small, bg, fg=(225, 230, 220)):
     w = d.textbbox((0, 0), big, font=fb)
     bx = SIZE - (w[2] - w[0]) - 4 * U - w[0]
     d.text((bx, 1 * U - w[1]), big, font=fb, fill=fg)
-    fs = font(int(9 * U))
+    fsize = int(9 * U)
+    fs = font(fsize)
+    longest = max([l for _, l in STATS] + [small], key=len)  # one label size on every icon
+    while d.textbbox((0, 0), longest, font=fs)[2] > SIZE - 6 * U and fsize > 10:
+        fsize -= 1
+        fs = font(fsize)
     s = d.textbbox((0, 0), small, font=fs)
     d.text((3 * U - s[0], SIZE - (s[3] - s[1]) - 3 * U - s[1]), small, font=fs, fill=fg)
     im.save(path)

@@ -583,23 +583,6 @@ Mood: calm and ordinary.
 Save it as area_residential.png
 
 ####################################################################################################
-### world.png  (Lore world)
-
-ICON STYLE (the same for every icon of this set):
-- One square 1:1 picture used as a small icon in a retro sci-fi strategy game, next to the game's own planet condition icons. It is shown small, about 60 x 60 pixels, so: ONE clear subject, big simple shapes, a strong silhouette, high contrast. Nothing small may matter.
-- Painted pixel art with visible pixels, 3 to 5 flat tones per material, thin dark outlines, one light from the upper left, a soft glow where something emits light.
-- Full-bleed square scene that fills the whole picture: no frame, no border, no rounded corners, no text, no letters, no numbers, no symbols, no UI, no watermark.
-- A dark, moody background (night blues, deep browns, near-black) and the subject lit by one warm or colored light, so it pops at a tiny size.
-- Close or medium-close framing of one part of a home or what is right next to it. Not a wide landscape, not a whole house unless asked.
-
-WORLD (the same for every icon): a grounded, lived-in far-future frontier colony seen the way 1970s and 1980s science fiction imagined it: prefab metal panels, rivets, chunky pipes and vents, amber and teal indicator lights, worn paint. Semi-realistic, never fantasy: no magic, no mechs, no walking or floating buildings, no creatures with glowing eyes, no cartoon faces, no people in close-up.
-
-THE ICON: Lore world. Show a planet seen from orbit with the lights of big cities on its night side.
-Mood: famous and important, a known world of the sector.
-
-Save it as world.png
-
-####################################################################################################
 ### climate_heat.png  (Heat)
 
 ICON STYLE (the same for every icon of this set):

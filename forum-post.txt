@@ -122,6 +122,13 @@ This mod is under the CC0 (Creative Commons Zero) License, allowing you to do wh
 [/spoiler]
 
 [spoiler=Version log]
+[b]1.5.3[/b]
+[list]
+[li]Home icons sit in one row and use the free width on the right; with many icons they get a little smaller instead of wrapping[/li]
+[li]Grade icons spell out LOCATION and COMMUTE[/li]
+[li]Removed the lore world icon[/li]
+[li]The Maglev network no longer shows a pointless +35 commute: when a colony building sets the commute, only that line shows[/li]
+[/list]
 [b]1.5.2[/b]
 [list]
 [li]Home icons are 60 pixels by default (Home icon size setting)[/li]

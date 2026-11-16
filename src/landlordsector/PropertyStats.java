@@ -656,6 +656,9 @@ public final class PropertyStats {
                     Surroundings.buildings(m).keySet()).entrySet()) {
                 if (v >= o.getValue()) continue;
                 v = o.getValue();
+                // 1.5.3 (Andrzej: the Maglev's "+35" is pointless when it sets the whole colony to S+): the lines
+                // that led below the colony's floor no longer matter, only the building that sets it.
+                lines.clear();
                 lines.add(new String[] {industryName(m, new String[] {o.getKey()}) + " on this colony: "
                         + graded(sc.name, Environment.letter(v)), null, graded(sc.name, Environment.letter(v)), "+"});
             }

@@ -347,7 +347,7 @@ public abstract class PropertyView extends Canvas {
         }
     }
 
-    /** Size, Location, Commute, Air, Noise, climate, Area, the world, then each house trait. */
+    /** Size, Location, Commute, Air, Noise, climate, Area, then each house trait. */
     private static List<IconSpec> icons(Sheet s) {
         List<IconSpec> out = new ArrayList<>();
         String ic = landlordsector.Art.ICONS;
@@ -382,11 +382,6 @@ public abstract class PropertyView extends Canvas {
             } else {
                 out.add(new IconSpec(ic + "area_residential.png", 1f, "Area: " + st.area, st.neighborLines));
             }
-            if (st.loreName != null) {
-                List<String[]> ll = new ArrayList<>();
-                if (st.loreLine != null) ll.add(new String[] {st.loreLine, null});
-                out.add(new IconSpec(ic + "world.png", 1f, st.loreName, ll));
-            }
         }
         for (String id : s.traitIds) {
             landlordsector.data.HouseTraits.Def d = landlordsector.data.HouseTraits.get(id);
@@ -396,50 +391,46 @@ public abstract class PropertyView extends Canvas {
         return out;
     }
 
-    /** 1.5.1: {x, y} of each icon in a row {@code w} wide; an icon that does not fit starts the next row. */
-    private static float[][] iconLayout(List<IconSpec> list, float w) {
-        float size = iconSize();
-        float[][] at = new float[list.size()][];
-        float cx = 0f;
-        int row = 0;
-        for (int i = 0; i < list.size(); i++) {
-            float iw = size * list.get(i).span;
-            if (cx > 0f && cx + iw > w) {
-                cx = 0f;
-                row++;
-            }
-            at[i] = new float[] {cx, row * (size + ICON_GAP)};
-            cx += iw + ICON_GAP;
-        }
-        return at;
+    /**
+     * 1.5.3 (Andrzej: "let's maybe do one row of icons instead of stacking them on top?"): one row. The icons are
+     * the setting's size, or smaller when that many would not fit in {@code w}.
+     */
+    private static float iconSizeFor(List<IconSpec> list, float w) {
+        float span = 0f;
+        for (IconSpec i : list) span += i.span;
+        if (span <= 0f) return iconSize();
+        return Math.max(16f, Math.min(iconSize(), (w - ICON_GAP * (list.size() - 1)) / span));
     }
 
-    /** Height of the icon rows for a sheet {@code cw} wide. */
-    protected static float iconRowsHeight(Sheet s, float cw) {
+    /** Height of the icon row for a row {@code w} wide. */
+    protected static float iconRowsHeight(Sheet s, float w) {
         List<IconSpec> list = icons(s);
-        if (list.isEmpty()) return 0f;
-        float[][] at = iconLayout(list, cw);
-        return at[at.length - 1][1] + iconSize();
+        return list.isEmpty() ? 0f : iconSizeFor(list, w);
     }
 
-    /** The icons under the picture; each has the same tooltip as its row below. */
+    /** How wide the icon row may be: all of {@code w} by default; the Real estate tab stops it before its log. */
+    protected float iconRowWidth(float w, float cw) {
+        return w;
+    }
+
+    /** The icons under the picture, in one row; each has the same tooltip the text row had. */
     protected void iconRow(Sheet s, float x, float y, float w) {
-        float size = iconSize();
         List<IconSpec> list = icons(s);
-        float[][] at = iconLayout(list, w);
-        for (int i = 0; i < list.size(); i++) {
-            IconSpec ic = list.get(i);
-            float ix = x + at[i][0], iy = y + at[i][1], iw = size * ic.span;
-            icon(ic.path, ix, iy, iw, size, ic.span);
-            tipColored(ix, iy, iw, size, ic.title, ic.lines);
+        float size = iconSizeFor(list, w);
+        float ix = x;
+        for (IconSpec ic : list) {
+            float iw = size * ic.span;
+            icon(ic.path, ix, y, iw, size, ic.span);
+            tipColored(ix, y, iw, size, ic.title, ic.lines);
+            ix += iw + ICON_GAP;
         }
     }
 
     /** Height the sheet needs under its picture. */
     protected static float sheetTextHeight(Sheet s, float w) {
         // 1.5.2 (Andrzej: "when there are 3 rows of icons, the image of the house downscales. That's not good."):
-        // room for two icon rows and seven text rows whatever the home has, so the picture keeps one size.
-        return 6f + 2f * iconSize() + ICON_GAP + 8f + 30f + 7 * ROW + s.extra.size() * ROW;
+        // room for the icon row and seven text rows whatever the home has, so the picture keeps one size.
+        return 6f + iconSize() + 8f + 30f + 7 * ROW + s.extra.size() * ROW;
     }
 
     /** Where the right column (the bars) starts, from the sheet's left edge (0.5.0: nearer the middle). */
@@ -477,8 +468,9 @@ public abstract class PropertyView extends Canvas {
 
         // 1.5.0 (Andrzej, LLS-16: "home conditions as icons like market conditions"): a row of icons under the
         // picture, like the conditions on a colony screen. 1.5.2: they replace the text rows, with the same tooltips.
-        iconRow(s, x, y + imgH + 6f, cw);
-        float ty = y + imgH + 6f + iconRowsHeight(s, cw) + 8f;
+        float iconW = iconRowWidth(w, cw);
+        iconRow(s, x, y + imgH + 6f, iconW);
+        float ty = y + imgH + 6f + iconRowsHeight(s, iconW) + 8f;
         title(s.title, x, ty, cw);
 
         float r = ty + 30f;

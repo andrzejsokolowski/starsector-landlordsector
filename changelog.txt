@@ -1,3 +1,9 @@
+Version 1.5.3 (2026-11-16)
+- Home icons sit in one row and use the free width on the right; with many icons they get a little smaller instead of wrapping
+- Grade icons spell out LOCATION and COMMUTE
+- Removed the lore world icon
+- The Maglev network no longer shows a pointless +35 commute: when a colony building sets the commute, only that line shows
+
 Version 1.5.2 (2026-11-16)
 - Home icons are 60 pixels by default (Home icon size setting)
 - The icons replace the Size, Location, Area, Traits, Environment and Climate rows; hover an icon for the same details

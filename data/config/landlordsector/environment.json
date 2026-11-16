@@ -51,7 +51,7 @@
 		"ii_interstellarbazaar":{"commute":15, "noise":-10, "price":1.06, "happiness":3, "tags":["busy"]},
 		"aotd_underworld":{"commute":10, "noise":-10, "price":0.9, "security":-10, "tags":["busy"]},
 		"aotd_trade_outpost":{"commute":10, "noise":-5, "price":1.03, "tags":["busy"]},
-		"aotd_maglev":{"commute":35, "noise":-10, "price":1.1},
+		"aotd_maglev":{"noise":-10, "price":1.1},
 		"kk_mailuo_deck":{"commute":25, "noise":-5, "price":1.05},
 		"patrolhq":{"commute":5, "noise":-10, "security":8, "price":1.02, "tags":["police"]},
 		"militarybase":{"commute":5, "noise":-20, "security":12, "price":1.0, "tags":["police", "noise"]},
