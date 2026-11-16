@@ -82,20 +82,6 @@
 			"area": "Talking with your partner"
 		},
 		{
-			"id": "f_greet_gf1",
-			"version": "1.2.0",
-			"line": "Hey, you. I was hoping you'd call.",
-			"when": "Your partner greets you when you open their comm link: not married yet, happiness 60 or more.",
-			"area": "Talking with your partner"
-		},
-		{
-			"id": "f_greet_gf2",
-			"version": "1.2.0",
-			"line": "Good timing. I just made coffee.",
-			"when": "Your partner greets you when you open their comm link: not married yet, happiness 60 or more (other pick).",
-			"area": "Talking with your partner"
-		},
-		{
 			"id": "f_greet_plain1",
 			"version": "1.2.0",
 			"line": "Hi. How was the trip?",
@@ -107,13 +93,6 @@
 			"version": "1.2.0",
 			"line": "Hey. You look tired.",
 			"when": "Your partner greets you when you open their comm link, any other time (other pick).",
-			"area": "Talking with your partner"
-		},
-		{
-			"id": "f_opt_propose",
-			"version": "1.2.0",
-			"line": "Will you marry me?",
-			"when": "Option in your partner's comm link, until you are married.",
 			"area": "Talking with your partner"
 		},
 		{
@@ -169,42 +148,28 @@
 			"id": "f_propose_yes1",
 			"version": "1.2.0",
 			"line": "Yes! Yes, of course!",
-			"when": "Your partner's answer when they accept your proposal.",
+			"when": "Their answer when you click Propose and they say yes, in the message at the top of the Real estate tab (see the full message below).",
 			"area": "Talking with your partner"
 		},
 		{
 			"id": "f_propose_yes2",
 			"version": "1.2.0",
 			"line": "I thought you'd never ask. Yes!",
-			"when": "Your partner's answer when they accept your proposal (other pick).",
+			"when": "The same answer, other pick.",
 			"area": "Talking with your partner"
 		},
 		{
 			"id": "f_propose_now",
 			"version": "1.2.0",
 			"line": "Mira Okoye is now your wife.",
-			"when": "In the dialog and the home's log after they say yes. \"husband\" or \"spouse\" for others.",
+			"when": "After they say yes: in that message and in the home's log. \"husband\" for a man.",
 			"area": "Talking with your partner"
 		},
 		{
 			"id": "f_propose_cheat",
 			"version": "1.2.0",
 			"line": "Actually... I'm cheating on you.",
-			"when": "Your partner's answer in the rare (2%) case they turn the proposal down.",
-			"area": "Talking with your partner"
-		},
-		{
-			"id": "f_propose_leaves",
-			"version": "1.2.0",
-			"line": "She packs her things and leaves.",
-			"when": "In the dialog right after \"Actually... I'm cheating on you.\"",
-			"area": "Talking with your partner"
-		},
-		{
-			"id": "f_propose_left",
-			"version": "1.2.0",
-			"line": "Mira Okoye turned down your proposal and left you. She was seeing someone else.",
-			"when": "Home log and intel message after the rejected proposal.",
+			"when": "Their answer in the rare (2%) case they turn you down. They stay in your service and never say yes.",
 			"area": "Talking with your partner"
 		},
 		{
@@ -747,13 +712,6 @@
 			"area": "Real estate tab"
 		},
 		{
-			"id": "f_btn_move_in_with",
-			"version": "1.2.0",
-			"line": "Move in with...",
-			"when": "Real estate tab: button on your home. Opens the list of officers and administrators.",
-			"area": "Real estate tab"
-		},
-		{
 			"id": "f_btn_stop",
 			"version": "1.2.0",
 			"line": "Stop living here",
@@ -799,28 +757,7 @@
 			"id": "f_list_none",
 			"version": "1.2.0",
 			"line": "No officers or administrators of the opposite sex.",
-			"when": "\"Move in with...\" list when nobody can be picked.",
-			"area": "Real estate tab"
-		},
-		{
-			"id": "f_list_bond",
-			"version": "1.2.0",
-			"line": "Relationship +72",
-			"when": "\"Move in with...\" list: each officer's or administrator's relationship with you. Green at +70 or more.",
-			"area": "Real estate tab"
-		},
-		{
-			"id": "f_btn_partner_move_in",
-			"version": "1.2.0",
-			"line": "Move in",
-			"when": "\"Move in with...\" list: button next to each officer or administrator.",
-			"area": "Real estate tab"
-		},
-		{
-			"id": "f_tip_partner_move_in",
-			"version": "1.2.0",
-			"line": "Mira Okoye leaves your service and lives here with you.",
-			"when": "Tooltip on that \"Move in\" button when they can.",
+			"when": "\"Propose to...\" list when nobody can be picked.",
 			"area": "Real estate tab"
 		},
 		{
@@ -828,27 +765,6 @@
 			"version": "1.2.0",
 			"line": "Someone already lives here with you.",
 			"when": "Tooltip on \"Move in\" when you already have a partner there.",
-			"area": "Real estate tab"
-		},
-		{
-			"id": "f_no_bond",
-			"version": "1.2.0",
-			"line": "Needs a relationship of +70",
-			"when": "Tooltip on \"Move in\" when the relationship is too low.",
-			"area": "Real estate tab"
-		},
-		{
-			"id": "f_log_partner_in",
-			"version": "1.2.0",
-			"line": "Mira Okoye moved in with you.",
-			"when": "Home log when your partner moves in.",
-			"area": "Real estate tab"
-		},
-		{
-			"id": "f_st_partner_in",
-			"version": "1.2.0",
-			"line": "Mira Okoye moved in with you at Leafy Cottage.",
-			"when": "Real estate tab: message at the bottom when your partner moves in.",
 			"area": "Real estate tab"
 		},
 		{
@@ -1031,6 +947,111 @@
 			"version": "1.2.0",
 			"line": "Girlfriend, Boyfriend, Partner, Wife, Husband, Spouse, Son, Daughter",
 			"when": "Comm directory: the post under your partner's or child's name.",
+			"area": "Monthly, settings and names"
+		},
+		{
+			"id": "f_btn_propose_to",
+			"version": "1.2.2",
+			"line": "Propose to...",
+			"when": "Real estate tab, Family tab of your home while you live alone: opens the list of officers and administrators.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_btn_propose",
+			"version": "1.2.2",
+			"line": "Propose",
+			"when": "Button next to each person on the \"Propose to...\" list.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_role_officer",
+			"version": "1.2.2",
+			"line": "Officer, level 5 of 6",
+			"when": "\"Propose to...\" list, under an officer's name: their level and the highest they can reach. Green when they would say yes.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_role_admin",
+			"version": "1.2.2",
+			"line": "Administrator, governed 7 of 12 months",
+			"when": "\"Propose to...\" list, under an administrator's name: months governing one of your colonies. Green at 12.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_role_sophia",
+			"version": "1.2.2",
+			"line": "Scientist on your research council",
+			"when": "\"Propose to...\" list, under Sophia Anderson (AoTD, Kaysaar's Demise on). Always green.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_no_level",
+			"version": "1.2.2",
+			"line": "Only says yes at level 6.",
+			"when": "Tooltip on a greyed-out Propose button: an officer below their highest level.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_no_governed",
+			"version": "1.2.2",
+			"line": "Only says yes after governing a colony for 12 months.",
+			"when": "Tooltip on a greyed-out Propose button: an administrator who has not governed long enough.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_no_cheated",
+			"version": "1.2.2",
+			"line": "Seeing someone else.",
+			"when": "Tooltip on a greyed-out Propose button: someone who already turned you down with \"Actually... I'm cheating on you.\"",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_tip_propose",
+			"version": "1.2.2",
+			"line": "Retires and moves in with you.",
+			"when": "Tooltip on Propose when an officer or administrator would say yes.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_tip_propose_sophia",
+			"version": "1.2.2",
+			"line": "Moves in with you and keeps her research post.",
+			"when": "Tooltip on Propose next to Sophia Anderson.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_st_said_yes",
+			"version": "1.2.2",
+			"line": "Mira Okoye: \"Yes! Yes, of course!\" Mira Okoye is now your wife.",
+			"when": "Real estate tab: the message at the top after a yes (the answer is one of the two picks above).",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_st_cheated",
+			"version": "1.2.2",
+			"line": "Mira Okoye: \"Actually... I'm cheating on you.\"",
+			"when": "Real estate tab: the message at the top after the 2% no.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_need_child",
+			"version": "1.2.2",
+			"line": "Another child needs happiness 50 and comfort 40.",
+			"when": "Family tab, under your spouse's card once you have a child. Red while your spouse or the home is below it. 10 more of each per child.",
+			"area": "Real estate tab"
+		},
+		{
+			"id": "f_tip_try_needs",
+			"version": "1.2.2",
+			"line": "Another child needs happiness 50 and comfort 40. Now: 46 and 52.",
+			"when": "Tooltip on the greyed-out \"Let's try for a child.\" in your spouse's comm link while they or the home are below it.",
+			"area": "Talking with your partner"
+		},
+		{
+			"id": "s_kaysaar",
+			"version": "1.2.2",
+			"line": "With AoTD Vaults of Knowledge: you can marry Sophia Anderson once she is on your research council.",
+			"when": "LunaLib settings: the description of Kaysaar's Demise.",
 			"area": "Monthly, settings and names"
 		}
 	]

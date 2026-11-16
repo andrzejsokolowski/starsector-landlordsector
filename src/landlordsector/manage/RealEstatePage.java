@@ -440,7 +440,7 @@ public class RealEstatePage implements ManagePage {
             float y = y0;
             if (t == null) {
                 text("You live here.", Misc.getGrayColor(), rx, y + 5f, 200f);
-                Btn mw = button("choose:" + p.id, "Move in with...", rx + 210f, y, 200f, 28f, !p.condemned);
+                Btn mw = button("choose:" + p.id, "Propose to...", rx + 210f, y, 200f, 28f, !p.condemned);
                 mw.selected = choosingPartner;
                 String no = landlordsector.Family.cannotLeave(p);
                 button("leave:" + p.id, "Stop living here", rx + 420f, y, 200f, 28f, no == null);
@@ -449,6 +449,13 @@ public class RealEstatePage implements ManagePage {
                 if (choosingPartner) y = partnerList(p, rx, y, cw);
             } else {
                 y = partnerCard(p, t, rx, y, cw);
+                float[] need = landlordsector.Family.childNeeds(p.children().size());
+                if (need != null) {
+                    boolean ok = landlordsector.Family.cannotTry(p) == null;
+                    text("Another child needs happiness " + Math.round(need[0]) + " and comfort " + Math.round(need[1])
+                            + ".", traitColor(ok ? null : Boolean.FALSE), rx, y, cw);
+                    y += 22f;
+                }
             }
             y = kidsList(p, rx, y + 8f, cw);
             int away = Portfolio.get().exKids().size();
@@ -459,7 +466,10 @@ public class RealEstatePage implements ManagePage {
             }
         }
 
-        /** Officers and administrators of the opposite sex, with their relationship and a Move in button. */
+        /**
+         * Officers and administrators of the opposite sex (and Sophia Anderson with AoTD), with what they need to say
+         * yes and a Propose button (Andrzej, 2026-11-16).
+         */
         private float partnerList(Property p, float rx, float y, float cw) {
             List<com.fs.starfarer.api.characters.PersonAPI> people = landlordsector.Family.candidates();
             if (people.isEmpty()) {
@@ -471,16 +481,14 @@ public class RealEstatePage implements ManagePage {
                 box(rx, y, cw, 56f);
                 portrait(who.getPortraitSprite(), rx + 4f, y + 4f, 48f);
                 text(who.getNameString(), Misc.getHighlightColor(), rx + 60f, y + 6f, cw - 300f);
-                text(landlordsector.Family.role(who), Misc.getGrayColor(), rx + 60f, y + 28f, 220f);
-                int bond = landlordsector.Family.bond(who);
-                text("Relationship " + (bond > 0 ? "+" : "") + bond, traitColor(bond >= landlordsector.Family.MIN_BOND
-                        ? Boolean.TRUE : null), rx + 290f, y + 28f, 200f);
-                String no = landlordsector.Family.cannotMoveIn(p, who);
+                String no = landlordsector.Family.cannotPropose(p, who);
+                text(landlordsector.Family.role(who), traitColor(no == null ? Boolean.TRUE : null), rx + 60f, y + 28f,
+                        cw - 300f);
                 float bx = rx + cw - 8f - 160f;
-                button("partner:" + p.id + ":" + who.getId(), "Move in", bx, y + 14f, 160f, 28f, no == null);
-                if (no != null) tip(bx, y + 14f, 160f, 28f, "Move in", no);
-                else tip(bx, y + 14f, 160f, 28f, "Move in", who.getNameString() + " leaves your service and lives"
-                        + " here with you.");
+                button("partner:" + p.id + ":" + who.getId(), "Propose", bx, y + 14f, 160f, 28f, no == null);
+                if (no != null) tip(bx, y + 14f, 160f, 28f, "Propose", no);
+                else tip(bx, y + 14f, 160f, 28f, "Propose", landlordsector.Family.isSophia(who)
+                        ? "Moves in with you and keeps her research post." : "Retires and moves in with you.");
                 y += 60f;
             }
             return y;
@@ -1156,7 +1164,7 @@ public class RealEstatePage implements ManagePage {
                     for (com.fs.starfarer.api.characters.PersonAPI c : landlordsector.Family.candidates()) {
                         if (parts.length > 2 && c.getId().equals(parts[2])) who = c;
                     }
-                    if (who != null) result(landlordsector.Family.moveInWith(pr, who, new java.util.Random()));
+                    if (who != null) result(landlordsector.Family.propose(pr, who, new java.util.Random()));
                     choosingPartner = false;
                     break;
                 }
@@ -1171,7 +1179,7 @@ public class RealEstatePage implements ManagePage {
                     || text.startsWith("Screened") || text.contains(" moved into ") || text.startsWith("Turned")
                     || text.startsWith("Evicted") || text.startsWith("Placed") || text.startsWith("Took back")
                     || text.startsWith("Built") || text.startsWith("Removed") || text.startsWith("Hired")
-                    || text.startsWith("Cancelled") || text.startsWith("You moved") || text.contains(" moved in with ");
+                    || text.startsWith("Cancelled") || text.startsWith("You moved") || text.contains(" is now your ");
             if (ok) good(text);
             else bad(text);
         }

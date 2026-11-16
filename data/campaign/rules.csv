@@ -23,7 +23,6 @@ LLS_Family greet
 FireAll PopulateOptions",,
 lls_partner_options,PopulateOptions,"$isPerson
 $lls_partner",LLS_Family options,,
-lls_fam_propose_sel,DialogOptionSelected,$option == lls_fam_propose,LLS_Family propose,,
 lls_fam_try_sel,DialogOptionSelected,$option == lls_fam_try,LLS_Family try,,
 lls_fam_gift_sel,DialogOptionSelected,$option == lls_fam_gift,LLS_Family gift,,
 lls_fam_breakup_sel,DialogOptionSelected,$option == lls_fam_breakup,LLS_Family breakup,,

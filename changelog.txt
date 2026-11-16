@@ -1,3 +1,11 @@
+Version 1.2.2 (2026-11-16)
+- Proposing replaces moving in: Propose to... on your home's Family tab lists your officers and administrators of the opposite sex. Whoever says yes retires and is your wife or husband at once
+- Officers say yes only at their highest level. Administrators say yes after governing one of your colonies for 12 months, counted from this version. Relationships no longer count
+- 2% of proposals get "Actually... I'm cheating on you." That officer or administrator stays in your service and never says yes
+- With AoTD Vaults of Knowledge and the Kaysaar's Demise setting on, Sophia Anderson can marry you once she is on your research council. She always says yes and keeps her research post
+- Each child at home raises the happiness and comfort needed before you can try for another: 50 happiness and 40 comfort for the second child, up to 95 and 90
+- No more girlfriend or boyfriend stage: partners from 1.2.0 and 1.2.1 are married when you load the game
+
 Version 1.2.1 (2026-11-16)
 - The commute tooltip reads "Commute: +32 from proximity to city center"
 - Heated floors, Air conditioning and the other heating or cooling upgrades are hidden only where no tenant could want them: warming on very hot worlds, cooling on very cold ones. Lead lining is still hidden where there is no radiation

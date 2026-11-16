@@ -125,14 +125,18 @@ Requires LunaLib and OddiszCommons.
 ## Family
 
 - Declare one of your homes your own from its Tenants tab. You live there: no rent and no adverts.
-- Move in with one of your officers or administrators of the opposite sex once your relationship with them
-  is +70. They leave your service and live with you. Officers start at 10 per level and administrators at
-  30; everyone gains 10 a month, and officers 2 more for every battle you win.
-- Your partner lives like any tenant, with their own traits, happiness, health and events, and pays no rent.
+- Propose to one of your officers or administrators of the opposite sex from your home's Family tab. Officers
+  say yes at their highest level, administrators after governing one of your colonies for 12 months. They
+  retire and live with you as your wife or husband. 2% are cheating on you and never say yes.
+- With AoTD Vaults of Knowledge and Kaysaar's Demise on, Sophia Anderson can marry you once she is on your
+  research council. She always says yes, keeps her research post and never dies in a tenant event.
+- Your spouse lives like any tenant, with their own traits, happiness, health and events, and pays no rent.
   After 30 days without a visit (dock at that market) they lose half a point of happiness a day, up to 50.
-  An unhappy partner leaves you.
-- Talk to your partner in that market's comm directory: propose, try for a child (a 1 in 4 chance, once a
-  day), give a gift or break up. Gifts are sold and the money goes into upgrades for the house, then repairs.
+  An unhappy spouse divorces you.
+- Talk to your spouse in that market's comm directory: try for a child (a 1 in 4 chance, once a day), give a
+  gift or ask for a divorce. Gifts are sold and the money goes into upgrades for the house, then repairs.
+- Each child at home raises what the next one needs: 50 happiness and 40 comfort for the second child, 10 more
+  of each for every child after that, up to 95 and 90.
 - Married: no tariffs on that market, happier kids, and good events half again as likely while you visit.
 - Divorce: the house is sold and you get half. Your ex takes the kids. You pay alimony for each child until
   they grow up.
@@ -157,6 +161,7 @@ chosen one large on the right with its stat sheet, rent setting, Repair and Sell
 - Most properties you can own (default 5, 0 for no limit).
 - Cycles for kids to grow up (default 5).
 - Alimony per child each month (default 5,000).
+- Kaysaar's Demise: with AoTD Vaults of Knowledge, Sophia Anderson can marry you (default off).
 
 ## Compatibility
 

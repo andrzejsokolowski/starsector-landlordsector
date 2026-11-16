@@ -213,6 +213,8 @@ public class TenantDaily implements EveryFrameScript {
     private static boolean allowed(Property p, TenantEvents.Def d) {
         // 1.2.0: no rent, tips or new partners for the one who lives with you.
         if (p.tenant != null && p.tenant.isPartner() && Family.PARTNER_SKIP_EVENTS.contains(d.id)) return false;
+        // 1.2.2: Sophia Anderson still runs AoTD research, so tenant events never kill her.
+        if (d.dies && p.tenant != null && Family.isSophia(p.tenant.person)) return false;
         if (!d.requires.isEmpty()) {
             boolean ok = false;
             for (String tr : d.requires) if (p.tenant.has(tr)) ok = true;

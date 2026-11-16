@@ -58,7 +58,10 @@ public final class Settings {
         }
     }
 
-    /** "Kaysaar's Demise" (Andrzej, 0.3.8): off by default and does nothing yet. */
+    /**
+     * "Kaysaar's Demise" (Andrzej, 0.3.8), off by default. 1.2.2 (Andrzej): with AoTD, Sophia Anderson can marry you
+     * once she is on your research council, and she always says yes.
+     */
     public static boolean kaysaarsDemise() {
         try {
             Boolean b = LunaSettings.getBoolean(MOD_ID, "lls_kaysaarsDemise");

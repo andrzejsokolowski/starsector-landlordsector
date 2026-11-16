@@ -58,6 +58,7 @@ public class LandlordsectorModPlugin extends BaseModPlugin {
         upgradeTo060(p);
         upgradeTo080(p);
         upgradeTo101(p);
+        Family.marryEveryPartner();
     }
 
     /**

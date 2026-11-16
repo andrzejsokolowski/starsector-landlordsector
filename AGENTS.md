@@ -150,12 +150,18 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
 - 1.2.0 family (LLS-5, Andrzej's design of 2026-11-15, numbers in `Family`): `Property.playerHome` (no rent:
   `isRented` is false, rent setting counts as Normal, no adverts), the partner is the home's `Tenant` with
   `partner` 1 (partner) or 2 (spouse) and `person` (the former officer or administrator, placed in the market's
-  comm directory with `$lls_partner` / `$lls_homeId` and a post from default_ranks.json). `PropertyStats` gives
+  comm directory with `$lls_partner` / `$lls_homeId` and a post from default_ranks.json). 1.2.2 (Andrzej,
+  2026-11-16): no relationship numbers and no girlfriend stage. `Family.propose(home, person, random)` from the
+  Family tab marries at once: officers at `maxLevel` (the game's officerLevelUp plugin), administrators after 365
+  days governing a player colony (`countGovernance`, person memory `$lls_governedDays`), Sophia Anderson
+  (`aotd_sophia`, only with Kaysaar's Demise and AoTD `aotd_vok`, read through `AotdScience`, never killed by
+  events, keeps her research post) always; 2% get "Actually... I'm cheating on you." (`$lls_cheated`, for good).
+  `marryEveryPartner` on load. `childNeeds` / `cannotTry`: each kid at home raises the happiness and comfort for
+  the next. `PropertyStats` gives
   partners "Last visited" (`Family.visitPenalty`) instead of the rent and wealth penalties; `TenantDaily` skips
   `Family.PARTNER_SKIP_EVENTS` for them and sends leaving and dying through `Family.leaves` (a spouse leaving =
   divorce: the home is sold, the player gets half, every kid goes, young ones go to `Portfolio.exKids` for
-  alimony). Officers and admins have no relationship in the base game, so `Family.seedBonds` / `raiseBonds` grow
-  it (monthly in `MonthlyTick`, battles in `FamilyListener`, which also counts docking as a visit). Kids:
+  alimony). `FamilyListener` counts docking as a visit. Kids:
   `Child` in `Property.children` (person in the comm directory, `$lls_child` / `$lls_childId`), born in
   `Family.daily`, grown after `Settings.growUpCycles`, then `Family.startLife` by `path` (officer, admin, worker
   pay and growth kids stay in `Portfolio.adultKids`). Dialogs: rules.csv `lls_partner_*`, `lls_child_*`,

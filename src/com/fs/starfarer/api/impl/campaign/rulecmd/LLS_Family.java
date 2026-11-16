@@ -29,7 +29,7 @@ import landlordsector.Tenant;
 
 /**
  * 1.2.0: talking to your partner or one of your kids over the comm link. One command, the first parameter says what
- * to do: greet, options, propose, try, gift, breakup, breakupYes, breakupNo, greetChild, childOptions, rename, path.
+ * to do: greet, options, try, gift, breakup, breakupYes, breakupNo, greetChild, childOptions, rename, path.
  */
 public class LLS_Family extends BaseCommandPlugin {
 
@@ -57,9 +57,7 @@ public class LLS_Family extends BaseCommandPlugin {
                 if (t != null) say(text, partnerGreeting(p, t));
                 return true;
             case "options":
-                return t != null && partnerOptions(opts, t);
-            case "propose":
-                return t != null && propose(dialog, memoryMap, p, t);
+                return t != null && partnerOptions(opts, p, t);
             case "try":
                 return t != null && tryForChild(dialog, memoryMap, p, t);
             case "gift":
@@ -113,17 +111,19 @@ public class LLS_Family extends BaseCommandPlugin {
             return pick("Look who finally remembered where they live.", "Oh, you're alive. Good to know.");
         }
         if (h < 25f) return pick("Oh. It's you.", "What do you want?");
-        if (h >= 60f && t.isSpouse()) return pick("There you are. I missed you.", "Hey, love. Staying for dinner?");
-        if (h >= 60f) return pick("Hey, you. I was hoping you'd call.", "Good timing. I just made coffee.");
+        if (h >= 60f) return pick("There you are. I missed you.", "Hey, love. Staying for dinner?");
         return pick("Hi. How was the trip?", "Hey. You look tired.");
     }
 
-    private static boolean partnerOptions(OptionPanelAPI opts, Tenant t) {
-        if (!t.isSpouse()) opts.addOption("Will you marry me?", "lls_fam_propose");
+    private static boolean partnerOptions(OptionPanelAPI opts, Property p, Tenant t) {
         opts.addOption("Let's try for a child.", "lls_fam_try");
+        String needs = Family.cannotTry(p);
         if (t.conceivedAt > 0L && t.toldPregnant) {
             opts.setEnabled("lls_fam_try", false);
             opts.setTooltip("lls_fam_try", "A child is already on the way.");
+        } else if (needs != null) {
+            opts.setEnabled("lls_fam_try", false);
+            opts.setTooltip("lls_fam_try", needs);
         } else if (t.lastTry > 0L && Family.daysSince(t.lastTry) < 1f) {
             opts.setEnabled("lls_fam_try", false);
             opts.setTooltip("lls_fam_try", "Not again today.");
@@ -137,29 +137,11 @@ public class LLS_Family extends BaseCommandPlugin {
         return true;
     }
 
-    private static boolean propose(InteractionDialogAPI dialog, Map<String, MemoryAPI> memoryMap, Property p,
-            Tenant t) {
-        TextPanelAPI text = dialog.getTextPanel();
-        String name = t.name;
-        if (Family.propose(p, RANDOM)) {
-            say(text, pick("Yes! Yes, of course!", "I thought you'd never ask. Yes!"));
-            text.addPara(name + " is now your " + Family.noun(t) + ".", Misc.getPositiveHighlightColor());
-            HomeownerScript.refresh();
-            FireAll.fire(null, dialog, memoryMap, "PopulateOptions");
-        } else {
-            say(text, "Actually... I'm cheating on you.");
-            text.addPara(capital(Family.he(t)) + " packs " + Family.his(t) + " things and leaves.",
-                    Misc.getNegativeHighlightColor());
-            end(dialog.getOptionPanel());
-        }
-        return true;
-    }
-
     private static boolean tryForChild(InteractionDialogAPI dialog, Map<String, MemoryAPI> memoryMap, Property p,
             Tenant t) {
         TextPanelAPI text = dialog.getTextPanel();
         int r = Family.tryForChild(p, RANDOM);
-        if (r == 0) say(text, "Not tonight. I'm exhausted.");
+        if (r == 0 || r == 3) say(text, "Not tonight. I'm exhausted.");
         else if (r == 1) say(text, "We already have one on the way, remember?");
         else text.addPara("You spend the night together.");
         FireAll.fire(null, dialog, memoryMap, "PopulateOptions");

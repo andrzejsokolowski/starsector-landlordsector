@@ -68,6 +68,8 @@ public final class RuntimeCheck {
         final Map<String, Float> openStock = new HashMap<>();
         /** 0.5.0: buildings, id to tags. */
         final Map<String, java.util.Set<String>> industries = new java.util.LinkedHashMap<>();
+        /** 1.2.2: the colony's administrator. */
+        com.fs.starfarer.api.characters.PersonAPI admin;
     }
 
     /** 0.4.0: special items in the player's cargo, by id. */
@@ -802,7 +804,7 @@ public final class RuntimeCheck {
         h.put("getGender", a -> gender);
         h.put("getName", a -> full);
         h.put("getNameString", a -> name);
-        h.put("getId", a -> "person_" + name.replace(' ', '_'));
+        h.put("getId", a -> "Sophia Anderson".equals(name) ? "aotd_sophia" : "person_" + name.replace(' ', '_'));
         h.put("setMarket", a -> market[0] = a[0]);
         h.put("getMarket", a -> market[0]);
         return mock(com.fs.starfarer.api.characters.PersonAPI.class, h);
@@ -852,22 +854,46 @@ public final class RuntimeCheck {
         officers.add(shy);
         List<com.fs.starfarer.api.characters.PersonAPI> cands = Family.candidates();
         expect(cands.contains(she) && cands.contains(shy) && !cands.contains(he),
-                "only officers of the opposite sex can move in with you");
-        expect(Family.bond(she) == 70 && Family.bond(shy) == 20, "officers start at 10 per level: "
-                + Family.bond(she) + ", " + Family.bond(shy));
-        expect(Family.cannotMoveIn(home, shy) != null, "+20 is not enough to move in together");
-        String moved = Family.moveInWith(home, she, new Random(3));
+                "only officers of the opposite sex are on the list");
+        expect(cands.indexOf(she) < cands.indexOf(shy), "those who would say yes come first");
+        // 1.2.2 (Andrzej, 2026-11-16): officers say yes at their highest level only (5 without the game's settings).
+        expect(Family.maxLevel(she) == 5 && Family.wouldRefuse(she) == null && Family.wouldRefuse(shy) != null,
+                "a level 7 officer says yes, a level 2 officer says no: " + Family.wouldRefuse(shy));
+        expect("Officer, level 2 of 5".equals(Family.role(shy)), "the list shows the level: " + Family.role(shy));
+        expect(Family.cannotPropose(home, shy) != null, "you can't propose to a level 2 officer");
+
+        // Administrators say yes after governing one of your colonies for a cycle.
+        com.fs.starfarer.api.characters.PersonAPI gov = familyPerson("Lena Orr",
+                com.fs.starfarer.api.characters.FullName.Gender.FEMALE, 1);
+        admins.add(new com.fs.starfarer.api.characters.AdminData(gov));
+        FakeMarket govF = new FakeMarket();
+        govF.id = "fake_governed"; govF.name = "Orrstead"; govF.factionId = "player"; govF.size = 4;
+        govF.stability = 5f; govF.hazard = 1.5f; govF.own = true; govF.admin = gov;
+        market(govF);
+        expect(Family.wouldRefuse(gov) != null && Family.role(gov).equals("Administrator, governed 0 of 12 months"),
+                "a new administrator says no: " + Family.role(gov));
+        for (int i = 0; i < 364; i++) Family.countGovernance();
+        expect(Family.wouldRefuse(gov) != null, "364 days of governing are not enough");
+        Family.countGovernance();
+        expect(Family.wouldRefuse(gov) == null && Family.role(gov).equals("Administrator, governed 12 of 12 months"),
+                "an administrator says yes after 365 days of governing: " + Family.role(gov));
+
+        String said = Family.propose(home, she, new Random(3) {
+            @Override
+            public float nextFloat() {
+                return 0.5f;
+            }
+        });
         Tenant wife = home.partner();
-        expect(moved.contains("moved in with you") && wife != null && wife.person == she,
-                "an officer at +70 moves in with you: " + moved);
-        expect(!officers.contains(she) && ff.directory.contains(she), "your partner leaves the fleet for the comm directory");
+        expect(said.contains(" is now your ") && wife != null && wife.person == she && wife.isSpouse(),
+                "a level 7 officer says yes and is your wife at once: " + said);
+        expect(!officers.contains(she) && ff.directory.contains(she), "your wife leaves the fleet for the comm directory");
         if (wife == null) return;
         for (String t : wife.traits()) expect(!Family.PARTNER_SKIP_TRAITS.contains(t), "no " + t + " partner");
-        expect(!home.isRented() && home.expectedRent() == 0f, "your partner pays no rent");
+        expect(!home.isRented() && home.expectedRent() == 0f, "your wife pays no rent");
         MonthlyTick tick = new MonthlyTick();
         month(tick);
         expect(home.lastRent == 0f, "no rent from your own home at the month's end");
-        expect(Family.bond(shy) == 30, "officers get 10 closer each month: " + Family.bond(shy));
 
         Family.visit(fm);
         float fresh = home.stats().happiness;
@@ -880,7 +906,6 @@ public final class RuntimeCheck {
         Family.visit(fm);
         expect(Family.daysSince(wife.lastVisit) == 0f && wife.lastGap >= 89f, "docking there is a visit");
 
-        expect(Family.propose(home, half) && wife.isSpouse(), "a proposal is accepted");
         expect(Family.spouseMarkets().contains("fake_family"), "no tariff where your wife lives");
         for (int i = 0; i < 300; i++) {
             landlordsector.data.TenantEvents.Def e = TenantDaily.pickTenantEvent(home, new Random(i));
@@ -903,6 +928,15 @@ public final class RuntimeCheck {
         for (String t : kid.traits()) expect(!Family.CHILD_SKIP_TRAITS.contains(t), "no " + t + " child");
         Family.daily(half);
         expect(kid.happyDays >= 1 && wife.kidsAtHome == 1 && wife.hasKids(), "a child's days are counted");
+        // 1.2.2 (Andrzej: "the more you have, the higher the happiness and comfort requirements").
+        float[] second = Family.childNeeds(1), seventh = Family.childNeeds(6);
+        expect(Family.childNeeds(0) == null && second[0] == 50f && second[1] == 40f && seventh[0] == 95f
+                && seventh[1] == 90f, "another child needs more happiness and comfort with each kid");
+        PropertyStats now2 = home.stats();
+        boolean enough = now2.happiness >= 50f && now2.comfort >= 40f;
+        expect((Family.cannotTry(home) == null) == enough, "the second child's needs follow the home: "
+                + Family.cannotTry(home));
+        if (!enough) expect(Family.tryForChild(home, yes) == 3, "no try for a second child without the needs");
         expect(Actions.cannotSell(home) != null, "you can't sell the home your family lives in");
 
         float sale = home.saleValue(true);
@@ -928,17 +962,25 @@ public final class RuntimeCheck {
             return;
         }
         Family.declareHome(home2);
-        Family.raiseBonds(60f, false);
-        expect(Family.bond(shy) >= 70, "closer after many months: " + Family.bond(shy));
-        Family.moveInWith(home2, shy, new Random(4));
         Random cheat = new Random() {
             @Override
             public float nextFloat() {
                 return 0.01f;
             }
         };
-        expect(!Family.propose(home2, cheat) && home2.partner() == null && Portfolio.get().properties().contains(home2)
-                && home2.playerHome, "2% are cheating and leave you, keeping no part of the house");
+        String no = Family.propose(home2, gov, cheat);
+        expect(no.contains("cheating on you") && home2.partner() == null && Family.isAdmin(gov)
+                && "Seeing someone else.".equals(Family.wouldRefuse(gov)),
+                "2% are cheating on you, stay in your service and say no for good: " + no);
+        com.fs.starfarer.api.characters.PersonAPI sophia = familyPerson("Sophia Anderson",
+                com.fs.starfarer.api.characters.FullName.Gender.FEMALE, 1);
+        String yes2 = Family.propose(home2, sophia, cheat);
+        expect(Family.isSophia(sophia) && yes2.contains(" is now your ") && home2.partner() != null
+                && home2.partner().person == sophia, "Sophia always says yes: " + yes2);
+        for (int i = 0; i < 300; i++) {
+            landlordsector.data.TenantEvents.Def e = TenantDaily.pickTenantEvent(home2, new Random(i));
+            expect(e == null || !e.dies, "tenant events never kill Sophia: " + (e == null ? "" : e.id));
+        }
 
         Child miner = new Child();
         miner.id = "kid_test";
@@ -988,6 +1030,7 @@ public final class RuntimeCheck {
         h.put("hasIndustry", a -> f.industries.containsKey(a[0]));
         h.put("getFaction", a -> fac);
         h.put("getFactionId", a -> f.factionId);
+        h.put("getAdmin", a -> f.admin);
         h.put("isInEconomy", a -> true);
         h.put("isPlayerOwned", a -> f.own);
         h.put("getTariff", a -> f.tariff);

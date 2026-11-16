@@ -45,16 +45,15 @@ public final class Family {
     public static final String HOME_KEY = "$lls_homeId";
     public static final String CHILD_FLAG = "$lls_child";
     public static final String CHILD_KEY = "$lls_childId";
-    /** Person memory: set once an officer's or administrator's relationship got its starting value. */
-    public static final String BOND_FLAG = "$lls_bondSeen";
-
-    /** Relationship needed to move in together (Andrzej: "+70 rep or more"). */
-    public static final int MIN_BOND = 70;
-    /** Claude's numbers (officers and admins have no relationship in the base game, so the mod grows it). */
-    public static final float BOND_PER_LEVEL = 10f;
-    public static final float ADMIN_BOND_START = 30f;
-    public static final float BOND_PER_MONTH = 10f;
-    public static final float BOND_PER_BATTLE = 2f;
+    /** Person memory: days an administrator governed one of your colonies, counted from 1.2.2. */
+    public static final String GOVERNED_KEY = "$lls_governedDays";
+    /** Person memory: turned your proposal down (the 2%), for good. */
+    public static final String CHEATED_KEY = "$lls_cheated";
+    /** Andrzej, 2026-11-16: administrators say yes after governing for one cycle. */
+    public static final float GOVERN_DAYS = 365f;
+    /** AoTD Vaults of Knowledge: Sophia Anderson's important-person id, and the mod's id. */
+    public static final String SOPHIA_ID = "aotd_sophia";
+    public static final String VOK_MOD = "aotd_vok";
 
     /** "Last visited: X days ago": no cost for this long, then half a point a day, at most 50. */
     public static final float VISIT_GRACE_DAYS = 30f;
@@ -95,15 +94,19 @@ public final class Family {
     private Family() {
     }
 
-    // ---- Who you can move in with ----
+    // ---- Who you can marry (Andrzej, 2026-11-16) ----
 
-    /** Officers and administrators of the opposite sex, best relationship first. */
+    /**
+     * Officers and administrators of the opposite sex, and Sophia Anderson (AoTD) with Kaysaar's Demise on. Those who
+     * would say yes come first.
+     */
     public static List<PersonAPI> candidates() {
-        seedBonds();
         List<PersonAPI> out = new ArrayList<>();
         PersonAPI me = Global.getSector().getPlayerPerson();
+        PersonAPI sophia = sophia();
+        if (sophia != null && fits(me, sophia) && partnerHome(sophia) == null) out.add(sophia);
         for (PersonAPI p : service()) if (fits(me, p) && !out.contains(p)) out.add(p);
-        out.sort((a, b) -> Integer.compare(bond(b), bond(a)));
+        out.sort((a, b) -> Boolean.compare(wouldRefuse(a) != null, wouldRefuse(b) != null));
         return out;
     }
 
@@ -144,40 +147,6 @@ public final class Family {
         return false;
     }
 
-    /** The relationship as the game shows it, -100 to 100. */
-    public static int bond(PersonAPI p) {
-        if (p == null || p.getRelToPlayer() == null) return 0;
-        return Math.round(p.getRelToPlayer().getRel() * 100f);
-    }
-
-    private static void setBond(PersonAPI p, float points) {
-        if (p == null || p.getRelToPlayer() == null) return;
-        p.getRelToPlayer().setRel(Pricing.clamp(points, -100f, 100f) / 100f);
-    }
-
-    /**
-     * Officers and administrators start where their service would have taken them: 10 per officer level, 30 for an
-     * administrator. Each person once, the first time the mod sees them.
-     */
-    public static void seedBonds() {
-        for (PersonAPI p : service()) {
-            if (p.getMemoryWithoutUpdate() == null || p.getMemoryWithoutUpdate().getBoolean(BOND_FLAG)) continue;
-            float start = isAdmin(p) && !inFleet(p) ? ADMIN_BOND_START
-                    : BOND_PER_LEVEL * Math.max(1, p.getStats() != null ? p.getStats().getLevel() : 1);
-            if (bond(p) < start) setBond(p, start);
-            p.getMemoryWithoutUpdate().set(BOND_FLAG, true);
-        }
-    }
-
-    /** Everyone in your service gets closer to you: each month, and officers after every battle you win. */
-    public static void raiseBonds(float points, boolean officersOnly) {
-        seedBonds();
-        for (PersonAPI p : service()) {
-            if (officersOnly && !inFleet(p)) continue;
-            setBond(p, Math.min(100f, bond(p) + points));
-        }
-    }
-
     private static boolean inFleet(PersonAPI p) {
         CampaignFleetAPI fleet = Global.getSector().getPlayerFleet();
         if (fleet == null || fleet.getFleetData() == null) return false;
@@ -185,10 +154,96 @@ public final class Family {
         return false;
     }
 
-    /** "Officer, level 5" or "Administrator". */
+    public static boolean isSophia(PersonAPI p) {
+        return p != null && SOPHIA_ID.equals(p.getId());
+    }
+
+    /**
+     * Sophia Anderson when Kaysaar's Demise is on and she sits on your AoTD research council, else null. AoTD's own
+     * classes are only touched through {@link AotdScience}, and only while Vaults of Knowledge is on.
+     */
+    public static PersonAPI sophia() {
+        if (!Settings.kaysaarsDemise()) return null;
+        try {
+            if (!Global.getSettings().getModManager().isModEnabled(VOK_MOD)) return null;
+            PersonAPI s = Global.getSector().getImportantPeople().getPerson(SOPHIA_ID);
+            return s != null && AotdScience.onCouncil(s) ? s : null;
+        } catch (Throwable t) {
+            return null;
+        }
+    }
+
+    public static int level(PersonAPI p) {
+        return p != null && p.getStats() != null ? p.getStats().getLevel() : 1;
+    }
+
+    /** The highest level this officer can reach in your fleet (Officer Training and cryopod officers count). */
+    public static int maxLevel(PersonAPI p) {
+        try {
+            Object plugin = Global.getSettings().getPlugin("officerLevelUp");
+            if (plugin instanceof com.fs.starfarer.api.plugins.OfficerLevelupPlugin) {
+                int m = ((com.fs.starfarer.api.plugins.OfficerLevelupPlugin) plugin).getMaxLevel(p);
+                if (m > 0) return m;
+            }
+        } catch (Throwable ignored) {
+        }
+        try {
+            float f = Global.getSettings().getFloat("officerMaxLevel");
+            if (f > 0f) return (int) f;
+        } catch (Throwable ignored) {
+        }
+        return 5;
+    }
+
+    public static float governedDays(PersonAPI p) {
+        if (p == null || p.getMemoryWithoutUpdate() == null) return 0f;
+        Object v = p.getMemoryWithoutUpdate().get(GOVERNED_KEY);
+        return v instanceof Number ? ((Number) v).floatValue() : 0f;
+    }
+
+    /** A day of governance for every administrator running one of your colonies. Public for the headless check. */
+    public static void countGovernance() {
+        List<PersonAPI> seen = new ArrayList<>();
+        for (MarketAPI m : Global.getSector().getEconomy().getMarketsCopy()) {
+            if (m == null || !m.isPlayerOwned()) continue;
+            PersonAPI a = m.getAdmin();
+            if (a == null || a.isPlayer() || a.isAICore() || seen.contains(a) || !isAdmin(a)) continue;
+            seen.add(a);
+            if (a.getMemoryWithoutUpdate() != null) a.getMemoryWithoutUpdate().set(GOVERNED_KEY, governedDays(a) + 1f);
+        }
+    }
+
+    /**
+     * Why this person would turn you down, or null when they would say yes (Andrzej, 2026-11-16: officers only at
+     * their highest level, administrators after a cycle of governing, Sophia always).
+     */
+    public static String wouldRefuse(PersonAPI who) {
+        if (isSophia(who)) return null;
+        if (who.getMemoryWithoutUpdate() != null && who.getMemoryWithoutUpdate().getBoolean(CHEATED_KEY)) {
+            return "Seeing someone else.";
+        }
+        if (inFleet(who)) {
+            int max = maxLevel(who);
+            return level(who) >= max ? null : "Only says yes at level " + max + ".";
+        }
+        return governedDays(who) >= GOVERN_DAYS ? null : "Only says yes after governing a colony for 12 months.";
+    }
+
+    /** "Officer, level 5 of 6", "Administrator, governed 7 of 12 months", "Scientist on your research council". */
     public static String role(PersonAPI p) {
-        if (inFleet(p)) return "Officer, level " + (p.getStats() != null ? p.getStats().getLevel() : 1);
-        return "Administrator";
+        if (isSophia(p)) return "Scientist on your research council";
+        if (inFleet(p)) return "Officer, level " + level(p) + " of " + maxLevel(p);
+        int months = Math.min(12, (int) (governedDays(p) / 30f));
+        return "Administrator, governed " + months + " of 12 months";
+    }
+
+    /** The home where this person lives with you as your partner, or null. */
+    public static Property partnerHome(PersonAPI who) {
+        if (who == null) return null;
+        for (Property p : Portfolio.get().properties()) {
+            if (p.partner() != null && p.partner().person == who) return p;
+        }
+        return null;
     }
 
     // ---- The player's home ----
@@ -229,22 +284,31 @@ public final class Family {
         return "You moved out of " + p.displayName() + ".";
     }
 
-    /** Null when this person would move in with you here, or why not. */
-    public static String cannotMoveIn(Property p, PersonAPI who) {
+    /** Null when you can propose to this person here, or why not. */
+    public static String cannotPropose(Property p, PersonAPI who) {
         if (!p.playerHome) return "You don't live here.";
         if (p.tenant != null) return "Someone already lives here with you.";
         if (p.condemned) return "Repair it first.";
         if (p.market() == null) return "The world is gone.";
-        if (bond(who) < MIN_BOND) return "Needs a relationship of +" + MIN_BOND;
-        return null;
+        if (partnerHome(who) != null) return "Already married to you.";
+        return wouldRefuse(who);
     }
 
-    /** The officer or administrator leaves your service and moves in with you as your partner. */
-    public static String moveInWith(Property p, PersonAPI who, Random random) {
-        String no = cannotMoveIn(p, who);
+    /**
+     * Andrzej, 2026-11-16: "Propose to officers to retire them and become your spouse." The one who says yes leaves
+     * your service (Sophia keeps her research post) and lives here as your wife or husband. 2% are cheating on you
+     * and say no for good; Sophia always says yes.
+     */
+    public static String propose(Property p, PersonAPI who, Random random) {
+        String no = cannotPropose(p, who);
         if (no != null) return no;
+        boolean sophia = isSophia(who);
+        if (!sophia && random.nextFloat() < CHEAT_CHANCE) {
+            if (who.getMemoryWithoutUpdate() != null) who.getMemoryWithoutUpdate().set(CHEATED_KEY, true);
+            return who.getNameString() + ": \"Actually... I'm cheating on you.\"";
+        }
         MarketAPI m = p.market();
-        leaveService(who);
+        if (!sophia) leaveService(who);
         Tenant t = new Tenant();
         t.id = Portfolio.get().newId();
         t.name = who.getNameString();
@@ -254,7 +318,8 @@ public final class Family {
         t.screened = true;
         t.wealth = 3;
         t.traits = rollTraits(m, PARTNER_SKIP_TRAITS, random);
-        t.partner = 1;
+        t.partner = 2;
+        t.marriedAt = now();
         t.person = who;
         t.since = now();
         t.lastVisit = now();
@@ -265,9 +330,12 @@ public final class Family {
         placePerson(m, who, post(t));
         who.getMemoryWithoutUpdate().set(PARTNER_FLAG, true);
         who.getMemoryWithoutUpdate().set(HOME_KEY, p.id);
-        p.addLog(t.name + " moved in with you.", true, t.name + " moved in with you.");
+        String now = t.name + " is now your " + noun(t) + ".";
+        p.addLog(now, true, now);
+        HomeownerScript.refresh();
         Global.getSoundPlayer().playUISound("ui_upgrade_industry", 1f, 1f);
-        return t.name + " moved in with you at " + p.displayName() + ".";
+        String yes = random.nextBoolean() ? "Yes! Yes, of course!" : "I thought you'd never ask. Yes!";
+        return t.name + ": \"" + yes + "\" " + now;
     }
 
     /** Takes the person off their ship or colony and out of the officer and administrator lists. */
@@ -402,32 +470,49 @@ public final class Family {
         return null;
     }
 
-    /** True: yes. False: the 2% who turn you down, and leave. */
-    public static boolean propose(Property p, Random random) {
-        Tenant t = p.partner();
-        if (t == null || t.isSpouse()) return false;
-        if (random.nextFloat() < CHEAT_CHANCE) {
-            leaves(p, false, t.name + " turned down your proposal and left you. " + capital(he(t))
-                    + (he(t).equals("they") ? " were" : " was") + " seeing someone else.");
-            return false;
+    /**
+     * 1.2.2: there is no girlfriend or boyfriend stage any more (Andrzej: officers "become your spouse"). Partners who
+     * moved in under 1.2.0 or 1.2.1 are married on load. Public for the headless check.
+     */
+    public static void marryEveryPartner() {
+        for (Property p : Portfolio.get().properties()) {
+            Tenant t = p.partner();
+            if (t == null || t.isSpouse()) continue;
+            t.partner = 2;
+            t.marriedAt = now();
+            if (t.person != null) {
+                t.person.setRankId(post(t));
+                t.person.setPostId(post(t));
+            }
         }
-        t.partner = 2;
-        t.marriedAt = now();
-        t.mood = Pricing.clamp(t.mood + 20f, -30f, 30f);
-        if (t.person != null) {
-            t.person.setRankId(post(t));
-            t.person.setPostId(post(t));
-        }
-        Notify.event(p, t.name + " is now your " + noun(t) + ".", true, true);
-        return true;
     }
 
-    /** 0: tried today already, 1: a child is already on the way and you know it, 2: tried. */
+    /**
+     * Andrzej, 2026-11-16: "the more you have, the higher the happiness and comfort requirements". The partner's
+     * happiness and the home's comfort another child needs, {happiness, comfort}, or null for the first one.
+     */
+    public static float[] childNeeds(int kids) {
+        if (kids <= 0) return null;
+        return new float[] {Math.min(95f, 40f + 10f * kids), Math.min(95f, 30f + 10f * kids)};
+    }
+
+    /** Why you can't try for another child yet, or null. */
+    public static String cannotTry(Property p) {
+        float[] need = childNeeds(p.children().size());
+        if (need == null || p.partner() == null) return null;
+        PropertyStats st = p.stats();
+        if (st.happiness >= need[0] && st.comfort >= need[1]) return null;
+        return "Another child needs happiness " + Math.round(need[0]) + " and comfort " + Math.round(need[1])
+                + ". Now: " + Math.round(st.happiness) + " and " + Math.round(st.comfort) + ".";
+    }
+
+    /** 0: tried today already, 1: a child is already on the way and you know it, 2: tried, 3: not happy enough. */
     public static int tryForChild(Property p, Random random) {
         Tenant t = p.partner();
         if (t == null) return 0;
-        if (t.lastTry > 0L && daysSince(t.lastTry) < 1f) return 0;
         if (t.conceivedAt > 0L && t.toldPregnant) return 1;
+        if (cannotTry(p) != null) return 3;
+        if (t.lastTry > 0L && daysSince(t.lastTry) < 1f) return 0;
         t.lastTry = now();
         t.mood = Pricing.clamp(t.mood + 3f, -30f, 30f);
         if (t.conceivedAt <= 0L && random.nextFloat() < CHILD_CHANCE) {
@@ -776,7 +861,6 @@ public final class Family {
         to.setGender(g);
         if (c.portrait != null) to.setPortraitSprite(c.portrait);
         if (to.getRelToPlayer() != null) to.getRelToPlayer().setRel(1f);
-        to.getMemoryWithoutUpdate().set(BOND_FLAG, true);
     }
 
     private static void news(String text) {
@@ -787,7 +871,7 @@ public final class Family {
 
     /** Pregnancies, births, kids' happiness and growing up. Public for the headless check. */
     public static void daily(Random random) {
-        seedBonds();
+        countGovernance();
         for (Property p : new ArrayList<>(Portfolio.get().properties())) {
             if (!p.playerHome) continue;
             Tenant t = p.partner();
@@ -854,7 +938,6 @@ public final class Family {
         }
         portfolio.lastKidPay = pay;
         portfolio.lastAlimony = alimony;
-        raiseBonds(BOND_PER_MONTH, false);
     }
 
     /** Markets where your wife or husband lives with you: no tariff there. */
