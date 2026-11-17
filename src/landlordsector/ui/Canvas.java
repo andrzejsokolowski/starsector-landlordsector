@@ -631,6 +631,8 @@ public abstract class Canvas implements CustomUIPanelPlugin {
                 return;
             }
             Global.getSoundPlayer().playUISound("ui_button_pressed", 1f, 1f);
+            // 1.9.1: a click anywhere closes an open text box (it kept taking every key with nothing on screen).
+            stopTyping();
             onAction(b.action);
             return;
         }
