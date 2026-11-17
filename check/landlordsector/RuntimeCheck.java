@@ -1203,11 +1203,12 @@ public final class RuntimeCheck {
         expect(kid.classes, "extra classes taken");
 
         // Grown: a miner's pay follows the childhood, what they learned and the bad marks.
-        int learned = Kids.training(kid), bad = Kids.badMarks(kid), q = kid.quality();
-        float expected = Math.round(Family.WORKER_PAY * (1f + q * 0.5f) * (1f + learned * 0.25f)
-                * (float) Math.pow(0.8, bad));
+        expect(kid.healthDays > 0 && kid.health > 0f, "1.9.0: a kid's health is counted every day: " + kid.health);
         now += stage;
         Family.daily(half);
+        int learned = Kids.training(kid), bad = Kids.badMarks(kid), q = kid.quality(), good = Kids.goodTraits(kid);
+        float expected = Math.round(Family.WORKER_PAY * (1f + q * 0.5f) * (1f + learned * 0.25f)
+                * (float) Math.pow(0.8, bad) * (1f + Kids.GOOD_TRAIT_BONUS * good));
         expect(!home.children().contains(kid) && Portfolio.get().adultKids().contains(kid) && kid.pay == expected,
                 "a grown miner's pay: " + kid.pay + " (learned " + learned + ", bad " + bad + ")");
 
@@ -1222,6 +1223,26 @@ public final class RuntimeCheck {
                 && off.contains("lls_hothead"), "a rough childhood: officer skills " + off);
         expect(adm.contains("lls_slacker") && adm.contains("lls_wasteful") && adm.contains("lls_unpopular"),
                 "a rough childhood: administrator skills " + adm);
+        // 1.9.0: a sickly childhood adds Weak lungs / Wasteful and a bad mark; good traits give good skills.
+        Child sick = new Child();
+        sick.healthSum = 30f;
+        sick.healthDays = 1;
+        sick.happySum = 60f;
+        sick.happyDays = 1;
+        expect(Kids.badSkills(sick, true).contains("lls_weak_lungs") && Kids.badSkills(sick, false).contains("lls_wasteful")
+                && Kids.badMarks(sick) == 1, "a sickly childhood: Weak lungs, Wasteful and one bad mark");
+        Child bright = new Child();
+        bright.traits().add("athletic");
+        bright.traits().add("many_friends");
+        bright.traits().add("adhd");
+        expect(Kids.goodSkills(bright, true).equals(java.util.Arrays.asList("lls_fit", "lls_team_player"))
+                && Kids.goodSkills(bright, false).equals(java.util.Arrays.asList("lls_hard_worker", "lls_beloved"))
+                && !Kids.goodSkills(bright, true).contains("lls_adhd") && Kids.badSkills(bright, true).contains("lls_adhd")
+                && Kids.goodTraits(bright) == 2, "good traits give good skills: " + Kids.goodSkills(bright, true));
+        Child wheezy = new Child();
+        wheezy.traits().add("asthma");
+        expect(Kids.healthOf(home, wheezy).health < Kids.healthOf(home, new Child()).health,
+                "Asthma lowers a kid's health");
         rough.traits().add("book_reader");
         rough.lessons = 2;
         rough.bonds = 9;
@@ -1238,15 +1259,22 @@ public final class RuntimeCheck {
                     "a baby's event fits a baby and never kills: " + (e == null ? null : e.id));
         }
         // 1.8.2 (Andrzej): 1% over the childhood when raised well, 10% when raised badly.
+        // 1.9.0: "raised" is happiness and health, half each.
         Child well = new Child();
         well.happySum = 90f;
         well.happyDays = 1;
+        well.healthSum = 90f;
+        well.healthDays = 1;
         Child badly = new Child();
         badly.happySum = 10f;
         badly.happyDays = 1;
+        badly.healthSum = 10f;
+        badly.healthDays = 1;
         Child middle = new Child();
-        middle.happySum = 50f;
+        middle.happySum = 70f;
         middle.happyDays = 1;
+        middle.healthSum = 30f;
+        middle.healthDays = 1;
         double days = Family.growUpDays();
         double wellTotal = 1.0 - Math.pow(1.0 - Kids.dailyDeathChance(well), days);
         double badTotal = 1.0 - Math.pow(1.0 - Kids.dailyDeathChance(badly), days);

@@ -1,3 +1,10 @@
+Version 1.9.0 (2026-11-17)
+- Kids have their own health, shown on the Family tab with what makes it up: the home's air, noise, heat, cold and radiation, kids' upgrades, and their traits (Asthma and Weak lungs now hurt). Illness events follow it
+- How well a kid is raised now counts health as well as happiness, half each, for the 1% to 10% chance of dying before growing up
+- A childhood in poor health (below 40 on average) gives a grown officer Weak lungs or an administrator Wasteful, and makes a miner, agent or celebrity 20% worse
+- Good traits give grown kids good skills: officers Fit, Steady hands, Brave or Team player; administrators Hard worker, Thrifty, Beloved or Well connected. Each good trait also makes a miner or celebrity 10% better
+- Kid trait tooltips say what each trait means once they grow up; adult tenants' tooltips no longer show kid skills
+
 Version 1.8.2 (2026-11-17)
 - The chance that a kid dies before growing up is now 1% when raised well (average happiness 80 or more) and 10% when raised badly (20 or less), in between for the rest. Deaths no longer come from the normal kid events
 

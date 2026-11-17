@@ -185,7 +185,12 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   `<stage>_<f|m>_1` for baby to teen, `Kids.updatePortrait`, refreshed on every load). 1.8.1 (Andrzej: no faces, "I
   dont want to cause an uprising"): the kid seen from behind, made in the Gemini app from
   `tools/art-maker/kid_portraits.py` (prompts / build / sheet); from the Adult stage `Child.adultPortrait`, the random
-  faction portrait picked at birth. Kid skills: data/characters/skills (`lls_*`, tags npc_only and
+  faction portrait picked at birth.
+  1.9.0: kid health (`Kids.healthOf`, a stand-in Tenant with the kid's traits and kidsAtHome 1 through
+  `PropertyStats.withTenant`; `Child.health` / `healthSum` / `healthDays`, `childhoodHealth`), illness events use it,
+  `Kids.raised` (happiness and health, half each) sets the death chance, `SICKLY_CHILDHOOD` 40. Good traits name
+  good skills in the same `officerSkill` / `adminSkill` fields (`Kids.goodSkills`, `goodTraits`); `Tips.kidTrait`
+  shows the grown-up lines only on kids' traits. Kid skills: data/characters/skills (`lls_*`, tags npc_only and
   ai_core_only so random officers never roll them), effects in `landlordsector.skills.KidSkills`. `Family.startLife`
   scales by `Kids.training` and `Kids.badMarks`. `Kids.migrate` runs on load for older saves. Nicknames:
   `Tenant.realName` holds the real name while `name` is the nickname; `Canvas.startTyping` / `onTyped` take the

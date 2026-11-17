@@ -275,15 +275,6 @@ public final class Tips {
                     : "Loses health faster (x" + round2(d.healthCost) + ")", d.healthCost < 1f ? "+" : "-");
         }
         if (d.kids) add(out, "Has kids: upgrades for kids count for them", null);
-        // 1.8.0 (LLS-28): what a kid's trait means once they grow up.
-        if (d.training > 0) add(out, "Makes them better at what they want to become", "+");
-        if (d.training < 0) add(out, "Makes them worse at what they want to become", "-");
-        if (d.kidOnly && d.officerSkill != null) {
-            add(out, "As an officer, starts with " + skillName(d.officerSkill), "-");
-        }
-        if (d.kidOnly && d.adminSkill != null) {
-            add(out, "As an administrator, starts with " + skillName(d.adminSkill), "-");
-        }
         for (String[] line : eventKinds(d.events)) out.add(line);
         List<String> likes = new ArrayList<>();
         List<String> hates = new ArrayList<>();
@@ -395,6 +386,22 @@ public final class Tips {
 
     private static String round2(float v) {
         return String.valueOf(Math.round(v * 100f) / 100f);
+    }
+
+    /**
+     * 1.8.0 / 1.9.0 (LLS-28): a kid's trait tooltip, with what it means once they grow up: lessons it is worth, and the
+     * skill it gives a grown officer or administrator (good traits a good one, bad traits a bad one).
+     */
+    public static List<String[]> kidTrait(TenantTraits.Def d) {
+        List<String[]> out = tenantTrait(d);
+        String sign = Boolean.TRUE.equals(d.good) ? "+" : (Boolean.FALSE.equals(d.good) ? "-" : null);
+        if (d.training > 0) add(out, "Makes them better at what they want to become", "+");
+        if (d.training < 0) add(out, "Makes them worse at what they want to become", "-");
+        if (d.officerSkill != null) add(out, "As an officer, starts with " + skillName(d.officerSkill), sign);
+        if (d.adminSkill != null) add(out, "As an administrator, starts with " + skillName(d.adminSkill), sign);
+        if (Boolean.TRUE.equals(d.good)) add(out, "As a miner or celebrity, 10% better", "+");
+        if (Boolean.FALSE.equals(d.good)) add(out, "As a miner, agent or celebrity, 20% worse", "-");
+        return out;
     }
 
     /** A skill's name from skill_data.csv, the id when the game can't say (a headless check). */

@@ -20,7 +20,8 @@
 	# 1.8.0 kids (LLS-28): kidOnly traits only kids get. They are rolled when a kid becomes a Child (from the home: bad
 	#   air, noise, commute or location, a small home) and as a Teen (teenOnly). weight is their chance in the random
 	#   roll next to the adult traits kids can have (0: only from the home).
-	# officerSkill / adminSkill: the bad skill a grown kid with this trait starts with as an officer or administrator.
+	# officerSkill / adminSkill: the skill a grown kid with this trait starts with as an officer or administrator (bad
+	#   traits a bad skill, 1.9.0: good traits a good one). Adult tenants never use them.
 	# training: added to what the kid learned (book reader +1), which makes a better officer, administrator, miner,
 	#   agent or celebrity.
 	"traits":[
@@ -33,13 +34,13 @@
 		{"id":"pollen_allergy", "name":"Pollen allergy", "good":false, "weight":1.5, "dislikes":["flowers","plants"], "officerSkill":"lls_weak_lungs", "adminSkill":"lls_wasteful"},
 		{"id":"sensitive_lungs", "name":"Sensitive lungs", "good":false, "weight":1.5, "levels":{"air":2}, "dislikes":["smog","dust","stale_air","damp"], "officerSkill":"lls_weak_lungs", "adminSkill":"lls_wasteful"},
 		{"id":"prosperous", "name":"Prosperous", "good":true, "weight":1.5, "factions":{"tritachyon":5,"persean":1.5,"hegemony":1.2,"pirates":0.2,"luddic_path":0.2}, "wealth":2, "events":{"new_furniture":5,"tip":2}},
-		{"id":"tidy", "name":"Tidy", "good":true, "weight":2, "factions":{"hegemony":1.5,"tritachyon":2,"sindrian_diktat":1.5,"pirates":0.3}, "wear":0.8, "conflicts":["filthy","vandal"]},
-		{"id":"handy", "name":"Handy", "good":true, "weight":2, "factions":{"independent":1.5,"luddic_church":1.5,"pirates":0.4}, "events":{"fixed_something":5}},
-		{"id":"quiet", "name":"Quiet", "good":true, "weight":2, "factions":{"luddic_church":2,"pirates":0.3}, "happiness":3, "levels":{"noise":2}, "likes":["quiet"], "dislikes":["noise"], "conflicts":["loud"]},
-		{"id":"gardener", "name":"Gardener", "good":true, "weight":1.5, "factions":{"luddic_church":2,"pirates":0.3}, "likes":["garden","plants","flowers"], "events":{"garden":4}},
-		{"id":"loyal", "name":"Loyal", "good":true, "weight":1, "factions":{"sindrian_diktat":2,"luddic_church":1.5,"pirates":0.3}, "happiness":5, "loyal":true},
-		{"id":"veteran", "name":"Veteran", "good":true, "weight":1, "factions":{"hegemony":3,"sindrian_diktat":2,"pirates":0.3}, "events":{"chased_burglars":4}},
-		{"id":"hardy", "name":"Hardy", "good":true, "weight":1, "factions":{"pirates":2,"independent":1.5,"luddic_path":1.5,"tritachyon":0.3}, "happiness":12, "wealth":-1, "healthCost":0.5},
+		{"id":"tidy", "name":"Tidy", "good":true, "weight":2, "factions":{"hegemony":1.5,"tritachyon":2,"sindrian_diktat":1.5,"pirates":0.3}, "wear":0.8, "conflicts":["filthy","vandal"], "officerSkill":"lls_steady", "adminSkill":"lls_thrifty"},
+		{"id":"handy", "name":"Handy", "good":true, "weight":2, "factions":{"independent":1.5,"luddic_church":1.5,"pirates":0.4}, "events":{"fixed_something":5}, "officerSkill":"lls_steady", "adminSkill":"lls_hard_worker"},
+		{"id":"quiet", "name":"Quiet", "good":true, "weight":2, "factions":{"luddic_church":2,"pirates":0.3}, "happiness":3, "levels":{"noise":2}, "likes":["quiet"], "dislikes":["noise"], "conflicts":["loud"], "officerSkill":"lls_steady", "adminSkill":"lls_thrifty"},
+		{"id":"gardener", "name":"Gardener", "good":true, "weight":1.5, "factions":{"luddic_church":2,"pirates":0.3}, "likes":["garden","plants","flowers"], "events":{"garden":4}, "officerSkill":"lls_steady", "adminSkill":"lls_thrifty"},
+		{"id":"loyal", "name":"Loyal", "good":true, "weight":1, "factions":{"sindrian_diktat":2,"luddic_church":1.5,"pirates":0.3}, "happiness":5, "loyal":true, "officerSkill":"lls_brave", "adminSkill":"lls_beloved"},
+		{"id":"veteran", "name":"Veteran", "good":true, "weight":1, "factions":{"hegemony":3,"sindrian_diktat":2,"pirates":0.3}, "events":{"chased_burglars":4}, "officerSkill":"lls_brave", "adminSkill":"lls_beloved"},
+		{"id":"hardy", "name":"Hardy", "good":true, "weight":1, "factions":{"pirates":2,"independent":1.5,"luddic_path":1.5,"tritachyon":0.3}, "happiness":12, "wealth":-1, "healthCost":0.5, "officerSkill":"lls_fit", "adminSkill":"lls_hard_worker"},
 		{"id":"family", "name":"Family with kids", "weight":2, "wear":1.1, "kids":true, "levels":{"air":1.5}, "likes":["garden","quiet"], "dislikes":["noise","heat"]},
 		{"id":"pet_owner", "name":"Pet owner", "weight":2, "wear":1.1, "likes":["garden","pets"], "events":{"pet_acquired":0}},
 		{"id":"faithful", "name":"Faithful", "weight":1, "factions":{"luddic_church":5,"luddic_path":2}, "likes":["quiet","faith"], "dislikes":["busy"]},
@@ -50,7 +51,7 @@
 		{"id":"mycophile", "name":"Loves mushrooms", "weight":0.5, "likes":["fungus"]},
 		{"id":"social_climber", "name":"Social climber", "weight":1, "factions":{"tritachyon":1.5,"persean":1.5}, "homeShift":1, "events":{"late_rent":1.5}, "conflicts":["frugal"]},
 		{"id":"frugal", "name":"Frugal", "good":true, "weight":1, "factions":{"luddic_church":2,"hegemony":1.3}, "homeShift":-1, "events":{"late_rent":0.6}, "conflicts":["social_climber"]},
-		{"id":"athletic", "name":"Athletic", "good":true, "weight":1.5, "factions":{"hegemony":1.5,"sindrian_diktat":1.5}, "health":8, "events":{"got_fit":3,"fell_sick":0.5}},
+		{"id":"athletic", "name":"Athletic", "good":true, "weight":1.5, "factions":{"hegemony":1.5,"sindrian_diktat":1.5}, "health":8, "events":{"got_fit":3,"fell_sick":0.5}, "officerSkill":"lls_fit", "adminSkill":"lls_hard_worker"},
 		{"id":"sickly", "name":"Sickly", "good":false, "weight":1.2, "health":-10, "events":{"fell_sick":2,"hospital":2}, "conflicts":["athletic","hardy"], "officerSkill":"lls_weak_lungs", "adminSkill":"lls_wasteful"},
 		{"id":"smoker", "name":"Smoker", "good":false, "weight":1.5, "factions":{"pirates":2,"independent":1.3}, "health":-6, "wear":1.15, "events":{"small_fire":2}, "levels":{"air":1.5}, "conflicts":["athletic"]},
 		{"id":"elderly", "name":"Elderly", "weight":1, "factions":{"luddic_church":1.5}, "healthCost":1.3, "levels":{"noise":1.5}, "events":{"hospital":2,"partner_moves_in":0.3,"child_born":0}, "likes":["quiet","garden"], "conflicts":["athletic","family"]},
@@ -72,9 +73,9 @@
 		{"id":"neet", "name":"NEET", "good":false, "kidOnly":true, "teenOnly":true, "weight":1, "training":-1, "officerSkill":"lls_lazy", "adminSkill":"lls_slacker"},
 		{"id":"bullied", "name":"Bullied", "good":false, "kidOnly":true, "weight":0, "happiness":-8, "officerSkill":"lls_timid", "adminSkill":"lls_unpopular", "conflicts":["popular"]},
 		{"id":"book_reader", "name":"Book reader", "good":true, "kidOnly":true, "weight":0.8, "training":1, "likes":["quiet"]},
-		{"id":"many_friends", "name":"Many friends", "good":true, "kidOnly":true, "weight":0.8, "happiness":5, "training":1, "conflicts":["loner"]},
-		{"id":"affluent", "name":"Affluent", "good":true, "kidOnly":true, "weight":0, "happiness":3, "training":1},
-		{"id":"popular", "name":"Popular", "good":true, "kidOnly":true, "weight":0, "happiness":5, "conflicts":["bullied","loner"]}
+		{"id":"many_friends", "name":"Many friends", "good":true, "kidOnly":true, "weight":0.8, "happiness":5, "training":1, "conflicts":["loner"], "officerSkill":"lls_team_player", "adminSkill":"lls_beloved"},
+		{"id":"affluent", "name":"Affluent", "good":true, "kidOnly":true, "weight":0, "happiness":3, "training":1, "adminSkill":"lls_connected"},
+		{"id":"popular", "name":"Popular", "good":true, "kidOnly":true, "weight":0, "happiness":5, "conflicts":["bullied","loner"], "officerSkill":"lls_team_player", "adminSkill":"lls_beloved"}
 	],
 	# Base wealth (1 to 6) of tenants from each faction. Others are 3.
 	"wealth":{"pirates":1, "luddic_path":1, "luddic_church":2, "independent":2, "sindrian_diktat":2, "hegemony":3, "persean":3, "tritachyon":4}

@@ -327,4 +327,144 @@ public final class KidSkills {
             return "+10% colony income";
         }
     }
+
+    // ---- 1.9.0: good skills from good traits (Andrzej: "Yes, do both") ----
+
+    public static class Fit extends Ship {
+        @Override
+        public void apply(MutableShipStatsAPI stats, HullSize hullSize, String id, float level) {
+            stats.getPeakCRDuration().modifyMult(id, 1.2f);
+        }
+
+        @Override
+        public void unapply(MutableShipStatsAPI stats, HullSize hullSize, String id) {
+            stats.getPeakCRDuration().unmodify(id);
+        }
+
+        @Override
+        public String getEffectDescription(float level) {
+            return "+20% peak performance time";
+        }
+    }
+
+    public static class Steady extends Ship {
+        @Override
+        public void apply(MutableShipStatsAPI stats, HullSize hullSize, String id, float level) {
+            stats.getAutofireAimAccuracy().modifyMult(id, 1.15f);
+            stats.getWeaponTurnRateBonus().modifyPercent(id, 10f);
+        }
+
+        @Override
+        public void unapply(MutableShipStatsAPI stats, HullSize hullSize, String id) {
+            stats.getAutofireAimAccuracy().unmodify(id);
+            stats.getWeaponTurnRateBonus().unmodify(id);
+        }
+
+        @Override
+        public String getEffectDescription(float level) {
+            return "+15% autofire aim accuracy, +10% weapon turn rate";
+        }
+    }
+
+    public static class Brave extends Ship {
+        @Override
+        public void apply(MutableShipStatsAPI stats, HullSize hullSize, String id, float level) {
+            stats.getArmorDamageTakenMult().modifyMult(id, 0.9f);
+            stats.getHullDamageTakenMult().modifyMult(id, 0.9f);
+        }
+
+        @Override
+        public void unapply(MutableShipStatsAPI stats, HullSize hullSize, String id) {
+            stats.getArmorDamageTakenMult().unmodify(id);
+            stats.getHullDamageTakenMult().unmodify(id);
+        }
+
+        @Override
+        public String getEffectDescription(float level) {
+            return "-10% armor and hull damage taken";
+        }
+    }
+
+    public static class TeamPlayer extends Ship {
+        @Override
+        public void apply(MutableShipStatsAPI stats, HullSize hullSize, String id, float level) {
+            stats.getMaxSpeed().modifyPercent(id, 10f);
+            stats.getAcceleration().modifyPercent(id, 10f);
+            stats.getDeceleration().modifyPercent(id, 10f);
+            stats.getMaxTurnRate().modifyPercent(id, 10f);
+            stats.getTurnAcceleration().modifyPercent(id, 10f);
+        }
+
+        @Override
+        public void unapply(MutableShipStatsAPI stats, HullSize hullSize, String id) {
+            stats.getMaxSpeed().unmodify(id);
+            stats.getAcceleration().unmodify(id);
+            stats.getDeceleration().unmodify(id);
+            stats.getMaxTurnRate().unmodify(id);
+            stats.getTurnAcceleration().unmodify(id);
+        }
+
+        @Override
+        public String getEffectDescription(float level) {
+            return "+10% top speed and maneuverability";
+        }
+    }
+
+    public static class HardWorker extends Production {
+        @Override
+        int units() {
+            return 1;
+        }
+    }
+
+    public static class Thrifty extends Colony {
+        @Override
+        public void apply(MarketAPI market, String id, float level) {
+            market.getUpkeepMult().modifyMult(id, 0.9f, "Thrifty governor");
+        }
+
+        @Override
+        public void unapply(MarketAPI market, String id) {
+            market.getUpkeepMult().unmodify(id);
+        }
+
+        @Override
+        public String getEffectDescription(float level) {
+            return "-10% colony upkeep";
+        }
+    }
+
+    public static class Beloved extends Colony {
+        @Override
+        public void apply(MarketAPI market, String id, float level) {
+            market.getStability().modifyFlat(id, 1f, "Beloved governor");
+        }
+
+        @Override
+        public void unapply(MarketAPI market, String id) {
+            market.getStability().unmodify(id);
+        }
+
+        @Override
+        public String getEffectDescription(float level) {
+            return "+1 stability";
+        }
+    }
+
+    public static class Connected extends Colony {
+        @Override
+        public void apply(MarketAPI market, String id, float level) {
+            market.getIncomeMult().modifyMult(id, 1.1f, "Well-connected governor");
+        }
+
+        @Override
+        public void unapply(MarketAPI market, String id) {
+            market.getIncomeMult().unmodify(id);
+        }
+
+        @Override
+        public String getEffectDescription(float level) {
+            return "+10% colony income";
+        }
+    }
 }

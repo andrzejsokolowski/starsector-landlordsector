@@ -64,6 +64,11 @@ public class Child {
     public boolean teenHelps;
     /** Kid events: the last one, and what they added to the childhood (days of happiness, signed). */
     public long lastEvent;
+    /** 1.9.0: today's health (0 before the first day on older saves), and the sum and days for the average. */
+    public float health;
+    public float healthSum;
+    public int healthDays;
+
     /** The random portrait from your faction picked at birth: shown from the Adult stage on (1.8.1). */
     public String adultPortrait;
     /** Picks the portrait variant, so it stays the same across stages. */
@@ -86,6 +91,12 @@ public class Child {
     /** The average happiness of their childhood, 50 before the first day. */
     public float childhood() {
         return happyDays <= 0 ? happiness : happySum / happyDays;
+    }
+
+    /** 1.9.0: the average health of their childhood, today's before the first day (60 when unknown). */
+    public float childhoodHealth() {
+        if (healthDays > 0) return healthSum / healthDays;
+        return health > 0f ? health : 60f;
     }
 
     /** 0 to 4 from a 0 to 100 childhood: how good they turn out. */

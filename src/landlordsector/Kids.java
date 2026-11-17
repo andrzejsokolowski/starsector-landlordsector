@@ -49,6 +49,11 @@ public final class Kids {
     public static final float HOME_TRAIT_CHANCE = 0.6f, SIZE_TRAIT_CHANCE = 0.5f;
     /** A family happier than this on average gives the kid a bad mark, and again below the second. */
     public static final float BAD_CHILDHOOD = 35f, AWFUL_CHILDHOOD = 20f;
+    /** 1.9.0: a childhood with average health below this leaves a bad mark and a bad skill. */
+    public static final float SICKLY_CHILDHOOD = 40f;
+    public static final String[] SICKLY = {"lls_weak_lungs", "lls_wasteful"};
+    /** 1.9.0: each good trait makes a grown miner or celebrity this much better. */
+    public static final float GOOD_TRAIT_BONUS = 0.1f;
 
     /** Bad skills for a hard childhood. */
     public static final String[] LOW_OFFICER = {"lls_timid", "lls_hothead"};
@@ -111,9 +116,24 @@ public final class Kids {
         updatePortrait(c);
     }
 
+    /**
+     * 1.9.0 (Andrzej: "Yes, do both"): a kid's own health, like a tenant's: the home's levels, air, noise, neighbor and
+     * condition, kids' upgrades, and the kid's traits (Asthma -6 and bad air hurts them more).
+     */
+    public static PropertyStats healthOf(Property p, Child c) {
+        Tenant kid = new Tenant();
+        kid.traits = new ArrayList<>(c.traits());
+        kid.screened = true;
+        kid.kidsAtHome = 1;
+        return PropertyStats.withTenant(p, kid);
+    }
+
     /** Once a day for a kid at home who is not grown yet. */
     public static void daily(Property p, Child c, Random random) {
         if (c.stage == 0) migrate(p, c, random);
+        c.health = healthOf(p, c).health;
+        c.healthSum += c.health;
+        c.healthDays++;
         int s = stageOf(c);
         while (c.stage < s) {
             c.stage++;
@@ -336,7 +356,30 @@ public final class Kids {
         float h = c.childhood();
         if (h < BAD_CHILDHOOD) n++;
         if (h < AWFUL_CHILDHOOD) n++;
+        if (c.childhoodHealth() < SICKLY_CHILDHOOD) n++;
         return n;
+    }
+
+    /** 1.9.0: good traits, each a tenth better as a grown miner or celebrity. */
+    public static int goodTraits(Child c) {
+        int n = 0;
+        for (String id : c.traits()) {
+            TenantTraits.Def d = TenantTraits.get(id);
+            if (d != null && Boolean.TRUE.equals(d.good)) n++;
+        }
+        return n;
+    }
+
+    /** 1.9.0 (Andrzej: "Yes, do both"): the good skills a grown officer (true) or administrator starts with. */
+    public static List<String> goodSkills(Child c, boolean officer) {
+        List<String> out = new ArrayList<>();
+        for (String id : c.traits()) {
+            TenantTraits.Def d = TenantTraits.get(id);
+            if (d == null || !Boolean.TRUE.equals(d.good)) continue;
+            String s = officer ? d.officerSkill : d.adminSkill;
+            if (s != null && !out.contains(s)) out.add(s);
+        }
+        return out;
     }
 
     /** The bad skills a grown officer (true) or administrator (false) starts with, each once. */
@@ -344,10 +387,12 @@ public final class Kids {
         List<String> out = new ArrayList<>();
         for (String id : c.traits()) {
             TenantTraits.Def d = TenantTraits.get(id);
-            if (d == null) continue;
+            if (d == null || !Boolean.FALSE.equals(d.good)) continue;
             String s = officer ? d.officerSkill : d.adminSkill;
             if (s != null && !out.contains(s)) out.add(s);
         }
+        String sickly = SICKLY[officer ? 0 : 1];
+        if (c.childhoodHealth() < SICKLY_CHILDHOOD && !out.contains(sickly)) out.add(sickly);
         String[] low = officer ? LOW_OFFICER : LOW_ADMIN;
         float h = c.childhood();
         if (h < BAD_CHILDHOOD && !out.contains(low[0])) out.add(low[0]);
@@ -535,14 +580,19 @@ public final class Kids {
 
     /**
      * 1.8.2 (Andrzej: "a perfectly raised child have a 1% chance of dying, while a badly raised one a 10%"): the chance
-     * a kid dies before growing up, from how well they are raised so far (the childhood's average happiness): 80 or
-     * more 1%, 20 or less 10%, in a straight line between.
+     * a kid dies before growing up, from how well they are raised so far ({@link #raised}, 1.9.0: happiness and
+     * health): 80 or more 1%, 20 or less 10%, in a straight line between.
      */
     public static final float DEATH_RAISED_WELL = 0.01f, DEATH_RAISED_BADLY = 0.10f;
     public static final float RAISED_WELL = 80f, RAISED_BADLY = 20f;
 
+    /** 1.9.0: how well a kid is raised, 0 to 100: the childhood's average happiness and average health, half each. */
+    public static float raised(Child c) {
+        return (c.childhood() + c.childhoodHealth()) / 2f;
+    }
+
     public static float lifetimeDeathChance(Child c) {
-        float t = Pricing.clamp((c.childhood() - RAISED_BADLY) / (RAISED_WELL - RAISED_BADLY), 0f, 1f);
+        float t = Pricing.clamp((raised(c) - RAISED_BADLY) / (RAISED_WELL - RAISED_BADLY), 0f, 1f);
         return DEATH_RAISED_BADLY + (DEATH_RAISED_WELL - DEATH_RAISED_BADLY) * t;
     }
 
@@ -582,7 +632,7 @@ public final class Kids {
         float h = c.happiness;
         w *= e.good ? 0.5f + h / 50f : 2.5f - h / 50f;
         if (e.crime) w *= 1.5f - st.security / 100f;
-        if (e.health) w *= 1.5f - st.health / 100f;
+        if (e.health) w *= 1.5f - (c.health > 0f ? c.health : st.health) / 100f;
         return Math.max(0f, w);
     }
 

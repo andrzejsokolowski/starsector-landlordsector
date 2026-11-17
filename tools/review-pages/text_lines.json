@@ -1897,16 +1897,16 @@
 		},
 		{
 			"id": "kt_tip_officer",
-			"version": "1.8.0",
+			"version": "1.9.0",
 			"line": "As an officer, starts with {ADHD}",
-			"when": "Kid trait tooltip for bad kid traits.",
+			"when": "Kid trait tooltip for bad traits, in red. 1.9.0: only on kids' traits (adult tenants never show it); good traits show their good skill in green.",
 			"area": "Kid traits and skills"
 		},
 		{
 			"id": "kt_tip_admin",
-			"version": "1.8.0",
+			"version": "1.9.0",
 			"line": "As an administrator, starts with {Slacker}",
-			"when": "Kid trait tooltip for bad kid traits.",
+			"when": "Kid trait tooltip for bad traits, in red. 1.9.0: only on kids' traits.",
 			"area": "Kid traits and skills"
 		},
 		{
@@ -2090,6 +2090,104 @@
 			"line": "Only for the home you live in",
 			"when": "Upgrade tooltip line.",
 			"area": "Wife and upgrades"
+		},
+		{
+			"id": "ks_lls_fit",
+			"version": "1.9.0",
+			"line": "Fit | Ran everywhere as a kid. | +20% peak performance time",
+			"when": "Good skill of a grown kid (name | description | effect), from the trait Athletic or Hardy.",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "ks_lls_steady",
+			"version": "1.9.0",
+			"line": "Steady hands | Neat, patient, careful. | +15% autofire aim accuracy, +10% weapon turn rate",
+			"when": "Good skill of a grown kid (name | description | effect), from the trait Tidy, Handy, Quiet or Gardener.",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "ks_lls_brave",
+			"version": "1.9.0",
+			"line": "Brave | Never backs down when a friend is in trouble. | -10% armor and hull damage taken",
+			"when": "Good skill of a grown kid (name | description | effect), from the trait Loyal or Veteran.",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "ks_lls_team_player",
+			"version": "1.9.0",
+			"line": "Team player | Always knew where everyone was. | +10% top speed and maneuverability",
+			"when": "Good skill of a grown kid (name | description | effect), from the trait Many friends or Popular.",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "ks_lls_hard_worker",
+			"version": "1.9.0",
+			"line": "Hard worker | First in, last out. | All industries supply 1 more unit of what they produce",
+			"when": "Good skill of a grown kid (name | description | effect), from the trait Athletic, Hardy or Handy.",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "ks_lls_thrifty",
+			"version": "1.9.0",
+			"line": "Thrifty | Never wastes a credit. | -10% colony upkeep",
+			"when": "Good skill of a grown kid (name | description | effect), from the trait Tidy, Quiet or Gardener.",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "ks_lls_beloved",
+			"version": "1.9.0",
+			"line": "Beloved | Everyone knows the governor by name. | +1 stability",
+			"when": "Good skill of a grown kid (name | description | effect), from the trait Loyal, Veteran, Many friends or Popular.",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "ks_lls_connected",
+			"version": "1.9.0",
+			"line": "Well connected | Grew up among the right people. | +10% colony income",
+			"when": "Good skill of a grown kid (name | description | effect), from the trait Affluent.",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "kt_tip_officer_good",
+			"version": "1.9.0",
+			"line": "As an officer, starts with {Fit}",
+			"when": "Kid trait tooltip for good traits, in green. Bad traits show their bad skill in red (1.8.0 line).",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "kt_tip_admin_good",
+			"version": "1.9.0",
+			"line": "As an administrator, starts with {Hard worker}",
+			"when": "Kid trait tooltip for good traits, in green.",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "kt_tip_good_mark",
+			"version": "1.9.0",
+			"line": "As a miner or celebrity, 10% better",
+			"when": "Kid trait tooltip, good traits.",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "kt_tip_bad_mark",
+			"version": "1.9.0",
+			"line": "As a miner, agent or celebrity, 20% worse",
+			"when": "Kid trait tooltip, bad traits.",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "k_health",
+			"version": "1.9.0",
+			"line": "Health {64}",
+			"when": "Kid row on the Family tab, next to Happiness. Green at the \"sick below\" health or more, red below the treatment line.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_health_tip",
+			"version": "1.9.0",
+			"line": "Sick kids fall ill more often. A childhood in poor health (below 40 on average) leaves a mark for life, and how well a kid is raised (happiness and health) decides the risk of losing them.",
+			"when": "Last line of the kid's Health tooltip, under what makes up the health (base, home levels, air, noise, neighbor, worn home, kids' upgrades, traits).",
+			"area": "Kids growing up"
 		}
 	]
 }

@@ -839,7 +839,8 @@ public final class Family {
         // 1.8.0 (LLS-28): what they learned makes them better, bad traits and a hard childhood worse.
         int learned = Kids.training(c);
         int bad = Kids.badMarks(c);
-        float scale = (1f + q * 0.5f) * (1f + learned * 0.25f) * (float) Math.pow(0.8, bad);
+        float scale = (1f + q * 0.5f) * (1f + learned * 0.25f) * (float) Math.pow(0.8, bad)
+                * (1f + Kids.GOOD_TRAIT_BONUS * Kids.goodTraits(c));
         String with = "";
         try {
             switch (c.path) {
@@ -850,7 +851,8 @@ public final class Family {
                     PersonAPI o = OfficerManagerEvent.createOfficer(Global.getSector().getPlayerFaction(), level,
                             OfficerManagerEvent.SkillPickPreference.ANY, random);
                     copyIdentity(c, o);
-                    List<String> skills = new ArrayList<>(Kids.badSkills(c, true));
+                    List<String> skills = new ArrayList<>(Kids.goodSkills(c, true));
+                    skills.addAll(Kids.badSkills(c, true));
                     if (c.academy) skills.add(Kids.ACADEMY_OFFICER);
                     if (c.classes) skills.add(Kids.TUTORED);
                     giveSkills(c, o, skills);
@@ -865,7 +867,8 @@ public final class Family {
                     PersonAPI a = OfficerManagerEvent.createAdmin(Global.getSector().getPlayerFaction(),
                             q + learned >= 3 ? 2 : 1, random);
                     copyIdentity(c, a);
-                    List<String> skills = new ArrayList<>(Kids.badSkills(c, false));
+                    List<String> skills = new ArrayList<>(Kids.goodSkills(c, false));
+                    skills.addAll(Kids.badSkills(c, false));
                     if (c.academy) skills.add(Kids.ACADEMY_ADMIN);
                     if (c.classes) skills.add(Kids.BUSINESS);
                     giveSkills(c, a, skills);

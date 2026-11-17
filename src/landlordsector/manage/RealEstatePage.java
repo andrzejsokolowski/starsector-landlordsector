@@ -605,7 +605,22 @@ public class RealEstatePage implements ManagePage {
                 text(training(c), Misc.getGrayColor(), tx, y + 50f, tw);
                 float h = c.happiness;
                 text("Happiness " + Math.round(h), traitColor(h >= 50f ? Boolean.TRUE : (h < 25f ? Boolean.FALSE : null)),
-                        x + w - 230f, y + 6f, 220f);
+                        x + w - 230f, y + 6f, 110f);
+                // 1.9.0: the kid's own health, with what makes it up.
+                if (!c.grown) {
+                    PropertyStats ks = landlordsector.Kids.healthOf(p, c);
+                    float kh = ks.health;
+                    text("Health " + Math.round(kh), traitColor(kh >= landlordsector.data.Levels.sickBelow() ? Boolean.TRUE
+                            : (kh < landlordsector.data.Levels.treatmentBelow() ? Boolean.FALSE : null)),
+                            x + w - 115f, y + 6f, 110f);
+                    List<String[]> lines = new ArrayList<>(ks.healthLines);
+                    if (!lines.isEmpty()) lines.remove(lines.size() - 1);
+                    lines.add(new String[] {"Sick kids fall ill more often. A childhood in poor health (below "
+                            + Math.round(landlordsector.Kids.SICKLY_CHILDHOOD) + " on average) leaves a mark for life,"
+                            + " and how well a kid is raised (happiness and health) decides the risk of losing them.",
+                            null});
+                    tipColored(x + w - 115f, y + 6f, 110f, 20f, "Health: " + Math.round(kh), lines);
+                }
                 if (c.traits().isEmpty() && !c.grown && landlordsector.Kids.stageOf(c) < landlordsector.Kids.CHILD) {
                     text("Traits come when " + landlordsector.Kids.he(c) + " starts school.", Misc.getGrayColor(),
                             x + w - 230f, y + 28f, 220f);
@@ -635,10 +650,12 @@ public class RealEstatePage implements ManagePage {
         }
 
         private List<Object[]> kidTraits(landlordsector.Child c) {
-            landlordsector.Tenant fake = new landlordsector.Tenant();
-            fake.traits = c.traits();
-            fake.screened = true;
-            return tenantTraits(fake);
+            List<Object[]> out = new ArrayList<>();
+            for (String id : c.traits()) {
+                landlordsector.data.TenantTraits.Def d = landlordsector.data.TenantTraits.get(id);
+                if (d != null) out.add(new Object[] {d.name, d.good, d.name, landlordsector.ui.Tips.kidTrait(d)});
+            }
+            return out;
         }
 
         /**
