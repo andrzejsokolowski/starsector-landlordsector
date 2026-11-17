@@ -914,36 +914,31 @@ public final class RuntimeCheck {
             float repairs, fees;
             int vacantDays, houseEvents, tenantEvents, questions, tenants, leftOrDied;
             float happySum;
-            int happyDays;
+            int happyDays, unhappyDays;
+            /** Condition gained from tenants' good events, lost to bad events, lost to monthly wear. */
+            float fixedByTenant, eventDamage, wear;
+            final List<String> why = new ArrayList<>();
         }
 
+        /**
+         * Andrzej (2026-11-17): "assume 5 homes default, not 50" (the default limit). 40 campaigns of 5 homes, each home
+         * a random size on a random world, 10 years each.
+         */
         static void run(String jsonPath) throws Exception {
-            StringBuilder json = new StringBuilder("{\"scenarios\":[");
-            int[] sizes = {5, 20, 50};
-            for (int si = 0; si < sizes.length; si++) {
-                if (si > 0) json.append(',');
-                json.append(scenario(sizes[si], 1000 + sizes[si]));
+            StringBuilder json = new StringBuilder("{\"runs\":[");
+            for (int i = 0; i < 40; i++) {
+                if (i > 0) json.append(',');
+                json.append(scenario(5, 5000 + i));
             }
-            json.append("],\"variants\":[");
-            // What-ifs for Andrzej to choose from: cheaper repairs, slower wear, both. Same 50 homes, same dice.
-            Economy eco = TierTable.economy();
-            float repair0 = eco.repairFullCost, wear0 = eco.wearMonths;
-            String[][] variants = {{"repairs half", "0.5", "1"}, {"wear 1.5x slower", "1", "1.5"}, {"both", "0.5", "1.5"}};
-            for (int vi = 0; vi < variants.length; vi++) {
-                eco.repairFullCost = repair0 * Float.parseFloat(variants[vi][1]);
-                eco.wearMonths = wear0 * Float.parseFloat(variants[vi][2]);
-                if (vi > 0) json.append(',');
-                System.out.println("-- variant: " + variants[vi][0]);
-                json.append("{\"name\":\"").append(variants[vi][0]).append("\",\"run\":").append(scenario(50, 1050))
-                        .append('}');
-            }
-            eco.repairFullCost = repair0;
-            eco.wearMonths = wear0;
             json.append("]}");
             if (jsonPath != null) {
                 java.nio.file.Files.write(java.nio.file.Paths.get(jsonPath), json.toString().getBytes("UTF-8"));
             }
             System.out.println("Balance run written" + (jsonPath != null ? " to " + jsonPath : ""));
+        }
+
+        static String esc(String t) {
+            return t.replace("\\", "\\\\").replace("\"", "\\\"").replace("\t", " ");
         }
 
         static String scenario(int n, long seed) throws Exception {
@@ -969,7 +964,7 @@ public final class RuntimeCheck {
             List<HomeStat> homes = new ArrayList<>();
             float spent = 0f;
             for (int i = 0; i < n; i++) {
-                Tier t = tiers.get(i % tiers.size());
+                Tier t = tiers.get(r.nextInt(tiers.size()));
                 int start = r.nextInt(ms.size());
                 for (int tries = 0; tries < ms.size(); tries++) {
                     MarketAPI m = ms.get((start + tries) % ms.size());
@@ -996,11 +991,21 @@ public final class RuntimeCheck {
                     // month() adds the 30th day itself.
                     if (d < 29) now += DAY;
                     Map<Property, long[]> before = new HashMap<>();
+                    Map<Property, String> lastLog = new HashMap<>();
+                    Map<Property, Float> cond = new HashMap<>();
                     for (HomeStat h : homes) {
                         before.put(h.p, new long[] {h.p.lastEventAt, h.p.lastTenantEventAt,
                                 h.p.decision == null ? 0 : 1, h.p.tenant == null ? 0 : h.p.tenant.id.hashCode()});
+                        List<String> lg = h.p.log();
+                        lastLog.put(h.p, lg.isEmpty() ? null : lg.get(lg.size() - 1));
+                        cond.put(h.p, h.p.condition);
                     }
                     TenantDaily.runDay(r);
+                    for (HomeStat h : homes) {
+                        float dc = h.p.condition - cond.get(h.p);
+                        if (dc > 0f) h.fixedByTenant += dc;
+                        else h.eventDamage -= dc;
+                    }
                     days++;
                     for (HomeStat h : homes) {
                         if (!Portfolio.get().properties().contains(h.p)) continue;
@@ -1008,7 +1013,18 @@ public final class RuntimeCheck {
                         if (h.p.lastEventAt != b[0]) h.houseEvents++;
                         if (h.p.lastTenantEventAt != b[1]) h.tenantEvents++;
                         if (h.p.decision != null && b[2] == 0) h.questions++;
-                        if (b[3] != 0 && (h.p.tenant == null || h.p.tenant.id.hashCode() != b[3])) h.leftOrDied++;
+                        if (b[3] != 0 && (h.p.tenant == null || h.p.tenant.id.hashCode() != b[3])) {
+                            h.leftOrDied++;
+                            List<String> lg = h.p.log();
+                            String prev = lastLog.get(h.p);
+                            int from = prev == null ? 0 : lg.lastIndexOf(prev) + 1;
+                            StringBuilder w = new StringBuilder();
+                            for (int k = Math.max(0, from); k < lg.size(); k++) {
+                                String[] parts = lg.get(k).split("\t", 4);
+                                w.append(parts.length == 4 ? parts[2] + parts[3] : lg.get(k)).append(" | ");
+                            }
+                            h.why.add(w.toString());
+                        }
                         if (h.p.tenant == null) {
                             h.vacantDays++;
                             if (!h.p.applicants().isEmpty()) {
@@ -1020,10 +1036,13 @@ public final class RuntimeCheck {
                                 }
                             }
                         } else {
-                            h.happySum += h.p.stats().happiness;
+                            float hp = h.p.stats().happiness;
+                            h.happySum += hp;
                             h.happyDays++;
+                            if (hp < TenantRules.MOVE_OUT_BELOW) h.unhappyDays++;
                         }
                         if (h.p.condition < 0.6f || h.p.condemned) {
+                            cond.put(h.p, h.p.condition);
                             float cost = h.p.repairCost();
                             if (!Actions.repair(h.p).startsWith("Re")) cost = 0f;
                             h.repairs += cost;
@@ -1031,8 +1050,13 @@ public final class RuntimeCheck {
                         }
                     }
                 }
+                Map<Property, Float> c0 = new HashMap<>();
+                for (HomeStat h : homes) c0.put(h.p, h.p.condition);
                 month(tick);
-                for (HomeStat h : homes) yearIncome[month / 12] += h.p.lastRent;
+                for (HomeStat h : homes) {
+                    yearIncome[month / 12] += h.p.lastRent;
+                    h.wear += Math.max(0f, c0.get(h.p) - h.p.condition);
+                }
             }
             double msPerDay = (System.nanoTime() - t0) / 1e6 / days;
 
@@ -1068,10 +1092,13 @@ public final class RuntimeCheck {
                 out.append(String.format(java.util.Locale.ROOT,
                         "{\"tier\":\"%s\",\"world\":\"%s\",\"price\":%d,\"rent\":%d,\"repairs\":%d,\"end\":%d,"
                                 + "\"vacantDays\":%d,\"houseEvents\":%d,\"tenantEvents\":%d,\"questions\":%d,"
-                                + "\"tenants\":%d,\"left\":%d,\"happy\":%.1f,\"sold\":%s}",
+                                + "\"tenants\":%d,\"left\":%d,\"happy\":%.1f,\"unhappyDays\":%d,\"fixed\":%.3f,"
+                                + "\"damage\":%.3f,\"wear\":%.3f,\"value\":%d,\"sold\":%s,\"why\":[%s]}",
                         pr.tier().id, h.world, Math.round(pr.paidPrice), Math.round(pr.totalRent), Math.round(h.repairs),
                         Math.round(end), h.vacantDays, h.houseEvents, h.tenantEvents, h.questions, h.tenants,
-                        h.leftOrDied, h.happyDays > 0 ? h.happySum / h.happyDays : 0f, sold));
+                        h.leftOrDied, h.happyDays > 0 ? h.happySum / h.happyDays : 0f, h.unhappyDays, h.fixedByTenant,
+                        h.eventDamage, h.wear, Math.round(pr.fullValue()), sold,
+                        String.join(",", h.why.stream().map(w -> "\"" + esc(w) + "\"").toArray(String[]::new))));
                 System.out.println(String.format(java.util.Locale.ROOT,
                         "%-12s %-9s price %9d rent %9d repairs %8d end %9d vacant %4d ev %3d/%3d q %2d tenants %2d happy %.0f%s",
                         pr.tier().id, h.world, Math.round(pr.paidPrice), Math.round(pr.totalRent), Math.round(h.repairs),
