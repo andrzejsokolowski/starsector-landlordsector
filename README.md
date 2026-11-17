@@ -155,7 +155,9 @@ Requires LunaLib and OddiszCommons.
   (Industrial Evolution, officers and administrators, 100,000) or take extra classes (250,000).
 - Traits come at the Child stage: from the home (E or F air, noise, commute or location, a shack or studio; S+
   scores and villas give good ones) and one or two at random, good ones likelier the happier the family. Teens get
-  one or two more. Kid events (first words, broken arms, bullying, rarely a death) come about every two months.
+  one or two more. Kid events (first words, broken arms, bullying) come about every two months. Deaths have their
+  own daily roll: over the whole childhood 1% for a kid raised well (average happiness 80+), 10% for one raised
+  badly (20 or less), a straight line between.
 - At the end of the Adult stage they start their life. Officers start at level 1 + childhood quality (0 to 4) +
   what they learned, at most 5; administrators get a second skill at 3 or more. Bad traits and a hard childhood
   (below 35 and 20 average happiness) give bad skills (officers ADHD, Lazy, Weak lungs, Hard of hearing, Hothead,

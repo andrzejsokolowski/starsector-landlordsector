@@ -1,3 +1,6 @@
+Version 1.8.2 (2026-11-17)
+- The chance that a kid dies before growing up is now 1% when raised well (average happiness 80 or more) and 10% when raised badly (20 or less), in between for the rest. Deaths no longer come from the normal kid events
+
 Version 1.8.1 (2026-11-17)
 - Kids have pictures for each stage up to Teen: the kid seen from behind (a crib, toy blocks, a window, a walkway), a boy and a girl version. From the Adult stage they show the random portrait from your faction they were given at birth, and keep it as your officer or administrator
 

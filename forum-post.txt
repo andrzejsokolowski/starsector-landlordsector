@@ -125,6 +125,10 @@ This mod is under the CC0 (Creative Commons Zero) License, allowing you to do wh
 [/spoiler]
 
 [spoiler=Version log]
+[b]1.8.2[/b]
+[list]
+[li]The chance that a kid dies before growing up is now 1% when raised well (average happiness 80 or more) and 10% when raised badly (20 or less), in between for the rest. Deaths no longer come from the normal kid events[/li]
+[/list]
 [b]1.8.1[/b]
 [list]
 [li]Kids have pictures for each stage up to Teen: the kid seen from behind (a crib, toy blocks, a window, a walkway), a boy and a girl version. From the Adult stage they show the random portrait from your faction they were given at birth, and keep it as your officer or administrator[/li]

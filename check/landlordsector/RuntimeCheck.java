@@ -1232,14 +1232,34 @@ public final class RuntimeCheck {
         baby.id = "kid_events";
         baby.bornAt = now;
         baby.happiness = 50f;
-        int deaths = 0;
         for (int i = 0; i < 500; i++) {
             Kids.Event e = Kids.pick(home, baby, new Random(i));
-            expect(e != null && e.minStage <= Kids.BABY && Kids.BABY <= e.maxStage, "a baby's event fits a baby: "
-                    + (e == null ? null : e.id));
-            if (e != null && e.dies) deaths++;
+            expect(e != null && e.minStage <= Kids.BABY && Kids.BABY <= e.maxStage && !e.dies,
+                    "a baby's event fits a baby and never kills: " + (e == null ? null : e.id));
         }
-        expect(deaths < 25, "deadly events are rare: " + deaths + " of 500");
+        // 1.8.2 (Andrzej): 1% over the childhood when raised well, 10% when raised badly.
+        Child well = new Child();
+        well.happySum = 90f;
+        well.happyDays = 1;
+        Child badly = new Child();
+        badly.happySum = 10f;
+        badly.happyDays = 1;
+        Child middle = new Child();
+        middle.happySum = 50f;
+        middle.happyDays = 1;
+        double days = Family.growUpDays();
+        double wellTotal = 1.0 - Math.pow(1.0 - Kids.dailyDeathChance(well), days);
+        double badTotal = 1.0 - Math.pow(1.0 - Kids.dailyDeathChance(badly), days);
+        expect(Math.abs(wellTotal - 0.01) < 1e-4 && Math.abs(badTotal - 0.10) < 1e-4,
+                "dying over the whole childhood: raised well " + wellTotal + ", badly " + badTotal);
+        expect(Math.abs(Kids.lifetimeDeathChance(middle) - 0.055f) < 1e-4f, "halfway raised: 5.5%");
+        for (int st = Kids.BABY; st <= Kids.ADULT; st++) {
+            Child k = new Child();
+            k.bornAt = now - (long) (Kids.stageDays() * (st - 0.5f) * DAY);
+            Kids.Event e = Kids.pickDeath(home, k, new Random(st));
+            expect(e != null && e.dies && e.minStage <= st && st <= e.maxStage,
+                    "a deadly event fits stage " + st + ": " + (e == null ? null : e.id));
+        }
         Child doomed = new Child();
         doomed.id = "kid_doomed";
         doomed.name = "Doomed Junior";

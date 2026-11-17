@@ -1766,28 +1766,28 @@
 			"id": "kev_fever",
 			"version": "1.8.0",
 			"line": "{Tomas} caught a fever and died. The doctors came too late.",
-			"when": "Intel message: the kid dies. Stages baby to toddler, rare.",
+			"when": "Intel message: the kid dies. Stages baby to toddler. 1.8.2: the chance of dying before growing up is 1% for a kid raised well and 10% for one raised badly; this line says which way.",
 			"area": "Kid events"
 		},
 		{
 			"id": "kev_pneumonia",
 			"version": "1.8.0",
 			"line": "{Tomas} died of pneumonia.",
-			"when": "Intel message: the kid dies. Stages baby to teen, rare.",
+			"when": "Intel message: the kid dies. Stages baby to teen. 1.8.2: the chance of dying before growing up is 1% for a kid raised well and 10% for one raised badly; this line says which way.",
 			"area": "Kid events"
 		},
 		{
 			"id": "kev_kidnapped",
 			"version": "1.8.0",
 			"line": "{Tomas} was kidnapped on the way home from school and never found.",
-			"when": "Intel message: the kid dies. Stages child to teen, rare.",
+			"when": "Intel message: the kid dies. Stages child to teen. 1.8.2: the chance of dying before growing up is 1% for a kid raised well and 10% for one raised badly; this line says which way.",
 			"area": "Kid events"
 		},
 		{
 			"id": "kev_speeder_crash",
 			"version": "1.8.0",
 			"line": "{Tomas} crashed a borrowed speeder and died.",
-			"when": "Intel message: the kid dies. Stages teen to adult, rare.",
+			"when": "Intel message: the kid dies. Stages teen to adult. 1.8.2: the chance of dying before growing up is 1% for a kid raised well and 10% for one raised badly; this line says which way.",
 			"area": "Kid events"
 		},
 		{

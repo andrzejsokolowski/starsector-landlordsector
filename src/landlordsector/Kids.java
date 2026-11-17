@@ -119,6 +119,7 @@ public final class Kids {
             c.stage++;
             enter(p, c, c.stage, random);
         }
+        if (maybeDie(p, c, random)) return;
         maybeEvent(p, c, random);
     }
 
@@ -532,8 +533,41 @@ public final class Kids {
         return events;
     }
 
+    /**
+     * 1.8.2 (Andrzej: "a perfectly raised child have a 1% chance of dying, while a badly raised one a 10%"): the chance
+     * a kid dies before growing up, from how well they are raised so far (the childhood's average happiness): 80 or
+     * more 1%, 20 or less 10%, in a straight line between.
+     */
+    public static final float DEATH_RAISED_WELL = 0.01f, DEATH_RAISED_BADLY = 0.10f;
+    public static final float RAISED_WELL = 80f, RAISED_BADLY = 20f;
+
+    public static float lifetimeDeathChance(Child c) {
+        float t = Pricing.clamp((c.childhood() - RAISED_BADLY) / (RAISED_WELL - RAISED_BADLY), 0f, 1f);
+        return DEATH_RAISED_BADLY + (DEATH_RAISED_WELL - DEATH_RAISED_BADLY) * t;
+    }
+
+    /** The daily chance that adds up to {@link #lifetimeDeathChance} over the whole childhood. */
+    public static double dailyDeathChance(Child c) {
+        double days = Math.max(1.0, Family.growUpDays());
+        return 1.0 - Math.pow(1.0 - lifetimeDeathChance(c), 1.0 / days);
+    }
+
+    /** Once a day: the death roll. Deadly events never come from the normal event roll. True when the kid died. */
+    private static boolean maybeDie(Property p, Child c, Random random) {
+        if (random.nextFloat() >= dailyDeathChance(c)) return false;
+        Event e = pickDeath(p, c, random);
+        if (e == null) return false;
+        apply(p, c, e);
+        return true;
+    }
+
     /** The odds of each event for this kid now: happy kids have more good ones, crime follows security. */
     public static float weight(Property p, Child c, Event e, PropertyStats st) {
+        return e.dies ? 0f : rawWeight(c, e, st);
+    }
+
+    /** How a deadly event happens, for the death roll: crime follows security, illness follows health. */
+    private static float rawWeight(Child c, Event e, PropertyStats st) {
         int s = stageOf(c);
         if (s < e.minStage || s > e.maxStage) return 0f;
         if (e.trait != null && c.traits().contains(e.trait)) return 0f;
@@ -558,6 +592,29 @@ public final class Kids {
         if (random.nextFloat() >= eventChance) return;
         Event e = pick(p, c, random);
         if (e != null) apply(p, c, e);
+    }
+
+    /** Which deadly event takes the kid, or null when none fits their stage. Public for the headless check. */
+    public static Event pickDeath(Property p, Child c, Random random) {
+        PropertyStats st = p.stats();
+        float total = 0f;
+        List<Event> pool = new ArrayList<>();
+        List<Float> ws = new ArrayList<>();
+        for (Event e : events) {
+            if (!e.dies) continue;
+            float w = rawWeight(c, e, st);
+            if (w <= 0f) continue;
+            pool.add(e);
+            ws.add(w);
+            total += w;
+        }
+        if (pool.isEmpty()) return null;
+        float r = random.nextFloat() * total;
+        for (int i = 0; i < pool.size(); i++) {
+            r -= ws.get(i);
+            if (r <= 0f) return pool.get(i);
+        }
+        return pool.get(pool.size() - 1);
     }
 
     /** One event for this kid, or null. Public for the headless check. */

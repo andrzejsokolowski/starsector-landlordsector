@@ -10,6 +10,9 @@
 	#   spouse's mood), condition (the home's), trait (a kid trait it adds, and the event never repeats once they have
 	#   it), dies (the kid dies).
 	# $kid, $he, $his, $Parent ("Dad" or "Mom") and $home are filled in.
+	# 1.8.2: deadly events (dies) are never in the normal roll. A separate daily roll makes the chance of dying over
+	# the whole childhood 1% for a kid raised well (average happiness 80 or more) and 10% for one raised badly (20 or
+	# less), Kids.DEATH_RAISED_WELL / DEATH_RAISED_BADLY. Their weight, needs, crime and health only pick which one.
 	"minDaysBetween":20,
 	"dailyChance":0.04,
 	"events":[
