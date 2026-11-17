@@ -97,6 +97,17 @@ tasks.register('checkRuntime', JavaExec) {
             '--add-opens', 'java.base/java.util=ALL-UNNAMED', '--add-opens', 'java.base/java.lang=ALL-UNNAMED', '--add-opens', 'java.base/java.lang.reflect=ALL-UNNAMED', '--add-opens', 'java.base/java.text=ALL-UNNAMED', '--add-opens', 'java.desktop/java.awt.font=ALL-UNNAMED'
 }
 
+/** 1.12.0 (LLS-35): 10 game years with 5, 20 and 50 homes. Not part of the release checks. */
+tasks.register('balanceRun', JavaExec) {
+    dependsOn tasks.named('checkClasses')
+    classpath = sourceSets.check.runtimeClasspath
+    mainClass = 'landlordsector.RuntimeCheck'
+    args file('data/config/landlordsector/tiers.json').absolutePath, 'balance', file('build/balance.json').absolutePath
+    executable = "${starsectorPath}/jre/bin/java.exe"
+    jvmArgs '-XX:+UnlockDiagnosticVMOptions', '-XX:-BytecodeVerificationRemote', '-XX:-BytecodeVerificationLocal',
+            '--add-opens', 'java.base/java.util=ALL-UNNAMED', '--add-opens', 'java.base/java.lang=ALL-UNNAMED', '--add-opens', 'java.base/java.lang.reflect=ALL-UNNAMED', '--add-opens', 'java.base/java.text=ALL-UNNAMED', '--add-opens', 'java.desktop/java.awt.font=ALL-UNNAMED'
+}
+
 /** mod_info.json, the .version file and the Version Checker registration must agree. */
 tasks.register('checkVersionMetadata') {
     doLast {

@@ -85,6 +85,10 @@ public final class RuntimeCheck {
     public static void main(String[] args) throws Exception {
         installGlobals();
         RulesCheck.loadAll(args[0]);
+        if (args.length > 1 && "balance".equals(args[1])) {
+            Balance.run(args.length > 2 ? args[2] : null);
+            return;
+        }
 
         FakeMarket heg = new FakeMarket();
         heg.id = "fake_heg"; heg.name = "Fakeholm"; heg.factionId = "hegemony"; heg.size = 6;
@@ -884,6 +888,200 @@ public final class RuntimeCheck {
         Actions.sell(p);
     }
 
+
+
+    /**
+     * 1.12.0 (LLS-35, Andrzej: "do the balance run"): 10 game years over the real code with 5, 20 and 50 homes on
+     * stand-in markets. The player is passive: takes the first applicant who fits, keeps Normal rent and 12-month
+     * leases, lets every question take its default answer and repairs at 60% condition. Run with
+     * {@code ./gradlew balanceRun}; prints a report and writes JSON when given a path.
+     */
+    static final class Balance {
+        static final String[][] WORLDS = {
+            // id, faction, size, stability, hazard, habitable, mild, own
+            {"core", "hegemony", "6", "7", "1.0", "1", "0", "0"},
+            {"rich", "tritachyon", "7", "8", "1.25", "1", "0", "0"},
+            {"frontier", "independent", "5", "5", "1.5", "1", "0", "0"},
+            {"den", "pirates", "5", "3", "1.5", "0", "0", "0"},
+            {"colony", "player", "6", "6", "1.25", "1", "0", "1"},
+            {"pilgrim", "luddic_church", "5", "6", "1.0", "1", "1", "0"},
+            {"diktat", "sindrian_diktat", "6", "7", "1.5", "0", "0", "0"},
+        };
+
+        static final class HomeStat {
+            Property p;
+            String world;
+            float repairs, fees;
+            int vacantDays, houseEvents, tenantEvents, questions, tenants, leftOrDied;
+            float happySum;
+            int happyDays;
+        }
+
+        static void run(String jsonPath) throws Exception {
+            StringBuilder json = new StringBuilder("{\"scenarios\":[");
+            int[] sizes = {5, 20, 50};
+            for (int si = 0; si < sizes.length; si++) {
+                if (si > 0) json.append(',');
+                json.append(scenario(sizes[si], 1000 + sizes[si]));
+            }
+            json.append("],\"variants\":[");
+            // What-ifs for Andrzej to choose from: cheaper repairs, slower wear, both. Same 50 homes, same dice.
+            Economy eco = TierTable.economy();
+            float repair0 = eco.repairFullCost, wear0 = eco.wearMonths;
+            String[][] variants = {{"repairs half", "0.5", "1"}, {"wear 1.5x slower", "1", "1.5"}, {"both", "0.5", "1.5"}};
+            for (int vi = 0; vi < variants.length; vi++) {
+                eco.repairFullCost = repair0 * Float.parseFloat(variants[vi][1]);
+                eco.wearMonths = wear0 * Float.parseFloat(variants[vi][2]);
+                if (vi > 0) json.append(',');
+                System.out.println("-- variant: " + variants[vi][0]);
+                json.append("{\"name\":\"").append(variants[vi][0]).append("\",\"run\":").append(scenario(50, 1050))
+                        .append('}');
+            }
+            eco.repairFullCost = repair0;
+            eco.wearMonths = wear0;
+            json.append("]}");
+            if (jsonPath != null) {
+                java.nio.file.Files.write(java.nio.file.Paths.get(jsonPath), json.toString().getBytes("UTF-8"));
+            }
+            System.out.println("Balance run written" + (jsonPath != null ? " to " + jsonPath : ""));
+        }
+
+        static String scenario(int n, long seed) throws Exception {
+            persistent.clear();
+            markets.clear();
+            now = new java.util.GregorianCalendar(206, 0, 1).getTimeInMillis();
+            Random r = new Random(seed);
+            // Unlimited credits: the run measures money in and out, not whether the player can pay.
+            credits.set(2e8f);
+            List<MarketAPI> ms = new ArrayList<>();
+            Map<String, String> worldOf = new HashMap<>();
+            for (String[] w : WORLDS) {
+                FakeMarket f = new FakeMarket();
+                f.id = "bal_" + w[0]; f.name = w[0]; f.factionId = w[1]; f.size = Integer.parseInt(w[2]);
+                f.stability = Float.parseFloat(w[3]); f.hazard = Float.parseFloat(w[4]);
+                f.habitable = "1".equals(w[5]); f.mild = "1".equals(w[6]); f.own = "1".equals(w[7]);
+                MarketAPI m = market(f);
+                ms.add(m);
+                worldOf.put(f.id, w[0]);
+            }
+            // Buy n homes: tiers in turn, each on the next world that has room and is big enough.
+            List<Tier> tiers = TierTable.all();
+            List<HomeStat> homes = new ArrayList<>();
+            float spent = 0f;
+            for (int i = 0; i < n; i++) {
+                Tier t = tiers.get(i % tiers.size());
+                int start = r.nextInt(ms.size());
+                for (int tries = 0; tries < ms.size(); tries++) {
+                    MarketAPI m = ms.get((start + tries) % ms.size());
+                    if (m.getSize() < t.minSize) continue;
+                    if (Portfolio.get().countAt(m.getId()) >= MarketRules.housingSlots(m)) continue;
+                    Listing l = MarketRules.make(m, t, MarketRules.listings(m), false, r);
+                    float price = MarketRules.buyPrice(m, l);
+                    credits.subtract(price);
+                    spent += price;
+                    HomeStat h = new HomeStat();
+                    h.p = Actions.own(m, l, price);
+                    h.world = worldOf.get(m.getId());
+                    homes.add(h);
+                    break;
+                }
+            }
+            MonthlyTick tick = new MonthlyTick();
+            float[] yearIncome = new float[10];
+            float[] yearRepairs = new float[10];
+            long t0 = System.nanoTime();
+            int days = 0;
+            for (int month = 0; month < 120; month++) {
+                for (int d = 0; d < 30; d++) {
+                    // month() adds the 30th day itself.
+                    if (d < 29) now += DAY;
+                    Map<Property, long[]> before = new HashMap<>();
+                    for (HomeStat h : homes) {
+                        before.put(h.p, new long[] {h.p.lastEventAt, h.p.lastTenantEventAt,
+                                h.p.decision == null ? 0 : 1, h.p.tenant == null ? 0 : h.p.tenant.id.hashCode()});
+                    }
+                    TenantDaily.runDay(r);
+                    days++;
+                    for (HomeStat h : homes) {
+                        if (!Portfolio.get().properties().contains(h.p)) continue;
+                        long[] b = before.get(h.p);
+                        if (h.p.lastEventAt != b[0]) h.houseEvents++;
+                        if (h.p.lastTenantEventAt != b[1]) h.tenantEvents++;
+                        if (h.p.decision != null && b[2] == 0) h.questions++;
+                        if (b[3] != 0 && (h.p.tenant == null || h.p.tenant.id.hashCode() != b[3])) h.leftOrDied++;
+                        if (h.p.tenant == null) {
+                            h.vacantDays++;
+                            if (!h.p.applicants().isEmpty()) {
+                                for (Tenant a : new ArrayList<>(h.p.applicants())) {
+                                    if (Actions.refusal(h.p, a) == null && Actions.moveIn(h.p, a, false) == null) {
+                                        h.tenants++;
+                                        break;
+                                    }
+                                }
+                            }
+                        } else {
+                            h.happySum += h.p.stats().happiness;
+                            h.happyDays++;
+                        }
+                        if (h.p.condition < 0.6f || h.p.condemned) {
+                            float cost = h.p.repairCost();
+                            if (!Actions.repair(h.p).startsWith("Re")) cost = 0f;
+                            h.repairs += cost;
+                            yearRepairs[month / 12] += cost;
+                        }
+                    }
+                }
+                month(tick);
+                for (HomeStat h : homes) yearIncome[month / 12] += h.p.lastRent;
+            }
+            double msPerDay = (System.nanoTime() - t0) / 1e6 / days;
+
+            // Save size, as the runtime check measures it.
+            com.thoughtworks.xstream.XStream x = new com.thoughtworks.xstream.XStream(new com.thoughtworks.xstream.io.xml.DomDriver());
+            com.thoughtworks.xstream.XStream.setupDefaultSecurity(x);
+            x.allowTypesByWildcard(new String[] {"landlordsector.**", "java.util.**", "java.lang.**"});
+            Portfolio.get().agents().clear();
+            Portfolio.get().finders().clear();
+            for (Property pr : Portfolio.get().properties()) {
+                if (pr.decision != null) pr.decision.intel = null;
+            }
+            int saveChars = x.toXML(Portfolio.get()).length();
+
+            StringBuilder out = new StringBuilder();
+            out.append("{\"homes\":").append(n).append(",\"spent\":").append(Math.round(spent))
+                    .append(",\"msPerDay\":").append(String.format(java.util.Locale.ROOT, "%.3f", msPerDay))
+                    .append(",\"saveChars\":").append(saveChars).append(",\"years\":[");
+            for (int y = 0; y < 10; y++) {
+                if (y > 0) out.append(',');
+                out.append("{\"income\":").append(Math.round(yearIncome[y])).append(",\"repairs\":")
+                        .append(Math.round(yearRepairs[y])).append('}');
+            }
+            out.append("],\"list\":[");
+            System.out.println("== " + n + " homes: spent " + Math.round(spent) + ", " + String.format("%.2f", msPerDay)
+                    + " ms a day, save " + saveChars + " chars");
+            for (int i = 0; i < homes.size(); i++) {
+                HomeStat h = homes.get(i);
+                Property pr = h.p;
+                boolean sold = !Portfolio.get().properties().contains(pr);
+                float end = sold ? 0f : pr.saleValue(false);
+                if (i > 0) out.append(',');
+                out.append(String.format(java.util.Locale.ROOT,
+                        "{\"tier\":\"%s\",\"world\":\"%s\",\"price\":%d,\"rent\":%d,\"repairs\":%d,\"end\":%d,"
+                                + "\"vacantDays\":%d,\"houseEvents\":%d,\"tenantEvents\":%d,\"questions\":%d,"
+                                + "\"tenants\":%d,\"left\":%d,\"happy\":%.1f,\"sold\":%s}",
+                        pr.tier().id, h.world, Math.round(pr.paidPrice), Math.round(pr.totalRent), Math.round(h.repairs),
+                        Math.round(end), h.vacantDays, h.houseEvents, h.tenantEvents, h.questions, h.tenants,
+                        h.leftOrDied, h.happyDays > 0 ? h.happySum / h.happyDays : 0f, sold));
+                System.out.println(String.format(java.util.Locale.ROOT,
+                        "%-12s %-9s price %9d rent %9d repairs %8d end %9d vacant %4d ev %3d/%3d q %2d tenants %2d happy %.0f%s",
+                        pr.tier().id, h.world, Math.round(pr.paidPrice), Math.round(pr.totalRent), Math.round(h.repairs),
+                        Math.round(end), h.vacantDays, h.houseEvents, h.tenantEvents, h.questions, h.tenants,
+                        h.happyDays > 0 ? h.happySum / h.happyDays : 0f, sold ? " SOLD" : ""));
+            }
+            out.append("]}");
+            return out.toString();
+        }
+    }
 
     /** A home with a tenant on a fresh market, for the 1.12.0 checks. */
     private static Property rentedHome(String id, Random r) {
