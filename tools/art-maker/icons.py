@@ -115,6 +115,71 @@ def gemini_icons():
                 "subject": "a sealed habitat airlock under a flashing yellow hazard lamp, a sickly green haze in the "
                            "air outside its window",
                 "tone": "Mood: dangerous and unhealthy, the air outside can hurt you."})
+    # LLS-31 (Andrzej 2026-11-17: "did we make tenants use icons for their traits yet? If not, let's do it"): one icon
+    # per tenant trait, kid traits too. Objects that say how the person lives; never a face (no picking races for people).
+    tenant_subjects = {
+        "vandal": "a smashed window pane and a dented spray-paint can lying on the floor beneath it",
+        "filthy": "an overflowing trash bag, greasy takeout boxes and a buzzing fly on a stained table",
+        "late_payer": "a pile of unopened red-stamped bills and a tiny empty coin purse on a doormat",
+        "shady": "a half-open drawer hiding unmarked credit chips and a sealed unlabeled package, a dim red lamp",
+        "zealot": "a wall plastered with handwritten pamphlets around a burning candle and a stern religious emblem",
+        "loud": "a big battered loudspeaker blasting, the air around it rippling, a cracked mug shaking on the shelf",
+        "pollen_allergy": "a box of tissues and an inhaler next to a vase of flowers shedding yellow pollen",
+        "sensitive_lungs": "a breathing mask hanging on a hook beside a small humming air purifier",
+        "prosperous": "a neat stack of gold credit chips beside a fine crystal glass on a polished desk",
+        "tidy": "neatly folded clothes, perfectly lined-up boots and a gleaming clean shelf",
+        "handy": "a well-used toolbox with a wrench and a soldering iron next to a freshly fixed wall panel",
+        "quiet": "a single reading lamp over a soft armchair in a hushed, dim room, a closed book on the armrest",
+        "gardener": "a row of seedlings in pots under a grow lamp, a small watering can and garden gloves",
+        "loyal": "a well-worn house key on a ring with a long-held key tag, resting on a lease paper stamped many times",
+        "veteran": "an old military dress jacket with medals hanging on a hook, a battered helmet on the shelf",
+        "hardy": "a heavy work coat and scuffed steel-toed boots by the door, a dented thermos",
+        "family": "two big pairs of boots and two tiny pairs of boots lined up by a front door, a toy on the floor",
+        "pet_owner": "a food bowl and a chewed ball next to a cozy pet bed with a sleeping furry tail curled in it",
+        "faithful": "a small home shrine with a lit candle and a holy book on a shelf, calm warm light",
+        "tech_fan": "a desk crowded with glowing monitors, opened gadgets and coiled cables",
+        "heat_lover": "a glowing red space heater beside a pair of slippers on a warm rug",
+        "water_lover": "a big aquarium with bubbling water and drifting plants glowing teal in a dark room",
+        "history_buff": "a shelf of old leather books, a dusty antique starship model and a faded star map",
+        "mycophile": "a cardboard grow box of cultivated mushrooms on a kitchen shelf with a small knife (the mushrooms do "
+                     "not glow)",
+        "social_climber": "a sharp tailored suit hanging on a stand beside a framed invitation card and a polished shoe",
+        "frugal": "a jar of saved coins, a patched sock and a carefully mended mug on a plain table",
+        "athletic": "a pair of running shoes, a jump rope and a dented water bottle by a doorway",
+        "sickly": "a bedside table crowded with pill bottles, a thermometer and a glass of water",
+        "smoker": "an overflowing ashtray with a smoldering cigarette and curling smoke against a yellowed wall",
+        "elderly": "a walking cane leaning on a worn armchair, reading glasses on a knitted blanket",
+        "remote_worker": "a home desk with a terminal and a headset, a coffee mug and a calendar full of notes",
+        "long_hours": "a work uniform tossed on a chair, a wall clock past midnight and a cold untouched dinner",
+        "night_owl": "a desk lamp burning late at night by a window full of stars, an empty coffee cup",
+        "couple": "two coffee mugs side by side on a small kitchen table with two chairs pulled close",
+        "gambler": "playing cards, dice and a scatter of credit chips on a green felt table under a hanging lamp",
+        "smuggler": "a hidden compartment open under the floor, full of sealed crates with no markings",
+        "generous": "a gift box with a ribbon and a plate of fresh pastries left on a doorstep",
+        "asthma": "a child's inhaler and a small breathing mask on a nightstand by a dim window",
+        "allergies": "a box of tissues and a half-eaten sandwich pushed away on a child's lunch tray, a warning sticker",
+        "weak_lungs": "a small oxygen bottle with a clear tube beside a child's bed, a soft monitor light",
+        "hard_of_hearing": "a small hearing aid lying on a child's desk next to a school tablet",
+        "irritable": "a slammed door with a kid's room sign hanging crooked, a crumpled drawing on the floor",
+        "lazy": "an unmade kid's bed with clothes and game controllers piled around it, curtains closed",
+        "adhd": "a messy kid's desk with half-done homework, scattered toys and three things started at once",
+        "loner": "a single chair at the end of a long empty school canteen table, one lunch tray",
+        "neet": "a dark bedroom lit only by a glowing game screen, snack wrappers and a closed curtain",
+        "bullied": "a kicked-over school bag with spilled books and a torn drawing in a grey hallway",
+        "book_reader": "a tall stack of well-read books with a flashlight on a kid's bed",
+        "many_friends": "many small jackets piled on a hook by the door and a table set for a kids' party",
+        "affluent": "a kid's room with a fine wooden toy starship, a velvet chair and a big window to a nice garden",
+        "popular": "a school locker covered in notes, stickers and party invitations",
+    }
+    for t in load("tenant_traits.json")["traits"]:
+        good = t.get("good")
+        tone = ("Mood: warm and pleasant, a good trait." if good is True
+                else "Mood: grim and unpleasant, a bad trait." if good is False
+                else "Mood: neutral and everyday, just how this person lives.")
+        kid = " (a child's trait; show a child's things, never the child)" if t.get("kidOnly") else ""
+        out.append({"key": "tenant_" + t["id"], "name": t["name"], "group": "Tenant traits", "good": good,
+                    "subject": (tenant_subjects.get(t["id"]) or "the belongings of someone who is " + t["name"].lower())
+                    + kid + ". No people in the picture, only their things", "tone": tone})
     for i in out:
         i["prompt"] = ICON_STYLE + "\n\nTHE ICON: " + i["name"] + ". Show " + i["subject"] + ".\n" + i["tone"] + \
             "\n\nSave it as " + i["key"] + ".png"
@@ -197,10 +262,27 @@ def build():
     for i, t in enumerate(tiers):
         text_icon(os.path.join(OUT, "size_%s.png" % t["id"]), str(i + 1), "SIZE", size_bg[min(i, 5)])
         n_script += 1
-    for i in gemini_icons():
+    # LLS-31: a tenant's hidden trait (not screened yet), in the grade icons' flat style.
+    hidden = os.path.join(OUT, "tenant_hidden.png")
+    text_icon(hidden, "?", "HIDDEN", (70, 72, 80))
+    n_script += 1
+    items = gemini_icons()
+    # LLS-31: tenant icons ship all together or not at all (the game shows names until every one is in).
+    tenant_ready = all(any(os.path.exists(os.path.join(SRC, i["key"] + e)) for e in (".png", ".jpg", ".jpeg", ".webp"))
+                       for i in items if i["group"] == "Tenant traits")
+    if not tenant_ready:
+        for f in os.listdir(OUT):
+            if f.startswith("tenant_"):
+                os.remove(os.path.join(OUT, f))
+        print("tenant icons: not all painted yet, none written")
+    for i in items:
+        if i["group"] == "Tenant traits" and not tenant_ready:
+            continue
         dst = os.path.join(OUT, i["key"] + ".png")
         # Andrzej names files by the trait's name ("blooming.jpg"); the id ("flowers") and the key work too.
         names = [i["key"], i["name"].lower(), i["name"].lower().replace("-", "_").replace(" ", "_")]
+        if i["group"] == "Tenant traits":
+            names = [i["key"]]  # LLS-31: only tenant_<id>, so a tenant's "Allergies" never takes a house trait's art
         if i["key"].startswith("trait_"):
             names.append(i["key"][len("trait_"):])
         src = next((os.path.join(SRC, n + e) for n in names for e in (".png", ".jpg", ".jpeg", ".webp")
@@ -218,10 +300,12 @@ def build():
         if src:
             from_art(src, dst)
             n_art += 1
+        elif i["group"] == "Tenant traits":
+            continue  # no placeholder: the tenant card shows the trait as text until its icon is in
         else:
             placeholder(dst, i["name"], i["good"])
             n_place += 1
-    print("icons: %d made by script, %d from Andrzej's art, %d placeholders" % (n_script, n_art, n_place))
+    print("icons: %d made by script, %d painted, %d placeholders" % (n_script, n_art, n_place))
 
 
 def prompts():

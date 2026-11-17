@@ -1,3 +1,6 @@
+Version 1.10.0 (2026-11-17)
+- Every home trait has its painted icon now (27 were placeholders), and Residential area, Heat, Cold and Radiation have their own instead of the plain or vanilla ones
+
 Version 1.9.1 (2026-11-17)
 - Fixed: clicking anything while the nickname box was open left every key going to the hidden box
 

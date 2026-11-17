@@ -147,10 +147,70 @@ public abstract class PropertyView extends Canvas {
         for (int i = 0; i < t.traits().size(); i++) {
             landlordsector.data.TenantTraits.Def d = landlordsector.data.TenantTraits.get(t.traits().get(i));
             if (d == null) continue;
-            out.add(t.isShown(i) ? new Object[] {d.name, d.good, d.name, Tips.tenantTrait(d)}
-                    : new Object[] {"?", null, "Hidden trait", Tips.hidden()});
+            out.add(t.isShown(i) ? new Object[] {d.name, d.good, d.name, Tips.tenantTrait(d), traitIcon(d.id)}
+                    : new Object[] {"?", null, "Hidden trait", Tips.hidden(), traitIcon("hidden")});
         }
         return out;
+    }
+
+    /** LLS-31: a tenant trait's icon (kid traits too; "hidden" is the "?" icon). */
+    public static String traitIcon(String id) {
+        return landlordsector.Art.ICONS + "tenant_" + id + ".png";
+    }
+
+    private static Boolean tenantIcons;
+
+    /** LLS-31: true when every tenant trait (and the hidden one) has its icon; until then all traits stay names. */
+    public static boolean tenantIconsReady() {
+        if (tenantIcons == null) {
+            boolean ok = true;
+            for (landlordsector.data.TenantTraits.Def d : landlordsector.data.TenantTraits.all()) {
+                if (!landlordsector.Art.has(traitIcon(d.id))) {
+                    ok = false;
+                    break;
+                }
+            }
+            tenantIcons = ok && landlordsector.Art.has(traitIcon("hidden"));
+        }
+        return tenantIcons;
+    }
+
+    /** LLS-31: the space trait icons take: the icon, a gap, the good or bad line under it. */
+    public static final float TRAIT_LINE = 3f;
+
+    /** LLS-31: how big trait icons are drawn when {@code n} of them share {@code maxW}. */
+    protected static float traitIconSize(int n, float size, float maxW) {
+        if (n <= 0) return size;
+        return Math.max(20f, Math.min(size, (maxW - ICON_GAP * (n - 1)) / n));
+    }
+
+    /**
+     * LLS-31 (Andrzej: "did we make tenants use icons for their traits yet? If not, let's do it"): the traits as icons
+     * ({name, good, tooltip title, tooltip lines, icon}), each with its tooltip and a green or red line under good and
+     * bad ones. When one icon is missing nothing is drawn and the names are written instead.
+     */
+    @SuppressWarnings("unchecked")
+    protected void traitRow(List<Object[]> items, float x, float y, float size, float maxW) {
+        if (!tenantIconsReady()) {
+            coloredRow(items, x, y, maxW);
+            return;
+        }
+        for (Object[] it : items) {
+            if (it.length < 5 || !landlordsector.Art.has((String) it[4])) {
+                coloredRow(items, x, y, maxW);
+                return;
+            }
+        }
+        float s = traitIconSize(items.size(), size, maxW);
+        float cx = x;
+        for (Object[] it : items) {
+            if (cx + s > x + maxW + 0.5f) break;
+            icon((String) it[4], cx, y, s, s, 1f);
+            Boolean good = (Boolean) it[1];
+            if (good != null) bar(cx, y + s + 1f, s, TRAIT_LINE, 1f, traitColor(good));
+            tipColored(cx, y, s, s + 1f + TRAIT_LINE, (String) it[2], (List<String[]>) it[3]);
+            cx += s + ICON_GAP;
+        }
     }
 
     public static Color traitColor(Boolean good) {
@@ -199,7 +259,7 @@ public abstract class PropertyView extends Canvas {
         o.setHighlightColors(Misc.getHighlightColor());
         tip(tx, y + 28f, Math.max(80f, o.computeTextWidth(wl) + 8f), 18f, wl, Tips.wealth(t.wealth, t.homeShift()));
         text("Traits", Misc.getGrayColor(), tx, y + 48f, 60f);
-        coloredRow(tenantTraits(t), tx + 60f, y + 48f, tw - 60f);
+        traitRow(tenantTraits(t), tx + 60f, y + 46f, 36f, tw - 60f);
         float ny = y + size + 8f;
         if (home != null) {
             landlordsector.PropertyStats st = landlordsector.PropertyStats.withTenant(home, t);

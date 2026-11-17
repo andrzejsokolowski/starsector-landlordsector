@@ -4,8 +4,8 @@
 	"modName":"Landlordsector",
 	"modVersion": {
 		"major":1,
-		"minor":9,
-		"patch":1
+		"minor":10,
+		"patch":0
 	},
 	"starsectorVersion":"0.98.5a-RC4",
 	"directDownloadURL":"https://github.com/andrzejsokolowski/starsector-landlordsector/releases/latest/download/Landlordsector.zip"

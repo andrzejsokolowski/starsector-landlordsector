@@ -198,6 +198,16 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   Romantic bedroom: upgrades.json `homeOnly` and `childChance`, `Upgrades.fits(d, property)`,
   `Family.childChance`.
 
+- 1.10.0 (LLS-31, Andrzej: "did we make tenants use icons for their traits yet? If not, let's do it"): every house
+  trait, Residential area, the climate levels and every tenant trait (kid traits too) have a painted icon, made in the
+  Gemini app from `tools/art-maker/icons.py prompts` (Claude's queue, 3.1 Pro), saved as `art-source/icons/<key>.jpg`
+  and shrunk by `icons.py build` to `graphics/landlordsector/icons/` (`tenant_<id>.png`, `tenant_hidden.png` by script).
+  `PropertyView.traitRow` draws them with the tooltip and a green or red line under good and bad ones. Tenant icons
+  ship all together or not at all: `icons.py build` writes none until every one is painted, and
+  `tenantIconsReady` keeps the names until every icon loads (1.10.0 shipped the home icons only; Gemini's limit
+  stopped the tenant set at 16 of 51). Applicant rows put the icons in their own column (`rowTraits`).
+  `checkReleaseFiles` fails when a house trait has no icon or only some tenant icons are there.
+
 ## Known limits
 
 - The portfolio classes are in the save, so removing the mod mid-game breaks that save.

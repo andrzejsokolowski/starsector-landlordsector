@@ -547,7 +547,7 @@ public class RealEstatePage implements ManagePage {
             text("Your " + landlordsector.Family.noun(t) + ". Together " + mo + (mo == 1 ? " month." : " months."),
                     Misc.getGrayColor(), tx, y + 28f, tw);
             text("Traits", Misc.getGrayColor(), tx, y + 48f, 60f);
-            coloredRow(tenantTraits(t), tx + 60f, y + 48f, tw - 60f);
+            traitRow(tenantTraits(t), tx + 60f, y + 46f, 36f, tw - 60f);
             float ny = y + size + 8f;
             PropertyStats st = p.stats();
             text("Happiness", Misc.getGrayColor(), x, ny, 120f);
@@ -625,7 +625,7 @@ public class RealEstatePage implements ManagePage {
                     text("Traits come when " + landlordsector.Kids.he(c) + " starts school.", Misc.getGrayColor(),
                             x + w - 230f, y + 28f, 220f);
                 } else {
-                    coloredRow(kidTraits(c), x + w - 230f, y + 28f, 220f);
+                    traitRow(kidTraits(c), x + w - 230f, y + 28f, 40f, 220f);
                 }
                 y += 82f;
             }
@@ -653,7 +653,9 @@ public class RealEstatePage implements ManagePage {
             List<Object[]> out = new ArrayList<>();
             for (String id : c.traits()) {
                 landlordsector.data.TenantTraits.Def d = landlordsector.data.TenantTraits.get(id);
-                if (d != null) out.add(new Object[] {d.name, d.good, d.name, landlordsector.ui.Tips.kidTrait(d)});
+                if (d != null) {
+                    out.add(new Object[] {d.name, d.good, d.name, landlordsector.ui.Tips.kidTrait(d), traitIcon(d.id)});
+                }
             }
             return out;
         }
@@ -875,11 +877,29 @@ public class RealEstatePage implements ManagePage {
             portrait(a.portrait, x + 6f, y + 6f, 54f);
             float tx = x + 68f;
             float hw = w - 80f - 180f;
-            headLine(a, tx, y + 4f, hw);
-            coloredRow(tenantTraits(a), tx, y + 22f, hw);
-            happinessThere(p, a, tx, y + 42f);
+            rowTraits(p, a, y, tx, hw);
             button("movein:" + p.id + ":" + a.id, "Move in", x + w - 8f - 160f, y + 18f, 160f, 28f,
                     Actions.refusal(p, a) == null);
+        }
+
+        /**
+         * LLS-31: an applicant row's text and traits. With every icon in, name and happiness on the left and the trait
+         * icons in a column of their own; otherwise the 1.x layout with the names on the middle line.
+         */
+        private void rowTraits(Property p, Tenant a, float y, float tx, float hw) {
+            List<Object[]> items = tenantTraits(a);
+            boolean icons = tenantIconsReady();
+            for (Object[] it : items) icons &= landlordsector.Art.has((String) it[4]);
+            if (!icons || hw < 470f) {
+                headLine(a, tx, y + 4f, hw);
+                coloredRow(items, tx, y + 22f, hw);
+                happinessThere(p, a, tx, y + 42f);
+                return;
+            }
+            float col = 370f;
+            headLine(a, tx, y + 8f, col - 10f);
+            happinessThere(p, a, tx, y + 36f);
+            traitRow(items, tx + col, y + 6f, 50f, hw - col);
         }
 
         /** "Name - Faction   Wealth: [B]" with the wealth tooltip. */
@@ -917,9 +937,7 @@ public class RealEstatePage implements ManagePage {
             portrait(a.portrait, x + 6f, y + 6f, 54f);
             float tx = x + 68f;
             float hw = w - 80f - 330f;
-            headLine(a, tx, y + 4f, hw);
-            coloredRow(tenantTraits(a), tx, y + 22f, w - 80f - 340f);
-            happinessThere(p, a, tx, y + 42f);
+            rowTraits(p, a, y, tx, hw);
             String no = Actions.refusal(p, a);
             // 8 pixels from the card's right edge (0.3.8: Turn away touched it).
             float bx = x + w - 8f - 330f;

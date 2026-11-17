@@ -165,6 +165,21 @@ tasks.register('checkReleaseFiles') {
             }
         }
 
+        // LLS-31: every house trait has its painted icon; tenant trait icons ship all together or not at all (the game
+        // shows names until every one is in).
+        def ids = { String name ->
+            def text = file("data/config/landlordsector/${name}").getText('UTF-8').readLines()
+                    .findAll { !it.trim().startsWith('#') }.join('\n')
+            (text =~ /\{\s*"id"\s*:\s*"([a-z_0-9]+)"/).collect { it[1] }
+        }
+        ids('house_traits.json').each { id ->
+            if (!file("graphics/landlordsector/icons/trait_${id}.png").isFile()) problems << "house trait ${id} has no icon"
+        }
+        def tenantIcons = (ids('tenant_traits.json') + ['hidden']).collect { "graphics/landlordsector/icons/tenant_${it}.png" }
+        def have = tenantIcons.count { file(it).isFile() }
+        if (have != 0 && have != tenantIcons.size())
+            problems << "only ${have} of ${tenantIcons.size()} tenant trait icons: ship all or none"
+
         // getSpriteName("category", "key") throws when the key is missing. Check every pair against the
         // game's settings.json with its comments stripped.
         def settingsText = new File(core, 'data/config/settings.json').getText('UTF-8').readLines()
