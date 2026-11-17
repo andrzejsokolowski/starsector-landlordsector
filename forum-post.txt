@@ -125,6 +125,10 @@ This mod is under the CC0 (Creative Commons Zero) License, allowing you to do wh
 [/spoiler]
 
 [spoiler=Version log]
+[b]1.8.1[/b]
+[list]
+[li]Kids have pictures for each stage up to Teen: the kid seen from behind (a crib, toy blocks, a window, a walkway), a boy and a girl version. From the Adult stage they show the random portrait from your faction they were given at birth, and keep it as your officer or administrator[/li]
+[/list]
 [b]1.8.0[/b]
 [list]
 [li]Kids grow up in five stages: Baby, Toddler, Child, Teen and Adult (one cycle each with 5 cycles to grow up). Babies only giggle; the career lines show from the Child stage, with a tooltip saying what the child will want to become[/li]

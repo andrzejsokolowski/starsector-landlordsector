@@ -56,8 +56,12 @@ public final class Kids {
     public static final String ACADEMY_OFFICER = "lls_academy_officer", ACADEMY_ADMIN = "lls_academy_admin";
     public static final String TUTORED = "lls_tutored", BUSINESS = "lls_business_school";
 
-    /** Portrait variants per stage and sex (graphics/landlordsector/portraits/kids/<stage>_<f|m>_<n>.png). */
-    public static final int LOOKS = 3;
+    /**
+     * Portrait variants per stage and sex (graphics/landlordsector/portraits/kids/<stage>_<f|m>_<n>.png). Andrzej,
+     * 2026-11-17: a kid in a small spacesuit with a dark visor, no face ("race ambiguous"), one per sex; adults show
+     * the random portrait from your faction picked at birth.
+     */
+    public static final int LOOKS = 1;
 
     private Kids() {
     }
@@ -103,6 +107,7 @@ public final class Kids {
             c.teenHelps = random.nextBoolean();
         }
         c.look = look(c, random);
+        keepAdultPortrait(c);
         updatePortrait(c);
     }
 
@@ -607,6 +612,7 @@ public final class Kids {
     /** The picture for this stage, or null when the mod lists none (then the old one stays). */
     public static String portrait(Child c) {
         int s = stageOf(c);
+        if (s >= ADULT) return c.adultPortrait;
         int n = 1 + Math.floorMod(c.look < 0 ? 0 : c.look, LOOKS);
         String key = STAGE_KEY[s] + "_" + (c.female ? "f" : "m") + "_" + n;
         try {
@@ -615,6 +621,19 @@ public final class Kids {
         } catch (Throwable t) {
             return null;
         }
+    }
+
+    /** 1.8.1: every load, the picture for the kid's stage (kids from 1.8.0 saves get theirs). */
+    public static void refreshPortrait(Child c) {
+        if (c.grown) return;
+        keepAdultPortrait(c);
+        updatePortrait(c);
+    }
+
+    /** Older saves: the portrait the game picked at birth is the grown-up one. */
+    private static void keepAdultPortrait(Child c) {
+        if (c.adultPortrait != null || c.portrait == null) return;
+        if (!c.portrait.contains("/portraits/kids/")) c.adultPortrait = c.portrait;
     }
 
     /** Shows the picture for the kid's stage on the Family tab and in the comm directory. */

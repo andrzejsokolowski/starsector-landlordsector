@@ -1137,6 +1137,15 @@ public final class RuntimeCheck {
         expect(Portfolio.get().lastKidCost >= Kids.UPKEEP_BABY, "raising the baby shows at the month's end: "
                 + Portfolio.get().lastKidCost);
 
+        // 1.8.1: the faction portrait picked at birth is kept for the Adult stage and the grown-up life.
+        Child face = new Child();
+        face.portrait = "graphics/portraits/portrait_hegemony05.png";
+        face.bornAt = now - (long) (Kids.stageDays() * 4.5f * DAY);
+        face.stage = Kids.ADULT;
+        Kids.refreshPortrait(face);
+        expect("graphics/portraits/portrait_hegemony05.png".equals(face.adultPortrait)
+                && face.adultPortrait.equals(face.portrait), "an adult kid shows the portrait picked at birth");
+
         // Old saves: a baby born with traits loses them.
         Child old = new Child();
         old.id = "kid_old";

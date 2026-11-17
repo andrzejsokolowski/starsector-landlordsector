@@ -182,7 +182,10 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   `adminSkill`, `training`), spouse burden (`burden`, read by `PropertyStats` for partners), monthly upkeep
   (`Family.monthly`, `Portfolio.lastKidCost`), training (lessons, days together, Academy `IndEvo_Academy`, classes),
   kid events (kid_events.json, `Kids.pick` / `apply`) and portraits (settings.json graphics `lls_kid_portraits`, key
-  `<stage>_<f|m>_<1-3>`, `Kids.updatePortrait`). Kid skills: data/characters/skills (`lls_*`, tags npc_only and
+  `<stage>_<f|m>_1` for baby to teen, `Kids.updatePortrait`, refreshed on every load). 1.8.1 (Andrzej: no faces, "I
+  dont want to cause an uprising"): the kid seen from behind, made in the Gemini app from
+  `tools/art-maker/kid_portraits.py` (prompts / build / sheet); from the Adult stage `Child.adultPortrait`, the random
+  faction portrait picked at birth. Kid skills: data/characters/skills (`lls_*`, tags npc_only and
   ai_core_only so random officers never roll them), effects in `landlordsector.skills.KidSkills`. `Family.startLife`
   scales by `Kids.training` and `Kids.badMarks`. `Kids.migrate` runs on load for older saves. Nicknames:
   `Tenant.realName` holds the real name while `name` is the nickname; `Canvas.startTyping` / `onTyped` take the

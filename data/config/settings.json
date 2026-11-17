@@ -1,0 +1,14 @@
+{
+	"graphics": {
+		"lls_kid_portraits": {
+			"baby_m_1": "graphics/landlordsector/portraits/kids/baby_m_1.png",
+			"baby_f_1": "graphics/landlordsector/portraits/kids/baby_f_1.png",
+			"toddler_m_1": "graphics/landlordsector/portraits/kids/toddler_m_1.png",
+			"toddler_f_1": "graphics/landlordsector/portraits/kids/toddler_f_1.png",
+			"child_m_1": "graphics/landlordsector/portraits/kids/child_m_1.png",
+			"child_f_1": "graphics/landlordsector/portraits/kids/child_f_1.png",
+			"teen_m_1": "graphics/landlordsector/portraits/kids/teen_m_1.png",
+			"teen_f_1": "graphics/landlordsector/portraits/kids/teen_f_1.png"
+		}
+	}
+}

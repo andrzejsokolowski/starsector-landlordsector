@@ -64,6 +64,8 @@ public class Child {
     public boolean teenHelps;
     /** Kid events: the last one, and what they added to the childhood (days of happiness, signed). */
     public long lastEvent;
+    /** The random portrait from your faction picked at birth: shown from the Adult stage on (1.8.1). */
+    public String adultPortrait;
     /** Picks the portrait variant, so it stays the same across stages. */
     public int look = -1;
     /** Grown: the good and bad skills they started their life with (skill ids). */

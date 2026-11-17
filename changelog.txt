@@ -1,3 +1,6 @@
+Version 1.8.1 (2026-11-17)
+- Kids have pictures for each stage up to Teen: the kid seen from behind (a crib, toy blocks, a window, a walkway), a boy and a girl version. From the Adult stage they show the random portrait from your faction they were given at birth, and keep it as your officer or administrator
+
 Version 1.8.0 (2026-11-17)
 - Kids grow up in five stages: Baby, Toddler, Child, Teen and Adult (one cycle each with 5 cycles to grow up). Babies only giggle; the career lines show from the Child stage, with a tooltip saying what the child will want to become
 - A teen's wish is locked for good (picked at random if you never talked about it). Teens can take lessons (25,000, up to 3) and spend a day with you once a week; adults can go to an Industrial Evolution Academy on your colony (100,000, officers and administrators) and take extra classes (250,000)

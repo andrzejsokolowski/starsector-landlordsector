@@ -65,7 +65,10 @@ public class LandlordsectorModPlugin extends BaseModPlugin {
         Family.marryEveryPartner();
         // 1.8.0: kids from older saves get their stage (and babies lose the traits they were born with).
         for (Property home : p.properties()) {
-            for (Child c : new java.util.ArrayList<>(home.children())) Kids.migrate(home, c, random);
+            for (Child c : new java.util.ArrayList<>(home.children())) {
+                Kids.migrate(home, c, random);
+                Kids.refreshPortrait(c);
+            }
         }
     }
 

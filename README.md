@@ -146,6 +146,9 @@ Requires LunaLib and OddiszCommons.
 - Kids grow up in five stages, one cycle each with the default 5 cycles: Baby, Toddler, Child, Teen, Adult.
   At home they cost 500 a month as babies and toddlers, 1,500 as a child, 2,500 as a teen and nothing as adults.
   Your spouse loses 5 happiness per baby, 8 per toddler and 3 per child; a teen helps (+4) or is a handful (-4).
+- Up to the Teen stage a kid's picture shows them from behind (no face): in a crib, with toy blocks, at a window,
+  on a walkway at night; blue for boys, red for girls. From the Adult stage they show the random portrait from your
+  faction picked at birth.
 - From the Child stage, talk to them to steer what they become (officer, administrator, miner, Nexerelin agent,
   local celebrity). As a teen the wish is locked. Teens take lessons (25,000, up to 3, a month apart) and spend a
   day with you once a week (every 4 days count as a lesson, up to 2). Adults go to an Academy on your colony

@@ -803,6 +803,7 @@ public final class Family {
             kid.setName(name);
             kid.setGender(g);
             c.portrait = kid.getPortraitSprite();
+            c.adultPortrait = c.portrait;
             c.person = kid;
             Kids.updatePortrait(c);
             kid.getMemoryWithoutUpdate().set(CHILD_FLAG, true);
@@ -965,7 +966,8 @@ public final class Family {
         if (c.person != null && c.person.getName() != null) to.setName(c.person.getName());
         else to.setName(new FullName(c.name, "", g));
         to.setGender(g);
-        if (c.portrait != null) to.setPortraitSprite(c.portrait);
+        String face = c.adultPortrait != null ? c.adultPortrait : c.portrait;
+        if (face != null) to.setPortraitSprite(face);
         if (to.getRelToPlayer() != null) to.getRelToPlayer().setRel(1f);
     }
 
