@@ -76,8 +76,8 @@ public final class RulesCheck {
         Economy eco = TierTable.economy();
         expect(Pricing.value(1000f, 0f, true, eco.landValue) == 200f, "a condemned home keeps its land value");
         expect(Pricing.value(1000f, 1f, false, eco.landValue) == 1000f, "a new home is worth its full value");
-        expect(Math.abs(Pricing.repairCost(1000f, 0f, eco.repairFullCost) - 100f) < 1e-3,
-                "a full rebuild costs 10 percent of the value");
+        expect(Math.abs(Pricing.repairCost(1000f, 0f, eco.repairFullCost) - 1000f * eco.repairFullCost) < 1e-3,
+                "a full rebuild costs repairFullCost of the value (1.12.1: 5%)");
         expect(Pricing.repairCost(1000f, 1f, eco.repairFullCost) == 0f, "a new home needs no repairs");
         expect(Math.abs(eco.wearMonths - 24f) < 1e-3, "about 2 cycles from new to condemned (Andrzej, LLS-1)");
 

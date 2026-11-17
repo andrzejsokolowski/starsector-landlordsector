@@ -21,8 +21,8 @@ public final class Leases {
     /** The terms the lease button cycles through. */
     public static final int[] TERMS = {0, 6, 12, 24};
     public static final float BREACH_DAYS = 60f;
-    /** Below this happiness a tenant does not renew. */
-    public static final float RENEW_HAPPINESS = 35f;
+    /** Below this happiness a tenant does not renew (1.12.1: the same bar as moving out, was 35). */
+    public static final float RENEW_HAPPINESS = TenantRules.MOVE_OUT_BELOW;
     /** Evicting during a lease costs this share of the rent of the months left. */
     public static final float EVICT_SHARE = 0.5f;
     public static final String END_EVENT = "lease_end";

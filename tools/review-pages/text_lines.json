@@ -2765,10 +2765,10 @@
 		},
 		{
 			"id": "q_rent_cut_request_f1",
-			"version": "1.12.0",
+			"version": "1.12.1",
 			"line": "You kept the rent at Leafy Cottage as it is, so Jana Okoye moved out.",
 			"area": "Questions",
-			"when": "Instead of the line above, 20% of the time: the answer \"Keep the rent\" went wrong."
+			"when": "Instead of the line above, half the time, but only when the tenant's happiness is under 30 (1.12.1; was 20% of the time for everyone): the answer \"Keep the rent\" went wrong."
 		},
 		{
 			"id": "q_police_search",

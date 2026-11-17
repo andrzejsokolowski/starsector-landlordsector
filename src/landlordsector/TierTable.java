@@ -51,6 +51,9 @@ public final class TierTable {
             e.driftMin = num(ec, "driftMin", e.driftMin);
             e.driftMax = num(ec, "driftMax", e.driftMax);
             e.disruptionWear = num(ec, "disruptionWear", e.disruptionWear);
+            e.happyRepair = num(ec, "happyRepair", e.happyRepair);
+            e.happyRepairFrom = num(ec, "happyRepairFrom", e.happyRepairFrom);
+            e.eventDamage = num(ec, "eventDamage", e.eventDamage);
             e.raidWear = num(ec, "raidWear", e.raidWear);
             e.tacticalBombWear = num(ec, "tacticalBombWear", e.tacticalBombWear);
             e.agentShare = num(ec, "agentShare", e.agentShare);

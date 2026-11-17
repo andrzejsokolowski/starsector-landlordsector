@@ -159,7 +159,8 @@ public final class Choices {
             if (Leases.has(t)) t.leaseRent = to;
         }
         TenantEvents.Def outcome = a;
-        if (a.fail != null && random.nextFloat() < a.failChance) {
+        boolean unhappyEnough = a.failBelow <= 0f || (t != null && p.stats().happiness < a.failBelow);
+        if (a.fail != null && unhappyEnough && random.nextFloat() < a.failChance) {
             // The plan went wrong: say what was tried, then what happened.
             outcome = a.fail;
         }

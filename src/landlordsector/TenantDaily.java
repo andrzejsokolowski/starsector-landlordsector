@@ -276,7 +276,9 @@ public class TenantDaily implements EveryFrameScript {
         Tenant t = p.tenant;
         String text = prefix + eventText(p, e.text, t) + suffix;
         if (e.condition != 0f && !p.condemned) {
-            p.condition = Pricing.clamp(p.condition + e.condition, 0f, 1f);
+            // 1.12.1: event damage counts less (Andrzej: "make repairs less needed").
+            float dc = e.condition < 0f ? e.condition * TierTable.economy().eventDamage : e.condition;
+            p.condition = Pricing.clamp(p.condition + dc, 0f, 1f);
             if (p.condition <= 0f) p.condemned = true;
         }
         if (t != null) t.mood = Pricing.clamp(t.mood + e.mood, -30f, 30f);

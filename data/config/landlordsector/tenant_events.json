@@ -35,7 +35,8 @@
 	#   evict: the tenant is put out (no lease fee), rentStep: -1 lowers the rent a step (the lease's too),
 	#   sellMult: the home is sold at this share of its sale value, renew: the lease starts again,
 	#   managerPick: the tenant manager's answer (else the default),
-	#   fail: {"chance", "text", effects}: the answer goes wrong instead,
+	#   fail: {"chance", "text", effects}: the answer goes wrong instead ("below": only while the tenant's happiness is
+	#     under this),
 	#   later: {"days", "chance", "text", effects}: something happens later.
 	# A question never comes to your own home or your partner, and one waits at a time per home.
 	# minRent: only while the rent is at least this setting. lease: only during a lease. system: never rolled at
@@ -232,7 +233,7 @@
 		]},
 		{"id":"rent_cut_request", "type":"tenant", "kind":"money", "good":false, "weight":0.4, "minRent":"NORMAL", "text":"$tenant asks for lower rent at $home. Times are hard.", "default":1, "choices":[
 			{"label":"Lower the rent a step", "managerPick":true, "good":true, "rentStep":-1, "mood":10, "text":"You lowered the rent at $home. $tenant is grateful."},
-			{"label":"Keep the rent", "mood":-8, "text":"You kept the rent at $home as it is.", "fail":{"chance":0.2, "leave":true, "text":"You kept the rent at $home as it is, so $tenant moved out."}}
+			{"label":"Keep the rent", "mood":-8, "text":"You kept the rent at $home as it is.", "fail":{"chance":0.5, "below":30, "leave":true, "text":"You kept the rent at $home as it is, so $tenant moved out."}}
 		]},
 		{"id":"police_search", "type":"tenant", "kind":"crime", "good":false, "weight":0.15, "crime":true, "requires":["shady","smuggler"], "text":"Police want to search $home. They're looking for $tenant.", "default":0, "choices":[
 			{"label":"Let them in", "managerPick":true, "rep":1, "mood":-12, "text":"Police searched $home and found nothing.", "fail":{"chance":0.4, "leave":true, "rep":1.5, "text":"Police searched $home and arrested $tenant."}},
@@ -242,7 +243,7 @@
 			{"label":"Go ahead", "good":true, "mood":10, "condition":-0.02, "text":"$tenant threw a big party at $home. Everyone had a great time.", "fail":{"chance":0.35, "condition":-0.06, "rep":-0.5, "mood":6, "text":"$tenant's party at $home got out of hand. The neighbors called the police."}},
 			{"label":"Not this time", "managerPick":true, "mood":-5, "text":"You said no to the party at $home."}
 		]},
-		{"id":"early_leave", "type":"tenant", "kind":"life", "good":false, "weight":0.3, "lease":true, "text":"$tenant got a job offer on another world and asks to end the lease at $home early.", "default":0, "choices":[
+		{"id":"early_leave", "type":"tenant", "kind":"life", "good":false, "weight":0.03, "lease":true, "text":"$tenant got a job offer on another world and asks to end the lease at $home early.", "default":0, "choices":[
 			{"label":"Let $first go", "good":true, "leave":true, "rep":0.3, "text":"$tenant left $home for the new job. You wished them luck."},
 			{"label":"Let $first go for a fee ($gain)", "managerPick":true, "leave":true, "gain":1, "text":"$tenant paid to end the lease at $home early and left."},
 			{"label":"Hold $first to the lease", "mood":-15, "text":"You held $tenant to the lease at $home. $HeIs not happy about it."}

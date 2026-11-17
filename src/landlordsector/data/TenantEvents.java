@@ -74,6 +74,8 @@ public final class TenantEvents {
         /** An answer may go wrong: with {@link #failChance} the fail outcome happens instead. */
         public Def fail;
         public float failChance;
+        /** 1.12.1: the fail outcome only while the tenant's happiness is below this (0: always). */
+        public float failBelow;
         /** An answer may have an outcome later: after {@link #laterDays} days, with {@link #laterChance}. */
         public Def later;
         public float laterDays, laterChance = 1f;
@@ -226,6 +228,7 @@ public final class TenantEvents {
             d.fail.id = d.id + "!fail";
             d.fail.tenant = d.tenant;
             d.failChance = (float) f.optDouble("chance", 0.5);
+            d.failBelow = (float) f.optDouble("below", 0);
         }
         JSONObject l = e.optJSONObject("later");
         if (l != null) {

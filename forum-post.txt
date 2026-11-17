@@ -125,6 +125,13 @@ This mod is under the CC0 (Creative Commons Zero) License, allowing you to do wh
 [/spoiler]
 
 [spoiler=Version log]
+[b]1.12.1[/b]
+[list]
+[li]Repairs cost half as much[/li]
+[li]Happy tenants look after the home again: from happiness 60 they fix a little every month, and at 100 they keep it like new[/li]
+[li]Events (broken windows, fires, burst pipes) damage homes half as much[/li]
+[li]Tenants stay much longer: the job offer that ends a lease early is rare now, tenants renew unless they are very unhappy (below 15, was 35), and keeping the rent after a request for less only makes unhappy tenants move out[/li]
+[/list]
 [b]1.12.0[/b]
 [list]
 [li]Some events now wait for your answer, with buttons in the intel screen and on the home's Tenants tab: a tenant who can't pay (evict, give them a month, or take half), leaking pipes, a broken fridge, painting the walls, a pet, a friend in the spare room, a neighbor's offer to buy the home, a request for lower rent, a police search, a big party and leaving a lease early[/li]

@@ -144,6 +144,12 @@ public final class Pricing {
     }
 
     /** Wear speed: unhappy tenants (0) wear a home 1.5 times as fast, happy ones (100) half as fast. */
+    /** 1.12.1: condition a happy tenant repairs in a month: none at {@code from} or below, {@code atBest} at 100. */
+    public static float happyRepair(float happiness, float atBest, float from) {
+        if (happiness <= from || from >= 100f) return 0f;
+        return atBest * (clamp(happiness, 0f, 100f) - from) / (100f - from);
+    }
+
     public static float wearMult(float happiness) {
         return 1.5f - clamp(happiness, 0f, 100f) / 100f;
     }

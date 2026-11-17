@@ -266,7 +266,8 @@ public final class RuntimeCheck {
         before = credits.get();
         expect(Actions.repair(home).startsWith("Rebuilt"), "a condemned home can be rebuilt");
         expect(home.condition == 1f && !home.condemned, "rebuilt to new");
-        expect(Math.abs(before - credits.get() - full * 0.1f) < CREDIT_EPS, "a rebuild costs 10 percent of the value");
+        expect(Math.abs(before - credits.get() - full * TierTable.economy().repairFullCost) < CREDIT_EPS,
+                "a rebuild costs repairFullCost of the value (1.12.1: 5%)");
         expect(Actions.repair(home).startsWith("It needs no"), "a new home needs no repairs");
 
         // NPC buyers on the colony over a few years.

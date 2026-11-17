@@ -12,8 +12,15 @@
 		{"id":"estate", "name":"Estate", "min":3000000, "max":5000000, "rentShare":0.01, "minSize":6, "slots":8, "weight":7, "comfort":85, "decor":40}
 	],
 	"economy":{
-		# Share of the full value that a repair from ruin to new costs.
-		"repairFullCost":0.10,
+		# Share of the full value that a repair from ruin to new costs (1.12.1: 0.10 to 0.05, Andrzej: "make repairs
+		# less needed and cheaper").
+		"repairFullCost":0.05,
+		# 1.12.1: a happy tenant looks after the home. Condition repaired a month at happiness 100, falling to none at
+		# happyRepairFrom.
+		"happyRepair":0.03,
+		"happyRepairFrom":60,
+		# 1.12.1: damage from events (smashed windows, fires, burst pipes) is multiplied by this.
+		"eventDamage":0.5,
 		# Months from new to condemned at the Normal rent setting with no repairs.
 		"wearMonths":24,
 		# Value of a condemned property, as a share of its full value.

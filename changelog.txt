@@ -1,3 +1,9 @@
+Version 1.12.1 (2026-11-17)
+- Repairs cost half as much
+- Happy tenants look after the home again: from happiness 60 they fix a little every month, and at 100 they keep it like new
+- Events (broken windows, fires, burst pipes) damage homes half as much
+- Tenants stay much longer: the job offer that ends a lease early is rare now, tenants renew unless they are very unhappy (below 15, was 35), and keeping the rent after a request for less only makes unhappy tenants move out
+
 Version 1.12.0 (2026-11-17)
 - Some events now wait for your answer, with buttons in the intel screen and on the home's Tenants tab: a tenant who can't pay (evict, give them a month, or take half), leaking pipes, a broken fridge, painting the walls, a pet, a friend in the spare room, a neighbor's offer to buy the home, a request for lower rent, a police search, a big party and leaving a lease early
 - Some answers can go wrong or pay off later. With no answer in 7 days the default answer happens, and the tenant manager answers for you

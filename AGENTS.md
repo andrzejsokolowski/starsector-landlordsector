@@ -221,6 +221,15 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   `lease_end`). `upgradeTo1120` gives tenants in old saves a lease. Checks: `checkLeases1120`, `checkChoices1120`.
   Every new text line is on the review page (areas New events, Questions, Tenant words, Leases).
 
+- 1.12.1 (LLS-35 balance run, Andrzej: "make repairs less needed and cheaper"): `./gradlew balanceRun` simulates 40
+  campaigns of 5 homes for 10 years (5 is the default limit; balance for 5, not 50). tiers.json economy:
+  repairFullCost 0.10 to 0.05, `happyRepair` (0.03 a month at happiness 100, none at `happyRepairFrom` 60,
+  `Pricing.happyRepair`, in `MonthlyTick` after the wear), `eventDamage` 0.5 (bad events' condition, in
+  `TenantDaily.applyOutcome`). wearMonths stays 24 (LLS-1: an untended home falls apart in about 2 cycles).
+  Turnover from 1.12.0: early_leave weight 0.3 to 0.03, `Leases.RENEW_HAPPINESS` = MOVE_OUT_BELOW (15, was 35),
+  answer fails may need low happiness (`fail.below`, `Def.failBelow`). Result: tenants stay about 3.5 years, homes
+  away from your colonies pay for themselves in 11-22 years, on your colonies in 2.5-6.
+
 ## Known limits
 
 - The portfolio classes are in the save, so removing the mod mid-game breaks that save.
