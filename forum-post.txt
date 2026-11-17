@@ -125,6 +125,12 @@ This mod is under the CC0 (Creative Commons Zero) License, allowing you to do wh
 [/spoiler]
 
 [spoiler=Version log]
+[b]1.11.0[/b]
+[list]
+[li]Tenant, partner, applicant and kid traits show as painted icons instead of names; hover one for its name and what it does[/li]
+[li]Good traits have a green line under the icon, bad ones a red line; traits not screened yet show a "?" icon[/li]
+[li]Applicant and pool rows put the trait icons in a column of their own[/li]
+[/list]
 [b]1.10.0[/b]
 [list]
 [li]Every home trait has its painted icon now (27 were placeholders), and Residential area, Heat, Cold and Radiation have their own instead of the plain or vanilla ones[/li]

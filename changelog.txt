@@ -1,3 +1,8 @@
+Version 1.11.0 (2026-11-17)
+- Tenant, partner, applicant and kid traits show as painted icons instead of names; hover one for its name and what it does
+- Good traits have a green line under the icon, bad ones a red line; traits not screened yet show a "?" icon
+- Applicant and pool rows put the trait icons in a column of their own
+
 Version 1.10.0 (2026-11-17)
 - Every home trait has its painted icon now (27 were placeholders), and Residential area, Heat, Cold and Radiation have their own instead of the plain or vanilla ones
 

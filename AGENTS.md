@@ -205,7 +205,7 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   `PropertyView.traitRow` draws them with the tooltip and a green or red line under good and bad ones. Tenant icons
   ship all together or not at all: `icons.py build` writes none until every one is painted, and
   `tenantIconsReady` keeps the names until every icon loads (1.10.0 shipped the home icons only; Gemini's limit
-  stopped the tenant set at 16 of 51). Applicant rows put the icons in their own column (`rowTraits`).
+  stopped the tenant set at 16 of 51; 1.11.0 shipped all 51 tenant icons and the hidden one). Applicant rows put the icons in their own column (`rowTraits`).
   `checkReleaseFiles` fails when a house trait has no icon or only some tenant icons are there.
 
 ## Known limits
