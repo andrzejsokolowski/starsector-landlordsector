@@ -78,8 +78,13 @@ public class TenantDaily implements EveryFrameScript {
                     Notify.event(p, p.tenant.name + " moved out of " + p.displayName() + ": it is condemned.", false,
                             true);
                     p.tenant = null;
+                    Choices.cancel(p);
                     continue;
                 }
+                // 1.12.0: questions run out, outcomes come due, leases end.
+                Choices.daily(p, random);
+                if (p.tenant != null) Leases.daily(p, random);
+                if (p.tenant == null) continue;
                 rollEvent(p, m, random);
                 if (p.tenant != null) rollTenantEvent(p, m, random);
                 if (p.tenant != null) maybeMoveOut(p, random);
@@ -135,7 +140,7 @@ public class TenantDaily implements EveryFrameScript {
         List<Float> weights = new ArrayList<>();
         float total = 0f;
         for (TenantEvents.Def d : TenantEvents.all()) {
-            if (d.leave || d.tenant || !allowed(p, d)) continue;
+            if (d.leave || d.tenant || d.system || !allowed(p, d)) continue;
             float w = TenantRules.eventWeight(d.good, d.damage, d.crime, d.weight, p.tenant.eventMult(d.id),
                     st.happiness, p.playerHome ? RentSetting.NORMAL : p.setting(), p.tier().index, st.security);
             if (d.good) w *= spouseMult(p.tenant);
@@ -156,7 +161,8 @@ public class TenantDaily implements EveryFrameScript {
                 break;
             }
         }
-        apply(p, m, pick);
+        if (pick.isQuestion()) Choices.ask(p, pick, random);
+        else apply(p, m, pick);
     }
 
     /**
@@ -169,7 +175,9 @@ public class TenantDaily implements EveryFrameScript {
         }
         if (random.nextFloat() >= TenantEvents.tenantDailyChance()) return;
         TenantEvents.Def pick = pickTenantEvent(p, random);
-        if (pick != null) apply(p, m, pick);
+        if (pick == null) return;
+        if (pick.isQuestion()) Choices.ask(p, pick, random);
+        else apply(p, m, pick);
     }
 
     /** One tenant event by weight, or null. Public for the headless check. */
@@ -180,7 +188,7 @@ public class TenantDaily implements EveryFrameScript {
         List<Float> weights = new ArrayList<>();
         float total = 0f;
         for (TenantEvents.Def d : TenantEvents.all()) {
-            if (d.leave || !d.tenant || !allowed(p, d)) continue;
+            if (d.leave || !d.tenant || d.system || !allowed(p, d)) continue;
             float w = tenantWeight(d, p.tenant.eventMult(d.id), st.health, st.security) * featureMult(features, d.id);
             if (d.good) w *= spouseMult(p.tenant);
             if (w <= 0f) continue;
@@ -218,6 +226,21 @@ public class TenantDaily implements EveryFrameScript {
         if (p.tenant != null && p.tenant.isPartner() && Family.PARTNER_SKIP_EVENTS.contains(d.id)) return false;
         // 1.2.2: Sophia Anderson still runs AoTD research, so tenant events never kill her.
         if (d.dies && p.tenant != null && Family.isSophia(p.tenant.person)) return false;
+        if (d.isQuestion()) {
+            // 1.12.0: one question at a time, never for your family or your own home.
+            if (p.decision != null || p.playerHome || p.tenant == null || p.tenant.isPartner()) return false;
+            for (TenantEvents.Def a : d.choices) {
+                if (a.sellMult > 0f && Actions.cannotSell(p) != null) return false;
+            }
+        }
+        if (d.minRent != null) {
+            try {
+                if (p.setting().ordinal() < RentSetting.valueOf(d.minRent).ordinal()) return false;
+            } catch (IllegalArgumentException ignored) {
+                return false;
+            }
+        }
+        if (d.lease && !Leases.running(p.tenant)) return false;
         if (!d.requires.isEmpty()) {
             boolean ok = false;
             for (String tr : d.requires) if (p.tenant.has(tr)) ok = true;
@@ -236,19 +259,35 @@ public class TenantDaily implements EveryFrameScript {
     public static void apply(Property p, MarketAPI m, TenantEvents.Def e) {
         if (e.tenant) p.lastTenantEventAt = Global.getSector().getClock().getTimestamp();
         else p.lastEventAt = Global.getSector().getClock().getTimestamp();
+        applyOutcome(p, m, e, "", "");
+    }
+
+    /** An event's text with the tenant's name, the home's name and "She's" filled in (1.12.0: also for answers). */
+    public static String eventText(Property p, String text, Tenant t) {
+        return tenantWords(text, t).replace("$home", p.displayName()).replace("$HeIs", heIs(t))
+                .replace("$first", t != null ? t.firstName() : "They");
+    }
+
+    /**
+     * The effects of an event or of an answer (1.12.0), and its message: {@code prefix} goes before the text ("No
+     * answer from you..."), {@code suffix} after it ("You paid 1,200."). Returns the message.
+     */
+    public static String applyOutcome(Property p, MarketAPI m, TenantEvents.Def e, String prefix, String suffix) {
         Tenant t = p.tenant;
-        String text = tenantWords(e.text, t).replace("$home", p.displayName()).replace("$HeIs", heIs(t));
+        String text = prefix + eventText(p, e.text, t) + suffix;
         if (e.condition != 0f && !p.condemned) {
             p.condition = Pricing.clamp(p.condition + e.condition, 0f, 1f);
             if (p.condition <= 0f) p.condemned = true;
         }
         if (t != null) t.mood = Pricing.clamp(t.mood + e.mood, -30f, 30f);
+        if (t != null && e.breach) Leases.breach(t);
         if (e.decor != 0f) p.decorBonus = Pricing.clamp(p.decorBonus + e.decor, -p.tier().decor, 100f);
         if (e.rentMult >= 0f) p.rentCut = Math.max(p.rentCut, 1f - e.rentMult);
         if (e.tip > 0f) {
             float tip = p.expectedRent() * e.tip;
             if (tip > 0f) {
                 Global.getSector().getPlayerFleet().getCargo().getCredits().add(tip);
+                p.totalRent += tip;
                 text = text + " " + com.fs.starfarer.api.util.Misc.getDGSCredits(tip) + ".";
             }
         }
@@ -262,17 +301,20 @@ public class TenantDaily implements EveryFrameScript {
         if (e.rep != 0f && m != null && !MarketRules.isOwn(m)) {
             Global.getSector().getPlayerFaction().adjustRelationship(m.getFactionId(), e.rep / 100f);
         }
-        if ((e.leave || e.dies) && t != null && t.isPartner()) {
+        boolean leaves = e.leave || e.dies || e.evict;
+        if (leaves && t != null && t.isPartner()) {
             Family.leaves(p, e.dies, text);
-            return;
+            return text;
         }
         String said = e.big && t != null && !e.dies
                 ? TenantEvents.say(e.id, t.traits(), t.factionId, new java.util.Random()) : null;
         Notify.event(p, text, e.good, e.big, t != null ? t.name : null, said);
-        if ((e.leave || e.dies) && t != null) {
+        if (leaves && t != null) {
             p.tenant = null;
             p.advertising = true;
+            Choices.cancel(p);
         }
+        return text;
     }
 
     /** House traits and upgrades multiply an event's odds: a fire extinguisher halves small fires. */
@@ -324,6 +366,7 @@ public class TenantDaily implements EveryFrameScript {
         Notify.event(p, p.tenant.name + " moved out of " + p.displayName() + " to get treatment.", false, true);
         p.tenant = null;
         p.advertising = true;
+        Choices.cancel(p);
     }
 
     /**
@@ -348,9 +391,12 @@ public class TenantDaily implements EveryFrameScript {
                             : "."));
             return;
         }
-        Notify.event(p, p.tenant.name + " moved out of " + p.displayName() + ".", false, true);
+        // 1.12.0: moving out during a lease costs them a month's rent.
+        String fee = Leases.payBreakFee(p);
+        Notify.event(p, p.tenant.name + " moved out of " + p.displayName() + "." + fee, false, true);
         p.tenant = null;
         p.advertising = true;
+        Choices.cancel(p);
     }
 
     private static void expirePool() {

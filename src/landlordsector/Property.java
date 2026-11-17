@@ -252,9 +252,42 @@ public class Property {
         return t != null ? t : TierTable.all().get(0);
     }
 
+    /**
+     * The rent the tenant pays now. 1.12.0: while a lease runs it is the lease's rent (a raise waits for the next
+     * lease); {@link #askingRent} is the rent you set for the next lease and for new tenants.
+     */
     public RentSetting setting() {
+        RentSetting asking = askingRent();
+        if (tenant != null && !tenant.isPartner() && Leases.running(tenant) && tenant.leaseRent != null) {
+            return tenant.leaseRent;
+        }
+        return asking;
+    }
+
+    /** The rent you set: what new tenants and the next lease pay (1.12.0). */
+    public RentSetting askingRent() {
         if (setting == null) setting = RentSetting.NORMAL;
         return setting;
+    }
+
+    // ---- 1.12.0 ----
+
+    /** Lease length for new tenants in months, 0 for none; used only when {@link #leaseSet}, else 12. */
+    public int leaseTerm;
+    public boolean leaseSet;
+    /** A question waiting for the player's answer (LLS-32), or null. */
+    public Decision decision;
+    /** Outcomes still to come from earlier answers. Null on older saves. */
+    public List<Decision> later;
+
+    public List<Decision> later() {
+        if (later == null) later = new ArrayList<>();
+        return later;
+    }
+
+    /** The lease length new tenants sign here, in months (0: no lease). */
+    public int leaseTerm() {
+        return leaseSet ? leaseTerm : Leases.DEFAULT_MONTHS;
     }
 
     /** The market, or null when it is gone. */

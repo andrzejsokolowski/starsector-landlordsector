@@ -439,6 +439,12 @@ public final class PropertyStats {
             s.notes.add(new Note(want + first + " thinks " + here + " is too small (-" + Math.round(beneath) + ")",
                     false));
         }
+        // 1.12.0 (LLS-33): a lease makes a tenant feel settled; the longer, the more.
+        float settled = Leases.happiness(t);
+        if (settled >= 0.5f) {
+            flip += settled;
+            s.notes.add(new Note("Signed a " + t.leaseMonths + "-month lease (+" + Math.round(settled) + ")", true));
+        }
         if (t.mood >= 5f) s.notes.add(new Note("In a good mood (+" + Math.round(t.mood) + ")", true));
         if (t.mood <= -5f) s.notes.add(new Note("In a bad mood (" + Math.round(t.mood) + ")", false));
         return TenantRules.tenantHappiness(home, t.traitHappiness() + flip + levelExtra, liked, disliked,

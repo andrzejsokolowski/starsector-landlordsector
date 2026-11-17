@@ -54,6 +54,17 @@ public class Tenant {
      */
     public String realName;
 
+    // ---- 1.12.0 leases (LLS-33, Andrzej: "I also like leases. Legally binding stuff ye?"). Zero on older saves. ----
+
+    /** When the lease ends, 0 for no lease. */
+    public long leaseEnd;
+    /** The lease's length in months (6, 12 or 24). */
+    public int leaseMonths;
+    /** The rent setting in the lease: it holds until the lease ends, unless you lower it. */
+    public RentSetting leaseRent;
+    /** When the tenant last broke the lease (unpaid rent, a police raid, a trashed home): evicting is free for a while. */
+    public long breachAt;
+
     public boolean hasNickname() {
         return realName != null;
     }

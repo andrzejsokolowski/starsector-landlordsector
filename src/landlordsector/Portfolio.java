@@ -39,6 +39,8 @@ public class Portfolio {
     public boolean upgraded080;
     /** 0.8.1: true once homes for sale were rolled again with each world's lore traits. */
     public boolean upgraded081;
+    /** 1.12.0: tenants living in your homes got their lease. */
+    public boolean upgraded1120;
 
     /** 1.2.0: grown kids who work in the mines or inspire a colony, kept for their pay and bonus. */
     public List<Child> adultKids;

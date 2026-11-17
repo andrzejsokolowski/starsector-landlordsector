@@ -208,6 +208,19 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   stopped the tenant set at 16 of 51; 1.11.0 shipped all 51 tenant icons and the hidden one). Applicant rows put the icons in their own column (`rowTraits`).
   `checkReleaseFiles` fails when a house trait has no icon or only some tenant icons are there.
 
+- 1.12.0 (LLS-32 questions, LLS-33 leases, LLS-34 more events; Andrzej: "I really like interactive events! ... i cant
+  pay rent > evict, or keep", "leases. Legally binding stuff ye?", "Invent some more"): events with `choices` in
+  tenant_events.json are questions (`TenantEvents.Def.isQuestion`, the file's header lists the answer fields).
+  `Choices.ask` stores a `Decision` on the home and posts a `QuestionIntel` (intel screen, answer buttons, tag "Real
+  estate"); the Tenants tab shows it too (`questionBox`). `Choices.daily` takes the default after `answerDays` and runs
+  `later` outcomes; the tenant manager answers at once (`managerPick`). Answers go through
+  `TenantDaily.applyOutcome` (the old `apply` body). Leases: `Leases` (term per home `Property.leaseTerm()`, default
+  12; `Tenant.leaseEnd`/`leaseMonths`/`leaseRent`/`breachAt`). `Property.setting()` is the rent paid now (the
+  lease's), `askingRent()` the rent you set; the Manage page arrows and the manager use `askingRent`. Break fee in
+  `TenantDaily.maybeMoveOut`, eviction fee in `Actions.evict`, lease end in `Leases.daily` (system question
+  `lease_end`). `upgradeTo1120` gives tenants in old saves a lease. Checks: `checkLeases1120`, `checkChoices1120`.
+  Every new text line is on the review page (areas New events, Questions, Tenant words, Leases).
+
 ## Known limits
 
 - The portfolio classes are in the save, so removing the mod mid-game breaks that save.

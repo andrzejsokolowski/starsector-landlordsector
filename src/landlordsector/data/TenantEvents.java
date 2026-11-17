@@ -45,6 +45,47 @@ public final class TenantEvents {
         public String addTrait, removeTrait, addTenantTrait, removeTenantTrait;
         /** Added to the tenant's wealth. */
         public int wealth;
+
+        // ---- 1.12.0 (LLS-32, Andrzej: "interactive events ... i cant pay rent > evict, or keep") ----
+
+        /** The answers the player picks from; empty for an event that just happens. */
+        public List<Def> choices = Collections.emptyList();
+        /** The answer taken when the player does not answer in {@link #answerDays} days. */
+        public int defaultChoice;
+        public float answerDays = 7f;
+        /** Never rolled at random: the game asks it itself (the lease end). */
+        public boolean system;
+        /** An answer's button text. "$cost" and "$price" are filled in. */
+        public String label = "";
+        /** An answer: months of the home's Normal rent the player pays, or gets ({@link #gain}). */
+        public float cost, gain;
+        /** An answer: the rent setting moves this many steps (-1: one step lower), lease rent included. */
+        public int rentStep;
+        /** An answer: the home is sold to someone at this share of its sale value. */
+        public float sellMult;
+        /** An answer: the lease starts again for the home's lease term. */
+        public boolean renew;
+        /** An answer: the tenant is put out for breaking the lease (no fee). */
+        public boolean evict;
+        /** The tenant broke the lease: evicting them is free for a while (skipped rent, police raid, trashed). */
+        public boolean breach;
+        /** The tenant manager picks this answer (else the default one). */
+        public boolean managerPick;
+        /** An answer may go wrong: with {@link #failChance} the fail outcome happens instead. */
+        public Def fail;
+        public float failChance;
+        /** An answer may have an outcome later: after {@link #laterDays} days, with {@link #laterChance}. */
+        public Def later;
+        public float laterDays, laterChance = 1f;
+
+        /** Only while the rent is at least this setting (a request for lower rent). */
+        public String minRent;
+        /** Only while a lease runs (a tenant asking to leave early). */
+        public boolean lease;
+
+        public boolean isQuestion() {
+            return !choices.isEmpty();
+        }
     }
 
     /** Lines a tenant says, for tenants with one of {@code traits} or from one of {@code factions}, or anyone. */
@@ -95,38 +136,7 @@ public final class TenantEvents {
             for (int i = 0; i < arr.length(); i++) {
                 JSONObject e = arr.optJSONObject(i);
                 if (e == null || e.optString("id", "").isEmpty()) continue;
-                Def d = new Def();
-                d.id = e.optString("id");
-                d.kind = e.optString("kind", "");
-                d.good = e.optBoolean("good", false);
-                d.weight = (float) e.optDouble("weight", 1);
-                d.damage = e.optBoolean("damage", false);
-                d.crime = e.optBoolean("crime", false);
-                d.big = e.optBoolean("big", false);
-                org.json.JSONArray req = e.optJSONArray("requires");
-                if (req != null && req.length() > 0) {
-                    d.requires = new java.util.HashSet<>();
-                    for (int k = 0; k < req.length(); k++) d.requires.add(req.optString(k));
-                }
-                d.leave = e.optBoolean("leave", false);
-                d.condition = (float) e.optDouble("condition", 0);
-                d.mood = (float) e.optDouble("mood", 0);
-                d.decor = (float) e.optDouble("decor", 0);
-                d.rep = (float) e.optDouble("rep", 0);
-                d.tip = (float) e.optDouble("tip", 0);
-                d.rentMult = e.has("rentMult") && !e.isNull("rentMult") ? (float) e.optDouble("rentMult", 1) : -1f;
-                d.text = e.optString("text", "");
-                d.sickOnly = e.optBoolean("sickOnly", false);
-                d.sickMult = (float) e.optDouble("sickMult", 1);
-                d.tenant = "tenant".equals(e.optString("type", "house"));
-                d.health = e.optBoolean("health", false);
-                d.maxHealth = (float) e.optDouble("maxHealth", 0);
-                d.dies = e.optBoolean("dies", false);
-                d.addTrait = text(e, "addTrait");
-                d.removeTrait = text(e, "removeTrait");
-                d.addTenantTrait = text(e, "addTenantTrait");
-                d.removeTenantTrait = text(e, "removeTenantTrait");
-                d.wealth = e.optInt("wealth", 0);
+                Def d = readDef(e);
                 list.add(d);
             }
         }
@@ -146,6 +156,86 @@ public final class TenantEvents {
         dailyChance = (float) (house != null ? house : json).optDouble("dailyChance", 0.06);
         tenantMinDays = tenant != null ? (float) tenant.optDouble("minDaysBetween", 7) : 7f;
         tenantDailyChance = tenant != null ? (float) tenant.optDouble("dailyChance", 0.05) : 0.05f;
+    }
+
+    /** One event, answer or outcome. Answers and outcomes use the same fields as events. */
+    private static Def readDef(JSONObject e) {
+        Def d = new Def();
+        d.id = e.optString("id", "");
+        d.kind = e.optString("kind", "");
+        d.good = e.optBoolean("good", false);
+        d.weight = (float) e.optDouble("weight", 1);
+        d.damage = e.optBoolean("damage", false);
+        d.crime = e.optBoolean("crime", false);
+        d.big = e.optBoolean("big", false);
+        org.json.JSONArray req = e.optJSONArray("requires");
+        if (req != null && req.length() > 0) {
+            d.requires = new java.util.HashSet<>();
+            for (int k = 0; k < req.length(); k++) d.requires.add(req.optString(k));
+        }
+        d.leave = e.optBoolean("leave", false);
+        d.condition = (float) e.optDouble("condition", 0);
+        d.mood = (float) e.optDouble("mood", 0);
+        d.decor = (float) e.optDouble("decor", 0);
+        d.rep = (float) e.optDouble("rep", 0);
+        d.tip = (float) e.optDouble("tip", 0);
+        d.rentMult = e.has("rentMult") && !e.isNull("rentMult") ? (float) e.optDouble("rentMult", 1) : -1f;
+        d.text = e.optString("text", "");
+        d.sickOnly = e.optBoolean("sickOnly", false);
+        d.sickMult = (float) e.optDouble("sickMult", 1);
+        d.tenant = "tenant".equals(e.optString("type", "house"));
+        d.health = e.optBoolean("health", false);
+        d.maxHealth = (float) e.optDouble("maxHealth", 0);
+        d.dies = e.optBoolean("dies", false);
+        d.addTrait = text(e, "addTrait");
+        d.removeTrait = text(e, "removeTrait");
+        d.addTenantTrait = text(e, "addTenantTrait");
+        d.removeTenantTrait = text(e, "removeTenantTrait");
+        d.wealth = e.optInt("wealth", 0);
+        d.system = e.optBoolean("system", false);
+        d.label = e.optString("label", "");
+        d.cost = (float) e.optDouble("cost", 0);
+        d.gain = (float) e.optDouble("gain", 0);
+        d.rentStep = e.optInt("rentStep", 0);
+        d.sellMult = (float) e.optDouble("sellMult", 0);
+        d.renew = e.optBoolean("renew", false);
+        d.evict = e.optBoolean("evict", false);
+        d.breach = e.optBoolean("breach", false);
+        d.managerPick = e.optBoolean("managerPick", false);
+        d.defaultChoice = e.optInt("default", 0);
+        d.minRent = text(e, "minRent");
+        d.lease = e.optBoolean("lease", false);
+        d.answerDays = (float) e.optDouble("answerDays", 7);
+        JSONArray ch = e.optJSONArray("choices");
+        if (ch != null && ch.length() > 0) {
+            d.choices = new ArrayList<>();
+            for (int k = 0; k < ch.length(); k++) {
+                JSONObject o = ch.optJSONObject(k);
+                if (o == null) continue;
+                Def c = readDef(o);
+                c.id = d.id + "#" + k;
+                c.tenant = d.tenant;
+                c.kind = d.kind;
+                d.choices.add(c);
+            }
+            d.defaultChoice = Math.max(0, Math.min(d.choices.size() - 1, d.defaultChoice));
+        }
+        JSONObject f = e.optJSONObject("fail");
+        if (f != null) {
+            d.fail = readDef(f);
+            d.fail.id = d.id + "!fail";
+            d.fail.tenant = d.tenant;
+            d.failChance = (float) f.optDouble("chance", 0.5);
+        }
+        JSONObject l = e.optJSONObject("later");
+        if (l != null) {
+            d.later = readDef(l);
+            d.later.id = d.id + "!later";
+            d.later.tenant = d.tenant;
+            d.laterDays = (float) l.optDouble("days", 30);
+            d.laterChance = (float) l.optDouble("chance", 1);
+        }
+        return d;
     }
 
     /** A string field, or null when it is missing, empty or a JSON null. */
@@ -178,8 +268,16 @@ public final class TenantEvents {
     }
 
     public static Def get(String id) {
+        if (id == null) return null;
         for (Def d : defs) if (d.id.equals(id)) return d;
         return null;
+    }
+
+    /** One answer of a question, or null. */
+    public static Def answer(String eventId, int index) {
+        Def d = get(eventId);
+        if (d == null || index < 0 || index >= d.choices.size()) return null;
+        return d.choices.get(index);
     }
 
     public static float minDaysBetween() {

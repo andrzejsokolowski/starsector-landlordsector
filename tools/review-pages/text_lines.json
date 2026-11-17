@@ -2188,6 +2188,1210 @@
 			"line": "Sick kids fall ill more often. A childhood in poor health (below 40 on average) leaves a mark for life, and how well a kid is raised (happiness and health) decides the risk of losing them.",
 			"when": "Last line of the kid's Health tooltip, under what makes up the health (base, home levels, air, noise, neighbor, worn home, kids' upgrades, traits).",
 			"area": "Kids growing up"
+		},
+		{
+			"id": "e_mold",
+			"version": "1.12.0",
+			"line": "Mold is growing in the bathroom at Leafy Cottage.",
+			"area": "New events",
+			"when": "A bad home event (cleaning and repairs), in the home's log and the fleet log. Effects: condition -3%, mood -4."
+		},
+		{
+			"id": "e_power_surge",
+			"version": "1.12.0",
+			"line": "A power surge fried the wiring at Leafy Cottage.",
+			"area": "New events",
+			"when": "A bad home event (damage to the home), in the home's log and the fleet log. Effects: condition -4%, mood -3."
+		},
+		{
+			"id": "e_storm_damage",
+			"version": "1.12.0",
+			"line": "A storm tore panels off the roof of Leafy Cottage.",
+			"area": "New events",
+			"when": "A bad home event (damage to the home), in the home's log and the fleet log. Effects: condition -6%, mood -4."
+		},
+		{
+			"id": "e_broken_lock",
+			"version": "1.12.0",
+			"line": "The front door lock at Leafy Cottage broke. Jana Okoye slept with a chair against the door.",
+			"area": "New events",
+			"when": "A bad home event (crime and safety), in the home's log and the fleet log. Effects: mood -5."
+		},
+		{
+			"id": "e_locked_out",
+			"version": "1.12.0",
+			"line": "Jana Okoye got locked out of Leafy Cottage and broke a window to get back in.",
+			"area": "New events",
+			"when": "A bad home event (damage to the home), in the home's log and the fleet log. Effects: condition -2%, mood -2."
+		},
+		{
+			"id": "e_kids_drawings",
+			"version": "1.12.0",
+			"line": "Jana Okoye's kids drew all over the walls at Leafy Cottage.",
+			"area": "New events",
+			"when": "A bad home event (damage to the home), in the home's log and the fleet log. Only tenants who are Family with kids. Effects: condition -1%, mood +2, decor -1."
+		},
+		{
+			"id": "e_pet_scratches",
+			"version": "1.12.0",
+			"line": "Jana Okoye's pet scratched up every door at Leafy Cottage.",
+			"area": "New events",
+			"when": "A bad home event (damage to the home), in the home's log and the fleet log. Only tenants who are Pet owner. Effects: condition -2%."
+		},
+		{
+			"id": "e_smoke_stains",
+			"version": "1.12.0",
+			"line": "Jana Okoye's smoking left yellow stains on the ceiling at Leafy Cottage.",
+			"area": "New events",
+			"when": "A bad home event (cleaning and repairs), in the home's log and the fleet log. Only tenants who are Smoker. Effects: condition -2%, decor -1."
+		},
+		{
+			"id": "e_heater_blast",
+			"version": "1.12.0",
+			"line": "Jana Okoye ran the heater at full blast all month. The paint at Leafy Cottage is peeling.",
+			"area": "New events",
+			"when": "A bad home event (cleaning and repairs), in the home's log and the fleet log. Only tenants who are Loves heat. Effects: condition -2%, mood +3."
+		},
+		{
+			"id": "e_tank_leak",
+			"version": "1.12.0",
+			"line": "Jana Okoye's fish tank cracked and flooded the floor at Leafy Cottage.",
+			"area": "New events",
+			"when": "A bad home event (damage to the home), in the home's log and the fleet log. Only tenants who are Loves water. Effects: condition -4%, mood -6."
+		},
+		{
+			"id": "e_hidden_crate",
+			"version": "1.12.0",
+			"line": "Jana Okoye hid a crate of something inside the walls at Leafy Cottage. You'd rather not know what.",
+			"area": "New events",
+			"when": "A bad home event (crime and safety), in the home's log and the fleet log. Only tenants who are Smuggler. Effects: condition -2%, reputation -0.3."
+		},
+		{
+			"id": "e_labeled_shelves",
+			"version": "1.12.0",
+			"line": "Jana Okoye sorted every cupboard at Leafy Cottage and labeled the shelves.",
+			"area": "New events",
+			"when": "A good home event (cleaning and repairs), in the home's log and the fleet log. Only tenants who are Tidy. Effects: condition +1%, mood +3, decor +1."
+		},
+		{
+			"id": "e_old_coin",
+			"version": "1.12.0",
+			"line": "Jana Okoye found an old coin from before the Collapse under the floor at Leafy Cottage and framed it.",
+			"area": "New events",
+			"when": "A good home event (decorating the home), in the home's log and the fleet log. Only tenants who are History buff. Effects: mood +6, decor +3."
+		},
+		{
+			"id": "e_mushroom_beds",
+			"version": "1.12.0",
+			"line": "Jana Okoye is growing mushrooms in the basement at Leafy Cottage. It smells like a forest down there.",
+			"area": "New events",
+			"when": "A good home event (decorating the home), in the home's log and the fleet log. Only tenants who are Loves mushrooms. Effects: condition -1%, mood +6."
+		},
+		{
+			"id": "e_smart_lights",
+			"version": "1.12.0",
+			"line": "Jana Okoye put smart lights in every room at Leafy Cottage.",
+			"area": "New events",
+			"when": "A good home event (decorating the home), in the home's log and the fleet log. Only tenants who are Tech enthusiast. Effects: condition +1%, decor +3."
+		},
+		{
+			"id": "e_fish_tank",
+			"version": "1.12.0",
+			"line": "Jana Okoye set up a huge fish tank at Leafy Cottage.",
+			"area": "New events",
+			"when": "A good home event (decorating the home), in the home's log and the fleet log. Only tenants who are Loves water. Effects: mood +6, decor +2."
+		},
+		{
+			"id": "e_home_office",
+			"version": "1.12.0",
+			"line": "Jana Okoye turned a corner of Leafy Cottage into a neat home office.",
+			"area": "New events",
+			"when": "A good home event (decorating the home), in the home's log and the fleet log. Only tenants who are Works from home. Effects: mood +4, decor +1."
+		},
+		{
+			"id": "e_home_gym",
+			"version": "1.12.0",
+			"line": "Jana Okoye turned the spare room at Leafy Cottage into a home gym.",
+			"area": "New events",
+			"when": "A good home event (decorating the home), in the home's log and the fleet log. Only tenants who are Athletic. Effects: condition -1%, mood +6, decor +1."
+		},
+		{
+			"id": "e_chair_fixed",
+			"version": "1.12.0",
+			"line": "Jana Okoye fixed the broken chairs at Leafy Cottage instead of buying new ones.",
+			"area": "New events",
+			"when": "A good home event (cleaning and repairs), in the home's log and the fleet log. Only tenants who are Frugal. Effects: condition +1%."
+		},
+		{
+			"id": "e_night_noise",
+			"version": "1.12.0",
+			"line": "Jana Okoye's late nights kept the neighbors up again.",
+			"area": "New events",
+			"when": "A bad tenant event (the neighbors), in the home's log and the fleet log. Only tenants who are Night owl. Effects: mood -2, reputation -0.3."
+		},
+		{
+			"id": "e_quietest",
+			"version": "1.12.0",
+			"line": "The neighbors say Jana Okoye is the quietest tenant on the street.",
+			"area": "New events",
+			"when": "A good tenant event (the neighbors), in the home's log and the fleet log. Only tenants who are Quiet. Effects: reputation +0.5."
+		},
+		{
+			"id": "e_prayer_group",
+			"version": "1.12.0",
+			"line": "Jana Okoye hosted a prayer group at Leafy Cottage. The neighbors brought food.",
+			"area": "New events",
+			"when": "A good tenant event (the neighbors), in the home's log and the fleet log. Only tenants who are Faithful. Effects: mood +6, reputation +0.3."
+		},
+		{
+			"id": "e_welcome_basket",
+			"version": "1.12.0",
+			"line": "The neighbors brought Jana Okoye a basket of fruit and cookies.",
+			"area": "New events",
+			"when": "A good tenant event (the neighbors), in the home's log and the fleet log. Effects: mood +6."
+		},
+		{
+			"id": "e_fancy_dinner",
+			"version": "1.12.0",
+			"line": "Jana Okoye hosted a fancy dinner at Leafy Cottage for some very important guests.",
+			"area": "New events",
+			"when": "A good tenant event (the neighbors), in the home's log and the fleet log. Only tenants who are Social climber. Effects: mood +8, decor +1."
+		},
+		{
+			"id": "e_won_bet",
+			"version": "1.12.0",
+			"line": "Jana Okoye won a bet and gave you a share of it:",
+			"area": "New events",
+			"when": "A good tenant event (money), in the home's log and the fleet log. Only tenants who are Gambler. Effects: mood +8, pays you 30% of a month's rent (the amount follows the colon)."
+		},
+		{
+			"id": "e_double_shift",
+			"version": "1.12.0",
+			"line": "Jana Okoye fell asleep at work after another double shift.",
+			"area": "New events",
+			"when": "A bad tenant event (health), in the home's log and the fleet log. Only tenants who are Long hours. Effects: mood -6."
+		},
+		{
+			"id": "e_slipped",
+			"version": "1.12.0",
+			"line": "Jana Okoye slipped on the stairs at Leafy Cottage and hurt a hip.",
+			"area": "New events",
+			"when": "A bad tenant event (health), in the home's log and the fleet log. Only tenants who are Elderly. Effects: mood -8, this month's rent x0.8."
+		},
+		{
+			"id": "e_pollen_week",
+			"version": "1.12.0",
+			"line": "Jana Okoye spent a week sneezing. Pollen season hit hard.",
+			"area": "New events",
+			"when": "A bad tenant event (health), in the home's log and the fleet log. Only tenants who are Pollen allergy. Effects: mood -5."
+		},
+		{
+			"id": "e_dust_cough",
+			"version": "1.12.0",
+			"line": "Jana Okoye can't stop coughing. The dust at Leafy Cottage doesn't help.",
+			"area": "New events",
+			"when": "A bad tenant event (health), in the home's log and the fleet log. Only tenants who are Sensitive lungs. Effects: mood -5."
+		},
+		{
+			"id": "e_tough_flu",
+			"version": "1.12.0",
+			"line": "A flu went through the whole street. Jana Okoye didn't even notice it.",
+			"area": "New events",
+			"when": "A good tenant event (health), in the home's log and the fleet log. Only tenants who are Hardy. Effects: mood +4."
+		},
+		{
+			"id": "e_loyal_stay",
+			"version": "1.12.0",
+			"line": "Jana Okoye turned down a cheaper place across town. She's staying with you.",
+			"area": "New events",
+			"when": "A good tenant event (family and life), in the home's log and the fleet log. Only tenants who are Loyal. Effects: mood +5, reputation +0.3."
+		},
+		{
+			"id": "q_cant_pay",
+			"version": "1.12.0",
+			"line": "Jana Okoye can't pay this month's rent at Leafy Cottage.",
+			"area": "Questions",
+			"when": "The question, in the intel screen (with a button per answer) and on the home's Tenants tab."
+		},
+		{
+			"id": "q_cant_pay_b0",
+			"version": "1.12.0",
+			"line": "Evict Jana",
+			"area": "Questions",
+			"when": "Answer button 1 for: Jana Okoye can't pay this month's rent at Leafy Cottage."
+		},
+		{
+			"id": "q_cant_pay_r0",
+			"version": "1.12.0",
+			"line": "You evicted Jana Okoye from Leafy Cottage over the unpaid rent.",
+			"area": "Questions",
+			"when": "What happened after the answer \"Evict Jana\". In the home's log and the fleet log."
+		},
+		{
+			"id": "q_cant_pay_b1",
+			"version": "1.12.0",
+			"line": "Give Jana a month",
+			"area": "Questions",
+			"when": "Answer button 2 for: Jana Okoye can't pay this month's rent at Leafy Cottage. This is what happens when you don't answer in 7 days."
+		},
+		{
+			"id": "q_cant_pay_r1",
+			"version": "1.12.0",
+			"line": "You let Jana Okoye skip this month's rent at Leafy Cottage.",
+			"area": "Questions",
+			"when": "What happened after the answer \"Give Jana a month\". In the home's log and the fleet log."
+		},
+		{
+			"id": "q_cant_pay_l1",
+			"version": "1.12.0",
+			"line": "Jana Okoye paid back the rent you let slide at Leafy Cottage: 2,000.",
+			"area": "Questions",
+			"when": "35 days after the answer \"Give Jana a month\", 60% of the time."
+		},
+		{
+			"id": "q_cant_pay_b2",
+			"version": "1.12.0",
+			"line": "Take half now",
+			"area": "Questions",
+			"when": "Answer button 3 for: Jana Okoye can't pay this month's rent at Leafy Cottage. The tenant manager picks this one."
+		},
+		{
+			"id": "q_cant_pay_r2",
+			"version": "1.12.0",
+			"line": "Jana Okoye scraped together half of this month's rent at Leafy Cottage.",
+			"area": "Questions",
+			"when": "What happened after the answer \"Take half now\". In the home's log and the fleet log."
+		},
+		{
+			"id": "q_leaky_pipes",
+			"version": "1.12.0",
+			"line": "The pipes at Leafy Cottage are leaking.",
+			"area": "Questions",
+			"when": "The question, in the intel screen (with a button per answer) and on the home's Tenants tab."
+		},
+		{
+			"id": "q_leaky_pipes_b0",
+			"version": "1.12.0",
+			"line": "Call a plumber (1,200)",
+			"area": "Questions",
+			"when": "Answer button 1 for: The pipes at Leafy Cottage are leaking. The tenant manager picks this one."
+		},
+		{
+			"id": "q_leaky_pipes_r0",
+			"version": "1.12.0",
+			"line": "A plumber fixed the pipes at Leafy Cottage.",
+			"area": "Questions",
+			"when": "What happened after the answer \"Call a plumber (1,200)\". In the home's log and the fleet log."
+		},
+		{
+			"id": "q_leaky_pipes_b1",
+			"version": "1.12.0",
+			"line": "Cheap patch (1,200)",
+			"area": "Questions",
+			"when": "Answer button 2 for: The pipes at Leafy Cottage are leaking."
+		},
+		{
+			"id": "q_leaky_pipes_r1",
+			"version": "1.12.0",
+			"line": "A cheap patch stopped the leak at Leafy Cottage.",
+			"area": "Questions",
+			"when": "What happened after the answer \"Cheap patch (1,200)\". In the home's log and the fleet log."
+		},
+		{
+			"id": "q_leaky_pipes_f1",
+			"version": "1.12.0",
+			"line": "The cheap patch at Leafy Cottage gave way and flooded the floor.",
+			"area": "Questions",
+			"when": "Instead of the line above, 40% of the time: the answer \"Cheap patch (1,200)\" went wrong."
+		},
+		{
+			"id": "q_leaky_pipes_b2",
+			"version": "1.12.0",
+			"line": "Leave it",
+			"area": "Questions",
+			"when": "Answer button 3 for: The pipes at Leafy Cottage are leaking. This is what happens when you don't answer in 7 days."
+		},
+		{
+			"id": "q_leaky_pipes_r2",
+			"version": "1.12.0",
+			"line": "The pipes at Leafy Cottage keep leaking.",
+			"area": "Questions",
+			"when": "What happened after the answer \"Leave it\". In the home's log and the fleet log."
+		},
+		{
+			"id": "q_broken_fridge",
+			"version": "1.12.0",
+			"line": "The fridge at Leafy Cottage broke down.",
+			"area": "Questions",
+			"when": "The question, in the intel screen (with a button per answer) and on the home's Tenants tab."
+		},
+		{
+			"id": "q_broken_fridge_b0",
+			"version": "1.12.0",
+			"line": "Buy a new one (1,200)",
+			"area": "Questions",
+			"when": "Answer button 1 for: The fridge at Leafy Cottage broke down. The tenant manager picks this one."
+		},
+		{
+			"id": "q_broken_fridge_r0",
+			"version": "1.12.0",
+			"line": "Jana Okoye has a shiny new fridge at Leafy Cottage.",
+			"area": "Questions",
+			"when": "What happened after the answer \"Buy a new one (1,200)\". In the home's log and the fleet log."
+		},
+		{
+			"id": "q_broken_fridge_b1",
+			"version": "1.12.0",
+			"line": "Have it repaired (1,200)",
+			"area": "Questions",
+			"when": "Answer button 2 for: The fridge at Leafy Cottage broke down."
+		},
+		{
+			"id": "q_broken_fridge_r1",
+			"version": "1.12.0",
+			"line": "A repairman got the fridge at Leafy Cottage running again.",
+			"area": "Questions",
+			"when": "What happened after the answer \"Have it repaired (1,200)\". In the home's log and the fleet log."
+		},
+		{
+			"id": "q_broken_fridge_f1",
+			"version": "1.12.0",
+			"line": "The repaired fridge at Leafy Cottage broke again a week later.",
+			"area": "Questions",
+			"when": "Instead of the line above, 50% of the time: the answer \"Have it repaired (1,200)\" went wrong."
+		},
+		{
+			"id": "q_broken_fridge_b2",
+			"version": "1.12.0",
+			"line": "Leave it",
+			"area": "Questions",
+			"when": "Answer button 3 for: The fridge at Leafy Cottage broke down. This is what happens when you don't answer in 7 days."
+		},
+		{
+			"id": "q_broken_fridge_r2",
+			"version": "1.12.0",
+			"line": "Jana Okoye keeps the food at Leafy Cottage in a box of ice.",
+			"area": "Questions",
+			"when": "What happened after the answer \"Leave it\". In the home's log and the fleet log."
+		},
+		{
+			"id": "q_paint_walls",
+			"version": "1.12.0",
+			"line": "Jana Okoye asks if they can paint the walls at Leafy Cottage.",
+			"area": "Questions",
+			"when": "The question, in the intel screen (with a button per answer) and on the home's Tenants tab."
+		},
+		{
+			"id": "q_paint_walls_b0",
+			"version": "1.12.0",
+			"line": "Let them",
+			"area": "Questions",
+			"when": "Answer button 1 for: Jana Okoye asks if they can paint the walls at Leafy Cottage. This is what happens when you don't answer in 7 days."
+		},
+		{
+			"id": "q_paint_walls_r0",
+			"version": "1.12.0",
+			"line": "Jana Okoye painted the walls at Leafy Cottage.",
+			"area": "Questions",
+			"when": "What happened after the answer \"Let them\". In the home's log and the fleet log."
+		},
+		{
+			"id": "q_paint_walls_f0",
+			"version": "1.12.0",
+			"line": "Jana Okoye painted the walls at Leafy Cottage bright orange. Every wall.",
+			"area": "Questions",
+			"when": "Instead of the line above, 25% of the time: the answer \"Let them\" went wrong."
+		},
+		{
+			"id": "q_paint_walls_b1",
+			"version": "1.12.0",
+			"line": "Say no",
+			"area": "Questions",
+			"when": "Answer button 2 for: Jana Okoye asks if they can paint the walls at Leafy Cottage."
+		},
+		{
+			"id": "q_paint_walls_r1",
+			"version": "1.12.0",
+			"line": "You told Jana Okoye to leave the walls at Leafy Cottage alone.",
+			"area": "Questions",
+			"when": "What happened after the answer \"Say no\". In the home's log and the fleet log."
+		},
+		{
+			"id": "q_keep_pet",
+			"version": "1.12.0",
+			"line": "Jana Okoye asks if they can keep a pet at Leafy Cottage.",
+			"area": "Questions",
+			"when": "The question, in the intel screen (with a button per answer) and on the home's Tenants tab."
+		},
+		{
+			"id": "q_keep_pet_b0",
+			"version": "1.12.0",
+			"line": "Yes, a pet is fine",
+			"area": "Questions",
+			"when": "Answer button 1 for: Jana Okoye asks if they can keep a pet at Leafy Cottage. The tenant manager picks this one."
+		},
+		{
+			"id": "q_keep_pet_r0",
+			"version": "1.12.0",
+			"line": "Jana Okoye brought a pet home to Leafy Cottage.",
+			"area": "Questions",
+			"when": "What happened after the answer \"Yes, a pet is fine\". In the home's log and the fleet log."
+		},
+		{
+			"id": "q_keep_pet_b1",
+			"version": "1.12.0",
+			"line": "No pets",
+			"area": "Questions",
+			"when": "Answer button 2 for: Jana Okoye asks if they can keep a pet at Leafy Cottage. This is what happens when you don't answer in 7 days."
+		},
+		{
+			"id": "q_keep_pet_r1",
+			"version": "1.12.0",
+			"line": "You said no pets at Leafy Cottage. Jana Okoye isn't happy about it.",
+			"area": "Questions",
+			"when": "What happened after the answer \"No pets\". In the home's log and the fleet log."
+		},
+		{
+			"id": "q_sublet",
+			"version": "1.12.0",
+			"line": "Jana Okoye wants to rent the spare room at Leafy Cottage to a friend for a few months.",
+			"area": "Questions",
+			"when": "The question, in the intel screen (with a button per answer) and on the home's Tenants tab."
+		},
+		{
+			"id": "q_sublet_b0",
+			"version": "1.12.0",
+			"line": "Allow it for a share (900)",
+			"area": "Questions",
+			"when": "Answer button 1 for: Jana Okoye wants to rent the spare room at Leafy Cottage to a friend for a few months."
+		},
+		{
+			"id": "q_sublet_r0",
+			"version": "1.12.0",
+			"line": "Jana Okoye's friend moved into the spare room at Leafy Cottage.",
+			"area": "Questions",
+			"when": "What happened after the answer \"Allow it for a share (900)\". In the home's log and the fleet log."
+		},
+		{
+			"id": "q_sublet_f0",
+			"version": "1.12.0",
+			"line": "Jana Okoye's friend at Leafy Cottage turned out to be trouble and left a mess behind.",
+			"area": "Questions",
+			"when": "Instead of the line above, 25% of the time: the answer \"Allow it for a share (900)\" went wrong."
+		},
+		{
+			"id": "q_sublet_b1",
+			"version": "1.12.0",
+			"line": "Say no",
+			"area": "Questions",
+			"when": "Answer button 2 for: Jana Okoye wants to rent the spare room at Leafy Cottage to a friend for a few months. This is what happens when you don't answer in 7 days. The tenant manager picks this one."
+		},
+		{
+			"id": "q_sublet_r1",
+			"version": "1.12.0",
+			"line": "You said no to the friend at Leafy Cottage.",
+			"area": "Questions",
+			"when": "What happened after the answer \"Say no\". In the home's log and the fleet log."
+		},
+		{
+			"id": "q_neighbor_offer",
+			"version": "1.12.0",
+			"line": "A neighbor wants to buy Leafy Cottage and offers 182,000.",
+			"area": "Questions",
+			"when": "The question, in the intel screen (with a button per answer) and on the home's Tenants tab."
+		},
+		{
+			"id": "q_neighbor_offer_b0",
+			"version": "1.12.0",
+			"line": "Sell for 182,000",
+			"area": "Questions",
+			"when": "Answer button 1 for: A neighbor wants to buy Leafy Cottage and offers 182,000."
+		},
+		{
+			"id": "q_neighbor_offer_r0",
+			"version": "1.12.0",
+			"line": "You sold Leafy Cottage to the neighbor for 228,000.",
+			"area": "Questions",
+			"when": "What happened after the answer \"Sell for 182,000\". In the home's log and the fleet log."
+		},
+		{
+			"id": "q_neighbor_offer_b1",
+			"version": "1.12.0",
+			"line": "Keep it",
+			"area": "Questions",
+			"when": "Answer button 2 for: A neighbor wants to buy Leafy Cottage and offers 182,000. This is what happens when you don't answer in 7 days. The tenant manager picks this one."
+		},
+		{
+			"id": "q_neighbor_offer_r1",
+			"version": "1.12.0",
+			"line": "You kept Leafy Cottage. The neighbor will have to look elsewhere.",
+			"area": "Questions",
+			"when": "What happened after the answer \"Keep it\". In the home's log and the fleet log."
+		},
+		{
+			"id": "q_rent_cut_request",
+			"version": "1.12.0",
+			"line": "Jana Okoye asks for lower rent at Leafy Cottage. Times are hard.",
+			"area": "Questions",
+			"when": "The question, in the intel screen (with a button per answer) and on the home's Tenants tab."
+		},
+		{
+			"id": "q_rent_cut_request_b0",
+			"version": "1.12.0",
+			"line": "Lower the rent a step",
+			"area": "Questions",
+			"when": "Answer button 1 for: Jana Okoye asks for lower rent at Leafy Cottage. Times are hard. The tenant manager picks this one."
+		},
+		{
+			"id": "q_rent_cut_request_r0",
+			"version": "1.12.0",
+			"line": "You lowered the rent at Leafy Cottage. Jana Okoye is grateful.",
+			"area": "Questions",
+			"when": "What happened after the answer \"Lower the rent a step\". In the home's log and the fleet log."
+		},
+		{
+			"id": "q_rent_cut_request_b1",
+			"version": "1.12.0",
+			"line": "Keep the rent",
+			"area": "Questions",
+			"when": "Answer button 2 for: Jana Okoye asks for lower rent at Leafy Cottage. Times are hard. This is what happens when you don't answer in 7 days."
+		},
+		{
+			"id": "q_rent_cut_request_r1",
+			"version": "1.12.0",
+			"line": "You kept the rent at Leafy Cottage as it is.",
+			"area": "Questions",
+			"when": "What happened after the answer \"Keep the rent\". In the home's log and the fleet log."
+		},
+		{
+			"id": "q_rent_cut_request_f1",
+			"version": "1.12.0",
+			"line": "You kept the rent at Leafy Cottage as it is, so Jana Okoye moved out.",
+			"area": "Questions",
+			"when": "Instead of the line above, 20% of the time: the answer \"Keep the rent\" went wrong."
+		},
+		{
+			"id": "q_police_search",
+			"version": "1.12.0",
+			"line": "Police want to search Leafy Cottage. They're looking for Jana Okoye.",
+			"area": "Questions",
+			"when": "The question, in the intel screen (with a button per answer) and on the home's Tenants tab. Only tenants who are Shady connections or Smuggler."
+		},
+		{
+			"id": "q_police_search_b0",
+			"version": "1.12.0",
+			"line": "Let them in",
+			"area": "Questions",
+			"when": "Answer button 1 for: Police want to search Leafy Cottage. They're looking for Jana Okoye. This is what happens when you don't answer in 7 days. The tenant manager picks this one."
+		},
+		{
+			"id": "q_police_search_r0",
+			"version": "1.12.0",
+			"line": "Police searched Leafy Cottage and found nothing.",
+			"area": "Questions",
+			"when": "What happened after the answer \"Let them in\". In the home's log and the fleet log."
+		},
+		{
+			"id": "q_police_search_f0",
+			"version": "1.12.0",
+			"line": "Police searched Leafy Cottage and arrested Jana Okoye.",
+			"area": "Questions",
+			"when": "Instead of the line above, 40% of the time: the answer \"Let them in\" went wrong."
+		},
+		{
+			"id": "q_police_search_b1",
+			"version": "1.12.0",
+			"line": "Turn them away",
+			"area": "Questions",
+			"when": "Answer button 2 for: Police want to search Leafy Cottage. They're looking for Jana Okoye."
+		},
+		{
+			"id": "q_police_search_r1",
+			"version": "1.12.0",
+			"line": "You turned the police away from Leafy Cottage. Jana Okoye owes you one.",
+			"area": "Questions",
+			"when": "What happened after the answer \"Turn them away\". In the home's log and the fleet log."
+		},
+		{
+			"id": "q_big_party",
+			"version": "1.12.0",
+			"line": "Jana Okoye wants to throw a big party at Leafy Cottage this weekend.",
+			"area": "Questions",
+			"when": "The question, in the intel screen (with a button per answer) and on the home's Tenants tab."
+		},
+		{
+			"id": "q_big_party_b0",
+			"version": "1.12.0",
+			"line": "Go ahead",
+			"area": "Questions",
+			"when": "Answer button 1 for: Jana Okoye wants to throw a big party at Leafy Cottage this weekend. This is what happens when you don't answer in 7 days."
+		},
+		{
+			"id": "q_big_party_r0",
+			"version": "1.12.0",
+			"line": "Jana Okoye threw a big party at Leafy Cottage. Everyone had a great time.",
+			"area": "Questions",
+			"when": "What happened after the answer \"Go ahead\". In the home's log and the fleet log."
+		},
+		{
+			"id": "q_big_party_f0",
+			"version": "1.12.0",
+			"line": "Jana Okoye's party at Leafy Cottage got out of hand. The neighbors called the police.",
+			"area": "Questions",
+			"when": "Instead of the line above, 35% of the time: the answer \"Go ahead\" went wrong."
+		},
+		{
+			"id": "q_big_party_b1",
+			"version": "1.12.0",
+			"line": "Not this time",
+			"area": "Questions",
+			"when": "Answer button 2 for: Jana Okoye wants to throw a big party at Leafy Cottage this weekend. The tenant manager picks this one."
+		},
+		{
+			"id": "q_big_party_r1",
+			"version": "1.12.0",
+			"line": "You said no to the party at Leafy Cottage.",
+			"area": "Questions",
+			"when": "What happened after the answer \"Not this time\". In the home's log and the fleet log."
+		},
+		{
+			"id": "q_early_leave",
+			"version": "1.12.0",
+			"line": "Jana Okoye got a job offer on another world and asks to end the lease at Leafy Cottage early.",
+			"area": "Questions",
+			"when": "The question, in the intel screen (with a button per answer) and on the home's Tenants tab."
+		},
+		{
+			"id": "q_early_leave_b0",
+			"version": "1.12.0",
+			"line": "Let Jana go",
+			"area": "Questions",
+			"when": "Answer button 1 for: Jana Okoye got a job offer on another world and asks to end the lease at Leafy Cottage early. This is what happens when you don't answer in 7 days."
+		},
+		{
+			"id": "q_early_leave_r0",
+			"version": "1.12.0",
+			"line": "Jana Okoye left Leafy Cottage for the new job. You wished them luck.",
+			"area": "Questions",
+			"when": "What happened after the answer \"Let Jana go\". In the home's log and the fleet log."
+		},
+		{
+			"id": "q_early_leave_b1",
+			"version": "1.12.0",
+			"line": "Let Jana go for a fee (900)",
+			"area": "Questions",
+			"when": "Answer button 2 for: Jana Okoye got a job offer on another world and asks to end the lease at Leafy Cottage early. The tenant manager picks this one."
+		},
+		{
+			"id": "q_early_leave_r1",
+			"version": "1.12.0",
+			"line": "Jana Okoye paid to end the lease at Leafy Cottage early and left.",
+			"area": "Questions",
+			"when": "What happened after the answer \"Let Jana go for a fee (900)\". In the home's log and the fleet log."
+		},
+		{
+			"id": "q_early_leave_b2",
+			"version": "1.12.0",
+			"line": "Hold Jana to the lease",
+			"area": "Questions",
+			"when": "Answer button 3 for: Jana Okoye got a job offer on another world and asks to end the lease at Leafy Cottage early."
+		},
+		{
+			"id": "q_early_leave_r2",
+			"version": "1.12.0",
+			"line": "You held Jana Okoye to the lease at Leafy Cottage. She's not happy about it.",
+			"area": "Questions",
+			"when": "What happened after the answer \"Hold Jana to the lease\". In the home's log and the fleet log."
+		},
+		{
+			"id": "q_lease_end",
+			"version": "1.12.0",
+			"line": "Jana Okoye's lease at Leafy Cottage has ended. She's asking to renew it.",
+			"area": "Questions",
+			"when": "The question, in the intel screen (with a button per answer) and on the home's Tenants tab. Asked by the game when a lease ends and the tenant is happy enough to stay."
+		},
+		{
+			"id": "q_lease_end_b0",
+			"version": "1.12.0",
+			"line": "Renew the lease",
+			"area": "Questions",
+			"when": "Answer button 1 for: Jana Okoye's lease at Leafy Cottage has ended. She's asking to renew it. This is what happens when you don't answer in 7 days. The tenant manager picks this one."
+		},
+		{
+			"id": "q_lease_end_b1",
+			"version": "1.12.0",
+			"line": "Let Jana go",
+			"area": "Questions",
+			"when": "Answer button 2 for: Jana Okoye's lease at Leafy Cottage has ended. She's asking to renew it."
+		},
+		{
+			"id": "q_lease_end_r1",
+			"version": "1.12.0",
+			"line": "Jana Okoye moved out of Leafy Cottage at the end of the lease.",
+			"area": "Questions",
+			"when": "What happened after the answer \"Let Jana go\". In the home's log and the fleet log."
+		},
+		{
+			"id": "m_cant_pay_0_0",
+			"version": "1.12.0",
+			"line": "Jana Okoye: \"Next month, boss. Promise. Probably.\"",
+			"area": "Tenant words",
+			"when": "What the tenant says under the question \"Jana Okoye can't pay this month's rent at Leafy Cottage.\" (tenants who are Late payer). One line picked at random."
+		},
+		{
+			"id": "m_cant_pay_0_1",
+			"version": "1.12.0",
+			"line": "Jana Okoye: \"I had it. Then I didn't. Long story.\"",
+			"area": "Tenant words",
+			"when": "What the tenant says under the question \"Jana Okoye can't pay this month's rent at Leafy Cottage.\" (tenants who are Late payer). One line picked at random."
+		},
+		{
+			"id": "m_cant_pay_1_0",
+			"version": "1.12.0",
+			"line": "Jana Okoye: \"The cards hated me this week. Next week they'll love me.\"",
+			"area": "Tenant words",
+			"when": "What the tenant says under the question \"Jana Okoye can't pay this month's rent at Leafy Cottage.\" (tenants who are Gambler). One line picked at random."
+		},
+		{
+			"id": "m_cant_pay_1_1",
+			"version": "1.12.0",
+			"line": "Jana Okoye: \"I was this close to doubling it, boss.\"",
+			"area": "Tenant words",
+			"when": "What the tenant says under the question \"Jana Okoye can't pay this month's rent at Leafy Cottage.\" (tenants who are Gambler). One line picked at random."
+		},
+		{
+			"id": "m_cant_pay_2_0",
+			"version": "1.12.0",
+			"line": "Jana Okoye: \"A deal went sideways. Don't ask which deal.\"",
+			"area": "Tenant words",
+			"when": "What the tenant says under the question \"Jana Okoye can't pay this month's rent at Leafy Cottage.\" (tenants who are Shady connections). One line picked at random."
+		},
+		{
+			"id": "m_cant_pay_2_1",
+			"version": "1.12.0",
+			"line": "Jana Okoye: \"My partner owes me. When he pays, you get paid.\"",
+			"area": "Tenant words",
+			"when": "What the tenant says under the question \"Jana Okoye can't pay this month's rent at Leafy Cottage.\" (tenants who are Shady connections). One line picked at random."
+		},
+		{
+			"id": "m_cant_pay_3_0",
+			"version": "1.12.0",
+			"line": "Jana Okoye: \"The kids needed shoes. I'm sorry, boss.\"",
+			"area": "Tenant words",
+			"when": "What the tenant says under the question \"Jana Okoye can't pay this month's rent at Leafy Cottage.\" (tenants who are Family with kids). One line picked at random."
+		},
+		{
+			"id": "m_cant_pay_3_1",
+			"version": "1.12.0",
+			"line": "Jana Okoye: \"It's the kids or the rent this month. Please.\"",
+			"area": "Tenant words",
+			"when": "What the tenant says under the question \"Jana Okoye can't pay this month's rent at Leafy Cottage.\" (tenants who are Family with kids). One line picked at random."
+		},
+		{
+			"id": "m_cant_pay_4_0",
+			"version": "1.12.0",
+			"line": "Jana Okoye: \"The job fell through. You'll get yours when I get mine.\"",
+			"area": "Tenant words",
+			"when": "What the tenant says under the question \"Jana Okoye can't pay this month's rent at Leafy Cottage.\" (tenants from pirates). One line picked at random."
+		},
+		{
+			"id": "m_cant_pay_5_0",
+			"version": "1.12.0",
+			"line": "Jana Okoye: \"I can't pay this month. I'm sorry.\"",
+			"area": "Tenant words",
+			"when": "What the tenant says under the question \"Jana Okoye can't pay this month's rent at Leafy Cottage.\" (anyone else). One line picked at random."
+		},
+		{
+			"id": "m_cant_pay_5_1",
+			"version": "1.12.0",
+			"line": "Jana Okoye: \"Lost my job. Give me a little time?\"",
+			"area": "Tenant words",
+			"when": "What the tenant says under the question \"Jana Okoye can't pay this month's rent at Leafy Cottage.\" (anyone else). One line picked at random."
+		},
+		{
+			"id": "m_cant_pay_5_2",
+			"version": "1.12.0",
+			"line": "Jana Okoye: \"I'll get it to you. I just need a few weeks.\"",
+			"area": "Tenant words",
+			"when": "What the tenant says under the question \"Jana Okoye can't pay this month's rent at Leafy Cottage.\" (anyone else). One line picked at random."
+		},
+		{
+			"id": "m_early_leave_0_0",
+			"version": "1.12.0",
+			"line": "Jana Okoye: \"I hate to go, boss. Best landlord I ever had.\"",
+			"area": "Tenant words",
+			"when": "What the tenant says under the question \"Jana Okoye got a job offer on another world and asks to end the lease at Leafy Cottage early.\" (tenants who are Loyal). One line picked at random."
+		},
+		{
+			"id": "m_early_leave_0_1",
+			"version": "1.12.0",
+			"line": "Jana Okoye: \"If it was up to me, I'd stay.\"",
+			"area": "Tenant words",
+			"when": "What the tenant says under the question \"Jana Okoye got a job offer on another world and asks to end the lease at Leafy Cottage early.\" (tenants who are Loyal). One line picked at random."
+		},
+		{
+			"id": "m_early_leave_1_0",
+			"version": "1.12.0",
+			"line": "Jana Okoye: \"It's the job of a lifetime. I can't say no.\"",
+			"area": "Tenant words",
+			"when": "What the tenant says under the question \"Jana Okoye got a job offer on another world and asks to end the lease at Leafy Cottage early.\" (anyone else). One line picked at random."
+		},
+		{
+			"id": "m_early_leave_1_1",
+			"version": "1.12.0",
+			"line": "Jana Okoye: \"I know I signed for longer. I'm sorry.\"",
+			"area": "Tenant words",
+			"when": "What the tenant says under the question \"Jana Okoye got a job offer on another world and asks to end the lease at Leafy Cottage early.\" (anyone else). One line picked at random."
+		},
+		{
+			"id": "m_police_search_0_0",
+			"version": "1.12.0",
+			"line": "Jana Okoye: \"Tell them I moved out. Last year.\"",
+			"area": "Tenant words",
+			"when": "What the tenant says under the question \"Police want to search Leafy Cottage. They're looking for Jana Okoye.\" (tenants who are Shady connections). One line picked at random."
+		},
+		{
+			"id": "m_police_search_0_1",
+			"version": "1.12.0",
+			"line": "Jana Okoye: \"Whatever they find, it's not mine.\"",
+			"area": "Tenant words",
+			"when": "What the tenant says under the question \"Police want to search Leafy Cottage. They're looking for Jana Okoye.\" (tenants who are Shady connections). One line picked at random."
+		},
+		{
+			"id": "m_police_search_1_0",
+			"version": "1.12.0",
+			"line": "Jana Okoye: \"Give me ten minutes before you open the door. Five?\"",
+			"area": "Tenant words",
+			"when": "What the tenant says under the question \"Police want to search Leafy Cottage. They're looking for Jana Okoye.\" (tenants who are Smuggler). One line picked at random."
+		},
+		{
+			"id": "m_police_search_1_1",
+			"version": "1.12.0",
+			"line": "Jana Okoye: \"Don't let them near the walls, boss.\"",
+			"area": "Tenant words",
+			"when": "What the tenant says under the question \"Police want to search Leafy Cottage. They're looking for Jana Okoye.\" (tenants who are Smuggler). One line picked at random."
+		},
+		{
+			"id": "m_big_party_0_0",
+			"version": "1.12.0",
+			"line": "Jana Okoye: \"It'll be quiet. Ish. Mostly.\"",
+			"area": "Tenant words",
+			"when": "What the tenant says under the question \"Jana Okoye wants to throw a big party at Leafy Cottage this weekend.\" (tenants who are Loud). One line picked at random."
+		},
+		{
+			"id": "m_big_party_0_1",
+			"version": "1.12.0",
+			"line": "Jana Okoye: \"Everyone's invited. You too, boss.\"",
+			"area": "Tenant words",
+			"when": "What the tenant says under the question \"Jana Okoye wants to throw a big party at Leafy Cottage this weekend.\" (tenants who are Loud). One line picked at random."
+		},
+		{
+			"id": "m_big_party_1_0",
+			"version": "1.12.0",
+			"line": "Jana Okoye: \"Just a few friends. A few dozen friends.\"",
+			"area": "Tenant words",
+			"when": "What the tenant says under the question \"Jana Okoye wants to throw a big party at Leafy Cottage this weekend.\" (anyone else). One line picked at random."
+		},
+		{
+			"id": "m_big_party_1_1",
+			"version": "1.12.0",
+			"line": "Jana Okoye: \"It's my birthday, boss. Come on.\"",
+			"area": "Tenant words",
+			"when": "What the tenant says under the question \"Jana Okoye wants to throw a big party at Leafy Cottage this weekend.\" (anyone else). One line picked at random."
+		},
+		{
+			"id": "m_keep_pet_0_0",
+			"version": "1.12.0",
+			"line": "Jana Okoye: \"The kids won't stop asking. Please say yes.\"",
+			"area": "Tenant words",
+			"when": "What the tenant says under the question \"Jana Okoye asks if they can keep a pet at Leafy Cottage.\" (tenants who are Family with kids). One line picked at random."
+		},
+		{
+			"id": "m_keep_pet_0_1",
+			"version": "1.12.0",
+			"line": "Jana Okoye: \"It's a tiny one. The kids will look after it.\"",
+			"area": "Tenant words",
+			"when": "What the tenant says under the question \"Jana Okoye asks if they can keep a pet at Leafy Cottage.\" (tenants who are Family with kids). One line picked at random."
+		},
+		{
+			"id": "m_keep_pet_1_0",
+			"version": "1.12.0",
+			"line": "Jana Okoye: \"It's very small and very quiet. Mostly quiet.\"",
+			"area": "Tenant words",
+			"when": "What the tenant says under the question \"Jana Okoye asks if they can keep a pet at Leafy Cottage.\" (anyone else). One line picked at random."
+		},
+		{
+			"id": "m_keep_pet_1_1",
+			"version": "1.12.0",
+			"line": "Jana Okoye: \"I found it outside. It has nowhere else to go.\"",
+			"area": "Tenant words",
+			"when": "What the tenant says under the question \"Jana Okoye asks if they can keep a pet at Leafy Cottage.\" (anyone else). One line picked at random."
+		},
+		{
+			"id": "m_rent_cut_request_0_0",
+			"version": "1.12.0",
+			"line": "Jana Okoye: \"I did the math, boss. I can't make it work.\"",
+			"area": "Tenant words",
+			"when": "What the tenant says under the question \"Jana Okoye asks for lower rent at Leafy Cottage. Times are hard.\" (tenants who are Frugal). One line picked at random."
+		},
+		{
+			"id": "m_rent_cut_request_0_1",
+			"version": "1.12.0",
+			"line": "Jana Okoye: \"I've cut everything else already.\"",
+			"area": "Tenant words",
+			"when": "What the tenant says under the question \"Jana Okoye asks for lower rent at Leafy Cottage. Times are hard.\" (tenants who are Frugal). One line picked at random."
+		},
+		{
+			"id": "m_rent_cut_request_1_0",
+			"version": "1.12.0",
+			"line": "Jana Okoye: \"Prices went up everywhere. My pay didn't.\"",
+			"area": "Tenant words",
+			"when": "What the tenant says under the question \"Jana Okoye asks for lower rent at Leafy Cottage. Times are hard.\" (anyone else). One line picked at random."
+		},
+		{
+			"id": "m_rent_cut_request_1_1",
+			"version": "1.12.0",
+			"line": "Jana Okoye: \"Just until things get better. Please.\"",
+			"area": "Tenant words",
+			"when": "What the tenant says under the question \"Jana Okoye asks for lower rent at Leafy Cottage. Times are hard.\" (anyone else). One line picked at random."
+		},
+		{
+			"id": "l_card",
+			"version": "1.12.0",
+			"line": "Living here 3 months. Lease: 9 months left of 12, at Normal rent.",
+			"when": "Tenants tab, under the tenant's card.",
+			"area": "Leases"
+		},
+		{
+			"id": "l_card_none",
+			"version": "1.12.0",
+			"line": "Living here 3 months. No lease.",
+			"when": "Tenants tab, a tenant without a lease.",
+			"area": "Leases"
+		},
+		{
+			"id": "l_card_ended",
+			"version": "1.12.0",
+			"line": "Living here 12 months. The lease has ended. Waiting for your answer about renewing.",
+			"when": "Tenants tab, a lease that ended while the question waits.",
+			"area": "Leases"
+		},
+		{
+			"id": "l_btn_next",
+			"version": "1.12.0",
+			"line": "Next lease: 12 months",
+			"when": "Button on the Tenants tab of a rented home: click to cycle No lease, 6, 12, 24 months.",
+			"area": "Leases"
+		},
+		{
+			"id": "l_btn_empty",
+			"version": "1.12.0",
+			"line": "Lease: 12 months",
+			"when": "The same button on an empty home, next to Advertising.",
+			"area": "Leases"
+		},
+		{
+			"id": "l_tip",
+			"version": "1.12.0",
+			"line": "How long new tenants sign for: no lease, 6, 12 or 24 months. During a lease the rent stays as signed (you can still lower it), a tenant who moves out early pays you a month's rent, and evicting costs you half the rent of the months left, unless they broke the lease first. A longer lease makes tenants a little happier. When it ends, you decide whether to renew.",
+			"when": "Tooltip of the lease button.",
+			"area": "Leases"
+		},
+		{
+			"id": "l_evict_btn",
+			"version": "1.12.0",
+			"line": "Evict, pay 7,200",
+			"when": "Evict button while a lease runs (it says Evict Jana Okoye when it is free).",
+			"area": "Leases"
+		},
+		{
+			"id": "l_evict_tip_fee",
+			"version": "1.12.0",
+			"line": "The lease still runs 9 months. Breaking it costs you half their rent for the months left, at least one month.",
+			"when": "Evict button tooltip during a lease.",
+			"area": "Leases"
+		},
+		{
+			"id": "l_evict_tip_breach",
+			"version": "1.12.0",
+			"line": "Jana broke the lease lately, so evicting is free.",
+			"when": "Evict button tooltip after skipped rent, a police raid or a trashed home (60 days).",
+			"area": "Leases"
+		},
+		{
+			"id": "l_evict_tip_free",
+			"version": "1.12.0",
+			"line": "Free: there is no lease to break.",
+			"when": "Evict button tooltip without a lease.",
+			"area": "Leases"
+		},
+		{
+			"id": "l_evicted_fee",
+			"version": "1.12.0",
+			"line": "Evicted Jana Okoye from Leafy Cottage. You paid 7,200 for breaking the lease.",
+			"when": "After evicting during a lease.",
+			"area": "Leases"
+		},
+		{
+			"id": "l_evict_poor",
+			"version": "1.12.0",
+			"line": "Not enough credits to break the lease (7,200).",
+			"when": "Evicting during a lease without the credits.",
+			"area": "Leases"
+		},
+		{
+			"id": "l_rent_wait",
+			"version": "1.12.0",
+			"line": "Jana pays Normal rent until the lease ends. High rent starts with the next lease.",
+			"when": "Message after raising the rent during a lease.",
+			"area": "Leases"
+		},
+		{
+			"id": "l_rent_tip",
+			"version": "1.12.0",
+			"line": "A lower rent counts at once. During a lease, a higher rent starts with the next lease.",
+			"when": "New line in the Rent tooltip.",
+			"area": "Leases"
+		},
+		{
+			"id": "l_rent_tip2",
+			"version": "1.12.0",
+			"line": "Jana pays Normal rent until the lease ends.",
+			"when": "Rent tooltip, when the lease rent differs from the rent you set.",
+			"area": "Leases"
+		},
+		{
+			"id": "l_moved_fee",
+			"version": "1.12.0",
+			"line": "Jana Okoye moved out of Leafy Cottage. 2,400 paid for breaking the lease.",
+			"when": "An unhappy tenant moves out during a lease.",
+			"area": "Leases"
+		},
+		{
+			"id": "l_no_renew",
+			"version": "1.12.0",
+			"line": "Jana Okoye did not renew the lease at Leafy Cottage and moved out.",
+			"when": "A lease ends and the tenant is unhappy (happiness under 35).",
+			"area": "Leases"
+		},
+		{
+			"id": "l_renewed",
+			"version": "1.12.0",
+			"line": "Jana Okoye signed a new 12-month lease at Leafy Cottage.",
+			"when": "After you renew the lease.",
+			"area": "Leases"
+		},
+		{
+			"id": "l_renewed_raise",
+			"version": "1.12.0",
+			"line": "Jana Okoye signed a new 12-month lease at Leafy Cottage. Jana is not happy about the raise.",
+			"when": "After renewing at a higher rent than before.",
+			"area": "Leases"
+		},
+		{
+			"id": "l_renew_cant",
+			"version": "1.12.0",
+			"line": "Jana Okoye can't pay High rent and moved out of Leafy Cottage.",
+			"when": "Renewing at a rent the tenant can't pay.",
+			"area": "Leases"
+		},
+		{
+			"id": "l_renew_none",
+			"version": "1.12.0",
+			"line": "Jana Okoye stays at Leafy Cottage without a lease.",
+			"when": "Renewing while the home's lease is set to No lease.",
+			"area": "Leases"
+		},
+		{
+			"id": "l_happy",
+			"version": "1.12.0",
+			"line": "Signed a 12-month lease (+4)",
+			"when": "Happiness tooltip line of a tenant with a lease (+2 for 6 months, +6 for 24).",
+			"area": "Leases"
+		},
+		{
+			"id": "q_box_title",
+			"version": "1.12.0",
+			"line": "Waiting for your answer",
+			"when": "Title on the Tenants tab while a question waits.",
+			"area": "Questions"
+		},
+		{
+			"id": "q_intel_open",
+			"version": "1.12.0",
+			"line": "Leafy Cottage: your answer is needed",
+			"when": "Intel title of a question.",
+			"area": "Questions"
+		},
+		{
+			"id": "q_intel_done",
+			"version": "1.12.0",
+			"line": "Leafy Cottage: answered",
+			"when": "Intel title after you answer.",
+			"area": "Questions"
+		},
+		{
+			"id": "q_intel_gone",
+			"version": "1.12.0",
+			"line": "Leafy Cottage: no longer needs an answer",
+			"when": "Intel title when the tenant left or the home was sold before you answered.",
+			"area": "Questions"
+		},
+		{
+			"id": "q_intel_gone2",
+			"version": "1.12.0",
+			"line": "This no longer needs an answer.",
+			"when": "Intel text in that case.",
+			"area": "Questions"
+		},
+		{
+			"id": "q_intel_default",
+			"version": "1.12.0",
+			"line": "If you don't answer in 5 days: Give Jana a month.",
+			"when": "Intel text under the answer buttons.",
+			"area": "Questions"
+		},
+		{
+			"id": "q_no_money",
+			"version": "1.12.0",
+			"line": "Not enough credits.",
+			"when": "Under an answer you can't pay for.",
+			"area": "Questions"
+		},
+		{
+			"id": "q_rent_free",
+			"version": "1.12.0",
+			"line": "The rent is already Free.",
+			"when": "Under Lower the rent when it is Free.",
+			"area": "Questions"
+		},
+		{
+			"id": "q_no_answer",
+			"version": "1.12.0",
+			"line": "No answer from you in 7 days. You let Jana Okoye skip this month's rent at Leafy Cottage.",
+			"when": "When the days run out: this goes before the default answer's line.",
+			"area": "Questions"
+		},
+		{
+			"id": "q_manager",
+			"version": "1.12.0",
+			"line": "Your tenant manager answered: Jana Okoye scraped together half of this month's rent at Leafy Cottage.",
+			"when": "With the tenant manager hired: it answers at once, this goes before its answer's line.",
+			"area": "Questions"
+		},
+		{
+			"id": "q_paid",
+			"version": "1.12.0",
+			"line": "A plumber fixed the pipes at Leafy Cottage. You paid 1,200.",
+			"when": "After an answer that costs credits.",
+			"area": "Questions"
+		},
+		{
+			"id": "q_got",
+			"version": "1.12.0",
+			"line": "Jana Okoye's friend moved into the spare room at Leafy Cottage. You got 900.",
+			"when": "After an answer that pays you.",
+			"area": "Questions"
 		}
 	]
 }

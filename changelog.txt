@@ -1,3 +1,11 @@
+Version 1.12.0 (2026-11-17)
+- Some events now wait for your answer, with buttons in the intel screen and on the home's Tenants tab: a tenant who can't pay (evict, give them a month, or take half), leaking pipes, a broken fridge, painting the walls, a pet, a friend in the spare room, a neighbor's offer to buy the home, a request for lower rent, a police search, a big party and leaving a lease early
+- Some answers can go wrong or pay off later. With no answer in 7 days the default answer happens, and the tenant manager answers for you
+- Leases: new tenants sign for 6, 12 or 24 months, or none (set per home on the Tenants tab, 12 by default). During a lease the rent can only go down, a tenant who moves out early pays you a month's rent, and evicting costs half the rent of the months left unless they broke the lease (skipped rent, a police raid, a trashed home)
+- A longer lease makes tenants a little happier. When a lease ends, a happy tenant asks to renew and you decide; an unhappy one moves out
+- Tenants already living in your homes start a 12-month lease at the rent they pay now
+- 31 new events, many for tenant traits that had none before
+
 Version 1.11.0 (2026-11-17)
 - Tenant, partner, applicant and kid traits show as painted icons instead of names; hover one for its name and what it does
 - Good traits have a green line under the icon, bad ones a red line; traits not screened yet show a "?" icon

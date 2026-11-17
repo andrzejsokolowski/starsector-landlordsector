@@ -116,7 +116,14 @@ public final class Actions {
     public static String sell(Property p, boolean furnished) {
         String no = cannotSell(p);
         if (no != null) return no;
-        float pay = p.saleValue(furnished);
+        return sellFor(p, furnished, p.saleValue(furnished), null);
+    }
+
+    /**
+     * Sells a home for this price (1.12.0: a neighbor's offer pays more). {@code said} replaces the "Sold:" line when
+     * given.
+     */
+    public static String sellFor(Property p, boolean furnished, float pay, String said) {
         int back = 0;
         if (!furnished) {
             for (Installed i : p.upgrades()) {
@@ -126,10 +133,17 @@ public final class Actions {
             }
         }
         Family.release(p);
+        Choices.cancel(p);
         Portfolio.get().properties().remove(p);
         Global.getSector().getPlayerFleet().getCargo().getCredits().add(pay);
-        Global.getSoundPlayer().playUISound("ui_cargo_special_tech_drop", 1f, 1f);
-        return "Sold: " + p.displayName() + " for " + Misc.getDGSCredits(pay) + "."
+        try {
+            Global.getSoundPlayer().playUISound("ui_cargo_special_tech_drop", 1f, 1f);
+        } catch (Throwable ignored) {
+        }
+        String head = said != null ? said + " " + Misc.getDGSCredits(pay) + "." : "Sold: " + p.displayName() + " for "
+                + Misc.getDGSCredits(pay) + ".";
+        if (said != null) Notify.line(head, true, null);
+        return head
                 + (back > 0 ? " " + back + (back == 1 ? " piece of furniture is" : " pieces of furniture are")
                         + " back in your furniture storage." : "");
     }
@@ -235,8 +249,16 @@ public final class Actions {
         return "Removed: " + i.name() + ".";
     }
 
-    public static void setRent(Property p, RentSetting s) {
-        p.setting = s;
+    /** Sets the rent you ask. 1.12.0: a raise waits for the next lease; returns a note for the player, or null. */
+    public static String setRent(Property p, RentSetting s) {
+        return Leases.setRent(p, s);
+    }
+
+    /** 1.12.0: the lease length new tenants sign here: none, 6, 12 or 24 months. */
+    public static String cycleLease(Property p) {
+        int next = Leases.nextTerm(p.leaseTerm());
+        Leases.setTerm(p, next);
+        return null;
     }
 
     // ---- Tenants ----
@@ -319,6 +341,8 @@ public final class Actions {
         p.tenant = t;
         p.advertising = false;
         p.applicants().clear();
+        // 1.12.0: they sign the home's lease at the rent you ask.
+        Leases.start(p, t);
         p.addLog(t.name + " moved in.", true, t.name + " moved in.");
         if (sound) Global.getSoundPlayer().playUISound("ui_upgrade_industry", 1f, 1f);
         return null;
@@ -332,9 +356,17 @@ public final class Actions {
     public static String evict(Property p) {
         if (p.tenant == null) return "Nobody lives there.";
         if (p.tenant.isPartner()) return "Talk to " + p.tenant.name + " instead.";
+        // 1.12.0: breaking a lease costs you, unless the tenant broke it first.
+        float fee = Leases.evictFee(p);
+        if (fee > 0f && credits() < fee) {
+            return "Not enough credits to break the lease (" + Misc.getDGSCredits(fee) + ").";
+        }
+        if (fee > 0f) Global.getSector().getPlayerFleet().getCargo().getCredits().subtract(fee);
         String name = p.tenant.name;
         p.tenant = null;
-        p.addLog("Evicted " + name + ".", false, "Evicted " + name + ".");
-        return "Evicted " + name + " from " + p.displayName() + ".";
+        Choices.cancel(p);
+        String paid = fee > 0f ? " You paid " + Misc.getDGSCredits(fee) + " for breaking the lease." : "";
+        p.addLog("Evicted " + name + "." + paid, false, "Evicted " + name + ".");
+        return "Evicted " + name + " from " + p.displayName() + "." + paid;
     }
 }

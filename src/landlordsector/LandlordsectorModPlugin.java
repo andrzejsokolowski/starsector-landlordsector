@@ -62,6 +62,7 @@ public class LandlordsectorModPlugin extends BaseModPlugin {
         upgradeTo060(p);
         upgradeTo080(p);
         upgradeTo101(p);
+        upgradeTo1120(p);
         Family.marryEveryPartner();
         // 1.8.0: kids from older saves get their stage (and babies lose the traits they were born with).
         for (Property home : p.properties()) {
@@ -69,6 +70,19 @@ public class LandlordsectorModPlugin extends BaseModPlugin {
                 Kids.migrate(home, c, random);
                 Kids.refreshPortrait(c);
             }
+        }
+    }
+
+    /**
+     * 1.12.0 (LLS-33): tenants already living in your homes sign the home's lease (12 months) at the rent they pay
+     * now, so leases show up at once. Public for the headless check.
+     */
+    public static void upgradeTo1120(Portfolio p) {
+        if (p.upgraded1120) return;
+        p.upgraded1120 = true;
+        for (Property pr : p.properties()) {
+            if (pr.tenant == null || pr.tenant.isPartner() || pr.playerHome || pr.tenant.leaseEnd != 0L) continue;
+            Leases.start(pr, pr.tenant);
         }
     }
 

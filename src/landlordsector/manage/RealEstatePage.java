@@ -322,7 +322,8 @@ public class RealEstatePage implements ManagePage {
             float end = sheet(s, rx, y0, rw, maxImg);
 
             float cy = Math.min(end + 8f, height - 36f);
-            RentSetting set = chosen.setting();
+            // 1.12.0: the arrows set the rent you ask; a running lease keeps its own rent until it ends.
+            RentSetting set = chosen.askingRent();
             if (!chosen.playerHome) {
                 label("Rent", Misc.getGrayColor(), rx, cy, 50f, 28f, Alignment.LMID, Fonts.DEFAULT_SMALL);
                 button("lower:" + chosen.id, "<", rx + 50f, cy, 30f, 28f, set != RentSetting.FREE);
@@ -355,9 +356,15 @@ public class RealEstatePage implements ManagePage {
                 tip(rx + 660f, cy, fw, 28f, "Selling furnished", "The furniture stays in the home and the buyer pays"
                         + " its full price on top: " + Misc.getDGSCredits(chosen.furnitureValue()) + ".", noSale);
             }
-            if (!chosen.playerHome) tip(rx, cy, 210f, 28f, "Rent", "Free: no rent at all. Anyone can afford it, tenants are grateful, and rich"
-                    + " ones take a smaller home than usual. Charity and Low: less rent, happier tenants, more reputation."
-                    + " High and Greedy: more rent, unhappier tenants, lost reputation.");
+            if (!chosen.playerHome) {
+                String leaseNote = landlordsector.Leases.has(chosen.tenant) && chosen.tenant.leaseRent != null
+                        && chosen.tenant.leaseRent != set ? chosen.tenant.firstName() + " pays "
+                        + chosen.tenant.leaseRent.label + " rent until the lease ends." : null;
+                tip(rx, cy, 210f, 28f, "Rent", "Free: no rent at all. Anyone can afford it, tenants are grateful, and rich"
+                        + " ones take a smaller home than usual. Charity and Low: less rent, happier tenants, more reputation."
+                        + " High and Greedy: more rent, unhappier tenants, lost reputation.", "A lower rent counts at once."
+                        + " During a lease, a higher rent starts with the next lease.", leaseNote);
+            }
         }
 
         private void buildTenantTab(Property p, float rx, float y0) {
@@ -369,15 +376,23 @@ public class RealEstatePage implements ManagePage {
             if (p.tenant != null) {
                 float ny = tenantCard(p.tenant, p, rx, y0, cw);
                 float months = Global.getSector().getClock().getElapsedDaysSince(p.tenant.since) / 30f;
-                text("Living here " + Math.max(0, Math.round(months)) + (Math.round(months) == 1 ? " month." : " months."),
-                        Misc.getGrayColor(), rx, ny + 4f, cw);
+                text("Living here " + Math.max(0, Math.round(months)) + (Math.round(months) == 1 ? " month. " : " months. ")
+                        + landlordsector.Leases.cardLine(p.tenant), Misc.getGrayColor(), rx, ny + 4f, cw);
                 if (isTyping("nick:" + p.id)) {
                     nicknameBox(rx, ny + 30f, cw);
                     return;
                 }
-                button("evict:" + p.id, "Evict " + p.tenant.name, rx, ny + 30f, 240f, 28f, true);
+                float fee = landlordsector.Leases.evictFee(p);
+                button("evict:" + p.id, fee > 0f ? "Evict, pay " + Misc.getDGSCredits(fee) : "Evict " + p.tenant.name,
+                        rx, ny + 30f, 240f, 28f, fee <= 0f || Actions.credits() >= fee);
+                tip(rx, ny + 30f, 240f, 28f, "Evict", fee > 0f ? "The lease still runs " + landlordsector.Leases.monthsLeft(
+                        p.tenant) + " months. Breaking it costs you half their rent for the months left, at least one"
+                        + " month." : (landlordsector.Leases.breached(p.tenant) ? p.tenant.firstName() + " broke the"
+                        + " lease lately, so evicting is free." : "Free: there is no lease to break."));
                 declareButton(p, rx + 250f, ny + 30f);
                 nicknameButton(p, p.tenant, rx + 460f, ny + 30f);
+                leaseButton(p, rx, ny + 64f, "Next lease: ");
+                questionBox(p, rx, ny + 104f, cw);
                 return;
             }
             if (p.condemned) {
@@ -409,6 +424,7 @@ public class RealEstatePage implements ManagePage {
                     Misc.getGrayColor(), rx, y0 + 36f, cw);
             if (cw >= 790f) declareButton(p, rx + 580f, y0);
             else declareButton(p, rx + cw - 200f, y0 + 32f);
+            if (cw >= 790f) leaseButton(p, rx + 580f, y0 + 32f, "Lease: ");
 
             float y = y0 + 62f;
             title("Applicants", rx, y, cw);
@@ -436,6 +452,38 @@ public class RealEstatePage implements ManagePage {
                 if (y + 66f > height - 8f) break;
                 poolRow(p, a, rx, y, cw);
                 y += 72f;
+            }
+        }
+
+        /** 1.12.0 (LLS-33): the lease length new tenants sign here. */
+        private void leaseButton(Property p, float x, float y, String caption) {
+            button("lease:" + p.id, caption + landlordsector.Leases.termName(p.leaseTerm()), x, y, 200f, 28f, true);
+            tip(x, y, 200f, 28f, "Lease", "How long new tenants sign for: no lease, 6, 12 or 24 months. During a lease the"
+                    + " rent stays as signed (you can still lower it), a tenant who moves out early pays you a month's"
+                    + " rent, and evicting costs you half the rent of the months left, unless they broke the lease"
+                    + " first. A longer lease makes tenants a little happier. When it ends, you decide whether to"
+                    + " renew.");
+        }
+
+        /** 1.12.0 (LLS-32): a question from this home, with a button per answer. */
+        private void questionBox(Property p, float x, float y, float w) {
+            landlordsector.data.TenantEvents.Def d = landlordsector.Choices.question(p);
+            if (d == null || y + 60f > height - 8f) return;
+            title("Waiting for your answer", x, y, w);
+            float yy = y + 30f;
+            yy += wrapped(p.decision.text, 0, Misc.getTextColor(), Misc.getTextColor(), x, yy, w) + 4f;
+            if (p.decision.said != null) {
+                yy += wrapped(p.decision.who + ": \"" + p.decision.said + "\"", 0, Misc.getGrayColor(),
+                        Misc.getGrayColor(), x, yy, w) + 4f;
+            }
+            for (int i = 0; i < d.choices.size(); i++) {
+                if (yy + 28f > height - 8f) break;
+                landlordsector.data.TenantEvents.Def a = d.choices.get(i);
+                String no = landlordsector.Choices.cannot(p, a);
+                button("answer:" + p.id + ":" + i, landlordsector.Choices.label(p, a), x, yy, Math.min(w, 420f), 26f,
+                        no == null);
+                if (no != null) tip(x, yy, Math.min(w, 420f), 26f, "Not now", no);
+                yy += 30f;
             }
         }
 
@@ -1199,12 +1247,25 @@ public class RealEstatePage implements ManagePage {
                     }
                     break;
                 case "lower":
-                    Actions.setRent(pr, pr.setting().lower());
-                    message = "";
+                    note(Actions.setRent(pr, pr.askingRent().lower()));
                     break;
                 case "higher":
-                    Actions.setRent(pr, pr.setting().higher());
+                    note(Actions.setRent(pr, pr.askingRent().higher()));
+                    break;
+                case "lease":
+                    Actions.cycleLease(pr);
                     message = "";
+                    break;
+                case "answer":
+                    if (parts.length > 2) {
+                        try {
+                            String what = landlordsector.Choices.answer(pr, Integer.parseInt(parts[2]),
+                                    landlordsector.Choices.PLAYER, new java.util.Random());
+                            message = what;
+                            messageColor = Misc.getHighlightColor();
+                        } catch (NumberFormatException ignored) {
+                        }
+                    }
                     break;
                 case "repair":
                     result(Actions.repair(pr));
@@ -1286,6 +1347,11 @@ public class RealEstatePage implements ManagePage {
                     break;
             }
             return null;
+        }
+
+        private void note(String text) {
+            message = text == null ? "" : text;
+            messageColor = Misc.getHighlightColor();
         }
 
         private void result(String text) {

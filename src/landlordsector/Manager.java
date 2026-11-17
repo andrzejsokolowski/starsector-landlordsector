@@ -61,7 +61,8 @@ public final class Manager {
     }
 
     private static void rent(Property p) {
-        RentSetting s = p.setting();
+        // 1.12.0: the rent you ask (a raise during a lease waits for the next one).
+        RentSetting s = p.askingRent();
         float h = p.stats().happiness;
         RentSetting to = null;
         if (h < UNHAPPY && (s == RentSetting.NORMAL || s == RentSetting.HIGH)) {

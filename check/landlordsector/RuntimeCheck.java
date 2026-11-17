@@ -197,6 +197,11 @@ public final class RuntimeCheck {
         fit.wealth = colonyHome.tier().index + 1;
         Actions.moveIn(colonyHome, fit);
         expect(colonyHome.isRented(), "a tenant moves into the colony home");
+        // 1.12.0: new tenants sign a 12-month lease. The checks below test the rent without one; checkLeases1120 has
+        // the lease rules.
+        expect(Leases.running(home.tenant) && home.tenant.leaseMonths == 12, "a new tenant signs a 12-month lease");
+        Leases.clear(home.tenant);
+        Leases.clear(colonyHome.tenant);
         // Events: a fixed event changes the home and lands in its log.
         float before0 = home.condition;
         TenantDaily.apply(home, a, landlordsector.data.TenantEvents.get("smashed_window"));
@@ -581,6 +586,8 @@ public final class RuntimeCheck {
         checkPictureMemory070();
         checkFamily120();
         checkManager161();
+        checkLeases1120();
+        checkChoices1120();
 
         // 0.8.0: a world from worlds.json. Eochu Bres, size 6, has room for 23 homes, lists every size and prices
         // like the Tri-Tachyon capital; the same market under another id is the plain size 6 rule.
@@ -863,6 +870,7 @@ public final class RuntimeCheck {
         p.applicants().add(bad);
         Manager.day(p);
         expect(p.tenant == bad, "after 5 days the manager takes the best applicant there is");
+        Leases.clear(p.tenant);
         Actions.setRent(p, RentSetting.NORMAL);
         float h = p.stats().happiness;
         Manager.day(p);
@@ -874,6 +882,193 @@ public final class RuntimeCheck {
         Manager.day(p);
         expect(p.setting() == RentSetting.CHARITY, "the manager leaves Charity rent alone");
         Actions.sell(p);
+    }
+
+
+    /** A home with a tenant on a fresh market, for the 1.12.0 checks. */
+    private static Property rentedHome(String id, Random r) {
+        FakeMarket fm = new FakeMarket();
+        fm.id = id; fm.name = id; fm.factionId = "hegemony"; fm.size = 6;
+        fm.stability = 7f; fm.hazard = 1f; fm.habitable = true;
+        MarketAPI mm = market(fm);
+        Listing l = MarketRules.listings(mm).list().get(0);
+        Actions.buy(mm, l);
+        Property p = null;
+        for (Property q : Portfolio.get().properties()) if (id.equals(q.marketId)) p = q;
+        if (p == null) return null;
+        Tenant t = Tenants.create("independent", mm, 1f, true, "advert", r);
+        t.traits().clear();
+        t.wealth = Math.min(TenantRules.MAX_WEALTH, p.tier().index + 2);
+        Actions.moveIn(p, t);
+        return p;
+    }
+
+    /** 1.12.0 (LLS-33): leases. */
+    private static void checkLeases1120() {
+        Random r = new Random(7);
+        Property p = rentedHome("fake_lease", r);
+        expect(p != null && p.tenant != null, "a rented home for the lease check");
+        if (p == null || p.tenant == null) return;
+        Tenant t = p.tenant;
+        expect(Leases.running(t) && Leases.monthsLeft(t) == 12 && t.leaseRent == RentSetting.NORMAL,
+                "the lease runs 12 months at Normal rent");
+        String note = Actions.setRent(p, RentSetting.HIGH);
+        expect(p.setting() == RentSetting.NORMAL && p.askingRent() == RentSetting.HIGH && note != null,
+                "a raise waits for the next lease");
+        Actions.setRent(p, RentSetting.LOW);
+        expect(p.setting() == RentSetting.LOW && t.leaseRent == RentSetting.LOW, "a lower rent counts at once");
+        Actions.setRent(p, RentSetting.NORMAL);
+        expect(p.setting() == RentSetting.LOW, "going back up waits for the next lease too");
+
+        float with = p.stats().happiness;
+        long end = t.leaseEnd;
+        t.leaseEnd = 0L;
+        float without = p.stats().happiness;
+        t.leaseEnd = end;
+        expect(with > without || with >= 100f, "a 12-month lease makes the tenant happier: " + with + " vs " + without);
+
+        float fee = Leases.evictFee(p);
+        expect(fee >= Leases.monthRent(p) * 5.9f && fee <= Leases.monthRent(p) * 6.1f,
+                "evicting with 12 months left costs half of 12 months' rent: " + fee);
+        float before = credits.get();
+        String paid = Leases.payBreakFee(p);
+        expect(!paid.isEmpty() && Math.abs(credits.get() - before - Leases.monthRent(p)) < CREDIT_EPS,
+                "a tenant who leaves early pays a month's rent");
+        Leases.breach(t);
+        expect(Leases.evictFee(p) == 0f, "evicting a tenant who broke the lease is free");
+        t.breachAt = now - 61 * DAY;
+        before = credits.get();
+        fee = Leases.evictFee(p);
+        String ev = Actions.evict(p);
+        expect(ev.startsWith("Evicted") && p.tenant == null && Math.abs(before - credits.get() - fee) < CREDIT_EPS,
+                "evicting during the lease costs the fee: " + ev);
+
+        // Lease end: a happy tenant asks to renew; renewing at a higher rent works when they can pay it.
+        Tenant n = Tenants.create("independent", p.market(), 1f, true, "advert", r);
+        n.traits().clear();
+        Actions.setRent(p, RentSetting.NORMAL);
+        n.wealth = 1;
+        for (int w = 1; w <= TenantRules.MAX_WEALTH; w++) {
+            n.wealth = w;
+            if (Actions.refusal(p, n) == null && TenantRules.canAfford(p.tier().index, RentSetting.HIGH, w)) break;
+        }
+        Actions.moveIn(p, n);
+        expect(p.tenant == n, "a tenant who can pay High rent moves in for the lease-end check");
+        n.mood = 30f;
+        n.leaseEnd = now - DAY;
+        expect(!Leases.running(n) && Leases.has(n), "an ended lease still counts until renewed");
+        Leases.daily(p, r);
+        expect(p.decision != null && Leases.END_EVENT.equals(p.decision.eventId), "an ended lease asks about renewing");
+        Actions.setRent(p, RentSetting.HIGH);
+        String res = Choices.answer(p, 0, Choices.PLAYER, r);
+        expect(p.tenant == n && Leases.running(n) && n.leaseRent == RentSetting.HIGH && res.contains("signed a new"),
+                "renewing starts a new lease at the rent you ask: " + res);
+        Leases.setTerm(p, 0);
+        Actions.setRent(p, RentSetting.NORMAL);
+        n.mood = 30f;
+        n.leaseEnd = now - DAY;
+        Leases.daily(p, r);
+        Choices.answer(p, 0, Choices.PLAYER, r);
+        expect(p.tenant == n && !Leases.has(n), "renewing with No lease leaves them without one");
+        expect(Leases.evictFee(p) == 0f, "no lease, no eviction fee");
+        Actions.sell(p);
+    }
+
+    /** 1.12.0 (LLS-32): questions. */
+    private static void checkChoices1120() {
+        Random r = new Random(9);
+        Random yes = new Random() {
+            @Override
+            public float nextFloat() {
+                return 0f;
+            }
+        };
+        Random no = new Random() {
+            @Override
+            public float nextFloat() {
+                return 0.999f;
+            }
+        };
+        Property p = rentedHome("fake_choice", r);
+        expect(p != null && p.tenant != null, "a rented home for the question check");
+        if (p == null || p.tenant == null) return;
+        landlordsector.data.TenantEvents.Def cant = landlordsector.data.TenantEvents.get("cant_pay");
+        expect(cant != null && cant.isQuestion() && cant.choices.size() == 3, "the can't-pay question has 3 answers");
+        for (landlordsector.data.TenantEvents.Def d : landlordsector.data.TenantEvents.all()) {
+            if (!d.isQuestion()) continue;
+            landlordsector.data.TenantEvents.Def def = d.choices.get(d.defaultChoice);
+            expect(def.cost <= 0f && def.sellMult <= 0f, "a question's default answer is free: " + d.id);
+            for (landlordsector.data.TenantEvents.Def a : d.choices) {
+                expect(!a.label.isEmpty(), "every answer has a button text: " + a.id);
+                expect(a.renew || !a.text.isEmpty() || a.sellMult > 0f, "every answer says what happened: " + a.id);
+            }
+        }
+        Choices.ask(p, cant, r);
+        expect(p.decision != null && "cant_pay".equals(p.decision.eventId), "a question waits for an answer");
+        expect(Leases.evictFee(p) == 0f, "a tenant who can't pay broke the lease: evicting is free");
+        Choices.ask(p, landlordsector.data.TenantEvents.get("leaky_pipes"), r);
+        expect("cant_pay".equals(p.decision.eventId), "one question at a time");
+        now += 8 * DAY;
+        Choices.daily(p, r);
+        expect(p.decision == null && p.rentCut == 1f && p.tenant != null && p.later().size() == 1,
+                "no answer in 7 days takes the default: a month off, a payback may follow");
+        p.rentCut = 0f;
+        float before = credits.get();
+        now += 36 * DAY;
+        Choices.daily(p, yes);
+        expect(p.later().isEmpty() && credits.get() > before, "the tenant pays back the month you gave them");
+
+        landlordsector.data.TenantEvents.Def pipes = landlordsector.data.TenantEvents.get("leaky_pipes");
+        Choices.ask(p, pipes, r);
+        before = credits.get();
+        float cost = Choices.credits(p, pipes.choices.get(0));
+        String res = Choices.answer(p, 0, Choices.PLAYER, r);
+        expect(p.decision == null && Math.abs(before - credits.get() - cost) < CREDIT_EPS && cost > 0f,
+                "calling a plumber costs " + cost + ": " + res);
+        float cond = p.condition;
+        Choices.ask(p, pipes, r);
+        Choices.answer(p, 1, Choices.PLAYER, yes);
+        expect(p.condition < cond, "a cheap patch can give way");
+
+        Choices.ask(p, cant, r);
+        Tenant t = p.tenant;
+        Choices.answer(p, 0, Choices.PLAYER, r);
+        expect(p.tenant == null && p.decision == null && p.advertising, "evicting over unpaid rent puts them out: " + t.name);
+
+        // The tenant leaving drops the question.
+        Tenant t2 = Tenants.create("independent", p.market(), 1f, true, "advert", r);
+        t2.traits().clear();
+        t2.wealth = Math.min(TenantRules.MAX_WEALTH, p.tier().index + 2);
+        Actions.moveIn(p, t2);
+        Choices.ask(p, landlordsector.data.TenantEvents.get("big_party"), r);
+        p.tenant = null;
+        Choices.daily(p, r);
+        expect(p.decision == null, "a question goes away with the tenant");
+        Actions.moveIn(p, t2);
+
+        // Rent cut: one step lower, the lease's too.
+        Actions.setRent(p, RentSetting.NORMAL);
+        t2.leaseRent = RentSetting.NORMAL;
+        Choices.ask(p, landlordsector.data.TenantEvents.get("rent_cut_request"), r);
+        Choices.answer(p, 0, Choices.PLAYER, no);
+        expect(p.setting() == RentSetting.LOW && t2.leaseRent == RentSetting.LOW, "lowering the rent a step works");
+
+        // The tenant manager answers at once.
+        Actions.toggleService(p, Manager.ID);
+        p.rentCut = 0f;
+        Choices.ask(p, cant, r);
+        expect(p.decision == null && Math.abs(p.rentCut - 0.5f) < 1e-3, "the tenant manager takes half the rent");
+        Actions.toggleService(p, Manager.ID);
+
+        // A neighbor's offer sells the home for more.
+        landlordsector.data.TenantEvents.Def offer = landlordsector.data.TenantEvents.get("neighbor_offer");
+        Choices.ask(p, offer, r);
+        expect(p.decision != null && !p.decision.text.contains("$price"), "the offer names its price: " + p.decision.text);
+        float value = p.saleValue(false);
+        before = credits.get();
+        Choices.answer(p, 0, Choices.PLAYER, r);
+        expect(!Portfolio.get().properties().contains(p) && Math.abs(credits.get() - before - value * 1.25f) < CREDIT_EPS,
+                "selling to the neighbor pays a quarter more than the sale value");
     }
 
     private static void checkFamily120() {

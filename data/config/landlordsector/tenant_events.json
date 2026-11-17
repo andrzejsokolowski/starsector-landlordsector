@@ -26,6 +26,20 @@
 	# requires: only tenants with one of these traits have the event.
 	# kind: what the event is about. Trait tooltips name the kind (from "kinds"), never the event.
 	# big: also sent to the intel screen. Every event goes into the home's log and the fleet log.
+	# breach (1.12.0): the tenant broke the lease, so evicting them is free for 60 days.
+	#
+	# Questions (1.12.0, LLS-32): an event with "choices" waits for the player's answer in the intel screen and the
+	# home's Tenants tab. "default": the answer taken after "answerDays" (7) days without one (keep it free).
+	# Each answer: "label" (button, $cost / $gain / $price filled in), "text" (what happened), the effects above, and
+	#   cost / gain: months of the home's Normal rent the player pays / gets
+	#   evict: the tenant is put out (no lease fee), rentStep: -1 lowers the rent a step (the lease's too),
+	#   sellMult: the home is sold at this share of its sale value, renew: the lease starts again,
+	#   managerPick: the tenant manager's answer (else the default),
+	#   fail: {"chance", "text", effects}: the answer goes wrong instead,
+	#   later: {"days", "chance", "text", effects}: something happens later.
+	# A question never comes to your own home or your partner, and one waits at a time per home.
+	# minRent: only while the rent is at least this setting. lease: only during a lease. system: never rolled at
+	# random (the lease end is asked by the game).
 	# $tenant and $home are filled in.
 	"house":{"minDaysBetween":5, "dailyChance":0.06},
 	"tenant":{"minDaysBetween":7, "dailyChance":0.05},
@@ -34,6 +48,34 @@
 	# message. Each group has lines and may name traits or factions. Lines for one of the tenant's traits come
 	# first, then lines for their faction, then the group with neither. One line is picked at random.
 	"messages":{
+		"cant_pay":[
+			{"traits":["late_payer"], "lines":["Next month, boss. Promise. Probably.", "I had it. Then I didn't. Long story."]},
+			{"traits":["gambler"], "lines":["The cards hated me this week. Next week they'll love me.", "I was this close to doubling it, boss."]},
+			{"traits":["shady"], "lines":["A deal went sideways. Don't ask which deal.", "My partner owes me. When he pays, you get paid."]},
+			{"traits":["family"], "lines":["The kids needed shoes. I'm sorry, boss.", "It's the kids or the rent this month. Please."]},
+			{"factions":["pirates"], "lines":["The job fell through. You'll get yours when I get mine."]},
+			{"lines":["I can't pay this month. I'm sorry.", "Lost my job. Give me a little time?", "I'll get it to you. I just need a few weeks."]}
+		],
+		"early_leave":[
+			{"traits":["loyal"], "lines":["I hate to go, boss. Best landlord I ever had.", "If it was up to me, I'd stay."]},
+			{"lines":["It's the job of a lifetime. I can't say no.", "I know I signed for longer. I'm sorry."]}
+		],
+		"police_search":[
+			{"traits":["shady"], "lines":["Tell them I moved out. Last year.", "Whatever they find, it's not mine."]},
+			{"traits":["smuggler"], "lines":["Give me ten minutes before you open the door. Five?", "Don't let them near the walls, boss."]}
+		],
+		"big_party":[
+			{"traits":["loud"], "lines":["It'll be quiet. Ish. Mostly.", "Everyone's invited. You too, boss."]},
+			{"lines":["Just a few friends. A few dozen friends.", "It's my birthday, boss. Come on."]}
+		],
+		"keep_pet":[
+			{"traits":["family"], "lines":["The kids won't stop asking. Please say yes.", "It's a tiny one. The kids will look after it."]},
+			{"lines":["It's very small and very quiet. Mostly quiet.", "I found it outside. It has nowhere else to go."]}
+		],
+		"rent_cut_request":[
+			{"traits":["frugal"], "lines":["I did the math, boss. I can't make it work.", "I've cut everything else already."]},
+			{"lines":["Prices went up everywhere. My pay didn't.", "Just until things get better. Please."]}
+		],
 		"trashed":[
 			{"traits":["vandal"], "lines":["Try kicking me out, haha.", "Place looked boring anyway. You're welcome.", "Walls were in the way. Not anymore."]},
 			{"traits":["pet_owner"], "lines":["Sorry, boss, I kept telling my dog not to do it.", "The dog says sorry. I say sorry too. Mostly the dog."]},
@@ -88,7 +130,7 @@
 	},
 	"events":[
 		{"id":"smashed_window", "type":"house", "kind":"damage", "good":false, "weight":2, "damage":true, "condition":-0.03, "mood":-2, "text":"$tenant smashed a window at $home."},
-		{"id":"trashed", "type":"house", "kind":"damage", "good":false, "weight":0.3, "damage":true, "condition":-0.15, "big":true, "text":"$tenant trashed $home."},
+		{"id":"trashed", "type":"house", "kind":"damage", "good":false, "weight":0.3, "damage":true, "condition":-0.15, "big":true, "breach":true, "text":"$tenant trashed $home."},
 		{"id":"graffiti", "type":"house", "kind":"damage", "good":false, "weight":1, "damage":true, "condition":-0.01, "addTrait":"graffiti", "text":"$tenant painted graffiti all over $home."},
 		{"id":"mess", "type":"house", "kind":"upkeep", "good":false, "weight":1.5, "condition":-0.02, "addTrait":"dirty", "text":"$tenant left $home a filthy mess."},
 		{"id":"pests", "type":"house", "kind":"upkeep", "good":false, "weight":0.5, "addTrait":"infested", "mood":-3, "text":"Pests moved into $home."},
@@ -96,7 +138,7 @@
 		{"id":"power_outage", "type":"house", "kind":"upkeep", "good":false, "weight":0.6, "mood":-4, "text":"The power went out at $home for two days."},
 		{"id":"burglary", "type":"house", "kind":"crime", "good":false, "weight":1, "crime":true, "condition":-0.05, "mood":-10, "text":"Burglars broke into $home."},
 		{"id":"small_fire", "type":"house", "kind":"damage", "good":false, "weight":0.2, "damage":true, "condition":-0.2, "mood":-10, "big":true, "text":"A small fire damaged $home."},
-		{"id":"sabotage", "type":"house", "kind":"damage", "good":false, "weight":0.05, "condition":-0.25, "big":true, "text":"$tenant wrecked the machinery at $home in the name of Ludd."},
+		{"id":"sabotage", "type":"house", "kind":"damage", "good":false, "weight":0.05, "condition":-0.25, "big":true, "breach":true, "text":"$tenant wrecked the machinery at $home in the name of Ludd."},
 		{"id":"fixed_something", "type":"house", "kind":"upkeep", "good":true, "weight":1, "condition":0.03, "text":"$tenant fixed a leaky tap at $home."},
 		{"id":"cleaned_up", "type":"house", "kind":"upkeep", "good":true, "weight":0.6, "condition":0.01, "removeTrait":"dirty", "text":"$tenant gave $home a good clean."},
 		{"id":"garden", "type":"house", "kind":"decor", "good":true, "weight":0.5, "decor":2, "mood":5, "text":"$tenant planted a garden at $home."},
@@ -104,14 +146,14 @@
 		{"id":"chased_burglars", "type":"house", "kind":"crime", "good":true, "weight":0.3, "mood":5, "condition":0.01, "text":"$tenant chased burglars away from $home."},
 
 		{"id":"late_rent", "type":"tenant", "kind":"money", "good":false, "weight":1, "sickMult":2, "rentMult":0.5, "text":"$tenant paid the rent for $home late and short."},
-		{"id":"skipped_rent", "type":"tenant", "kind":"money", "good":false, "weight":0.4, "sickMult":2, "rentMult":0, "big":true, "text":"$tenant skipped this month's rent at $home."},
+		{"id":"skipped_rent", "type":"tenant", "kind":"money", "good":false, "weight":0.2, "sickMult":2, "rentMult":0, "big":true, "breach":true, "text":"$tenant skipped this month's rent at $home."},
 		{"id":"tip", "type":"tenant", "kind":"money", "good":true, "weight":1, "tip":0.1, "requires":["generous"], "text":"$tenant left a tip with the rent for $home."},
 		{"id":"promotion", "type":"tenant", "kind":"money", "good":true, "weight":0.25, "wealth":1, "mood":10, "text":"$tenant got a promotion at work."},
 		{"id":"lost_job", "type":"tenant", "kind":"money", "good":false, "weight":0.2, "wealth":-1, "rentMult":0.5, "mood":-10, "big":true, "text":"$tenant lost their job."},
 		{"id":"noise_complaint", "type":"tenant", "kind":"neighbors", "good":false, "weight":1, "rep":-0.5, "mood":-3, "text":"The neighbors complained about $tenant at $home."},
 		{"id":"housewarming", "type":"tenant", "kind":"neighbors", "good":true, "weight":0.5, "mood":10, "condition":-0.01, "text":"$tenant threw a party at $home. $HeIs still cleaning up the leftover mess."},
 		{"id":"recommended", "type":"tenant", "kind":"neighbors", "good":true, "weight":0.5, "rep":0.5, "text":"$tenant told the neighbors you are a good landlord."},
-		{"id":"police_raid", "type":"tenant", "kind":"crime", "good":false, "weight":0.1, "crime":true, "condition":-0.05, "rep":-1, "mood":-15, "big":true, "text":"Police raided $home looking for $tenant's contraband."},
+		{"id":"police_raid", "type":"tenant", "kind":"crime", "good":false, "weight":0.1, "crime":true, "condition":-0.05, "rep":-1, "mood":-15, "big":true, "breach":true, "text":"Police raided $home looking for $tenant's contraband."},
 		{"id":"mugged", "type":"tenant", "kind":"crime", "good":false, "weight":0.6, "crime":true, "mood":-8, "rentMult":0.9, "text":"$tenant was mugged on the way home."},
 		{"id":"killed", "type":"tenant", "kind":"crime", "good":false, "weight":0.02, "crime":true, "dies":true, "big":true, "text":"$tenant was killed in a fight near $home."},
 		{"id":"fell_sick", "type":"tenant", "kind":"health", "good":false, "weight":1.5, "sickOnly":true, "rentMult":0.75, "mood":-5, "text":"$tenant fell sick at $home and missed work."},
@@ -121,6 +163,93 @@
 		{"id":"partner_moves_in", "type":"tenant", "kind":"life", "good":true, "weight":0.2, "addTenantTrait":"couple", "mood":10, "text":"$tenant's partner moved in with them at $home."},
 		{"id":"breakup", "type":"tenant", "kind":"life", "good":false, "weight":0.15, "requires":["couple"], "removeTenantTrait":"couple", "mood":-15, "text":"$tenant and their partner broke up."},
 		{"id":"child_born", "type":"tenant", "kind":"life", "good":true, "weight":0.1, "requires":["couple","family"], "addTenantTrait":"family", "mood":15, "big":true, "text":"$tenant had a baby."},
-		{"id":"pet_acquired", "type":"tenant", "kind":"life", "good":true, "weight":0.25, "addTenantTrait":"pet_owner", "mood":8, "text":"$tenant adopted a pet."}
+		{"id":"pet_acquired", "type":"tenant", "kind":"life", "good":true, "weight":0.25, "addTenantTrait":"pet_owner", "mood":8, "text":"$tenant adopted a pet."},
+		# ---- 1.12.0 (LLS-34, Andrzej: "there's not that many. Invent some more") ----
+		{"id":"mold", "type":"house", "kind":"upkeep", "good":false, "weight":0.5, "condition":-0.03, "mood":-4, "text":"Mold is growing in the bathroom at $home."},
+		{"id":"power_surge", "type":"house", "kind":"damage", "good":false, "weight":0.4, "damage":true, "condition":-0.04, "mood":-3, "text":"A power surge fried the wiring at $home."},
+		{"id":"storm_damage", "type":"house", "kind":"damage", "good":false, "weight":0.25, "damage":true, "condition":-0.06, "mood":-4, "text":"A storm tore panels off the roof of $home."},
+		{"id":"broken_lock", "type":"house", "kind":"crime", "good":false, "weight":0.4, "crime":true, "mood":-5, "text":"The front door lock at $home broke. $tenant slept with a chair against the door."},
+		{"id":"locked_out", "type":"house", "kind":"damage", "good":false, "weight":0.4, "damage":true, "condition":-0.02, "mood":-2, "text":"$tenant got locked out of $home and broke a window to get back in."},
+		{"id":"kids_drawings", "type":"house", "kind":"damage", "good":false, "weight":1, "requires":["family"], "condition":-0.01, "decor":-1, "mood":2, "text":"$tenant's kids drew all over the walls at $home."},
+		{"id":"pet_scratches", "type":"house", "kind":"damage", "good":false, "weight":1, "requires":["pet_owner"], "condition":-0.02, "text":"$tenant's pet scratched up every door at $home."},
+		{"id":"smoke_stains", "type":"house", "kind":"upkeep", "good":false, "weight":1, "requires":["smoker"], "condition":-0.02, "decor":-1, "text":"$tenant's smoking left yellow stains on the ceiling at $home."},
+		{"id":"heater_blast", "type":"house", "kind":"upkeep", "good":false, "weight":1, "requires":["heat_lover"], "condition":-0.02, "mood":3, "text":"$tenant ran the heater at full blast all month. The paint at $home is peeling."},
+		{"id":"tank_leak", "type":"house", "kind":"damage", "good":false, "weight":0.5, "requires":["water_lover"], "damage":true, "condition":-0.04, "mood":-6, "text":"$tenant's fish tank cracked and flooded the floor at $home."},
+		{"id":"hidden_crate", "type":"house", "kind":"crime", "good":false, "weight":1, "requires":["smuggler"], "condition":-0.02, "rep":-0.3, "text":"$tenant hid a crate of something inside the walls at $home. You'd rather not know what."},
+		{"id":"labeled_shelves", "type":"house", "kind":"upkeep", "good":true, "weight":1, "requires":["tidy"], "decor":1, "mood":3, "condition":0.01, "text":"$tenant sorted every cupboard at $home and labeled the shelves."},
+		{"id":"old_coin", "type":"house", "kind":"decor", "good":true, "weight":0.6, "requires":["history_buff"], "decor":3, "mood":6, "text":"$tenant found an old coin from before the Collapse under the floor at $home and framed it."},
+		{"id":"mushroom_beds", "type":"house", "kind":"decor", "good":true, "weight":1, "requires":["mycophile"], "condition":-0.01, "mood":6, "text":"$tenant is growing mushrooms in the basement at $home. It smells like a forest down there."},
+		{"id":"smart_lights", "type":"house", "kind":"decor", "good":true, "weight":0.8, "requires":["tech_fan"], "decor":3, "condition":0.01, "text":"$tenant put smart lights in every room at $home."},
+		{"id":"fish_tank", "type":"house", "kind":"decor", "good":true, "weight":0.8, "requires":["water_lover"], "decor":2, "mood":6, "text":"$tenant set up a huge fish tank at $home."},
+		{"id":"home_office", "type":"house", "kind":"decor", "good":true, "weight":1, "requires":["remote_worker"], "decor":1, "mood":4, "text":"$tenant turned a corner of $home into a neat home office."},
+		{"id":"home_gym", "type":"house", "kind":"decor", "good":true, "weight":0.8, "requires":["athletic"], "decor":1, "condition":-0.01, "mood":6, "text":"$tenant turned the spare room at $home into a home gym."},
+		{"id":"chair_fixed", "type":"house", "kind":"upkeep", "good":true, "weight":1, "requires":["frugal"], "condition":0.01, "text":"$tenant fixed the broken chairs at $home instead of buying new ones."},
+
+		{"id":"night_noise", "type":"tenant", "kind":"neighbors", "good":false, "weight":1, "requires":["night_owl"], "rep":-0.3, "mood":-2, "text":"$tenant's late nights kept the neighbors up again."},
+		{"id":"quietest", "type":"tenant", "kind":"neighbors", "good":true, "weight":1, "requires":["quiet"], "rep":0.5, "text":"The neighbors say $tenant is the quietest tenant on the street."},
+		{"id":"prayer_group", "type":"tenant", "kind":"neighbors", "good":true, "weight":1, "requires":["faithful"], "rep":0.3, "mood":6, "text":"$tenant hosted a prayer group at $home. The neighbors brought food."},
+		{"id":"welcome_basket", "type":"tenant", "kind":"neighbors", "good":true, "weight":0.4, "mood":6, "text":"The neighbors brought $tenant a basket of fruit and cookies."},
+		{"id":"fancy_dinner", "type":"tenant", "kind":"neighbors", "good":true, "weight":1, "requires":["social_climber"], "decor":1, "mood":8, "text":"$tenant hosted a fancy dinner at $home for some very important guests."},
+		{"id":"won_bet", "type":"tenant", "kind":"money", "good":true, "weight":0.8, "requires":["gambler"], "tip":0.3, "mood":8, "text":"$tenant won a bet and gave you a share of it:"},
+		{"id":"double_shift", "type":"tenant", "kind":"health", "good":false, "weight":1, "requires":["long_hours"], "health":true, "mood":-6, "text":"$tenant fell asleep at work after another double shift."},
+		{"id":"slipped", "type":"tenant", "kind":"health", "good":false, "weight":1, "requires":["elderly"], "health":true, "rentMult":0.8, "mood":-8, "text":"$tenant slipped on the stairs at $home and hurt a hip."},
+		{"id":"pollen_week", "type":"tenant", "kind":"health", "good":false, "weight":1, "requires":["pollen_allergy"], "health":true, "mood":-5, "text":"$tenant spent a week sneezing. Pollen season hit hard."},
+		{"id":"dust_cough", "type":"tenant", "kind":"health", "good":false, "weight":1, "requires":["sensitive_lungs"], "health":true, "mood":-5, "text":"$tenant can't stop coughing. The dust at $home doesn't help."},
+		{"id":"tough_flu", "type":"tenant", "kind":"health", "good":true, "weight":1, "requires":["hardy"], "health":true, "mood":4, "text":"A flu went through the whole street. $tenant didn't even notice it."},
+		{"id":"loyal_stay", "type":"tenant", "kind":"life", "good":true, "weight":0.6, "requires":["loyal"], "mood":5, "rep":0.3, "text":"$tenant turned down a cheaper place across town. $HeIs staying with you."},
+
+		# ---- Questions (1.12.0, LLS-32) ----
+		{"id":"cant_pay", "type":"tenant", "kind":"money", "good":false, "weight":0.4, "sickMult":2, "breach":true, "text":"$tenant can't pay this month's rent at $home.", "default":1, "choices":[
+			{"label":"Evict $first", "evict":true, "rentMult":0, "rep":-0.3, "text":"You evicted $tenant from $home over the unpaid rent."},
+			{"label":"Give $first a month", "good":true, "rentMult":0, "mood":12, "text":"You let $tenant skip this month's rent at $home.", "later":{"days":35, "chance":0.6, "good":true, "tip":1, "text":"$tenant paid back the rent you let slide at $home:"}},
+			{"label":"Take half now", "managerPick":true, "rentMult":0.5, "mood":-6, "text":"$tenant scraped together half of this month's rent at $home."}
+		]},
+		{"id":"leaky_pipes", "type":"house", "kind":"damage", "good":false, "weight":0.5, "damage":true, "text":"The pipes at $home are leaking.", "default":2, "choices":[
+			{"label":"Call a plumber ($cost)", "managerPick":true, "good":true, "cost":0.4, "mood":2, "text":"A plumber fixed the pipes at $home."},
+			{"label":"Cheap patch ($cost)", "good":true, "cost":0.1, "text":"A cheap patch stopped the leak at $home.", "fail":{"chance":0.4, "condition":-0.06, "mood":-5, "text":"The cheap patch at $home gave way and flooded the floor."}},
+			{"label":"Leave it", "condition":-0.04, "mood":-6, "text":"The pipes at $home keep leaking."}
+		]},
+		{"id":"broken_fridge", "type":"house", "kind":"upkeep", "good":false, "weight":0.5, "text":"The fridge at $home broke down.", "default":2, "choices":[
+			{"label":"Buy a new one ($cost)", "managerPick":true, "good":true, "cost":0.25, "mood":6, "decor":1, "text":"$tenant has a shiny new fridge at $home."},
+			{"label":"Have it repaired ($cost)", "good":true, "cost":0.1, "mood":2, "text":"A repairman got the fridge at $home running again.", "fail":{"chance":0.5, "mood":-6, "text":"The repaired fridge at $home broke again a week later."}},
+			{"label":"Leave it", "mood":-10, "text":"$tenant keeps the food at $home in a box of ice."}
+		]},
+		{"id":"paint_walls", "type":"house", "kind":"decor", "good":true, "weight":0.4, "text":"$tenant asks if they can paint the walls at $home.", "default":0, "choices":[
+			{"label":"Let them", "good":true, "decor":3, "mood":6, "text":"$tenant painted the walls at $home.", "fail":{"chance":0.25, "decor":-2, "mood":4, "text":"$tenant painted the walls at $home bright orange. Every wall."}},
+			{"label":"Say no", "mood":-4, "text":"You told $tenant to leave the walls at $home alone."}
+		]},
+		{"id":"keep_pet", "type":"tenant", "kind":"life", "good":true, "weight":0.3, "addTenantTrait":"pet_owner", "text":"$tenant asks if they can keep a pet at $home.", "default":1, "choices":[
+			{"label":"Yes, a pet is fine", "managerPick":true, "good":true, "addTenantTrait":"pet_owner", "mood":8, "text":"$tenant brought a pet home to $home."},
+			{"label":"No pets", "mood":-6, "text":"You said no pets at $home. $tenant isn't happy about it."}
+		]},
+		{"id":"sublet", "type":"tenant", "kind":"money", "good":true, "weight":0.25, "text":"$tenant wants to rent the spare room at $home to a friend for a few months.", "default":1, "choices":[
+			{"label":"Allow it for a share ($gain)", "good":true, "gain":0.3, "condition":-0.02, "text":"$tenant's friend moved into the spare room at $home.", "fail":{"chance":0.25, "condition":-0.06, "rep":-0.5, "mood":-4, "text":"$tenant's friend at $home turned out to be trouble and left a mess behind."}},
+			{"label":"Say no", "managerPick":true, "mood":-5, "text":"You said no to the friend at $home."}
+		]},
+		{"id":"neighbor_offer", "type":"house", "kind":"money", "good":true, "weight":0.08, "text":"A neighbor wants to buy $home and offers $price.", "default":1, "choices":[
+			{"label":"Sell for $price", "good":true, "sellMult":1.25, "text":"You sold $home to the neighbor for"},
+			{"label":"Keep it", "managerPick":true, "text":"You kept $home. The neighbor will have to look elsewhere."}
+		]},
+		{"id":"rent_cut_request", "type":"tenant", "kind":"money", "good":false, "weight":0.4, "minRent":"NORMAL", "text":"$tenant asks for lower rent at $home. Times are hard.", "default":1, "choices":[
+			{"label":"Lower the rent a step", "managerPick":true, "good":true, "rentStep":-1, "mood":10, "text":"You lowered the rent at $home. $tenant is grateful."},
+			{"label":"Keep the rent", "mood":-8, "text":"You kept the rent at $home as it is.", "fail":{"chance":0.2, "leave":true, "text":"You kept the rent at $home as it is, so $tenant moved out."}}
+		]},
+		{"id":"police_search", "type":"tenant", "kind":"crime", "good":false, "weight":0.15, "crime":true, "requires":["shady","smuggler"], "text":"Police want to search $home. They're looking for $tenant.", "default":0, "choices":[
+			{"label":"Let them in", "managerPick":true, "rep":1, "mood":-12, "text":"Police searched $home and found nothing.", "fail":{"chance":0.4, "leave":true, "rep":1.5, "text":"Police searched $home and arrested $tenant."}},
+			{"label":"Turn them away", "good":true, "rep":-1.5, "mood":8, "text":"You turned the police away from $home. $tenant owes you one."}
+		]},
+		{"id":"big_party", "type":"tenant", "kind":"neighbors", "good":true, "weight":0.35, "text":"$tenant wants to throw a big party at $home this weekend.", "default":0, "choices":[
+			{"label":"Go ahead", "good":true, "mood":10, "condition":-0.02, "text":"$tenant threw a big party at $home. Everyone had a great time.", "fail":{"chance":0.35, "condition":-0.06, "rep":-0.5, "mood":6, "text":"$tenant's party at $home got out of hand. The neighbors called the police."}},
+			{"label":"Not this time", "managerPick":true, "mood":-5, "text":"You said no to the party at $home."}
+		]},
+		{"id":"early_leave", "type":"tenant", "kind":"life", "good":false, "weight":0.3, "lease":true, "text":"$tenant got a job offer on another world and asks to end the lease at $home early.", "default":0, "choices":[
+			{"label":"Let $first go", "good":true, "leave":true, "rep":0.3, "text":"$tenant left $home for the new job. You wished them luck."},
+			{"label":"Let $first go for a fee ($gain)", "managerPick":true, "leave":true, "gain":1, "text":"$tenant paid to end the lease at $home early and left."},
+			{"label":"Hold $first to the lease", "mood":-15, "text":"You held $tenant to the lease at $home. $HeIs not happy about it."}
+		]},
+		{"id":"lease_end", "type":"tenant", "kind":"life", "good":true, "system":true, "weight":0, "text":"$tenant's lease at $home has ended. $HeIs asking to renew it.", "default":0, "choices":[
+			{"label":"Renew the lease", "managerPick":true, "good":true, "renew":true, "text":""},
+			{"label":"Let $first go", "leave":true, "text":"$tenant moved out of $home at the end of the lease."}
+		]}
 	]
 }
