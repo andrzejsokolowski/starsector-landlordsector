@@ -17,6 +17,8 @@
 	#   tags: what tenants can like or hate (tenant_traits.json)
 	# Where it can go: minTier, maxTier (0 shack to 5 estate), station (true stations only, false planets only),
 	#   needs (house traits: only homes with one of them). conflicts: upgrades it never shares a home with.
+	# homeOnly (1.8.0): only for the home you live in. childChance: added to the chance of a child each time you
+	#   try (the base is 25%).
 	# fixes: house traits it removes. oneTime: a job, not a part of the home: gone once done.
 	# roll: upgrades a home for sale may already have, like house traits: weight, anyCondition, climates.
 	# Chance a home for sale comes with one upgrade already done.
@@ -49,6 +51,7 @@
 		{"id":"massage_chair", "kind":"furniture", "name":"Massage chair", "decor":-3, "happiness":5, "health":1},
 		{"id":"grand_piano", "kind":"furniture", "name":"Grand piano", "decor":8, "happiness":1, "tags":["music"]},
 
+		{"id":"romantic_bedroom", "kind":"upgrade", "name":"Romantic bedroom", "cost":0.02, "minCost":20000, "homeOnly":true, "childChance":0.25, "comfort":2, "decor":3},
 		{"id":"air_conditioned", "kind":"upgrade", "name":"Air conditioning", "cost":0.04, "minCost":1000, "valueShare":0.5,
 			"levels":{"heat":-1},
 			"roll":{"weight":2, "anyCondition":["hot", "very_hot"]}},

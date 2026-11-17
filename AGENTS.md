@@ -176,6 +176,20 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   `Family.birth`, `MonthlyTick.runMonth`); a new command adds its class, its csv row and its help line to
   `tools/review-pages/text_lines.json`.
 
+- 1.8.0 (LLS-28 kids grow up, LLS-29 nicknames, LLS-30 kid portraits, LLS-5 changes): `Kids` holds the stages
+  (`stageOf` from age, `Child.stage` the last one seen, `enter` runs once per new stage), childhood and teen traits
+  (`rollChildhood` / `rollTeen`, kid-only traits `kidOnly` / `teenOnly` in tenant_traits.json with `officerSkill`,
+  `adminSkill`, `training`), spouse burden (`burden`, read by `PropertyStats` for partners), monthly upkeep
+  (`Family.monthly`, `Portfolio.lastKidCost`), training (lessons, days together, Academy `IndEvo_Academy`, classes),
+  kid events (kid_events.json, `Kids.pick` / `apply`) and portraits (settings.json graphics `lls_kid_portraits`, key
+  `<stage>_<f|m>_<1-3>`, `Kids.updatePortrait`). Kid skills: data/characters/skills (`lls_*`, tags npc_only and
+  ai_core_only so random officers never roll them), effects in `landlordsector.skills.KidSkills`. `Family.startLife`
+  scales by `Kids.training` and `Kids.badMarks`. `Kids.migrate` runs on load for older saves. Nicknames:
+  `Tenant.realName` holds the real name while `name` is the nickname; `Canvas.startTyping` / `onTyped` take the
+  typed line. Partner events read "Your wife, Name," (`Family.subject` / `who`, `TenantDaily.tenantWords`). The
+  Romantic bedroom: upgrades.json `homeOnly` and `childChance`, `Upgrades.fits(d, property)`,
+  `Family.childChance`.
+
 ## Known limits
 
 - The portfolio classes are in the save, so removing the mod mid-game breaks that save.

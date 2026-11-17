@@ -49,6 +49,8 @@ public class Portfolio {
     /** 1.2.0: last month's alimony and the pay grown kids sent home. */
     public float lastAlimony;
     public float lastKidPay;
+    /** 1.8.0: what raising the kids at home cost last month. */
+    public float lastKidCost;
 
     public List<Child> adultKids() {
         if (adultKids == null) adultKids = new ArrayList<>();

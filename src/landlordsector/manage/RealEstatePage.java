@@ -87,6 +87,7 @@ public class RealEstatePage implements ManagePage {
                     + Misc.getDGSCredits(worth) + ". Credits: " + Misc.getDGSCredits(Actions.credits()) + ".",
                     10f, 38f, width - 20f);
             String family = (portfolio.lastKidPay > 0f ? ", your kids sent home " + Misc.getDGSCredits(portfolio.lastKidPay)
+                    : "") + (portfolio.lastKidCost > 0f ? ", raising your kids " + Misc.getDGSCredits(portfolio.lastKidCost)
                     : "") + (portfolio.lastAlimony > 0f ? ", alimony " + Misc.getDGSCredits(portfolio.lastAlimony) : "");
             text("Last month: rent " + Misc.getDGSCredits(portfolio.lastRent) + ", home sales on your colonies "
                     + Misc.getDGSCredits(portfolio.lastSales) + ", property tax "
@@ -370,8 +371,13 @@ public class RealEstatePage implements ManagePage {
                 float months = Global.getSector().getClock().getElapsedDaysSince(p.tenant.since) / 30f;
                 text("Living here " + Math.max(0, Math.round(months)) + (Math.round(months) == 1 ? " month." : " months."),
                         Misc.getGrayColor(), rx, ny + 4f, cw);
+                if (isTyping("nick:" + p.id)) {
+                    nicknameBox(rx, ny + 30f, cw);
+                    return;
+                }
                 button("evict:" + p.id, "Evict " + p.tenant.name, rx, ny + 30f, 240f, 28f, true);
                 declareButton(p, rx + 250f, ny + 30f);
+                nicknameButton(p, p.tenant, rx + 460f, ny + 30f);
                 return;
             }
             if (p.condemned) {
@@ -431,6 +437,32 @@ public class RealEstatePage implements ManagePage {
                 poolRow(p, a, rx, y, cw);
                 y += 72f;
             }
+        }
+
+        /** 1.8.0 (LLS-29): give a tenant a name you will remember. */
+        private void nicknameButton(Property p, Tenant t, float x, float y) {
+            button("nickname:" + p.id, t.hasNickname() ? "Change nickname" : "Nickname", x, y, 180f, 28f, true);
+            tip(x, y, 180f, 28f, "Nickname", t.hasNickname() ? "Real name: " + t.realName + "."
+                    + " Leave the nickname empty to use the real name again." : "Call " + t.firstName()
+                    + " something you will remember. It shows everywhere instead of the name.");
+        }
+
+        private void nicknameBox(float x, float y, float w) {
+            box(x, y, Math.min(w, 420f), 28f);
+            text(typedText() + "_", Misc.getHighlightColor(), x + 8f, y + 5f, Math.min(w, 420f) - 16f);
+            text("Type a nickname. Enter saves it, Escape cancels. Leave it empty for the real name.",
+                    Misc.getGrayColor(), x, y + 34f, w);
+        }
+
+        @Override
+        protected void onTyped(Object key, String text) {
+            String k = String.valueOf(key);
+            if (!k.startsWith("nick:")) return;
+            Property p = findHome(k.substring(5));
+            if (p == null || p.tenant == null) return;
+            String before = p.tenant.name;
+            p.tenant.setNickname(text);
+            good(p.tenant.hasNickname() ? before + " is now " + p.tenant.name + "." : "Back to " + p.tenant.name + ".");
         }
 
         /** 1.2.0: "Declare player home": you move in, the adverts stop. */
@@ -538,6 +570,11 @@ public class RealEstatePage implements ManagePage {
                 landlordsector.ui.Canvas.highlight(nl, n.text, n.line());
                 ny += 18f;
             }
+            if (t.conceivedAt == 0L || !t.toldPregnant) {
+                text("Chance of a child each time you try: " + Math.round(landlordsector.Family.childChance(p) * 100f)
+                        + "%.", Misc.getGrayColor(), x, ny + 4f, w);
+                ny += 22f;
+            }
             if (t.conceivedAt != 0L && t.toldPregnant) {
                 int days = Math.max(1, Math.round(landlordsector.Family.BIRTH_DAYS
                         - landlordsector.Family.daysSince(t.conceivedAt)));
@@ -554,20 +591,47 @@ public class RealEstatePage implements ManagePage {
             title("Kids", x, y, w);
             y += 30f;
             for (landlordsector.Child c : p.children()) {
-                if (y + 60f > height - 8f) break;
-                box(x, y, w, 56f);
-                portrait(c.portrait, x + 4f, y + 4f, 48f);
-                text(c.name, Misc.getHighlightColor(), x + 60f, y + 6f, w - 300f);
+                if (y + 82f > height - 8f) break;
+                box(x, y, w, 78f);
+                portrait(c.portrait, x + 4f, y + 4f, 70f);
+                float tx = x + 82f, tw = w - 82f - 240f;
+                text(c.name, Misc.getHighlightColor(), tx, y + 6f, tw);
+                // 1.8.0 (LLS-28): the stage, the wish (decided from the Teen stage) and what was paid for.
                 String what = landlordsector.Family.pathName(c.path);
-                text(landlordsector.Family.age(c) + (what != null ? ". Wants to be " + what + "." : "."),
-                        Misc.getGrayColor(), x + 60f, y + 28f, w - 300f);
+                String stage = c.grown ? "Grown up" : landlordsector.Kids.stageName(c) + ", "
+                        + landlordsector.Family.age(c).toLowerCase();
+                text(stage + (what != null ? (c.pathLocked ? ". Will become " : ". Wants to be ") + what + "." : "."),
+                        Misc.getGrayColor(), tx, y + 28f, tw);
+                text(training(c), Misc.getGrayColor(), tx, y + 50f, tw);
                 float h = c.happiness;
                 text("Happiness " + Math.round(h), traitColor(h >= 50f ? Boolean.TRUE : (h < 25f ? Boolean.FALSE : null)),
                         x + w - 230f, y + 6f, 220f);
-                coloredRow(kidTraits(c), x + w - 230f, y + 28f, 220f);
-                y += 60f;
+                if (c.traits().isEmpty() && !c.grown && landlordsector.Kids.stageOf(c) < landlordsector.Kids.CHILD) {
+                    text("Traits come when " + landlordsector.Kids.he(c) + " starts school.", Misc.getGrayColor(),
+                            x + w - 230f, y + 28f, 220f);
+                } else {
+                    coloredRow(kidTraits(c), x + w - 230f, y + 28f, 220f);
+                }
+                y += 82f;
             }
             return y;
+        }
+
+        /** "Costs 2,500 a month. Lessons 1 of 3, 5 days together, the Academy, extra classes." */
+        private String training(landlordsector.Child c) {
+            List<String> parts = new ArrayList<>();
+            int s = landlordsector.Kids.stageOf(c);
+            if (s >= landlordsector.Kids.TEEN) {
+                parts.add("lessons " + c.lessons + " of " + landlordsector.Kids.MAX_LESSONS);
+                parts.add(c.bonds + (c.bonds == 1 ? " day" : " days") + " together");
+            }
+            if (c.academy) parts.add("the Academy");
+            if (c.classes) parts.add("extra classes");
+            float cost = landlordsector.Kids.upkeep(c);
+            String head = cost > 0f ? "Costs " + Misc.getDGSCredits(cost) + " a month." : "Costs you nothing.";
+            if (parts.isEmpty()) return head;
+            String list = String.join(", ", parts);
+            return head + " " + Character.toUpperCase(list.charAt(0)) + list.substring(1) + ".";
         }
 
         private List<Object[]> kidTraits(landlordsector.Child c) {
@@ -713,7 +777,7 @@ public class RealEstatePage implements ManagePage {
             int hidden = 0;
             for (landlordsector.data.Upgrades.Def d : landlordsector.data.Upgrades.of(
                     landlordsector.data.Upgrades.Kind.RENOVATION)) {
-                if (p.has(d.id) || !landlordsector.data.Upgrades.fits(d, p.tier().index, p.onStation(), p.traits())) {
+                if (p.has(d.id) || !landlordsector.data.Upgrades.fits(d, p)) {
                     continue;
                 }
                 // 1.0.1 (Andrzej: "just hide them conditionally from the upgrades panel"): no heated floors on a
@@ -1093,6 +1157,12 @@ public class RealEstatePage implements ManagePage {
             if (pr == null) return null;
             Tenant applicant = parts.length > 2 ? findApplicant(pr, parts[2]) : null;
             switch (verb) {
+                case "nickname":
+                    if (pr.tenant != null) {
+                        message = "";
+                        startTyping("nick:" + pr.id, pr.tenant.hasNickname() ? pr.tenant.name : "");
+                    }
+                    break;
                 case "lower":
                     Actions.setRent(pr, pr.setting().lower());
                     message = "";

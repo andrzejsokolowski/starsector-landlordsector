@@ -49,6 +49,12 @@ public final class TenantTraits {
         public float healthCost = 1f;
         /** 0.4.0: they have kids, so upgrades' "kids" effects count for them. */
         public boolean kids;
+        /** 1.8.0: only kids get it (kidOnly), only teens (teenOnly). */
+        public boolean kidOnly, teenOnly;
+        /** 1.8.0: the bad skill a grown kid with this trait starts with, as an officer or an administrator. */
+        public String officerSkill, adminSkill;
+        /** 1.8.0: added to what a kid learned. */
+        public int training;
     }
 
     private static Map<String, Def> defs = Collections.emptyMap();
@@ -86,6 +92,11 @@ public final class TenantTraits {
                 d.eventOnly = t.optBoolean("eventOnly", false);
                 d.kids = t.optBoolean("kids", false);
                 d.conflicts = HouseTraits.strings(t.optJSONArray("conflicts"));
+                d.kidOnly = t.optBoolean("kidOnly", false);
+                d.teenOnly = t.optBoolean("teenOnly", false);
+                d.officerSkill = t.has("officerSkill") && !t.isNull("officerSkill") ? t.optString("officerSkill") : null;
+                d.adminSkill = t.has("adminSkill") && !t.isNull("adminSkill") ? t.optString("adminSkill") : null;
+                d.training = t.optInt("training", 0);
                 map.put(d.id, d);
             }
         }
@@ -159,7 +170,7 @@ public final class TenantTraits {
             List<Def> pool = new ArrayList<>();
             List<Float> weights = new ArrayList<>();
             for (Def d : defs.values()) {
-                if (out.contains(d.id)) continue;
+                if (out.contains(d.id) || d.kidOnly) continue;
                 boolean clash = false;
                 for (String o : out) {
                     Def od = defs.get(o);

@@ -1,3 +1,15 @@
+Version 1.8.0 (2026-11-17)
+- Kids grow up in five stages: Baby, Toddler, Child, Teen and Adult (one cycle each with 5 cycles to grow up). Babies only giggle; the career lines show from the Child stage, with a tooltip saying what the child will want to become
+- A teen's wish is locked for good (picked at random if you never talked about it). Teens can take lessons (25,000, up to 3) and spend a day with you once a week; adults can go to an Industrial Evolution Academy on your colony (100,000, officers and administrators) and take extra classes (250,000)
+- Kids at home cost money each month (500 for babies and toddlers, 1,500 for a child, 2,500 for a teen, nothing for adults) and affect your spouse's happiness: babies and toddlers wear them out, a teen either helps or is a handful
+- Kids get their traits when they start school, not at birth. The home decides some: bad air, noise, commute or location, or a small home, give traits like Asthma, Hard of hearing, ADHD, Loner or Bullied; perfect ones give Athletic, Book reader, Many friends or Affluent. A happy family rolls more good traits
+- Kid events: first words, top of the class, broken arms, fights, bullying, and rarely a kid dies
+- Grown kids start with skills from their upbringing: bad traits and a hard childhood give officers ADHD, Lazy, Weak lungs, Hard of hearing, Hothead or Timid and administrators Wasteful, Slacker or Unpopular; the Academy and extra classes give good skills. Lessons, days together and good traits make better officers, administrators, miners, agents and celebrities. Miners with extra classes sometimes send home furniture, agents learn a second specialty, celebrities add stability
+- New upgrade for the home you live in: Romantic bedroom, +25% chance of a child each time you try. The Family tab shows the chance
+- Tenants can get a nickname (Tenants tab), shown everywhere instead of their name
+- Your spouse's events start with "Your wife, Name," (or husband)
+- Babies born with traits before this version lose them
+
 Version 1.7.0 (2026-11-16)
 - New service: Tenant manager, 5,000 a month. It advertises an empty home, moves in the best applicant (one with no bad traits, or the best one after 5 days) and moves the rent between Low and High to keep the tenant happy
 - New setting: Your sex (Family). Choose Male or Female to decide who you can marry and whether your kids call you Mom or Dad; your portrait stays the same

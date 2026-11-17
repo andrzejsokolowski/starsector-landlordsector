@@ -1253,9 +1253,9 @@
 		},
 		{
 			"id": "con_lls_growup",
-			"version": "1.6.0",
-			"line": "lls_growup [home]: Every child in the home grows up now. Talk to them to choose their path.",
-			"when": "Console Commands: the help text of lls_growup (help lls_growup in the console).",
+			"version": "1.8.0",
+			"line": "lls_growup [home]: Every child in the home grows up now and starts the life they wished for.",
+			"when": "Console Commands: the help text of lls_growup (help lls_growup in the console). After it runs: \"1 child in Leafy Cottage grew up. Those with a wish started their life; talk to the others to choose one.\"",
 			"area": "Console"
 		},
 		{
@@ -1327,6 +1327,769 @@
 			"line": "Who you can marry and whether your kids call you Mom or Dad. Your portrait stays the same.",
 			"when": "LunaLib setting description.",
 			"area": "Settings"
+		},
+		{
+			"id": "k_stage_toddler",
+			"version": "1.8.0",
+			"line": "{Tomas} took his first steps.",
+			"when": "Home log and fleet log when a baby becomes a toddler (1 cycle old with the default 5 cycles to grow up).",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_stage_child",
+			"version": "1.8.0",
+			"line": "{Tomas} started school and talks about what he wants to become.",
+			"when": "Intel message when a toddler becomes a child (2 cycles). Traits are rolled now.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_stage_teen",
+			"version": "1.8.0",
+			"line": "{Tomas} is a teenager now and has made up his mind: he wants to become {a miner}.",
+			"when": "Intel message when a child becomes a teen (3 cycles). The wish is locked; picked at random if you never talked about it.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_stage_adult",
+			"version": "1.8.0",
+			"line": "{Tomas} is an adult now and works entry-level jobs. He no longer costs you anything.",
+			"when": "Intel message at 4 cycles.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_greet_toddler1",
+			"version": "1.8.0",
+			"line": "\"Dad! Dad! Up!\"",
+			"when": "Comm link greeting of a toddler (Mom for a female player). One of three, picked at random.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_greet_toddler2",
+			"version": "1.8.0",
+			"line": "\"Look! Block! Big block!\"",
+			"when": "Comm link greeting of a toddler.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_greet_toddler3",
+			"version": "1.8.0",
+			"line": "\"No nap. No nap!\"",
+			"when": "Comm link greeting of a toddler.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_wish_tip",
+			"version": "1.8.0",
+			"line": "This child will want to become {an officer} when it grows up.",
+			"when": "Tooltip on each career line (Kite, AI Cores, Minecraft, 007, pretty), from the Child stage until the Teen stage. Andrzej's own wording.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_opt_bond",
+			"version": "1.8.0",
+			"line": "Let's spend the day together.",
+			"when": "Comm link option of a teen or adult kid, once a week.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_tip_bond",
+			"version": "1.8.0",
+			"line": "Days together: {5}. Every 4 make them better at what they want to become, up to 2 times.",
+			"when": "Tooltip on the day-together option.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_tip_bond_wait",
+			"version": "1.8.0",
+			"line": "You spent a day together recently. Again in {3} days.",
+			"when": "Tooltip when the option is greyed out.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_bond_text",
+			"version": "1.8.0",
+			"line": "You spend the day together.",
+			"when": "Dialog text after the option.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_bond_say1",
+			"version": "1.8.0",
+			"line": "\"That was fun, Dad.\"",
+			"when": "Kid's answer after a day together (one of three).",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_bond_say2",
+			"version": "1.8.0",
+			"line": "\"Can we do that again next week?\"",
+			"when": "Kid's answer after a day together.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_bond_say3",
+			"version": "1.8.0",
+			"line": "\"Don't tell anyone, but that was the best day this month.\"",
+			"when": "Kid's answer after a day together.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_log_bond",
+			"version": "1.8.0",
+			"line": "You spent the day with {Tomas}.",
+			"when": "Home log.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_opt_lesson",
+			"version": "1.8.0",
+			"line": "I signed you up for lessons.",
+			"when": "Comm link option of a teen.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_tip_lesson",
+			"version": "1.8.0",
+			"line": "Costs 25,000. Makes them better at being {a miner}. Lessons taken: {1} of 3.",
+			"when": "Tooltip on the lessons option. When greyed out, the reason comes first: \"Still busy with the last lessons. New ones in {12} days.\", \"Took every lesson already.\" or \"You can't afford it.\"",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_lesson_yes",
+			"version": "1.8.0",
+			"line": "\"Thanks, Dad! I won't waste it.\"",
+			"when": "Teen's answer to lessons when happy (50+).",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_lesson_meh",
+			"version": "1.8.0",
+			"line": "\"Ugh. Fine.\"",
+			"when": "Teen's answer to lessons when unhappy.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_log_lesson",
+			"version": "1.8.0",
+			"line": "{Tomas} started new lessons.",
+			"when": "Home log.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_opt_academy",
+			"version": "1.8.0",
+			"line": "I'm sending you to the Academy.",
+			"when": "Comm link option of an adult kid who wants to be an officer or administrator, only with Industrial Evolution.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_tip_academy",
+			"version": "1.8.0",
+			"line": "Costs 100,000. Needs an Academy on one of your colonies. Starts with Academy graduate: +10% maximum combat readiness, +25% autofire aim accuracy.",
+			"when": "Tooltip for a future officer. For an administrator: \"...Starts with Academy graduate: +1 stability, -10% colony upkeep.\" Greyed out reasons: \"You need an Academy on one of your colonies.\", \"Already graduated.\"",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_academy_say",
+			"version": "1.8.0",
+			"line": "\"The Academy? I won't let you down, Dad.\"",
+			"when": "Kid's answer.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_log_academy",
+			"version": "1.8.0",
+			"line": "{Tomas} went to the Academy on {Jangala}.",
+			"when": "Home log.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_opt_classes",
+			"version": "1.8.0",
+			"line": "I'm paying for extra classes.",
+			"when": "Comm link option of an adult kid.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_tip_classes",
+			"version": "1.8.0",
+			"line": "Costs 250,000. {Starts with Private tutors: +10% top speed, +20% maneuverability, +5% weapon damage.}",
+			"when": "Tooltip. By wish: administrator \"Starts with Business school: industries supply 1 more unit, +10% colony income.\", miner \"Learns to spot valuables: sometimes sends home a piece of furniture found in the mine.\", agent \"Learns a second specialty.\", celebrity \"+1 stability on the colony they move to.\"",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_classes_say",
+			"version": "1.8.0",
+			"line": "\"Weekends too? ...Okay. Thanks, Dad.\"",
+			"when": "Kid's answer.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_paid",
+			"version": "1.8.0",
+			"line": "You pay {25,000}.",
+			"when": "Dialog line after lessons, the Academy or classes.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_burden_baby",
+			"version": "1.8.0",
+			"line": "Your baby, {Tomas} (-5)",
+			"when": "Your spouse's happiness tooltip, one line per kid.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_burden_toddler",
+			"version": "1.8.0",
+			"line": "Your toddler, {Tomas} (-8)",
+			"when": "Your spouse's happiness tooltip.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_burden_child",
+			"version": "1.8.0",
+			"line": "Your child, {Tomas} (-3)",
+			"when": "Your spouse's happiness tooltip.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_burden_teen_good",
+			"version": "1.8.0",
+			"line": "Your teen, {Tomas}, helps around the house (+4)",
+			"when": "Your spouse's happiness tooltip (half the teens).",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_burden_teen_bad",
+			"version": "1.8.0",
+			"line": "Your teen, {Tomas}, is a handful (-4)",
+			"when": "Your spouse's happiness tooltip (the other half).",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_tab_row",
+			"version": "1.8.0",
+			"line": "{Teen}, {3 cycles old}. {Will become} {a miner}.",
+			"when": "Kid row on the Family tab, second line. \"Wants to be\" before the Teen stage.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_tab_costs",
+			"version": "1.8.0",
+			"line": "Costs {2,500} a month. Lessons {1} of 3, {5} days together, the Academy, extra classes.",
+			"when": "Kid row on the Family tab, third line. Adults: \"Costs you nothing.\"",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_tab_no_traits",
+			"version": "1.8.0",
+			"line": "Traits come when he starts school.",
+			"when": "Kid row on the Family tab, in place of the traits, for babies and toddlers.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_month_raising",
+			"version": "1.8.0",
+			"line": "..., raising your kids {3,000}, ...",
+			"when": "Real estate tab, \"Last month\" line.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_report_raising",
+			"version": "1.8.0",
+			"line": "Raising {Tomas Junior}",
+			"when": "Monthly income report, upkeep row per kid at home.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_chance",
+			"version": "1.8.0",
+			"line": "Chance of a child each time you try: {25}%.",
+			"when": "Family tab, under your spouse's card.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_news_officer",
+			"version": "1.8.0",
+			"line": "{Tomas Junior} joined your fleet as an officer, level {3}. Starts with: {ADHD, Academy graduate}.",
+			"when": "Intel when a grown kid joins your fleet. The \"Starts with\" part only when they have kid skills.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_news_admin",
+			"version": "1.8.0",
+			"line": "{Tomas Junior} is one of your administrators now. Starts with: {Slacker}.",
+			"when": "Intel when a grown kid becomes an administrator.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "k_miner_find",
+			"version": "1.8.0",
+			"line": "{Tomas Junior} found {a sofa} in the mine and sent it home. It is in your furniture storage.",
+			"when": "Intel, a quarter of the months, for a miner who took extra classes.",
+			"area": "Kids growing up"
+		},
+		{
+			"id": "kev_first_word",
+			"version": "1.8.0",
+			"line": "{Tomas} said his first word: \"Dad\".",
+			"when": "Home log and fleet log, stages baby to toddler. Good event.",
+			"area": "Kid events"
+		},
+		{
+			"id": "kev_slept_through",
+			"version": "1.8.0",
+			"line": "{Tomas} slept through the night for the first time.",
+			"when": "Home log and fleet log, stages baby to baby. Good event.",
+			"area": "Kid events"
+		},
+		{
+			"id": "kev_drawing",
+			"version": "1.8.0",
+			"line": "{Tomas} drew a picture of the family. It's on the fridge now.",
+			"when": "Home log and fleet log, stages toddler to child. Good event.",
+			"area": "Kid events"
+		},
+		{
+			"id": "kev_top_of_class",
+			"version": "1.8.0",
+			"line": "{Tomas} came top of the class.",
+			"when": "Home log and fleet log, stages child to teen. Good event.",
+			"area": "Kid events"
+		},
+		{
+			"id": "kev_loves_books",
+			"version": "1.8.0",
+			"line": "{Tomas} can't put books down.",
+			"when": "Home log and fleet log, stages child to teen. Good event. Adds the trait book_reader.",
+			"area": "Kid events"
+		},
+		{
+			"id": "kev_made_friends",
+			"version": "1.8.0",
+			"line": "{Tomas} made a lot of new friends at school.",
+			"when": "Home log and fleet log, stages child to teen. Good event. Adds the trait many_friends.",
+			"area": "Kid events"
+		},
+		{
+			"id": "kev_won_match",
+			"version": "1.8.0",
+			"line": "{Tomas}'s team won the match.",
+			"when": "Home log and fleet log, stages child to adult. Good event.",
+			"area": "Kid events"
+		},
+		{
+			"id": "kev_part_time_job",
+			"version": "1.8.0",
+			"line": "{Tomas} found a part-time job and bought groceries with his first pay.",
+			"when": "Home log and fleet log, stages teen to adult. Good event.",
+			"area": "Kid events"
+		},
+		{
+			"id": "kev_helped_neighbor",
+			"version": "1.8.0",
+			"line": "{Tomas} helped the neighbors fix their roof.",
+			"when": "Home log and fleet log, stages teen to adult. Good event.",
+			"area": "Kid events"
+		},
+		{
+			"id": "kev_crying_nights",
+			"version": "1.8.0",
+			"line": "{Tomas} cried all night. Nobody slept.",
+			"when": "Home log and fleet log, stages baby to baby.",
+			"area": "Kid events"
+		},
+		{
+			"id": "kev_drew_on_walls",
+			"version": "1.8.0",
+			"line": "{Tomas} drew on the walls of {Leafy Cottage}.",
+			"when": "Home log and fleet log, stages toddler to child.",
+			"area": "Kid events"
+		},
+		{
+			"id": "kev_fell_sick",
+			"version": "1.8.0",
+			"line": "{Tomas} fell sick and spent a week in bed.",
+			"when": "Home log and fleet log, stages baby to teen.",
+			"area": "Kid events"
+		},
+		{
+			"id": "kev_broke_arm",
+			"version": "1.8.0",
+			"line": "{Tomas} fell off a wall and broke his arm.",
+			"when": "Home log and fleet log, stages toddler to teen.",
+			"area": "Kid events"
+		},
+		{
+			"id": "kev_bullied",
+			"version": "1.8.0",
+			"line": "{Tomas} is being bullied at school.",
+			"when": "Home log and fleet log, stages child to teen. Adds the trait bullied.",
+			"area": "Kid events"
+		},
+		{
+			"id": "kev_fight",
+			"version": "1.8.0",
+			"line": "{Tomas} got into a fight and came home with a black eye.",
+			"when": "Home log and fleet log, stages child to adult.",
+			"area": "Kid events"
+		},
+		{
+			"id": "kev_bad_grades",
+			"version": "1.8.0",
+			"line": "{Tomas}'s grades are getting worse.",
+			"when": "Home log and fleet log, stages child to teen.",
+			"area": "Kid events"
+		},
+		{
+			"id": "kev_skipped_school",
+			"version": "1.8.0",
+			"line": "{Tomas} skipped school for a week. Nobody knows where he went.",
+			"when": "Home log and fleet log, stages teen to teen. Adds the trait lazy.",
+			"area": "Kid events"
+		},
+		{
+			"id": "kev_caught_stealing",
+			"version": "1.8.0",
+			"line": "{Tomas} was caught stealing from a shop.",
+			"when": "Home log and fleet log, stages teen to teen.",
+			"area": "Kid events"
+		},
+		{
+			"id": "kev_wrecked_party",
+			"version": "1.8.0",
+			"line": "{Tomas} threw a party while everyone was out. {Leafy Cottage} is a mess.",
+			"when": "Home log and fleet log, stages teen to adult.",
+			"area": "Kid events"
+		},
+		{
+			"id": "kev_fever",
+			"version": "1.8.0",
+			"line": "{Tomas} caught a fever and died. The doctors came too late.",
+			"when": "Intel message: the kid dies. Stages baby to toddler, rare.",
+			"area": "Kid events"
+		},
+		{
+			"id": "kev_pneumonia",
+			"version": "1.8.0",
+			"line": "{Tomas} died of pneumonia.",
+			"when": "Intel message: the kid dies. Stages baby to teen, rare.",
+			"area": "Kid events"
+		},
+		{
+			"id": "kev_kidnapped",
+			"version": "1.8.0",
+			"line": "{Tomas} was kidnapped on the way home from school and never found.",
+			"when": "Intel message: the kid dies. Stages child to teen, rare.",
+			"area": "Kid events"
+		},
+		{
+			"id": "kev_speeder_crash",
+			"version": "1.8.0",
+			"line": "{Tomas} crashed a borrowed speeder and died.",
+			"when": "Intel message: the kid dies. Stages teen to adult, rare.",
+			"area": "Kid events"
+		},
+		{
+			"id": "kt_asthma",
+			"version": "1.8.0",
+			"line": "Asthma",
+			"when": "Kid trait name. Comes from bad air.",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "kt_allergies",
+			"version": "1.8.0",
+			"line": "Allergies",
+			"when": "Kid trait name. Comes from bad air, or at random.",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "kt_weak_lungs",
+			"version": "1.8.0",
+			"line": "Weak lungs",
+			"when": "Kid trait name. Comes from bad air.",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "kt_hard_of_hearing",
+			"version": "1.8.0",
+			"line": "Hard of hearing",
+			"when": "Kid trait name. Comes from bad noise.",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "kt_irritable",
+			"version": "1.8.0",
+			"line": "Irritable",
+			"when": "Kid trait name. Comes from bad noise, or at random.",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "kt_lazy",
+			"version": "1.8.0",
+			"line": "Lazy",
+			"when": "Kid trait name. Comes from bad commute, or at random.",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "kt_adhd",
+			"version": "1.8.0",
+			"line": "ADHD",
+			"when": "Kid trait name. Comes from bad commute, or at random.",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "kt_loner",
+			"version": "1.8.0",
+			"line": "Loner",
+			"when": "Kid trait name. Comes from a bad location, or at random.",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "kt_neet",
+			"version": "1.8.0",
+			"line": "NEET",
+			"when": "Kid trait name. Comes from teens on a bad location, or at random.",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "kt_bullied",
+			"version": "1.8.0",
+			"line": "Bullied",
+			"when": "Kid trait name. Comes from a shack or studio, or the bullied event.",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "kt_book_reader",
+			"version": "1.8.0",
+			"line": "Book reader",
+			"when": "Kid trait name. Comes from perfect (S+) noise, or at random.",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "kt_many_friends",
+			"version": "1.8.0",
+			"line": "Many friends",
+			"when": "Kid trait name. Comes from perfect (S+) commute, or at random.",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "kt_affluent",
+			"version": "1.8.0",
+			"line": "Affluent",
+			"when": "Kid trait name. Comes from a perfect (S+) location.",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "kt_popular",
+			"version": "1.8.0",
+			"line": "Popular",
+			"when": "Kid trait name. Comes from a villa or estate.",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "kt_tip_better",
+			"version": "1.8.0",
+			"line": "Makes them better at what they want to become",
+			"when": "Kid trait tooltip (Book reader, Many friends, Affluent). NEET: \"Makes them worse at what they want to become\".",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "kt_tip_officer",
+			"version": "1.8.0",
+			"line": "As an officer, starts with {ADHD}",
+			"when": "Kid trait tooltip for bad kid traits.",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "kt_tip_admin",
+			"version": "1.8.0",
+			"line": "As an administrator, starts with {Slacker}",
+			"when": "Kid trait tooltip for bad kid traits.",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "ks_lls_adhd",
+			"version": "1.8.0",
+			"line": "ADHD | Could never sit still in class. | -25% autofire aim accuracy",
+			"when": "Skill of a grown kid (name | description | effect), on the officer or administrator. Bad ones come from bad traits and a hard childhood (below 35 and 20 average happiness).",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "ks_lls_lazy",
+			"version": "1.8.0",
+			"line": "Lazy | Will get to it later. | -20% peak performance time",
+			"when": "Skill of a grown kid (name | description | effect), on the officer or administrator. Bad ones come from bad traits and a hard childhood (below 35 and 20 average happiness).",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "ks_lls_weak_lungs",
+			"version": "1.8.0",
+			"line": "Weak lungs | Grew up breathing bad air. | -10% maximum combat readiness",
+			"when": "Skill of a grown kid (name | description | effect), on the officer or administrator. Bad ones come from bad traits and a hard childhood (below 35 and 20 average happiness).",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "ks_lls_deaf",
+			"version": "1.8.0",
+			"line": "Hard of hearing | Grew up next to the noise. | -25% sight radius in combat",
+			"when": "Skill of a grown kid (name | description | effect), on the officer or administrator. Bad ones come from bad traits and a hard childhood (below 35 and 20 average happiness).",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "ks_lls_hothead",
+			"version": "1.8.0",
+			"line": "Hothead | Picks fights it can't win. | +10% armor and hull damage taken",
+			"when": "Skill of a grown kid (name | description | effect), on the officer or administrator. Bad ones come from bad traits and a hard childhood (below 35 and 20 average happiness).",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "ks_lls_timid",
+			"version": "1.8.0",
+			"line": "Timid | Flinches before every shot. | -10% weapon damage",
+			"when": "Skill of a grown kid (name | description | effect), on the officer or administrator. Bad ones come from bad traits and a hard childhood (below 35 and 20 average happiness).",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "ks_lls_academy_officer",
+			"version": "1.8.0",
+			"line": "Academy graduate | Top of the class. | +10% maximum combat readiness, +25% autofire aim accuracy",
+			"when": "Skill of a grown kid (name | description | effect), on the officer or administrator. Bad ones come from bad traits and a hard childhood (below 35 and 20 average happiness).",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "ks_lls_tutored",
+			"version": "1.8.0",
+			"line": "Private tutors | Flight lessons every weekend, paid by a parent. | +10% top speed, +20% maneuverability, +5% weapon damage",
+			"when": "Skill of a grown kid (name | description | effect), on the officer or administrator. Bad ones come from bad traits and a hard childhood (below 35 and 20 average happiness).",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "ks_lls_wasteful",
+			"version": "1.8.0",
+			"line": "Wasteful | Never learned the value of a credit. | +15% colony upkeep",
+			"when": "Skill of a grown kid (name | description | effect), on the officer or administrator. Bad ones come from bad traits and a hard childhood (below 35 and 20 average happiness).",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "ks_lls_slacker",
+			"version": "1.8.0",
+			"line": "Slacker | Leaves early, comes in late. | All industries supply 1 less unit of what they produce",
+			"when": "Skill of a grown kid (name | description | effect), on the officer or administrator. Bad ones come from bad traits and a hard childhood (below 35 and 20 average happiness).",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "ks_lls_unpopular",
+			"version": "1.8.0",
+			"line": "Unpopular | Nobody likes the new governor. | -1 stability",
+			"when": "Skill of a grown kid (name | description | effect), on the officer or administrator. Bad ones come from bad traits and a hard childhood (below 35 and 20 average happiness).",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "ks_lls_academy_admin",
+			"version": "1.8.0",
+			"line": "Academy graduate | Top of the class. | +1 stability, -10% colony upkeep",
+			"when": "Skill of a grown kid (name | description | effect), on the officer or administrator. Bad ones come from bad traits and a hard childhood (below 35 and 20 average happiness).",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "ks_lls_business_school",
+			"version": "1.8.0",
+			"line": "Business school | Extra classes in trade and law, paid by a parent. | All industries supply 1 more unit of what they produce, +10% colony income",
+			"when": "Skill of a grown kid (name | description | effect), on the officer or administrator. Bad ones come from bad traits and a hard childhood (below 35 and 20 average happiness).",
+			"area": "Kid traits and skills"
+		},
+		{
+			"id": "n_btn",
+			"version": "1.8.0",
+			"line": "Nickname",
+			"when": "Button next to Evict on a rented home's Tenants tab. \"Change nickname\" once one is set.",
+			"area": "Nicknames"
+		},
+		{
+			"id": "n_tip_new",
+			"version": "1.8.0",
+			"line": "Call {Olivia} something you will remember. It shows everywhere instead of the name.",
+			"when": "Tooltip on the Nickname button.",
+			"area": "Nicknames"
+		},
+		{
+			"id": "n_tip_set",
+			"version": "1.8.0",
+			"line": "Real name: {Olivia Denkel}. Leave the nickname empty to use the real name again.",
+			"when": "Tooltip on Change nickname.",
+			"area": "Nicknames"
+		},
+		{
+			"id": "n_hint",
+			"version": "1.8.0",
+			"line": "Type a nickname. Enter saves it, Escape cancels. Leave it empty for the real name.",
+			"when": "Under the text box while typing.",
+			"area": "Nicknames"
+		},
+		{
+			"id": "n_done",
+			"version": "1.8.0",
+			"line": "{Olivia Denkel} is now {Pirate tenant}.",
+			"when": "Message at the top of the Real estate tab after Enter. Clearing it: \"Back to {Olivia Denkel}.\"",
+			"area": "Nicknames"
+		},
+		{
+			"id": "w_subject",
+			"version": "1.8.0",
+			"line": "Your wife, {Mira Okoye}, {fell sick and missed a week of work}.",
+			"when": "Every event of your spouse in the home log, fleet log and intel now starts like this (husband for men). Inside a line: \"...looking for your wife Mira Okoye's contraband.\"",
+			"area": "Wife and upgrades"
+		},
+		{
+			"id": "w_pregnant",
+			"version": "1.8.0",
+			"line": "Your wife, {Mira Okoye}, is pregnant.",
+			"when": "Intel (replaces \"Mira Okoye is pregnant.\"). For a female player: \"You're pregnant. Your husband, {Tom Hale}, is the father.\"",
+			"area": "Wife and upgrades"
+		},
+		{
+			"id": "w_born",
+			"version": "1.8.0",
+			"line": "Your wife, {Mira Okoye}, gave birth to your son, {Tomas Junior}.",
+			"when": "Intel at the birth.",
+			"area": "Wife and upgrades"
+		},
+		{
+			"id": "w_divorced",
+			"version": "1.8.0",
+			"line": "Your wife, {Mira Okoye}, divorced you.",
+			"when": "Intel when an unhappy spouse leaves.",
+			"area": "Wife and upgrades"
+		},
+		{
+			"id": "w_built",
+			"version": "1.8.0",
+			"line": "Your wife, {Mira Okoye}, had {Air conditioning} built.",
+			"when": "Home log after a gift.",
+			"area": "Wife and upgrades"
+		},
+		{
+			"id": "u_bedroom",
+			"version": "1.8.0",
+			"line": "Romantic bedroom",
+			"when": "New upgrade, only for the home you live in. Costs 20,000 plus 2% of the home's value.",
+			"area": "Wife and upgrades"
+		},
+		{
+			"id": "u_bedroom_tip1",
+			"version": "1.8.0",
+			"line": "+25% chance of a child each time you try",
+			"when": "Upgrade tooltip line.",
+			"area": "Wife and upgrades"
+		},
+		{
+			"id": "u_bedroom_tip2",
+			"version": "1.8.0",
+			"line": "Only for the home you live in",
+			"when": "Upgrade tooltip line.",
+			"area": "Wife and upgrades"
 		}
 	]
 }

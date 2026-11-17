@@ -48,6 +48,28 @@ public class Tenant {
     /** Children living in the home, counted each day (kids' upgrades count for them). */
     public int kidsAtHome;
 
+    /**
+     * 1.8.0 (LLS-29, Andrzej: "I have no idea who "Olivia Denkel" is but I know what "Pirate tenant asshole" means"):
+     * the real name while a nickname is set. The nickname is in {@link #name}, so it shows everywhere the name did.
+     */
+    public String realName;
+
+    public boolean hasNickname() {
+        return realName != null;
+    }
+
+    /** Sets a nickname, or clears it with an empty one (the real name comes back). */
+    public void setNickname(String nick) {
+        String n = nick == null ? "" : nick.trim();
+        if (n.isEmpty()) {
+            if (realName != null) name = realName;
+            realName = null;
+            return;
+        }
+        if (realName == null) realName = name;
+        name = n;
+    }
+
     public List<String> traits() {
         if (traits == null) traits = new ArrayList<>();
         return traits;
@@ -125,6 +147,7 @@ public class Tenant {
     /** "Matteo" from "Matteo Zaniah". */
     public String firstName() {
         if (name == null || name.trim().isEmpty()) return "They";
+        if (hasNickname()) return name.trim();
         return name.trim().split("\s+")[0];
     }
 

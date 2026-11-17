@@ -409,6 +409,21 @@ public final class Family {
         return female(t) ? "girlfriend" : (male(t) ? "boyfriend" : "partner");
     }
 
+    /**
+     * 1.8.0 (Andrzej: "the notifications for your wife's name should start with "Your wife, {name}, did something"
+     * in the intel log"): "Your wife, Mira Okoye," at the start of a line.
+     */
+    public static String subject(Tenant t) {
+        if (t == null) return "";
+        return "Your " + noun(t) + ", " + t.name + ",";
+    }
+
+    /** "your wife Mira Okoye" inside a line. */
+    public static String who(Tenant t) {
+        if (t == null) return "";
+        return "your " + noun(t) + " " + t.name;
+    }
+
     /** Comm directory post id, named in default_ranks.json. */
     private static String post(Tenant t) {
         return "lls_" + noun(t);
@@ -443,7 +458,7 @@ public final class Family {
 
     // ---- Visits ----
 
-    private static long now() {
+    static long now() {
         return Global.getSector().getClock().getTimestamp();
     }
 
@@ -521,6 +536,19 @@ public final class Family {
         return new float[] {Math.min(95f, 40f + 10f * kids), Math.min(95f, 30f + 10f * kids)};
     }
 
+    /**
+     * 1.8.0 (Andrzej: "make an upgrade for lived-in homes that increases pregnancy chance"): 25%, plus what the home's
+     * upgrades add (the Romantic bedroom: +25%), at most 90%.
+     */
+    public static float childChance(Property p) {
+        float c = CHILD_CHANCE;
+        for (String id : p.renovationIds()) {
+            Upgrades.Def d = Upgrades.get(id);
+            if (d != null && d.childChance > 0f) c += d.childChance;
+        }
+        return Math.min(0.9f, c);
+    }
+
     /** Why you can't try for another child yet, or null. */
     public static String cannotTry(Property p) {
         float[] need = childNeeds(p.children().size());
@@ -540,7 +568,7 @@ public final class Family {
         if (t.lastTry != 0L && daysSince(t.lastTry) < 1f) return 0;
         t.lastTry = now();
         t.mood = Pricing.clamp(t.mood + 3f, -30f, 30f);
-        if (t.conceivedAt == 0L && random.nextFloat() < CHILD_CHANCE) {
+        if (t.conceivedAt == 0L && random.nextFloat() < childChance(p)) {
             t.conceivedAt = now();
             t.toldPregnant = false;
         }
@@ -610,7 +638,7 @@ public final class Family {
                 if (!d.fixes.isEmpty()) p.traits().removeAll(d.fixes);
                 if (!d.oneTime) p.upgrades().add(Installed.done(d.id));
                 g.built.add(d.name);
-                p.addLog(t.name + " had " + d.name + " built.", true, t.name + " had " + d.name + " built.");
+                p.addLog(subject(t) + " had " + d.name + " built.", true, subject(t) + " had " + d.name + " built.");
                 bought = true;
                 break;
             }
@@ -632,7 +660,7 @@ public final class Family {
     }
 
     private static boolean wouldBuy(Property p, Upgrades.Def d) {
-        if (p.has(d.id) || !Upgrades.fits(d, p.tier().index, p.onStation(), p.traits())) return false;
+        if (p.has(d.id) || !Upgrades.fits(d, p)) return false;
         if (PropertyStats.noUse(d, p.market(), p.features(false))) return false;
         return Upgrades.clash(d, p.renovationIds()) == null;
     }
@@ -760,7 +788,10 @@ public final class Family {
         int n = ++Portfolio.get().kidsBorn;
         FullName name = juniorName(n, g);
         c.name = (name.getFirst() + " " + name.getLast()).trim();
-        c.traits = rollTraits(m, CHILD_SKIP_TRAITS, random);
+        // 1.8.0 (Andrzej: "only roll those traits on childhood stage"): babies have none.
+        c.traits = new ArrayList<>();
+        c.stage = Kids.BABY;
+        c.look = random.nextInt(Kids.LOOKS);
         c.happiness = kidHappiness(p, c);
         PersonAPI kid = null;
         try {
@@ -772,6 +803,8 @@ public final class Family {
             kid.setName(name);
             kid.setGender(g);
             c.portrait = kid.getPortraitSprite();
+            c.person = kid;
+            Kids.updatePortrait(c);
             kid.getMemoryWithoutUpdate().set(CHILD_FLAG, true);
             kid.getMemoryWithoutUpdate().set(CHILD_KEY, c.id);
             kid.getMemoryWithoutUpdate().set(HOME_KEY, p.id);
@@ -779,8 +812,8 @@ public final class Family {
         }
         c.person = kid;
         p.children().add(c);
-        String text = female(parent) ? parent.name + " gave birth to your " + c.noun() + ", " + c.name + "."
-                : "You had a " + c.noun() + " with " + parent.name + ": " + c.name + ".";
+        String text = female(parent) ? subject(parent) + " gave birth to your " + c.noun() + ", " + c.name + "."
+                : "You had a " + c.noun() + " with " + who(parent) + ": " + c.name + ".";
         Notify.event(p, text, true, true);
     }
 
@@ -802,30 +835,46 @@ public final class Family {
     public static boolean startLife(Property p, Child c, Random random) {
         if (c.path == null) return false;
         int q = c.quality();
+        // 1.8.0 (LLS-28): what they learned makes them better, bad traits and a hard childhood worse.
+        int learned = Kids.training(c);
+        int bad = Kids.badMarks(c);
+        float scale = (1f + q * 0.5f) * (1f + learned * 0.25f) * (float) Math.pow(0.8, bad);
+        String with = "";
         try {
             switch (c.path) {
                 case Child.OFFICER: {
                     CampaignFleetAPI fleet = Global.getSector().getPlayerFleet();
                     if (fleet.getFleetData().getOfficersCopy().size() >= Misc.getMaxOfficers(fleet)) return false;
-                    PersonAPI o = OfficerManagerEvent.createOfficer(Global.getSector().getPlayerFaction(), 1 + q,
+                    int level = Math.max(1, Math.min(OFFICER_MAX_START, 1 + q + learned));
+                    PersonAPI o = OfficerManagerEvent.createOfficer(Global.getSector().getPlayerFaction(), level,
                             OfficerManagerEvent.SkillPickPreference.ANY, random);
                     copyIdentity(c, o);
+                    List<String> skills = new ArrayList<>(Kids.badSkills(c, true));
+                    if (c.academy) skills.add(Kids.ACADEMY_OFFICER);
+                    if (c.classes) skills.add(Kids.TUTORED);
+                    giveSkills(c, o, skills);
                     fleet.getFleetData().addOfficer(o);
-                    news(c.name + " joined your fleet as an officer.");
+                    with = skillNames(skills);
+                    news(c.name + " joined your fleet as an officer, level " + level + "." + with);
                     break;
                 }
                 case Child.ADMIN: {
                     int max = Global.getSector().getPlayerStats().getAdminNumber().getModifiedInt();
                     if (Global.getSector().getCharacterData().getAdmins().size() >= max) return false;
-                    PersonAPI a = OfficerManagerEvent.createAdmin(Global.getSector().getPlayerFaction(), q >= 3 ? 2 : 1,
-                            random);
+                    PersonAPI a = OfficerManagerEvent.createAdmin(Global.getSector().getPlayerFaction(),
+                            q + learned >= 3 ? 2 : 1, random);
                     copyIdentity(c, a);
+                    List<String> skills = new ArrayList<>(Kids.badSkills(c, false));
+                    if (c.academy) skills.add(Kids.ACADEMY_ADMIN);
+                    if (c.classes) skills.add(Kids.BUSINESS);
+                    giveSkills(c, a, skills);
                     Global.getSector().getCharacterData().addAdmin(a);
-                    news(c.name + " is one of your administrators now.");
+                    with = skillNames(skills);
+                    news(c.name + " is one of your administrators now." + with);
                     break;
                 }
                 case Child.WORKER:
-                    c.pay = WORKER_PAY * (1f + q * 0.5f);
+                    c.pay = Math.round(WORKER_PAY * scale);
                     Portfolio.get().adultKids().add(c);
                     c.homeId = p.id;
                     news(c.name + " went to work in the mines and will send " + Misc.getDGSCredits(c.pay)
@@ -834,14 +883,15 @@ public final class Family {
                 case Child.AGENT: {
                     if (!nexerelin() || c.person == null) return false;
                     removePerson(c.person);
-                    NexAgents.add(c.person, 1 + q / 2, p.market());
+                    NexAgents.add(c.person, 1 + q / 2 + learned - bad / 2, p.market(), c.classes);
                     news(c.name + " is your agent now.");
                     break;
                 }
                 case Child.GROWTH: {
                     MarketAPI colony = colonyFor(p);
                     if (colony == null) return false;
-                    c.growth = GROWTH * (1f + q * 0.5f);
+                    c.growth = GROWTH * scale;
+                    if (c.classes) c.stability = 1f;
                     c.marketId = colony.getId();
                     Portfolio.get().adultKids().add(c);
                     news(c.name + " moved to " + colony.getName() + ". " + (c.female ? "Her" : "His") + " beauty inspires many people to start a family of their own.");
@@ -858,6 +908,35 @@ public final class Family {
         if (!Child.AGENT.equals(c.path)) c.person = null;
         p.children().remove(c);
         return true;
+    }
+
+    /** 1.8.0: a grown kid's officer level is 1 + childhood quality + what they learned, at most this. */
+    public static final int OFFICER_MAX_START = 5;
+
+    private static void giveSkills(Child c, PersonAPI to, List<String> skills) {
+        for (String id : skills) {
+            try {
+                to.getStats().setSkillLevel(id, 1f);
+                c.skills().add(id);
+            } catch (Throwable t) {
+                log.warn("Landlordsector: no skill " + id, t);
+            }
+        }
+    }
+
+    /** " Starts with: ADHD, Academy graduate." or "". */
+    private static String skillNames(List<String> skills) {
+        if (skills.isEmpty()) return "";
+        List<String> names = new ArrayList<>();
+        for (String id : skills) {
+            String n = id;
+            try {
+                n = Global.getSettings().getSkillSpec(id).getName();
+            } catch (Throwable ignored) {
+            }
+            names.add(n);
+        }
+        return " Starts with: " + String.join(", ", names) + ".";
     }
 
     /** True while Nexerelin is on (checked here so {@link NexAgents} is never loaded without it). */
@@ -906,7 +985,7 @@ public final class Family {
                 float d = daysSince(t.conceivedAt);
                 if (!t.toldPregnant && d >= TELL_DAYS) {
                     t.toldPregnant = true;
-                    Notify.event(p, female(t) ? t.name + " is pregnant." : "You're pregnant. " + t.name
+                    Notify.event(p, female(t) ? subject(t) + " is pregnant." : "You're pregnant. " + subject(t)
                             + " is the father.", true, true);
                 }
                 if (d >= BIRTH_DAYS) {
@@ -920,6 +999,8 @@ public final class Family {
                     c.happiness = kidHappiness(p, c);
                     c.happySum += c.happiness;
                     c.happyDays++;
+                    Kids.daily(p, c, random);
+                    if (!p.children().contains(c)) continue;
                     if (ageDays(c) >= growUpDays()) {
                         c.grown = true;
                         if (c.path == null || !startLife(p, c, random)) {
@@ -970,11 +1051,43 @@ public final class Family {
                 n.upkeep += each;
             }
         }
+        // 1.8.0 (Andrzej: a child "costs more money to maintain"): every kid at home costs by stage, adults nothing.
+        float raising = 0f;
+        for (Property p : portfolio.properties()) {
+            for (Child c : p.children()) {
+                float cost = Kids.upkeep(c);
+                if (cost <= 0f) continue;
+                raising += cost;
+                if (report != null) {
+                    FDNode n = report.getNode(root, "raising_" + c.id);
+                    n.name = "Raising " + c.name;
+                    n.upkeep += cost;
+                }
+            }
+        }
+        // 1.8.0: miners who took extra classes sometimes find a piece of furniture and send it home.
+        for (Child c : portfolio.adultKids()) {
+            if (c.pay <= 0f || !c.classes || RANDOM_HOME.nextFloat() >= MINER_FIND_CHANCE) continue;
+            List<Upgrades.Def> pieces = new ArrayList<>(Upgrades.of(Upgrades.Kind.FURNITURE));
+            if (pieces.isEmpty()) continue;
+            Upgrades.Def d = pieces.get(RANDOM_HOME.nextInt(pieces.size()));
+            portfolio.furniture().merge(d.id, 1, Integer::sum);
+            Notify.news(c.name + " found " + article(d.name) + " in the mine and sent it home. It is in your furniture"
+                    + " storage.", d.name, true);
+        }
         portfolio.lastKidPay = pay;
         portfolio.lastAlimony = alimony;
+        portfolio.lastKidCost = raising;
     }
 
     private static final Random RANDOM_HOME = new Random();
+    /** 1.8.0: a miner with extra classes finds a piece of furniture this often a month. */
+    public static final float MINER_FIND_CHANCE = 0.25f;
+
+    private static String article(String name) {
+        String n = name.toLowerCase();
+        return ("aeiou".indexOf(n.charAt(0)) >= 0 ? "an " : "a ") + n;
+    }
 
     /** The home a grown miner sends money to: the one they grew up in, else any home you live in, else null. */
     public static Property kidHome(Child c) {
@@ -1008,7 +1121,7 @@ public final class Family {
         Collections.shuffle(furniture, random);
         for (Upgrades.Def d : furniture) {
             if (p.furnitureCount() >= p.tier().slots) break;
-            if (p.hasFurniture(d.id) || !Upgrades.fits(d, p.tier().index, p.onStation(), p.traits())) continue;
+            if (p.hasFurniture(d.id) || !Upgrades.fits(d, p)) continue;
             float price = furniturePrice(d);
             if (price > p.homeFund) continue;
             p.homeFund -= price;
@@ -1100,6 +1213,15 @@ public final class Family {
         return line;
     }
 
+    /** 1.8.0: a kid died in an event. Your spouse takes it hard. */
+    static void kidDies(Property p, Child c) {
+        p.children().remove(c);
+        if (c.person != null) removePerson(c.person);
+        c.person = null;
+        Tenant t = p.partner();
+        if (t != null) t.mood = Pricing.clamp(t.mood - 30f, -30f, 30f);
+    }
+
     /** Markets where your wife or husband lives with you: no tariff there. */
     public static Set<String> spouseMarkets() {
         Set<String> out = new HashSet<>();
@@ -1107,6 +1229,13 @@ public final class Family {
             if (p.playerHome && p.partner() != null && p.partner().isSpouse()) out.add(p.marketId);
         }
         return out;
+    }
+
+    /** 1.8.0: stability each colony gets from your celebrity kids who took extra classes. */
+    public static float stabilityAt(String marketId) {
+        float s = 0f;
+        for (Child c : Portfolio.get().adultKids()) if (marketId.equals(c.marketId)) s += c.stability;
+        return s;
     }
 
     /** Growth each colony gets from your kids living there. */
@@ -1131,7 +1260,7 @@ public final class Family {
         }
     }
 
-    private static void removePerson(PersonAPI who) {
+    static void removePerson(PersonAPI who) {
         try {
             MarketAPI m = who.getMarket();
             if (m == null) return;

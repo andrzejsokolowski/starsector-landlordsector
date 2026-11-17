@@ -71,7 +71,8 @@ public class TenantDaily implements EveryFrameScript {
                 p.tenant.mood = settle(p.tenant.mood);
                 if (p.condemned) {
                     if (p.tenant.isPartner()) {
-                        Family.leaves(p, false, p.tenant.name + " left you: " + p.displayName() + " is falling apart.");
+                        Family.leaves(p, false, Family.subject(p.tenant) + " left you: " + p.displayName()
+                                + " is falling apart.");
                         continue;
                     }
                     Notify.event(p, p.tenant.name + " moved out of " + p.displayName() + ": it is condemned.", false,
@@ -236,8 +237,7 @@ public class TenantDaily implements EveryFrameScript {
         if (e.tenant) p.lastTenantEventAt = Global.getSector().getClock().getTimestamp();
         else p.lastEventAt = Global.getSector().getClock().getTimestamp();
         Tenant t = p.tenant;
-        String text = e.text.replace("$tenant", t != null ? t.name : "The tenant").replace("$home", p.displayName())
-                .replace("$HeIs", heIs(t));
+        String text = tenantWords(e.text, t).replace("$home", p.displayName()).replace("$HeIs", heIs(t));
         if (e.condition != 0f && !p.condemned) {
             p.condition = Pricing.clamp(p.condition + e.condition, 0f, 1f);
             if (p.condition <= 0f) p.condemned = true;
@@ -326,13 +326,24 @@ public class TenantDaily implements EveryFrameScript {
         p.advertising = true;
     }
 
+    /**
+     * 1.8.0 (Andrzej: "the notifications for your wife's name should start with "Your wife, {name}, did something""):
+     * a partner's event starts "Your wife, Mira Okoye," and names "your wife Mira Okoye" inside a line.
+     */
+    static String tenantWords(String text, Tenant t) {
+        if (t == null) return text.replace("$tenant", "The tenant");
+        if (!t.isPartner()) return text.replace("$tenant", t.name);
+        if (text.startsWith("$tenant")) text = Family.subject(t) + text.substring("$tenant".length());
+        return text.replace("$tenant", Family.who(t));
+    }
+
     private static void maybeMoveOut(Property p, Random random) {
         PropertyStats st = p.stats();
         if (random.nextFloat() >= TenantRules.moveOutChance(st.happiness, p.tenant.loyal())) return;
         if (p.tenant.isPartner()) {
             Tenant t = p.tenant;
             boolean away = Family.visitPenalty(Family.daysSince(t.lastVisit)) >= 20f;
-            Family.leaves(p, false, t.name + (t.isSpouse() ? " divorced you" : " left you")
+            Family.leaves(p, false, Family.subject(t) + (t.isSpouse() ? " divorced you" : " left you")
                     + (away ? ". " + Family.capital(Family.he(t)) + " got tired of waiting for you to come home."
                             : "."));
             return;

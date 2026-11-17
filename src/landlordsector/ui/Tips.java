@@ -175,6 +175,10 @@ public final class Tips {
         // Andrzej, 0.5.0: no slot text (it is obvious), and the cost moved to the Build button's tooltip.
         // 0.6.0: no line for the flat value an upgrade adds.
         if (!d.furniture() && d.oneTime) add(out, "A one-time job.", null);
+        if (d.childChance > 0f) {
+            add(out, "+" + Math.round(d.childChance * 100f) + "% chance of a child each time you try", "+");
+        }
+        if (d.homeOnly) add(out, "Only for the home you live in", null);
         if (d.minTier > 0 || d.station != null || !d.needs.isEmpty()) {
             StringBuilder b = new StringBuilder("Only for ");
             List<String> parts = new ArrayList<>();
@@ -271,6 +275,15 @@ public final class Tips {
                     : "Loses health faster (x" + round2(d.healthCost) + ")", d.healthCost < 1f ? "+" : "-");
         }
         if (d.kids) add(out, "Has kids: upgrades for kids count for them", null);
+        // 1.8.0 (LLS-28): what a kid's trait means once they grow up.
+        if (d.training > 0) add(out, "Makes them better at what they want to become", "+");
+        if (d.training < 0) add(out, "Makes them worse at what they want to become", "-");
+        if (d.kidOnly && d.officerSkill != null) {
+            add(out, "As an officer, starts with " + skillName(d.officerSkill), "-");
+        }
+        if (d.kidOnly && d.adminSkill != null) {
+            add(out, "As an administrator, starts with " + skillName(d.adminSkill), "-");
+        }
         for (String[] line : eventKinds(d.events)) out.add(line);
         List<String> likes = new ArrayList<>();
         List<String> hates = new ArrayList<>();
@@ -382,5 +395,14 @@ public final class Tips {
 
     private static String round2(float v) {
         return String.valueOf(Math.round(v * 100f) / 100f);
+    }
+
+    /** A skill's name from skill_data.csv, the id when the game can't say (a headless check). */
+    public static String skillName(String id) {
+        try {
+            return com.fs.starfarer.api.Global.getSettings().getSkillSpec(id).getName();
+        } catch (Throwable t) {
+            return id;
+        }
     }
 }

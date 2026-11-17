@@ -14,6 +14,11 @@ public final class Actions {
         return Global.getSector().getPlayerFleet().getCargo().getCredits().get();
     }
 
+    /** 1.8.0: pays for a kid's lessons, the Academy or extra classes. */
+    public static void spend(float amount) {
+        Global.getSector().getPlayerFleet().getCargo().getCredits().subtract(amount);
+    }
+
     /** Null when the player may buy here, or the reason they may not. */
     public static String cannotBuy(MarketAPI market, Listing listing) {
         if (!MarketRules.isEligible(market)) return "Nobody here sells homes.";
@@ -159,7 +164,7 @@ public final class Actions {
     /** Null when this furniture can go into this home now, or the reason it cannot. */
     public static String cannotPlace(Property p, landlordsector.data.Upgrades.Def d) {
         if (p.market() == null) return "The colony is gone.";
-        if (!landlordsector.data.Upgrades.fits(d, p.tier().index, p.onStation(), p.traits())) {
+        if (!landlordsector.data.Upgrades.fits(d, p)) {
             return "It does not fit " + PropertyStats.article(p.tier().name.toLowerCase()) + ".";
         }
         if (p.hasFurniture(d.id)) return "There is already one in this home.";
@@ -197,7 +202,7 @@ public final class Actions {
         if (p.market() == null) return "The colony is gone.";
         if (p.condemned) return "Repair the home first.";
         if (p.has(d.id)) return "Already there.";
-        if (!landlordsector.data.Upgrades.fits(d, p.tier().index, p.onStation(), p.traits())) {
+        if (!landlordsector.data.Upgrades.fits(d, p)) {
             return "Not for this home.";
         }
         if (PropertyStats.noUse(d, p.market(), p.features(false))) return "It would do nothing in this home.";

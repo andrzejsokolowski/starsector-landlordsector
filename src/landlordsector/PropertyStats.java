@@ -410,6 +410,12 @@ public final class PropertyStats {
             s.notes.add(new Note("Last visited: " + when + num, away >= 0.5f ? Boolean.FALSE : null));
             if (t.mood >= 5f) s.notes.add(new Note("In a good mood (+" + Math.round(t.mood) + ")", true));
             if (t.mood <= -5f) s.notes.add(new Note("In a bad mood (" + Math.round(t.mood) + ")", false));
+            // 1.8.0 (Andrzej): babies and toddlers wear your spouse out, a child less so, a teen helps or burdens.
+            for (Object[] b : Kids.burden(t)) {
+                float v = (Float) b[1];
+                levelExtra += v;
+                s.notes.add(new Note(b[0] + " (" + signed(v) + ")", v > 0f));
+            }
             return TenantRules.tenantHappiness(home, t.traitHappiness() + levelExtra, liked, disliked, away, t.mood);
         }
         int shift = t.homeShift();

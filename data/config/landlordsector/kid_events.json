@@ -1,0 +1,42 @@
+{
+	# 1.8.0 kid events (LLS-28, Andrzej: "Your son/daughter can be killed in negative tenant events, so you have to try
+	# for them to become the best of people without having many issues along the way").
+	# Each kid at home who is not grown rolls on its own: at most one event every minDaysBetween days, then dailyChance
+	# a day. stages: [first, last] (1 baby, 2 toddler, 3 child, 4 teen, 5 adult).
+	# Weight: weight, times 0.5 (unhappy kid) to 2.5 (happy kid) for good events and the other way round for bad ones,
+	#   times 1.5 at security 0 down to 0.5 at 100 for crime events, and the same with health for health events.
+	# needs: only kids with one of these traits ("bad_air": the home's air is E or F).
+	# Effects: happy (what it adds to the childhood, as ten days at that much more or less happiness), spouse (your
+	#   spouse's mood), condition (the home's), trait (a kid trait it adds, and the event never repeats once they have
+	#   it), dies (the kid dies).
+	# $kid, $he, $his, $Parent ("Dad" or "Mom") and $home are filled in.
+	"minDaysBetween":20,
+	"dailyChance":0.04,
+	"events":[
+		{"id":"first_word", "good":true, "stages":[1,2], "weight":3, "happy":5, "spouse":5, "text":"$kid said $his first word: \"$Parent\"."},
+		{"id":"slept_through", "good":true, "stages":[1,1], "weight":2, "spouse":10, "text":"$kid slept through the night for the first time."},
+		{"id":"drawing", "good":true, "stages":[2,3], "weight":2, "happy":5, "spouse":5, "text":"$kid drew a picture of the family. It's on the fridge now."},
+		{"id":"top_of_class", "good":true, "stages":[3,4], "weight":1.5, "happy":10, "text":"$kid came top of the class."},
+		{"id":"loves_books", "good":true, "stages":[3,4], "weight":0.6, "happy":5, "trait":"book_reader", "text":"$kid can't put books down."},
+		{"id":"made_friends", "good":true, "stages":[3,4], "weight":1, "happy":10, "trait":"many_friends", "text":"$kid made a lot of new friends at school."},
+		{"id":"won_match", "good":true, "stages":[3,5], "weight":1.5, "happy":10, "text":"$kid's team won the match."},
+		{"id":"part_time_job", "good":true, "stages":[4,5], "weight":1, "happy":5, "spouse":5, "text":"$kid found a part-time job and bought groceries with $his first pay."},
+		{"id":"helped_neighbor", "good":true, "stages":[4,5], "weight":1, "happy":5, "text":"$kid helped the neighbors fix their roof."},
+
+		{"id":"crying_nights", "stages":[1,1], "weight":3, "spouse":-10, "text":"$kid cried all night. Nobody slept."},
+		{"id":"drew_on_walls", "stages":[2,3], "weight":2, "condition":-0.01, "spouse":-5, "text":"$kid drew on the walls of $home."},
+		{"id":"fell_sick", "stages":[1,4], "weight":2, "health":true, "happy":-5, "spouse":-5, "text":"$kid fell sick and spent a week in bed."},
+		{"id":"broke_arm", "stages":[2,4], "weight":1, "happy":-10, "spouse":-5, "text":"$kid fell off a wall and broke $his arm."},
+		{"id":"bullied", "stages":[3,4], "weight":1, "happy":-10, "trait":"bullied", "text":"$kid is being bullied at school."},
+		{"id":"fight", "stages":[3,5], "weight":1, "happy":-5, "spouse":-5, "text":"$kid got into a fight and came home with a black eye."},
+		{"id":"bad_grades", "stages":[3,4], "weight":1.5, "happy":-5, "text":"$kid's grades are getting worse."},
+		{"id":"skipped_school", "stages":[4,4], "weight":1, "happy":-5, "trait":"lazy", "text":"$kid skipped school for a week. Nobody knows where $he went."},
+		{"id":"caught_stealing", "stages":[4,4], "weight":0.6, "crime":true, "happy":-5, "spouse":-10, "text":"$kid was caught stealing from a shop."},
+		{"id":"wrecked_party", "stages":[4,5], "weight":0.6, "condition":-0.05, "spouse":-10, "text":"$kid threw a party while everyone was out. $home is a mess."},
+
+		{"id":"fever", "stages":[1,2], "weight":0.1, "health":true, "dies":true, "text":"$kid caught a fever and died. The doctors came too late."},
+		{"id":"pneumonia", "stages":[1,4], "weight":0.4, "health":true, "dies":true, "needs":["asthma","weak_lungs","bad_air"], "text":"$kid died of pneumonia."},
+		{"id":"kidnapped", "stages":[3,4], "weight":0.15, "crime":true, "dies":true, "text":"$kid was kidnapped on the way home from school and never found."},
+		{"id":"speeder_crash", "stages":[4,5], "weight":0.12, "dies":true, "text":"$kid crashed a borrowed speeder and died."}
+	]
+}

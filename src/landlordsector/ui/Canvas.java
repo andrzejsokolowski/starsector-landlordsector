@@ -199,6 +199,64 @@ public abstract class Canvas implements CustomUIPanelPlugin {
 
     protected abstract void onAction(Object action);
 
+    // ---- 1.8.0: typing a line (a tenant's nickname) ----
+
+    private Object typingKey;
+    private StringBuilder typed;
+    public static final int MAX_TYPED = 40;
+
+    /** Starts taking keys for a line of text; Enter ends it in {@link #onTyped}, Escape cancels. */
+    protected void startTyping(Object key, String start) {
+        typingKey = key;
+        typed = new StringBuilder(start == null ? "" : start);
+        rebuild();
+    }
+
+    protected boolean isTyping(Object key) {
+        return typed != null && key != null && key.equals(typingKey);
+    }
+
+    /** What has been typed so far. */
+    protected String typedText() {
+        return typed == null ? "" : typed.toString();
+    }
+
+    /** Enter was pressed while typing. */
+    protected void onTyped(Object key, String text) {
+    }
+
+    private void stopTyping() {
+        typed = null;
+        typingKey = null;
+    }
+
+    /** All keys go to the line while typing. True when the line took this event. */
+    private boolean typeKey(InputEventAPI e) {
+        if (typed == null || !e.isKeyDownEvent()) return false;
+        int k = e.getEventValue();
+        if (k == Keyboard.KEY_ESCAPE) {
+            stopTyping();
+            rebuild();
+        } else if (k == Keyboard.KEY_RETURN || k == Keyboard.KEY_NUMPADENTER) {
+            Object key = typingKey;
+            String text = typed.toString().trim();
+            stopTyping();
+            onTyped(key, text);
+            rebuild();
+        } else if (k == Keyboard.KEY_BACK) {
+            if (typed.length() > 0) typed.setLength(typed.length() - 1);
+            rebuild();
+        } else {
+            char ch = e.getEventChar();
+            if (ch >= 32 && ch != 127 && typed.length() < MAX_TYPED) {
+                typed.append(ch);
+                rebuild();
+            }
+        }
+        e.consume();
+        return true;
+    }
+
     /**
      * Escape was pressed. Return true to take the key; false leaves it to whatever holds this panel
      * (the Manage screen closes on it).
@@ -594,6 +652,7 @@ public abstract class Canvas implements CustomUIPanelPlugin {
                 }
                 continue;
             }
+            if (typeKey(e)) continue;
             if (!e.isKeyDownEvent()) continue;
             if (e.getEventValue() == Keyboard.KEY_ESCAPE) {
                 // Only take Escape when this panel uses it, so the Manage screen can still close on it.

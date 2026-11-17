@@ -1076,6 +1076,173 @@ public final class RuntimeCheck {
                 "event text says She's, He's or They're");
         expect(Family.visitPenalty(10f) == 0f && Family.visitPenalty(130f) == Family.VISIT_PENALTY_MAX,
                 "visits: free for 30 days, at most -50");
+        checkKids180(home2, tick, half);
+    }
+
+    /** 1.8.0 (LLS-28, LLS-29, LLS-5 changes): kid stages, training, careers, events, nicknames, the bedroom. */
+    private static void checkKids180(Property home, MonthlyTick tick, Random half) {
+        Tenant wife = home.partner();
+        if (wife == null) {
+            expect(false, "1.8.0: a wife for the kid checks");
+            return;
+        }
+        // LLS-5: "Your wife, Name," in her events.
+        String line = TenantDaily.tenantWords("$tenant fell sick.", wife);
+        expect(line.startsWith("Your wife, " + wife.name + ", fell sick."), "a wife's event starts with Your wife: "
+                + line);
+        expect(TenantDaily.tenantWords("Police raided the home looking for $tenant.", wife)
+                .endsWith("looking for your wife " + wife.name + "."), "inside a line: your wife Name");
+        Tenant renter = new Tenant();
+        renter.name = "Olivia Denkel";
+        expect(TenantDaily.tenantWords("$tenant fell sick.", renter).equals("Olivia Denkel fell sick."),
+                "a tenant's event keeps the name");
+
+        // LLS-29 nicknames.
+        renter.setNickname("Pirate tenant");
+        expect("Pirate tenant".equals(renter.name) && "Olivia Denkel".equals(renter.realName)
+                && "Pirate tenant".equals(renter.firstName()), "a nickname shows instead of the name");
+        renter.setNickname("  ");
+        expect("Olivia Denkel".equals(renter.name) && !renter.hasNickname(), "an empty nickname brings the name back");
+
+        // LLS-5: the Romantic bedroom, your own home only, +25% a try.
+        landlordsector.data.Upgrades.Def bed = landlordsector.data.Upgrades.get("romantic_bedroom");
+        expect(bed != null && bed.homeOnly && bed.childChance > 0f, "the Romantic bedroom is in upgrades.json");
+        if (bed != null) {
+            Property rented = null;
+            for (Property p : Portfolio.get().properties()) if (!p.playerHome) rented = p;
+            expect(rented == null || !landlordsector.data.Upgrades.fits(bed, rented), "no Romantic bedroom in a rental");
+            expect(landlordsector.data.Upgrades.fits(bed, home), "a Romantic bedroom fits your home");
+            float before = Family.childChance(home);
+            home.upgrades().add(landlordsector.Installed.done(bed.id));
+            expect(Math.abs(before - 0.25f) < 1e-4f && Math.abs(Family.childChance(home) - 0.5f) < 1e-4f,
+                    "a try's chance goes from 25% to 50% with the bedroom: " + Family.childChance(home));
+        }
+
+        // A baby: no traits, the Baby stage, no career talk yet.
+        int kidsBefore = home.children().size();
+        Family.birth(home, wife, new Random(11));
+        expect(home.children().size() == kidsBefore + 1, "a baby is born");
+        Child kid = home.children().get(home.children().size() - 1);
+        expect(kid.traits().isEmpty() && Kids.stageOf(kid) == Kids.BABY && kid.stage == Kids.BABY,
+                "a baby has no traits (Andrzej: only at the Child stage): " + kid.traits());
+        expect(Kids.upkeep(kid) == Kids.UPKEEP_BABY, "a baby costs " + Kids.UPKEEP_BABY + " a month");
+        List<Object[]> load = Kids.burden(wife);
+        expect(!load.isEmpty() && ((Float) load.get(load.size() - 1)[1]) == Kids.BURDEN_BABY,
+                "a baby wears your wife out");
+        boolean listed = false;
+        for (PropertyStats.Note n : home.stats().notes) listed |= n.text.startsWith("Your baby, ");
+        expect(listed, "the happiness tooltip names the baby");
+        expect(Kids.cannotLesson(kid) != null && Kids.cannotBond(kid) != null, "no lessons or days out for a baby");
+        month(tick);
+        expect(Portfolio.get().lastKidCost >= Kids.UPKEEP_BABY, "raising the baby shows at the month's end: "
+                + Portfolio.get().lastKidCost);
+
+        // Old saves: a baby born with traits loses them.
+        Child old = new Child();
+        old.id = "kid_old";
+        old.name = "Old Save Junior";
+        old.bornAt = now;
+        old.traits().add("tidy");
+        old.traits().add("athletic");
+        Kids.migrate(home, old, half);
+        expect(old.traits().isEmpty() && old.stage == Kids.BABY, "1.8.0 load: a baby's traits are cleared");
+
+        // Child stage: traits from the home and the family, then the wish.
+        long stage = (long) (Kids.stageDays() * DAY);
+        now += stage + DAY;
+        Family.daily(half);
+        expect(Kids.stageOf(kid) == Kids.TODDLER && kid.stage == Kids.TODDLER && kid.traits().isEmpty(),
+                "a toddler after one stage, still no traits");
+        now += stage;
+        Family.daily(half);
+        expect(kid.stage == Kids.CHILD && !kid.traits().isEmpty(), "a child gets traits: " + kid.traits());
+        for (String t : kid.traits()) {
+            landlordsector.data.TenantTraits.Def d = landlordsector.data.TenantTraits.get(t);
+            expect(!Family.CHILD_SKIP_TRAITS.contains(t) && d != null && !d.teenOnly, "no " + t + " child");
+        }
+        expect(!kid.pathLocked && kid.path == null, "a child's wish is still open");
+        kid.path = Child.WORKER;
+
+        // Teen: the wish is locked, lessons and days together.
+        now += stage;
+        Family.daily(half);
+        expect(kid.stage == Kids.TEEN && kid.pathLocked && Child.WORKER.equals(kid.path),
+                "a teen keeps the wish for good");
+        float c0 = credits.get();
+        expect(Kids.cannotLesson(kid) == null, "a teen can take lessons: " + Kids.cannotLesson(kid));
+        Kids.lesson(home, kid);
+        expect(kid.lessons == 1 && Math.abs(c0 - credits.get() - Kids.LESSON_COST) < CREDIT_EPS,
+                "lessons cost " + Kids.LESSON_COST);
+        expect(Kids.cannotLesson(kid) != null, "the next lessons wait a month");
+        now += (long) (Kids.LESSON_DAYS * DAY);
+        expect(Kids.cannotLesson(kid) == null, "new lessons after a month");
+        expect(Kids.cannotBond(kid) == null, "a day together with a teen");
+        Kids.bond(home, kid);
+        expect(kid.bonds == 1 && Kids.cannotBond(kid) != null, "one day together a week");
+        load = Kids.burden(wife);
+        expect(Math.abs(Math.abs((Float) load.get(load.size() - 1)[1]) - Kids.TEEN_SWING) < 1e-4f,
+                "a teen helps or burdens your wife by " + Kids.TEEN_SWING);
+        expect(Kids.upkeep(kid) == Kids.UPKEEP_TEEN, "a teen costs " + Kids.UPKEEP_TEEN);
+
+        // Adult: no cost, the Academy needs one, classes.
+        now += stage;
+        Family.daily(half);
+        expect(kid.stage == Kids.ADULT && Kids.upkeep(kid) == 0f, "an adult costs nothing");
+        expect(Kids.cannotAcademy(kid) != null, "a future miner doesn't go to the Academy");
+        expect(Kids.cannotClasses(kid) == null, "an adult can take extra classes");
+        Kids.takeClasses(home, kid);
+        expect(kid.classes, "extra classes taken");
+
+        // Grown: a miner's pay follows the childhood, what they learned and the bad marks.
+        int learned = Kids.training(kid), bad = Kids.badMarks(kid), q = kid.quality();
+        float expected = Math.round(Family.WORKER_PAY * (1f + q * 0.5f) * (1f + learned * 0.25f)
+                * (float) Math.pow(0.8, bad));
+        now += stage;
+        Family.daily(half);
+        expect(!home.children().contains(kid) && Portfolio.get().adultKids().contains(kid) && kid.pay == expected,
+                "a grown miner's pay: " + kid.pay + " (learned " + learned + ", bad " + bad + ")");
+
+        // Skills: bad traits and a hard childhood.
+        Child rough = new Child();
+        rough.traits().add("adhd");
+        rough.traits().add("asthma");
+        rough.happySum = 10f;
+        rough.happyDays = 1;
+        List<String> off = Kids.badSkills(rough, true), adm = Kids.badSkills(rough, false);
+        expect(off.contains("lls_adhd") && off.contains("lls_weak_lungs") && off.contains("lls_timid")
+                && off.contains("lls_hothead"), "a rough childhood: officer skills " + off);
+        expect(adm.contains("lls_slacker") && adm.contains("lls_wasteful") && adm.contains("lls_unpopular"),
+                "a rough childhood: administrator skills " + adm);
+        rough.traits().add("book_reader");
+        rough.lessons = 2;
+        rough.bonds = 9;
+        expect(Kids.training(rough) == 1 + 2 + 2, "training: book reader, 2 lessons, 9 days (2 points)");
+
+        // Events: only for the kid's stage, deaths only where they can happen.
+        Child baby = new Child();
+        baby.id = "kid_events";
+        baby.bornAt = now;
+        baby.happiness = 50f;
+        int deaths = 0;
+        for (int i = 0; i < 500; i++) {
+            Kids.Event e = Kids.pick(home, baby, new Random(i));
+            expect(e != null && e.minStage <= Kids.BABY && Kids.BABY <= e.maxStage, "a baby's event fits a baby: "
+                    + (e == null ? null : e.id));
+            if (e != null && e.dies) deaths++;
+        }
+        expect(deaths < 25, "deadly events are rare: " + deaths + " of 500");
+        Child doomed = new Child();
+        doomed.id = "kid_doomed";
+        doomed.name = "Doomed Junior";
+        doomed.bornAt = now;
+        home.children().add(doomed);
+        Kids.Event fever = null;
+        for (Kids.Event e : Kids.events()) if ("fever".equals(e.id)) fever = e;
+        expect(fever != null && fever.dies, "kid_events.json has the fever");
+        if (fever != null) {
+            Kids.apply(home, doomed, fever);
+            expect(!home.children().contains(doomed), "a deadly event takes the kid");
+        }
     }
 
     private static MarketAPI market(FakeMarket f) {

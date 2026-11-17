@@ -142,9 +142,25 @@ Requires LunaLib and OddiszCommons.
 - Divorce: the house is sold and you get half. Your ex takes the kids. You pay alimony for each child until
   they grow up.
 - A child is born 30 days after a lucky try, with your name and Junior, and lives in the comm directory.
-  Talk to them to rename them and steer what they become. At 5 cycles they grow up and become an officer,
-  an administrator, a miner who sends 2,000 to 6,000 a month home, a Nexerelin agent, or a local celebrity who
-  adds growth to one of your colonies. A happier childhood makes a better one.
+  The Romantic bedroom upgrade (your own home only) raises the chance per try from 25% to 50%.
+- Kids grow up in five stages, one cycle each with the default 5 cycles: Baby, Toddler, Child, Teen, Adult.
+  At home they cost 500 a month as babies and toddlers, 1,500 as a child, 2,500 as a teen and nothing as adults.
+  Your spouse loses 5 happiness per baby, 8 per toddler and 3 per child; a teen helps (+4) or is a handful (-4).
+- From the Child stage, talk to them to steer what they become (officer, administrator, miner, Nexerelin agent,
+  local celebrity). As a teen the wish is locked. Teens take lessons (25,000, up to 3, a month apart) and spend a
+  day with you once a week (every 4 days count as a lesson, up to 2). Adults go to an Academy on your colony
+  (Industrial Evolution, officers and administrators, 100,000) or take extra classes (250,000).
+- Traits come at the Child stage: from the home (E or F air, noise, commute or location, a shack or studio; S+
+  scores and villas give good ones) and one or two at random, good ones likelier the happier the family. Teens get
+  one or two more. Kid events (first words, broken arms, bullying, rarely a death) come about every two months.
+- At the end of the Adult stage they start their life. Officers start at level 1 + childhood quality (0 to 4) +
+  what they learned, at most 5; administrators get a second skill at 3 or more. Bad traits and a hard childhood
+  (below 35 and 20 average happiness) give bad skills (officers ADHD, Lazy, Weak lungs, Hard of hearing, Hothead,
+  Timid; administrators Wasteful, Slacker, Unpopular). The Academy gives Academy graduate, extra classes give
+  Private tutors or Business school. Miners, agents and celebrities do 25% better per lesson point and 20% worse
+  per bad mark; with extra classes miners sometimes send home furniture, agents learn a second specialty and
+  celebrities add 1 stability.
+- Give a tenant a nickname from their Tenants tab: it shows everywhere instead of the name.
 
 ## Your colonies
 

@@ -81,6 +81,9 @@ public class HomeownerScript implements EveryFrameScript, MarketImmigrationModif
             if (c.marketId == null) continue;
             MarketAPI m = Global.getSector().getEconomy().getMarket(c.marketId);
             if (m != null && MarketRules.isOwn(m) && withGrowth.add(m)) m.addTransientImmigrationModifier(this);
+            // 1.8.0: a celebrity kid who took extra classes steadies the colony too.
+            float stab = m != null && MarketRules.isOwn(m) ? Family.stabilityAt(m.getId()) : 0f;
+            if (stab > 0f) ledger.flat(m.getStability(), KIDS_ID, stab, "Your kids", m);
         }
         ledger.sweep();
     }

@@ -43,6 +43,39 @@ public class Child {
     /** Grown inspirers: the colony they live on. */
     public String marketId;
 
+    // ---- 1.8.0 stages (LLS-28). New fields load as 0, false or null from older saves. ----
+
+    /** The stage last seen by the daily pass (Kids.BABY to Kids.ADULT), 0 before 1.8.0. */
+    public int stage;
+    /** True once the wish (path) can't change any more: from the Teen stage. */
+    public boolean pathLocked;
+    /** Teen: lessons paid for. */
+    public int lessons;
+    public long lastLesson;
+    /** Days spent together (Teen and Adult), and the last one. */
+    public int bonds;
+    public long lastBond;
+    /** Adult: sent to the IndEvo Academy, and whether it held an Omega core then. */
+    public boolean academy;
+    public boolean omegaAcademy;
+    /** Adult: extracurricular classes paid for. */
+    public boolean classes;
+    /** Teen: true helps your spouse (+), false wears them out (-). Rolled when they become a teen. */
+    public boolean teenHelps;
+    /** Kid events: the last one, and what they added to the childhood (days of happiness, signed). */
+    public long lastEvent;
+    /** Picks the portrait variant, so it stays the same across stages. */
+    public int look = -1;
+    /** Grown: the good and bad skills they started their life with (skill ids). */
+    public List<String> skills;
+    /** Grown celebrities with classes: stability on their colony. */
+    public float stability;
+
+    public List<String> skills() {
+        if (skills == null) skills = new ArrayList<>();
+        return skills;
+    }
+
     public List<String> traits() {
         if (traits == null) traits = new ArrayList<>();
         return traits;

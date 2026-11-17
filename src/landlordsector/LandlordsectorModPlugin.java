@@ -34,6 +34,7 @@ public class LandlordsectorModPlugin extends BaseModPlugin {
                 Global.getSettings().getMergedJSON(landlordsector.data.Environment.PATH));
         landlordsector.data.Services.load(Global.getSettings().getMergedJSON(landlordsector.data.Services.PATH));
         landlordsector.data.Worlds.load(Global.getSettings().getMergedJSON(landlordsector.data.Worlds.PATH));
+        Kids.load(Global.getSettings().getMergedJSON(Kids.EVENTS_PATH));
         Art.loadFurnitureIcons();
         Manage.addPage(Settings.MOD_ID, "Real estate", new Color(200, 170, 80), new RealEstatePage());
     }
@@ -62,6 +63,10 @@ public class LandlordsectorModPlugin extends BaseModPlugin {
         upgradeTo080(p);
         upgradeTo101(p);
         Family.marryEveryPartner();
+        // 1.8.0: kids from older saves get their stage (and babies lose the traits they were born with).
+        for (Property home : p.properties()) {
+            for (Child c : new java.util.ArrayList<>(home.children())) Kids.migrate(home, c, random);
+        }
     }
 
     /**

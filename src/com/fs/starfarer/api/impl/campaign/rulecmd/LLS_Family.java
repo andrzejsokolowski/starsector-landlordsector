@@ -24,12 +24,14 @@ import com.fs.starfarer.api.util.Misc.Token;
 import landlordsector.Child;
 import landlordsector.Family;
 import landlordsector.HomeownerScript;
+import landlordsector.Kids;
 import landlordsector.Property;
 import landlordsector.Tenant;
 
 /**
  * 1.2.0: talking to your partner or one of your kids over the comm link. One command, the first parameter says what
- * to do: greet, options, try, gift, breakup, breakupYes, breakupNo, greetChild, childOptions, rename, path.
+ * to do: greet, options, try, gift, breakup, breakupYes, breakupNo, greetChild, childOptions, rename, path, and since
+ * 1.8.0 bond, lesson, academy, classes.
  */
 public class LLS_Family extends BaseCommandPlugin {
 
@@ -95,6 +97,11 @@ public class LLS_Family extends BaseCommandPlugin {
                 return c != null && rename(dialog, memoryMap, c);
             case "path":
                 return c != null && params.size() > 1 && path(dialog, memoryMap, p, c, params.get(1).getString(memoryMap));
+            case "bond":
+            case "lesson":
+            case "academy":
+            case "classes":
+                return c != null && train(dialog, memoryMap, p, c, verb);
             default:
                 return false;
         }
@@ -239,9 +246,15 @@ public class LLS_Family extends BaseCommandPlugin {
 
     private static void childGreeting(TextPanelAPI text, Child c) {
         String dad = Family.parentWord();
-        if (!c.grown && Family.ageDays(c) < Family.DAYS_PER_CYCLE) {
+        int stage = Kids.stageOf(c);
+        if (stage == Kids.BABY) {
             // 1.3.0 (Andrzej): you are in the home, visiting in person.
             text.addPara(c.name + " grabs your finger and giggles.");
+            return;
+        }
+        if (stage == Kids.TODDLER) {
+            // 1.8.0 (Andrzej: a toddler "Can barely hold a conversation").
+            say(text, pick(dad + "! " + dad + "! Up!", "Look! Block! Big block!", "No nap. No nap!"));
             return;
         }
         if (c.grown && c.path == null) {
@@ -272,25 +285,90 @@ public class LLS_Family extends BaseCommandPlugin {
 
     private static boolean childOptions(OptionPanelAPI opts, Child c) {
         opts.addOption("Let's pick a new name for you.", "lls_kid_rename");
-        opts.addOption("Wanna go for a drive in the Kite I bought, " + c.noun() + "?", "lls_kid_officer");
-        // 1.3.0 (Andrzej: "Needs a Kite-class frigate in fleet.").
-        if (Family.kite() == null) {
-            opts.setEnabled("lls_kid_officer", false);
-            opts.setTooltip("lls_kid_officer", "You need a Kite in your fleet.");
+        int stage = Kids.stageOf(c);
+        // 1.8.0 (Andrzej): the career lines only from the Child stage, until the wish is locked as a teen.
+        boolean talk = !c.pathLocked && (stage >= Kids.CHILD || c.grown);
+        if (talk) {
+            opts.addOption("Wanna go for a drive in the Kite I bought, " + c.noun() + "?", "lls_kid_officer");
+            wish(opts, "lls_kid_officer", Child.OFFICER);
+            // 1.3.0 (Andrzej: "Needs a Kite-class frigate in fleet.").
+            if (Family.kite() == null) {
+                opts.setEnabled("lls_kid_officer", false);
+                opts.setTooltip("lls_kid_officer", "You need a Kite in your fleet.");
+            }
+            opts.addOption("I see you're reading \"AI Cores in Industry\"?", "lls_kid_admin");
+            wish(opts, "lls_kid_admin", Child.ADMIN);
+            opts.addOption("I see you're playing Minecraft...", "lls_kid_worker");
+            wish(opts, "lls_kid_worker", Child.WORKER);
+            if (Family.nexerelin()) {
+                opts.addOption("That 007 movie is pretty cool, eh?", "lls_kid_agent");
+                wish(opts, "lls_kid_agent", Child.AGENT);
+            }
+            opts.addOption("Wow, you're so pretty!", "lls_kid_growth");
+            wish(opts, "lls_kid_growth", Child.GROWTH);
         }
-        opts.addOption("I see you're reading \"AI Cores in Industry\"?", "lls_kid_admin");
-        opts.addOption("I see you're playing Minecraft...", "lls_kid_worker");
-        if (Family.nexerelin()) opts.addOption("That 007 movie is pretty cool, eh?", "lls_kid_agent");
-        opts.addOption("Wow, you're so pretty!", "lls_kid_growth");
+        if (c.grown) return true;
+        if (stage >= Kids.TEEN) {
+            opts.addOption("Let's spend the day together.", "lls_kid_bond");
+            String no = Kids.cannotBond(c);
+            if (no != null) {
+                opts.setEnabled("lls_kid_bond", false);
+                opts.setTooltip("lls_kid_bond", no);
+            } else {
+                opts.setTooltip("lls_kid_bond", "Days together: " + c.bonds + ". Every " + Kids.BONDS_PER_POINT
+                        + " make them better at what they want to become, up to " + Kids.MAX_BOND_POINTS + " times.");
+            }
+        }
+        if (stage == Kids.TEEN) {
+            opts.addOption("I signed you up for lessons.", "lls_kid_lesson");
+            String no = Kids.cannotLesson(c);
+            String what = Family.pathName(c.path);
+            String tip = "Costs " + Misc.getDGSCredits(Kids.LESSON_COST) + ". Makes them better at being "
+                    + (what != null ? what : "what they want to become") + ". Lessons taken: " + c.lessons + " of "
+                    + Kids.MAX_LESSONS + ".";
+            if (no != null) {
+                opts.setEnabled("lls_kid_lesson", false);
+                tip = no + " " + tip;
+            }
+            opts.setTooltip("lls_kid_lesson", tip);
+        }
+        if (stage == Kids.ADULT) {
+            if (Kids.indEvo() && Kids.academyPath(c)) {
+                opts.addOption("I'm sending you to the Academy.", "lls_kid_academy");
+                String no = Kids.cannotAcademy(c);
+                String tip = "Costs " + Misc.getDGSCredits(Kids.ACADEMY_COST) + ". Needs an Academy on one of your"
+                        + " colonies. " + (Child.OFFICER.equals(c.path)
+                        ? "Starts with Academy graduate: +10% maximum combat readiness, +25% autofire aim accuracy."
+                        : "Starts with Academy graduate: +1 stability, -10% colony upkeep.");
+                if (no != null) {
+                    opts.setEnabled("lls_kid_academy", false);
+                    tip = no + " " + tip;
+                }
+                opts.setTooltip("lls_kid_academy", tip);
+            }
+            opts.addOption("I'm paying for extra classes.", "lls_kid_classes");
+            String no = Kids.cannotClasses(c);
+            String tip = "Costs " + Misc.getDGSCredits(Kids.CLASSES_COST) + ". " + Kids.classesGive(c.path);
+            if (no != null) {
+                opts.setEnabled("lls_kid_classes", false);
+                tip = no + " " + tip;
+            }
+            opts.setTooltip("lls_kid_classes", tip);
+        }
         return true;
+    }
+
+    /** Andrzej: "a tooltip that says "This child will want to become a {role} when it grows up"". */
+    private static void wish(OptionPanelAPI opts, String option, String path) {
+        opts.setTooltip(option, "This child will want to become " + Family.pathName(path) + " when it grows up.");
     }
 
     private static boolean path(InteractionDialogAPI dialog, Map<String, MemoryAPI> memoryMap, Property p, Child c,
             String path) {
         TextPanelAPI text = dialog.getTextPanel();
         // 1.3.0 (Andrzej: "a 2% chance of your kid crashing and dying in an explosion due to a malfunction,
-        // increased by 5% per D-MOD on the shuttle"). Babies only giggle and stay home.
-        if (Child.OFFICER.equals(path) && (c.grown || Family.ageDays(c) >= Family.DAYS_PER_CYCLE)) {
+        // increased by 5% per D-MOD on the shuttle").
+        if (Child.OFFICER.equals(path)) {
             String crash = Family.kiteDrive(p, c, RANDOM);
             if (crash != null) {
                 text.addPara(crash, Misc.getNegativeHighlightColor());
@@ -300,25 +378,23 @@ public class LLS_Family extends BaseCommandPlugin {
             }
         }
         c.path = path;
-        if (!c.grown && Family.ageDays(c) < Family.DAYS_PER_CYCLE) {
-            text.addPara(c.name + " giggles.");
-        } else {
-            switch (path) {
-                case Child.OFFICER:
-                    say(text, "Yes! Can I fly it this time?");
-                    break;
-                case Child.ADMIN:
-                    say(text, "It's really good. I want to run a colony one day.");
-                    break;
-                case Child.WORKER:
-                    say(text, "I'm going to dig the biggest mine ever.");
-                    break;
-                case Child.AGENT:
-                    say(text, "I want to be a spy when I grow up.");
-                    break;
-                default:
-                    say(text, "Thanks, " + Family.parentWord() + "! Everyone says that.");
-            }
+        // 1.8.0: a teen or older who picks now keeps it.
+        if (c.grown || Kids.stageOf(c) >= Kids.TEEN) c.pathLocked = true;
+        switch (path) {
+            case Child.OFFICER:
+                say(text, "Yes! Can I fly it this time?");
+                break;
+            case Child.ADMIN:
+                say(text, "It's really good. I want to run a colony one day.");
+                break;
+            case Child.WORKER:
+                say(text, "I'm going to dig the biggest mine ever.");
+                break;
+            case Child.AGENT:
+                say(text, "I want to be a spy when I grow up.");
+                break;
+            default:
+                say(text, "Thanks, " + Family.parentWord() + "! Everyone says that.");
         }
         if (c.grown) {
             if (Family.startLife(p, c, RANDOM)) {
@@ -329,6 +405,47 @@ public class LLS_Family extends BaseCommandPlugin {
             text.addPara(waitReason(path), Misc.getHighlightColor());
         }
         FireAll.fire(null, dialog, memoryMap, "PopulateOptions");
+        return true;
+    }
+
+    /** 1.8.0: a day together, lessons, the Academy or extra classes. */
+    private static boolean train(InteractionDialogAPI dialog, Map<String, MemoryAPI> memoryMap, Property p, Child c,
+            String verb) {
+        TextPanelAPI text = dialog.getTextPanel();
+        String dad = Family.parentWord();
+        switch (verb) {
+            case "bond":
+                if (Kids.cannotBond(c) != null) break;
+                Kids.bond(p, c);
+                text.addPara("You spend the day together.");
+                say(text, pick("That was fun, " + dad + ".", "Can we do that again next week?",
+                        "Don't tell anyone, but that was the best day this month."));
+                break;
+            case "lesson":
+                if (Kids.cannotLesson(c) != null) break;
+                Kids.lesson(p, c);
+                text.addPara("You pay " + Misc.getDGSCredits(Kids.LESSON_COST) + ".", Misc.getHighlightColor(),
+                        Misc.getDGSCredits(Kids.LESSON_COST));
+                say(text, c.happiness >= 50f ? "Thanks, " + dad + "! I won't waste it." : "Ugh. Fine.");
+                break;
+            case "academy":
+                if (Kids.cannotAcademy(c) != null) break;
+                Kids.sendToAcademy(p, c);
+                text.addPara("You pay " + Misc.getDGSCredits(Kids.ACADEMY_COST) + ".", Misc.getHighlightColor(),
+                        Misc.getDGSCredits(Kids.ACADEMY_COST));
+                say(text, "The Academy? I won't let you down, " + dad + ".");
+                break;
+            case "classes":
+                if (Kids.cannotClasses(c) != null) break;
+                Kids.takeClasses(p, c);
+                text.addPara("You pay " + Misc.getDGSCredits(Kids.CLASSES_COST) + ".", Misc.getHighlightColor(),
+                        Misc.getDGSCredits(Kids.CLASSES_COST));
+                say(text, "Weekends too? ...Okay. Thanks, " + dad + ".");
+                break;
+            default:
+                break;
+        }
+        back(dialog, memoryMap);
         return true;
     }
 
@@ -383,7 +500,7 @@ public class LLS_Family extends BaseCommandPlugin {
                 }
                 Family.rename(c, field.getText());
                 TextPanelAPI text = dialog.getTextPanel();
-                if (!c.grown && Family.ageDays(c) < Family.DAYS_PER_CYCLE) text.addPara(c.name + " giggles.");
+                if (!c.grown && Kids.stageOf(c) == Kids.BABY) text.addPara(c.name + " giggles.");
                 else say(text, c.name.split(" ")[0] + "? I like it.");
                 back(dialog, memoryMap);
             }

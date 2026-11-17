@@ -16,5 +16,5 @@ lls_upgrade,landlordsector.console.LlsUpgrade,"landlordsector,cheat",lls_upgrade
 lls_month,landlordsector.console.LlsMonth,"landlordsector,cheat",lls_month,"Runs the end-of-month pass now: rent, wear, reputation and your family's money. The rent shows in this month's income report."
 lls_marry,landlordsector.console.LlsMarry,"landlordsector,cheat",lls_marry <home> <name>,"One of your officers or administrators marries you and moves into the home, whatever their level. You move into the home first if it is empty."
 lls_baby,landlordsector.console.LlsBaby,"landlordsector,cheat",lls_baby [home],"Your partner has a baby now."
-lls_growup,landlordsector.console.LlsGrowUp,"landlordsector,cheat",lls_growup [home],"Every child in the home grows up now. Talk to them to choose their path."
+lls_growup,landlordsector.console.LlsGrowUp,"landlordsector,cheat",lls_growup [home],"Every child in the home grows up now and starts the life they wished for."
 lls_ids,landlordsector.console.LlsIds,landlordsector,lls_ids <sizes|housetraits|tenanttraits|events|upgrades>,"Lists the ids the other lls_ commands take."

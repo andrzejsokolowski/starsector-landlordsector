@@ -15,6 +15,7 @@ public final class RulesCheck {
 
     public static void main(String[] args) throws Exception {
         loadAll(args[0]);
+        checkKidSkills180(args[0]);
 
         List<Tier> tiers = TierTable.all();
         expect(tiers.size() == 6, "six tiers, found " + tiers.size());
@@ -432,6 +433,49 @@ public final class RulesCheck {
         landlordsector.data.Environment.load(json(dir.resolve("environment.json")));
         landlordsector.data.Services.load(json(dir.resolve("services.json")));
         landlordsector.data.Worlds.load(json(dir.resolve("worlds.json")));
+        landlordsector.Kids.load(json(dir.resolve("kid_events.json")));
+    }
+
+    /** 1.8.0: every kid skill a trait names is in skill_data.csv, and every .skill script class exists. */
+    static void checkKidSkills180(String tiersPath) throws Exception {
+        java.nio.file.Path root = Paths.get(tiersPath).getParent().getParent().getParent().getParent();
+        java.nio.file.Path dir = root.resolve("data/characters/skills");
+        java.util.Set<String> ids = new java.util.HashSet<>();
+        for (String row : java.nio.file.Files.readAllLines(dir.resolve("skill_data.csv"))) {
+            if (row.startsWith("id,") || row.trim().isEmpty()) continue;
+            ids.add(row.substring(0, row.indexOf(',')));
+        }
+        for (landlordsector.data.TenantTraits.Def d : landlordsector.data.TenantTraits.all()) {
+            if (d.officerSkill != null) expect(ids.contains(d.officerSkill), d.id + ": no skill " + d.officerSkill);
+            if (d.adminSkill != null) expect(ids.contains(d.adminSkill), d.id + ": no skill " + d.adminSkill);
+        }
+        for (String id : new String[] {landlordsector.Kids.ACADEMY_OFFICER, landlordsector.Kids.ACADEMY_ADMIN,
+                landlordsector.Kids.TUTORED, landlordsector.Kids.BUSINESS, "lls_timid", "lls_hothead", "lls_unpopular",
+                "lls_wasteful"}) {
+            expect(ids.contains(id), "skill_data.csv has " + id);
+        }
+        for (String id : ids) {
+            java.nio.file.Path f = dir.resolve(id + ".skill");
+            expect(java.nio.file.Files.exists(f), "a .skill file for " + id);
+            if (!java.nio.file.Files.exists(f)) continue;
+            java.util.regex.Matcher m = java.util.regex.Pattern.compile("\"script\":\"([^\"]+)\"")
+                    .matcher(new String(java.nio.file.Files.readAllBytes(f), java.nio.charset.StandardCharsets.UTF_8));
+            int n = 0;
+            while (m.find()) {
+                n++;
+                try {
+                    Class.forName(m.group(1), false, RulesCheck.class.getClassLoader());
+                } catch (ClassNotFoundException e) {
+                    expect(false, id + ": no class " + m.group(1));
+                }
+            }
+            expect(n > 0, id + ": has a script");
+        }
+        for (landlordsector.Kids.Event e : landlordsector.Kids.events()) {
+            expect(e.trait == null || landlordsector.data.TenantTraits.get(e.trait) != null, e.id + ": trait " + e.trait);
+            expect(e.minStage >= 1 && e.maxStage <= 5 && e.minStage <= e.maxStage, e.id + ": stages 1 to 5");
+        }
+        expect(landlordsector.Kids.events().size() >= 20, "kid_events.json loaded");
     }
 
     /**

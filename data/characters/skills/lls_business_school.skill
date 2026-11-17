@@ -1,0 +1,16 @@
+{
+	"id":"lls_business_school",
+	"governingAptitude":"industry",
+	"compressHullmods":false,
+	"scope":"GOVERNED_OUTPOST",
+	"effectGroups":[
+		{
+			"requiredSkillLevel":1,
+			"effectBasedOnLevel":false,
+			"effects":[
+				{"type":"CHARACTER_STATS", "script":"landlordsector.skills.KidSkills$BusinessSchool"},
+				{"type":"GOVERNED_OUTPOST", "script":"landlordsector.skills.KidSkills$BusinessIncome"},
+			]
+		},
+	],
+}

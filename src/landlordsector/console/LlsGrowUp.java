@@ -29,7 +29,7 @@ public class LlsGrowUp implements BaseCommand {
         }
         Family.daily(Lls.random());
         Console.showMessage(n + (n == 1 ? " child" : " children") + " in " + p.displayName()
-                + " grew up. Talk to them to choose their path.");
+                + " grew up. Those with a wish started their life; talk to the others to choose one.");
         return CommandResult.SUCCESS;
     }
 }

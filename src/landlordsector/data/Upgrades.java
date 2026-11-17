@@ -50,6 +50,9 @@ public final class Upgrades {
         public Set<String> fixes = Collections.emptySet();
         /** A job, not a part of the home: no slot, gone once done. */
         public boolean oneTime;
+        /** 1.8.0: only for the home you live in, and what it adds to the chance of a child per try. */
+        public boolean homeOnly;
+        public float childChance;
         /** Homes for sale may already have it: weight 0 never. */
         public float rollWeight;
         public Set<String> rollAnyCondition = Collections.emptySet();
@@ -96,6 +99,8 @@ public final class Upgrades {
                 d.needs = HouseTraits.strings(o.optJSONArray("needs"));
                 d.fixes = HouseTraits.strings(o.optJSONArray("fixes"));
                 d.oneTime = o.optBoolean("oneTime", false);
+                d.homeOnly = o.optBoolean("homeOnly", false);
+                d.childChance = (float) o.optDouble("childChance", 0);
                 JSONObject roll = o.optJSONObject("roll");
                 if (roll != null) {
                     d.rollWeight = (float) roll.optDouble("weight", 1);
@@ -210,6 +215,12 @@ public final class Upgrades {
     }
 
     /** True when this upgrade can go into a home of this tier, on a station or a planet, with these traits. */
+    /** 1.8.0: fits this home, and an upgrade for the home you live in only goes there. */
+    public static boolean fits(Def d, landlordsector.Property p) {
+        if (d.homeOnly && !p.playerHome) return false;
+        return fits(d, p.tier().index, p.onStation(), p.traits());
+    }
+
     public static boolean fits(Def d, int tier, boolean station, List<String> traits) {
         if (tier < d.minTier || tier > d.maxTier) return false;
         if (d.station != null && d.station != station) return false;

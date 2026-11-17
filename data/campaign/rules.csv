@@ -39,3 +39,7 @@ lls_kid_admin_sel,DialogOptionSelected,$option == lls_kid_admin,LLS_Family path 
 lls_kid_worker_sel,DialogOptionSelected,$option == lls_kid_worker,LLS_Family path worker,,
 lls_kid_agent_sel,DialogOptionSelected,$option == lls_kid_agent,LLS_Family path agent,,
 lls_kid_growth_sel,DialogOptionSelected,$option == lls_kid_growth,LLS_Family path growth,,
+lls_kid_bond_sel,DialogOptionSelected,$option == lls_kid_bond,LLS_Family bond,,
+lls_kid_lesson_sel,DialogOptionSelected,$option == lls_kid_lesson,LLS_Family lesson,,
+lls_kid_academy_sel,DialogOptionSelected,$option == lls_kid_academy,LLS_Family academy,,
+lls_kid_classes_sel,DialogOptionSelected,$option == lls_kid_classes,LLS_Family classes,,
