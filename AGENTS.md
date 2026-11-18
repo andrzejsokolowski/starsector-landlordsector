@@ -229,6 +229,10 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   Turnover from 1.12.0: early_leave weight 0.3 to 0.03, `Leases.RENEW_HAPPINESS` = MOVE_OUT_BELOW (15, was 35),
   answer fails may need low happiness (`fail.below`, `Def.failBelow`). Result: tenants stay about 3.5 years, homes
   away from your colonies pay for themselves in 11-22 years, on your colonies in 2.5-6.
+- 1.12.2 (LLS-37): tiers.json economy `otherWorldRent` 1.5 multiplies rent on worlds that are not the player's
+  colonies (`MarketRules.rentKeep` = (1 - tariff) x otherWorldRent, 1 on own colonies; every rent line uses it).
+  Andrzej's LLS-1 rules (tariff on price and rent, half price at home) stay. Balance run: median payback off your
+  colonies 16.9 to 9.6 years, on your colonies about 4.5 (unchanged).
 
 ## Known limits
 

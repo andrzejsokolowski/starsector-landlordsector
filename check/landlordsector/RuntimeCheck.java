@@ -225,6 +225,13 @@ public final class RuntimeCheck {
         expect(paid >= rentA + colonyHome.lastRent - 1f, "the income report carries the rent");
         expect(Math.abs(home.condition - (1f - 1f / 24f)) < 1e-3 || home.condition < 1f, "a month wears the home");
         expect(colonyHome.lastRent > 0f, "a colony home pays rent too");
+        // 1.12.2 (LLS-37): other factions' worlds pay 1.5x the rent, minus the 30% tariff; your colony plain rent.
+        float plainA = Pricing.rent(home.fullValue(), home.tier().rentShare, 1f, 1f, Settings.rentMult());
+        float plainC = Pricing.rent(colonyHome.fullValue(), colonyHome.tier().rentShare, 1f, 1f, Settings.rentMult());
+        expect(Math.abs(Actions.normalRent(home) - plainA * 0.7f * 1.5f) < 0.01f * plainA + 1f,
+                "rent on another faction's world is 1.5x, minus the tariff");
+        expect(Math.abs(Actions.normalRent(colonyHome) - plainC) < 0.01f * plainC + 1f,
+                "rent on your own colony is plain, with no tariff");
 
         // Greedy rent costs reputation with the Hegemony and pays more.
         Actions.setRent(home, RentSetting.GREEDY);

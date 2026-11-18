@@ -159,7 +159,7 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
             float worth = MarketRules.listingWorth(market, l);
             float cond = l.condition();
             float rent = t == null ? 0f
-                    : Pricing.rent(full, t.rentShare, 1f, cond, Settings.rentMult()) * (1f - tariff);
+                    : Pricing.rent(full, t.rentShare, 1f, cond, Settings.rentMult()) * MarketRules.rentKeep(market);
             Sheet s = new Sheet();
             s.title = l.name != null ? l.name : (t != null ? t.name : l.tierId);
             s.art = l.artPath;

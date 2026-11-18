@@ -8,6 +8,8 @@ public final class Economy {
     public float landValue = 0.2f;
     public float brokerFee = 0.05f;
     public float ownColonyPrice = 0.5f;
+    /** 1.12.2 (LLS-37): rent is multiplied by this on worlds that are not the player's colonies. */
+    public float otherWorldRent = 1.5f;
     public float listingRefreshDays = 90f;
     public float npcBuyChance = 0.15f;
     public float npcSaleShare = 0.5f;

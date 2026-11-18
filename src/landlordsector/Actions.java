@@ -267,7 +267,7 @@ public final class Actions {
     public static float normalRent(Property p) {
         MarketAPI m = p.market();
         if (m == null) return 0f;
-        return Pricing.rent(p.fullValue(), p.tier().rentShare, 1f, 1f, Settings.rentMult()) * (1f - MarketRules.tariff(m));
+        return Pricing.rent(p.fullValue(), p.tier().rentShare, 1f, 1f, Settings.rentMult()) * MarketRules.rentKeep(m);
     }
 
     public static void toggleAdvertising(Property p) {

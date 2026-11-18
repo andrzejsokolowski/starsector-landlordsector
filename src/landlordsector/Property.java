@@ -337,7 +337,7 @@ public class Property {
         MarketAPI m = market();
         if (m == null || !isRented() || MarketRules.hostile(m)) return 0f;
         float gross = Pricing.rent(fullValue(), tier().rentShare, setting().rentMult, condition, Settings.rentMult());
-        return gross * (1f - MarketRules.tariff(m));
+        return gross * MarketRules.rentKeep(m);
     }
 
     public float repairCost() {

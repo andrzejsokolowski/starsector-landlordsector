@@ -29,6 +29,9 @@
 		"brokerFee":0.05,
 		# Price share the player pays on their own colonies (no tariff there).
 		"ownColonyPrice":0.5,
+		# 1.12.2: rent is multiplied by this on worlds that are not your colonies, so homes there pay for themselves
+		# in about 10 years instead of 17 (the tariff still comes off).
+		"otherWorldRent":1.5,
 		# Days until a market rolls its listings again.
 		"listingRefreshDays":90,
 		# Monthly chance that NPC buyers buy one unsold listing on a player colony.

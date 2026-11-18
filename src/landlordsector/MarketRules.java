@@ -92,6 +92,15 @@ public final class MarketRules {
         return m;
     }
 
+    /**
+     * 1.12.2 (LLS-37): the share of the gross rent the player keeps here. Other factions' worlds take the tariff
+     * but pay {@code otherWorldRent} times the rent; the player's colonies pay plain rent with no tariff.
+     */
+    public static float rentKeep(MarketAPI market) {
+        if (isOwn(market)) return 1f;
+        return (1f - tariff(market)) * TierTable.economy().otherWorldRent;
+    }
+
     /** The tariff the player pays here, 0 on their own colonies. */
     public static float tariff(MarketAPI market) {
         if (isOwn(market)) return 0f;

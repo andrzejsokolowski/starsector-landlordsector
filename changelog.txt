@@ -1,3 +1,6 @@
+Version 1.12.2 (2026-11-18)
+- Homes on other factions' worlds pay 50% more rent (the tariff still comes off), so they pay for themselves in about 10 years instead of 17. Homes on your own colonies are unchanged
+
 Version 1.12.1 (2026-11-17)
 - Repairs cost half as much
 - Happy tenants look after the home again: from happiness 60 they fix a little every month, and at 100 they keep it like new
