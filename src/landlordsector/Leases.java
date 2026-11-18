@@ -107,7 +107,7 @@ public final class Leases {
         return t != null && t.breachAt != 0L && Global.getSector().getClock().getElapsedDaysSince(t.breachAt) < BREACH_DAYS;
     }
 
-    /** A month's rent at the rent the tenant pays now, after the tariff. */
+    /** A month's rent at the rent the tenant pays now. */
     public static float monthRent(Property p) {
         return Actions.normalRent(p) * p.setting().rentMult;
     }

@@ -152,10 +152,10 @@ public final class RuntimeCheck {
         heg.size = 6;
         expect(MarketRules.listings(a).list().size() == 4, "a market that shrinks keeps its homes for sale");
 
-        // Buy the cheapest on the Hegemony world: the price includes the 30 percent tariff.
+        // Buy the cheapest on the Hegemony world: 1.12.3, the price includes half the 30 percent tariff, paid once.
         Listing cheap = la.list().get(0);
         float before = credits.get();
-        float expected = MarketRules.listingWorth(a, cheap) * 1.3f;
+        float expected = MarketRules.listingWorth(a, cheap) * 1.15f;
         String result = Actions.buy(a, cheap);
         expect(result.startsWith("Bought"), "buying works: " + result);
         expect(Math.abs(before - credits.get() - expected) < CREDIT_EPS, "the buy price includes the tariff");
@@ -163,12 +163,12 @@ public final class RuntimeCheck {
         expect(Actions.buy(a, cheap).startsWith("That home"), "a home cannot be bought twice");
         Property home = Portfolio.get().properties().get(0);
 
-        // On the player's colony: half price, no tariff.
+        // On the player's colony: 1.12.3, full price, no tariff.
         Listing own = MarketRules.listings(b).list().get(0);
         before = credits.get();
-        float ownPrice = MarketRules.listingWorth(b, own) * 0.5f;
+        float ownPrice = MarketRules.listingWorth(b, own);
         Actions.buy(b, own);
-        expect(Math.abs(before - credits.get() - ownPrice) < CREDIT_EPS, "own colony homes cost half with no tariff");
+        expect(Math.abs(before - credits.get() - ownPrice) < CREDIT_EPS, "own colony homes cost full price with no tariff");
         Property colonyHome = Portfolio.get().properties().get(1);
 
         // 0.3.0: a new home starts empty and advertised, applicants turn up, screening shows every trait.
@@ -225,13 +225,13 @@ public final class RuntimeCheck {
         expect(paid >= rentA + colonyHome.lastRent - 1f, "the income report carries the rent");
         expect(Math.abs(home.condition - (1f - 1f / 24f)) < 1e-3 || home.condition < 1f, "a month wears the home");
         expect(colonyHome.lastRent > 0f, "a colony home pays rent too");
-        // 1.12.2 (LLS-37): other factions' worlds pay 1.5x the rent, minus the 30% tariff; your colony plain rent.
+        // 1.12.3 (LLS-37): rent pays no tariff anywhere, so the same home pays the same rent on any world.
         float plainA = Pricing.rent(home.fullValue(), home.tier().rentShare, 1f, 1f, Settings.rentMult());
         float plainC = Pricing.rent(colonyHome.fullValue(), colonyHome.tier().rentShare, 1f, 1f, Settings.rentMult());
-        expect(Math.abs(Actions.normalRent(home) - plainA * 0.7f * 1.5f) < 0.01f * plainA + 1f,
-                "rent on another faction's world is 1.5x, minus the tariff");
+        expect(Math.abs(Actions.normalRent(home) - plainA) < 0.01f * plainA + 1f,
+                "rent on another faction's world pays no tariff");
         expect(Math.abs(Actions.normalRent(colonyHome) - plainC) < 0.01f * plainC + 1f,
-                "rent on your own colony is plain, with no tariff");
+                "rent on your own colony pays no tariff");
 
         // Greedy rent costs reputation with the Hegemony and pays more.
         Actions.setRent(home, RentSetting.GREEDY);
@@ -260,9 +260,10 @@ public final class RuntimeCheck {
         expect(Actions.cannotSell(home) != null, "no sale while hostile");
         hostileFactions.clear();
 
-        // Run it down until condemned, then rebuild.
+        // Run it down until condemned, then rebuild. 1.12.3: plain wear is 10% a cycle at most, so start it worn out.
+        home.condition = Math.min(home.condition, 0.02f);
         for (int i = 0; i < 80 && !home.condemned; i++) month(tick);
-        expect(home.condemned, "an unrepaired greedy home is condemned in time");
+        expect(home.condemned, "a worn-out greedy home is condemned in time");
         month(tick);
         expect(home.lastRent == 0f, "a condemned home pays nothing");
         // A Dirty home would add the cleaning to the rebuild: take the marks off first.
@@ -274,7 +275,7 @@ public final class RuntimeCheck {
         expect(Actions.repair(home).startsWith("Rebuilt"), "a condemned home can be rebuilt");
         expect(home.condition == 1f && !home.condemned, "rebuilt to new");
         expect(Math.abs(before - credits.get() - full * TierTable.economy().repairFullCost) < CREDIT_EPS,
-                "a rebuild costs repairFullCost of the value (1.12.1: 5%)");
+                "a rebuild costs repairFullCost of the value (1.12.3: 10%)");
         expect(Actions.repair(home).startsWith("It needs no"), "a new home needs no repairs");
 
         // NPC buyers on the colony over a few years.
@@ -586,7 +587,7 @@ public final class RuntimeCheck {
         int fansBefore = Portfolio.get().furnitureCount("fans");
         expect(Actions.sell(home).startsWith("Sold"), "selling works");
         expect(Math.abs(credits.get() - before - sale) < CREDIT_EPS, "the sale pays the sale value");
-        expect(Math.abs(sale - home.value() * (1f - 0.05f - 0.3f)) < 1f, "sale minus 5 percent fee and tariff");
+        expect(Math.abs(sale - home.value() * (1f - 0.05f)) < 1f, "sale minus the 5 percent fee, no tariff (1.12.3)");
         expect(Portfolio.get().furnitureCount("fans") == fansBefore + 1, "selling a home puts its furniture in storage");
 
         // A colony that is gone takes its homes with it.

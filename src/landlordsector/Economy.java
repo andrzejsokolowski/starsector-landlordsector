@@ -3,13 +3,13 @@ package landlordsector;
 /** The "economy" numbers of tiers.json. Defaults match the shipped file. */
 public final class Economy {
 
-    public float repairFullCost = 0.05f;
-    public float wearMonths = 24f;
+    public float repairFullCost = 0.10f;
+    public float wearMonths = 180f;
     public float landValue = 0.2f;
     public float brokerFee = 0.05f;
-    public float ownColonyPrice = 0.5f;
-    /** 1.12.2 (LLS-37): rent is multiplied by this on worlds that are not the player's colonies. */
-    public float otherWorldRent = 1.5f;
+    public float ownColonyPrice = 1f;
+    /** 1.12.3 (LLS-37): share of the market's tariff paid once, when buying a home away from the player's colonies. */
+    public float housingTariff = 0.5f;
     public float listingRefreshDays = 90f;
     public float npcBuyChance = 0.15f;
     public float npcSaleShare = 0.5f;

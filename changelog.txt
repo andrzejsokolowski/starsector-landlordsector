@@ -1,3 +1,10 @@
+Version 1.12.3 (2026-11-18)
+- Homes on your own colonies cost full price (was half price), still with no tariff
+- Buying a home on another faction's world pays a tariff once: half the market's tariff (15% at the usual 30%). Rent and sales pay no tariff anymore
+- Rent is 50% higher everywhere, and the 1.12.2 rent boost for other factions' worlds only is gone: the same home pays the same rent on any world
+- Homes wear out much more slowly: at most 10% a cycle on their own (they used to fall apart in about 2 cycles). Events and bad tenants still damage them, and happy tenants still repair them
+- A full repair costs 10% of the home's value again (was 5%)
+
 Version 1.12.2 (2026-11-18)
 - Homes on other factions' worlds pay 50% more rent (the tariff still comes off), so they pay for themselves in about 10 years instead of 17. Homes on your own colonies are unchanged
 

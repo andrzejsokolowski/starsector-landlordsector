@@ -229,10 +229,16 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   Turnover from 1.12.0: early_leave weight 0.3 to 0.03, `Leases.RENEW_HAPPINESS` = MOVE_OUT_BELOW (15, was 35),
   answer fails may need low happiness (`fail.below`, `Def.failBelow`). Result: tenants stay about 3.5 years, homes
   away from your colonies pay for themselves in 11-22 years, on your colonies in 2.5-6.
-- 1.12.2 (LLS-37): tiers.json economy `otherWorldRent` 1.5 multiplies rent on worlds that are not the player's
-  colonies (`MarketRules.rentKeep` = (1 - tariff) x otherWorldRent, 1 on own colonies; every rent line uses it).
-  Andrzej's LLS-1 rules (tariff on price and rent, half price at home) stay. Balance run: median payback off your
-  colonies 16.9 to 9.6 years, on your colonies about 4.5 (unchanged).
+- 1.12.2 (LLS-37): rent x1.5 on other factions' worlds only. Andrzej: "our houses (our planets) are less valuable
+  to live in. Why didn't we just cut tariffs?" Replaced by 1.12.3.
+- 1.12.3 (LLS-37, Andrzej's decisions after the balance tables; they replace the LLS-1 price and wear rules): own
+  colonies full price (`ownColonyPrice` 1.0), no tariff. Elsewhere `MarketRules.housingTariff` = market tariff x
+  `housingTariff` 0.5 (15% at the usual 30%), paid once in `buyPrice`; rent and `Property.saleValue` pay no tariff
+  (sale = value minus the 5% broker fee). rentShare table x1.5 (same rent for a home on any world). `wearMonths` 180
+  (plain wear 10% a cycle at most, with an unhappy tenant), `repairFullCost` 0.10. Events unchanged. Andrzej reads
+  balance as a per-month table for a 100,000-credit buy: money lost on buy, rent per month (after repairs and empty
+  months), months till the loss is earned back, months until home value + rent = 2x. Balance run on 1.12.3: other
+  worlds 13,000 lost, 1,240 a month, 11 and 91 months; own colony 0 lost, 1,255 a month, 0 and 80 months.
 
 ## Known limits
 

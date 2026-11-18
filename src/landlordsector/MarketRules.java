@@ -93,12 +93,11 @@ public final class MarketRules {
     }
 
     /**
-     * 1.12.2 (LLS-37): the share of the gross rent the player keeps here. Other factions' worlds take the tariff
-     * but pay {@code otherWorldRent} times the rent; the player's colonies pay plain rent with no tariff.
+     * 1.12.3 (LLS-37): the tariff on buying a home here, paid once: {@code housingTariff} times the market's tariff,
+     * 0 on the player's colonies. Rent and sales pay no tariff.
      */
-    public static float rentKeep(MarketAPI market) {
-        if (isOwn(market)) return 1f;
-        return (1f - tariff(market)) * TierTable.economy().otherWorldRent;
+    public static float housingTariff(MarketAPI market) {
+        return tariff(market) * TierTable.economy().housingTariff;
     }
 
     /** The tariff the player pays here, 0 on their own colonies. */
@@ -149,11 +148,11 @@ public final class MarketRules {
         return Pricing.value(listingValue(market, listing), listing.condition(), false, TierTable.economy().landValue);
     }
 
-    /** Price to buy a listing right now, tariff and own-colony discount included. */
+    /** Price to buy a listing right now, the housing tariff or the own-colony price share included. */
     public static float buyPrice(MarketAPI market, Listing listing) {
         float price = listingWorth(market, listing);
         if (isOwn(market)) return price * TierTable.economy().ownColonyPrice;
-        return price * (1f + tariff(market));
+        return price * (1f + housingTariff(market));
     }
 
     /** Tiers this market lists, cheapest first. */

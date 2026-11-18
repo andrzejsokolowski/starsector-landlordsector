@@ -28,7 +28,7 @@ public class Property {
     public RentSetting setting = RentSetting.NORMAL;
     public float paidPrice;
     public long boughtAt;
-    /** Rent paid last month after the tariff. */
+    /** Rent paid last month. */
     public float lastRent;
     public float totalRent;
     /** True when last month's rent was frozen because the owners were hostile. */
@@ -332,12 +332,12 @@ public class Property {
         return Pricing.value(fullValue(), condition, condemned, TierTable.economy().landValue);
     }
 
-    /** Next month's rent after the tariff, at today's numbers. */
+    /** Next month's rent at today's numbers (1.12.3: rent pays no tariff). */
     public float expectedRent() {
         MarketAPI m = market();
         if (m == null || !isRented() || MarketRules.hostile(m)) return 0f;
         float gross = Pricing.rent(fullValue(), tier().rentShare, setting().rentMult, condition, Settings.rentMult());
-        return gross * MarketRules.rentKeep(m);
+        return gross;
     }
 
     public float repairCost() {
@@ -361,20 +361,18 @@ public class Property {
         return false;
     }
 
-    /** What a sale pays after the broker fee and the tariff, furniture left in. */
+    /** What a sale pays after the broker fee, furniture left in. */
     public float saleValue() {
         return saleValue(true);
     }
 
     /**
-     * What a sale pays after the broker fee and the tariff. Sold empty, the furniture comes back to the player and
+     * What a sale pays after the broker fee (1.12.3: no tariff on sales). Sold empty, the furniture comes back to the player and
      * its decor no longer counts; sold furnished, the buyer also pays for the furniture (0.4.0).
      */
     public float saleValue(boolean furnished) {
-        MarketAPI m = market();
-        float tariff = m != null ? MarketRules.tariff(m) : 0f;
         float v = Pricing.value(fullValue(furnished), condition, condemned, TierTable.economy().landValue);
-        float pay = v * Math.max(0f, 1f - TierTable.economy().brokerFee - tariff);
+        float pay = v * Math.max(0f, 1f - TierTable.economy().brokerFee);
         return furnished ? pay + furnitureValue() : pay;
     }
 }

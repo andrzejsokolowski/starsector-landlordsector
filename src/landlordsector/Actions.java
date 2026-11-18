@@ -263,11 +263,11 @@ public final class Actions {
 
     // ---- Tenants ----
 
-    /** A month's rent at Normal for this home, after the tariff, as if rented. */
+    /** A month's rent at Normal for this home, as if rented (1.12.3: rent pays no tariff). */
     public static float normalRent(Property p) {
         MarketAPI m = p.market();
         if (m == null) return 0f;
-        return Pricing.rent(p.fullValue(), p.tier().rentShare, 1f, 1f, Settings.rentMult()) * MarketRules.rentKeep(m);
+        return Pricing.rent(p.fullValue(), p.tier().rentShare, 1f, 1f, Settings.rentMult());
     }
 
     public static void toggleAdvertising(Property p) {

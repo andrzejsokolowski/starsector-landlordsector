@@ -96,12 +96,13 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
         MarketListings ml = MarketRules.listings(market);
         List<Listing> shown = ml.list();
         boolean own = MarketRules.isOwn(market);
-        float tariff = MarketRules.tariff(market);
+        float tariff = MarketRules.housingTariff(market);
 
         // Andrzej, 0.5.0: "Real estate on Chicomoztoc, a barren-desert world belonging to Hegemony" at the top.
         title("Real estate on " + where(market), MARGIN, 12f, width - 2 * MARGIN);
-        String terms = own ? "Your colony: homes cost half, with no tariff."
-                : "Prices include the " + Math.round(tariff * 100f) + "% tariff. Rent pays the same tariff.";
+        // 1.12.3 (LLS-37): full price at home; elsewhere a housing tariff paid once, none on rent or sales.
+        String terms = own ? "Your colony: no tariff."
+                : "Prices include a " + Math.round(tariff * 100f) + "% tariff on homes. Rent and sales pay no tariff.";
         text("Credits: " + Misc.getDGSCredits(Actions.credits()) + ".   " + terms, MARGIN, 42f, width - 2 * MARGIN);
         // 0.8.0: the world's own line (worlds.json), "Crowded underground hive cities: ...".
         landlordsector.data.Worlds.Def world = landlordsector.data.Worlds.get(market.getId());
@@ -159,7 +160,7 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
             float worth = MarketRules.listingWorth(market, l);
             float cond = l.condition();
             float rent = t == null ? 0f
-                    : Pricing.rent(full, t.rentShare, 1f, cond, Settings.rentMult()) * MarketRules.rentKeep(market);
+                    : Pricing.rent(full, t.rentShare, 1f, cond, Settings.rentMult());
             Sheet s = new Sheet();
             s.title = l.name != null ? l.name : (t != null ? t.name : l.tierId);
             s.art = l.artPath;
@@ -173,10 +174,10 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
                             + ". Repairs cost about " + Misc.getDGSCredits(repair) + ".", "+"});
                 }
                 float pay = MarketRules.buyPrice(market, l);
-                s.valueLines.add(new String[] {(own ? "Your colony: you pay half, " : "With the tariff you pay ")
+                s.valueLines.add(new String[] {(own ? "Your colony: you pay " : "With the tariff you pay ")
                         + Misc.getDGSCredits(pay) + ".", null});
             }
-            s.rentLine = "about " + Misc.getDGSCredits(rent) + " a month" + (own ? "" : ", after tariff");
+            s.rentLine = "about " + Misc.getDGSCredits(rent) + " a month";
             s.condition = cond;
             s.occupancy = "For sale";
             s.stats = st;

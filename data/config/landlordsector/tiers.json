@@ -1,37 +1,39 @@
 {
 	# Property tiers, cheapest first. min and max are the base price range in credits, before the
 	# market's multiplier (0.25x to 4x). rentShare is the monthly rent at the Normal setting, as a share
-	# of the value. minSize is the smallest market that lists the tier. weight is how often it is rolled.
+	# of the value (1.12.3: 1.5 times the old table, and no tariff comes off). minSize is the smallest market that lists the tier. weight is how often it is rolled.
 	# comfort and decor are the tier's base scores from 0 to 100 (furniture adds decor later).
 	"tiers":[
-		{"id":"shack", "name":"Shack", "min":1000, "max":10000, "rentShare":0.03, "minSize":3, "slots":1, "weight":30, "comfort":15, "decor":0},
-		{"id":"studio", "name":"Studio", "min":30000, "max":50000, "rentShare":0.025, "minSize":3, "slots":2, "weight":25, "comfort":30, "decor":5},
-		{"id":"small_house", "name":"Small house", "min":100000, "max":300000, "rentShare":0.02, "minSize":3, "slots":3, "weight":20, "comfort":45, "decor":10},
-		{"id":"house", "name":"House", "min":500000, "max":1000000, "rentShare":0.015, "minSize":4, "slots":4, "weight":14, "comfort":60, "decor":20},
-		{"id":"villa", "name":"Villa", "min":1500000, "max":2500000, "rentShare":0.012, "minSize":5, "slots":6, "weight":10, "comfort":75, "decor":30},
-		{"id":"estate", "name":"Estate", "min":3000000, "max":5000000, "rentShare":0.01, "minSize":6, "slots":8, "weight":7, "comfort":85, "decor":40}
+		{"id":"shack", "name":"Shack", "min":1000, "max":10000, "rentShare":0.045, "minSize":3, "slots":1, "weight":30, "comfort":15, "decor":0},
+		{"id":"studio", "name":"Studio", "min":30000, "max":50000, "rentShare":0.0375, "minSize":3, "slots":2, "weight":25, "comfort":30, "decor":5},
+		{"id":"small_house", "name":"Small house", "min":100000, "max":300000, "rentShare":0.03, "minSize":3, "slots":3, "weight":20, "comfort":45, "decor":10},
+		{"id":"house", "name":"House", "min":500000, "max":1000000, "rentShare":0.0225, "minSize":4, "slots":4, "weight":14, "comfort":60, "decor":20},
+		{"id":"villa", "name":"Villa", "min":1500000, "max":2500000, "rentShare":0.018, "minSize":5, "slots":6, "weight":10, "comfort":75, "decor":30},
+		{"id":"estate", "name":"Estate", "min":3000000, "max":5000000, "rentShare":0.015, "minSize":6, "slots":8, "weight":7, "comfort":85, "decor":40}
 	],
 	"economy":{
-		# Share of the full value that a repair from ruin to new costs (1.12.1: 0.10 to 0.05, Andrzej: "make repairs
-		# less needed and cheaper").
-		"repairFullCost":0.05,
+		# Share of the full value that a repair from ruin to new costs (1.12.1: 0.10 to 0.05; 1.12.3 back to 0.10,
+		# Andrzej: "Repairs should be expensive, but the house shouldn't deprecate by it's own").
+		"repairFullCost":0.10,
 		# 1.12.1: a happy tenant looks after the home. Condition repaired a month at happiness 100, falling to none at
 		# happyRepairFrom.
 		"happyRepair":0.03,
 		"happyRepairFrom":60,
 		# 1.12.1: damage from events (smashed windows, fires, burst pipes) is multiplied by this.
 		"eventDamage":0.5,
-		# Months from new to condemned at the Normal rent setting with no repairs.
-		"wearMonths":24,
+		# Months from new to condemned with no repairs and a tenant at happiness 50 (unhappy tenants wear it 1.5 times
+		# as fast, happy ones half as fast). 1.12.3: 24 to 180, Andrzej: "Maybe 10% a cycle at most".
+		"wearMonths":180,
 		# Value of a condemned property, as a share of its full value.
 		"landValue":0.2,
-		# Broker fee on a sale, on top of the market's tariff.
+		# Broker fee on a sale. 1.12.3: sales pay no tariff.
 		"brokerFee":0.05,
-		# Price share the player pays on their own colonies (no tariff there).
-		"ownColonyPrice":0.5,
-		# 1.12.2: rent is multiplied by this on worlds that are not your colonies, so homes there pay for themselves
-		# in about 10 years instead of 17 (the tariff still comes off).
-		"otherWorldRent":1.5,
+		# Price share the player pays on their own colonies, with no tariff (1.12.3: 0.5 to 1, Andrzej: "It should be
+		# full price").
+		"ownColonyPrice":1.0,
+		# 1.12.3: share of the market's tariff paid once, when buying a home on a world that is not your colony
+		# (15% at the game's normal 30%). Rent and sales pay no tariff.
+		"housingTariff":0.5,
 		# Days until a market rolls its listings again.
 		"listingRefreshDays":90,
 		# Monthly chance that NPC buyers buy one unsold listing on a player colony.

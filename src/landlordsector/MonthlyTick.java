@@ -52,7 +52,7 @@ public class MonthlyTick implements EconomyTickListener, ColonyPlayerHostileActL
 
         @Override
         public void createTooltip(TooltipMakerAPI tooltip, boolean expanded, Object tooltipParam) {
-            tooltip.addPara("Rent from your homes after the local tariff, and the money NPC homeowners bring"
+            tooltip.addPara("Rent from your homes, and the money NPC homeowners bring"
                     + " your colonies. Manage your homes from the Manage (Y) button.", 0f);
         }
     };
@@ -110,7 +110,7 @@ public class MonthlyTick implements EconomyTickListener, ColonyPlayerHostileActL
             if (p.isRented() && !hostile) {
                 float gross = Pricing.rent(p.fullValue(), p.tier().rentShare, p.setting().rentMult, p.condition,
                         Settings.rentMult());
-                net = gross * MarketRules.rentKeep(m) * (1f - Pricing.clamp(p.rentCut, 0f, 1f));
+                net = gross * (1f - Pricing.clamp(p.rentCut, 0f, 1f));
                 PropertyStats stats = p.stats();
                 if (!MarketRules.isOwn(m)) {
                     float rep = p.setting().repPerMonth * (1f + 0.25f * p.tier().index)

@@ -68,7 +68,7 @@ public final class RulesCheck {
 
         // Rent: a 4 million estate at Normal and full condition pays 1 percent a month.
         float estateRent = Pricing.rent(4_000_000f, estate.rentShare, 1f, 1f, 1f);
-        expect(Math.abs(estateRent - 40_000f) < 1f, "a 4 million estate rents for 40k, got " + estateRent);
+        expect(Math.abs(estateRent - 60_000f) < 1f, "a 4 million estate rents for 60k (1.12.3: x1.5), got " + estateRent);
         expect(Pricing.rent(100f, 0.03f, 1f, 0f, 1f) == 1.5f, "a worn-out home pays half rent");
         expect(Pricing.rent(100f, 0.03f, 1f, 1f, 2f) == 6f, "the LunaLib multiplier scales rent");
 
@@ -77,9 +77,11 @@ public final class RulesCheck {
         expect(Pricing.value(1000f, 0f, true, eco.landValue) == 200f, "a condemned home keeps its land value");
         expect(Pricing.value(1000f, 1f, false, eco.landValue) == 1000f, "a new home is worth its full value");
         expect(Math.abs(Pricing.repairCost(1000f, 0f, eco.repairFullCost) - 1000f * eco.repairFullCost) < 1e-3,
-                "a full rebuild costs repairFullCost of the value (1.12.1: 5%)");
+                "a full rebuild costs repairFullCost of the value (1.12.3: 10%)");
         expect(Pricing.repairCost(1000f, 1f, eco.repairFullCost) == 0f, "a new home needs no repairs");
-        expect(Math.abs(eco.wearMonths - 24f) < 1e-3, "about 2 cycles from new to condemned (Andrzej, LLS-1)");
+        // 1.12.3 (Andrzej, LLS-37): "Maybe 10% a cycle at most" replaces LLS-1's 2 cycles: even an unhappy tenant (wear
+        // 1.5 times as fast) wears a home at most 10% of its condition in 12 months.
+        expect(Math.abs(12f * Pricing.wearMult(0f) / eco.wearMonths - 0.10f) < 1e-3, "plain wear is 10% a cycle at most");
 
         // Rent settings run from cheap and kind to greedy and hard on the home.
         RentSetting[] s = RentSetting.values();

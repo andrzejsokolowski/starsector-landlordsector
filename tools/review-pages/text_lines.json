@@ -3392,6 +3392,55 @@
 			"line": "Jana Okoye's friend moved into the spare room at Leafy Cottage. You got 900.",
 			"when": "After an answer that pays you.",
 			"area": "Questions"
+		},
+		{
+			"id": "p_terms_own",
+			"version": "1.12.3",
+			"line": "Your colony: no tariff.",
+			"when": "Top of the property agent's screen on your own colony (was \"Your colony: homes cost half, with no tariff.\").",
+			"area": "Prices and tariff (1.12.3)"
+		},
+		{
+			"id": "p_terms_other",
+			"version": "1.12.3",
+			"line": "Prices include a 15% tariff on homes. Rent and sales pay no tariff.",
+			"when": "Top of the property agent's screen on other factions' worlds. The number is half the market's tariff (was \"Prices include the 30% tariff. Rent pays the same tariff.\").",
+			"area": "Prices and tariff (1.12.3)"
+		},
+		{
+			"id": "p_pay_own",
+			"version": "1.12.3",
+			"line": "Your colony: you pay 120,000 credits.",
+			"when": "Under the chosen home's value on the agent's screen, on your own colony (was \"Your colony: you pay half, ...\").",
+			"area": "Prices and tariff (1.12.3)"
+		},
+		{
+			"id": "p_rent_line",
+			"version": "1.12.3",
+			"line": "about 1,200 credits a month",
+			"when": "The Rent row of a home for sale and of your own homes (\", after tariff\" taken off).",
+			"area": "Prices and tariff (1.12.3)"
+		},
+		{
+			"id": "p_sell_tip",
+			"version": "1.12.3",
+			"line": "You can sell a home in any condition, rented or not. You get its value minus a 5% broker fee.",
+			"when": "Tooltip of the Sell button on the Manage page (\"and the local tariff\" taken off).",
+			"area": "Prices and tariff (1.12.3)"
+		},
+		{
+			"id": "p_sell_click",
+			"version": "1.12.3",
+			"line": "Click again to sell Leafy Cottage. The price takes off a broker fee.",
+			"when": "After the first click on Sell (\"and the local tariff\" taken off).",
+			"area": "Prices and tariff (1.12.3)"
+		},
+		{
+			"id": "p_income_tip",
+			"version": "1.12.3",
+			"line": "Rent from your homes, and the money NPC homeowners bring your colonies. Manage your homes from the Manage (Y) button.",
+			"when": "Tooltip of the Real estate line in the monthly income report (\"after the local tariff\" taken off).",
+			"area": "Prices and tariff (1.12.3)"
 		}
 	]
 }

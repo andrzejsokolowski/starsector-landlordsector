@@ -269,7 +269,6 @@ public class RealEstatePage implements ManagePage {
         private void buildDetails(Property chosen, float rx, float y0) {
             MarketAPI m = chosen.market();
             PropertyStats st = chosen.stats();
-            boolean own = m != null && MarketRules.isOwn(m);
             float rw = rightW();
             Sheet s = new Sheet();
             s.title = chosen.name != null ? chosen.name : chosen.tier().name;
@@ -283,7 +282,7 @@ public class RealEstatePage implements ManagePage {
                     chosen.drift, chosen.traitPrice(), chosen.decor(), chosen.condition, chosen.condemned,
                     chosen.value());
             float next = chosen.expectedRent();
-            s.rentLine = next > 0f ? Misc.getDGSCredits(next) + " a month" + (own ? "" : ", after tariff") : "none";
+            s.rentLine = next > 0f ? Misc.getDGSCredits(next) + " a month" : "none";
             s.condition = chosen.condition;
             if (chosen.condemned) {
                 s.occupancy = "Condemned";
@@ -344,7 +343,7 @@ public class RealEstatePage implements ManagePage {
             boolean furnished = chosen.furnitureCount() > 0;
             tip(rx + 430f, cy, 220f, 28f, "Selling", "You can sell a home in any condition, rented or not. You get"
                     + " its value minus a " + Math.round(landlordsector.TierTable.economy().brokerFee * 100f)
-                    + "% broker fee and the local tariff." + (furnished ? " The furniture goes back into your"
+                    + "% broker fee." + (furnished ? " The furniture goes back into your"
                     + " furniture storage." : ""), noSale);
             // Only as wide as the sheet, so it never runs into the event log.
             float fw = Math.min(230f, contentWidth(rw) - 660f);
@@ -1293,8 +1292,7 @@ public class RealEstatePage implements ManagePage {
                         result(Actions.sell(pr));
                         selectedHome = null;
                     } else {
-                        message = "Click again to sell " + pr.displayName() + ". The price takes off a broker fee"
-                                + " and the local tariff.";
+                        message = "Click again to sell " + pr.displayName() + ". The price takes off a broker fee.";
                         messageColor = Misc.getHighlightColor();
                         return pr.id;
                     }

@@ -38,7 +38,7 @@ public final class TierTable {
             e.landValue = num(ec, "landValue", e.landValue);
             e.brokerFee = num(ec, "brokerFee", e.brokerFee);
             e.ownColonyPrice = num(ec, "ownColonyPrice", e.ownColonyPrice);
-            e.otherWorldRent = Math.max(0f, num(ec, "otherWorldRent", e.otherWorldRent));
+            e.housingTariff = Math.max(0f, num(ec, "housingTariff", e.housingTariff));
             e.listingRefreshDays = Math.max(1f, num(ec, "listingRefreshDays", e.listingRefreshDays));
             e.npcBuyChance = num(ec, "npcBuyChance", e.npcBuyChance);
             e.npcSaleShare = num(ec, "npcSaleShare", e.npcSaleShare);
