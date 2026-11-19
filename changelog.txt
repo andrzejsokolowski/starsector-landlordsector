@@ -1,3 +1,9 @@
+Version 1.14.0 (2026-11-19)
+- Property agents offer mortgages: pay 20% of the price now and borrow the rest at 10% interest a cycle, over 5 or 10 cycles
+- The mortgage payment comes out of your monthly income, with its own line in the income report
+- Pay off a mortgage early at any time from the Manage page, with no fee. Selling a home pays off the rest of its mortgage first
+- Miss 3 mortgage payments in a row (not enough credits at the end of the month) and the bank takes the home
+
 Version 1.13.0 (2026-11-19)
 - Leases are binding: while a lease runs, an unhappy tenant stays and keeps paying instead of moving out. Only illness, death, a job offer you agree to or your eviction end it early
 - The No lease option is gone: every new tenant signs for 6, 12 or 24 months. Homes that were set to No lease use 12 months for the next tenant

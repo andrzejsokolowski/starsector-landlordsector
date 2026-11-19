@@ -34,6 +34,11 @@
 		# 1.12.3: share of the market's tariff paid once, when buying a home on a world that is not your colony
 		# (15% at the game's normal 30%). Rent and sales pay no tariff.
 		"housingTariff":0.5,
+		# 1.14.0 mortgages (LLS-44): share of the price paid up front, interest a cycle, and missed payments in a row
+		# before the bank takes the home. The loan runs 5 or 10 cycles (picked on the agent's screen).
+		"mortgageDown":0.2,
+		"mortgageRate":0.10,
+		"mortgageMissLimit":3,
 		# Days until a market rolls its listings again.
 		"listingRefreshDays":90,
 		# Monthly chance that NPC buyers buy one unsold listing on a player colony.

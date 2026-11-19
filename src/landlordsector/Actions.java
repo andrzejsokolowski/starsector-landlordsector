@@ -35,16 +35,64 @@ public final class Actions {
         return null;
     }
 
+    /** 1.14.0: null when the player may buy this home with a mortgage (the down payment is enough), or why not. */
+    public static String cannotMortgage(MarketAPI market, Listing listing) {
+        String no = cannotBuy(market, null);
+        if (no != null) return no;
+        if (listing != null && credits() < Mortgage.down(MarketRules.buyPrice(market, listing))) {
+            return "Not enough credits for the down payment.";
+        }
+        return null;
+    }
+
     public static String buy(MarketAPI market, Listing listing) {
-        String no = cannotBuy(market, listing);
+        return buy(market, listing, 0);
+    }
+
+    /** Buys a home: with cash ({@code loanCycles} 0) or with a mortgage of that many cycles (1.14.0). */
+    public static String buy(MarketAPI market, Listing listing, int loanCycles) {
+        boolean loan = loanCycles > 0;
+        String no = loan ? cannotMortgage(market, listing) : cannotBuy(market, listing);
         if (no != null) return no;
         MarketListings ml = MarketRules.listings(market);
         if (!ml.list().remove(listing)) return "That home is no longer for sale.";
         float price = MarketRules.buyPrice(market, listing);
-        Global.getSector().getPlayerFleet().getCargo().getCredits().subtract(price);
+        float now = loan ? Mortgage.down(price) : price;
+        Global.getSector().getPlayerFleet().getCargo().getCredits().subtract(now);
         Property p = own(market, listing, price);
+        if (loan) Mortgage.start(p, price, loanCycles);
         Global.getSoundPlayer().playUISound("ui_upgrade_industry", 1f, 1f);
+        if (loan) {
+            return "Bought: " + p.displayName() + " with a mortgage. You paid " + Misc.getDGSCredits(now) + " now and "
+                    + Misc.getDGSCredits(p.loanPayment) + " a month for " + loanCycles + " cycles.";
+        }
         return "Bought: " + p.displayName() + " for " + Misc.getDGSCredits(price) + ".";
+    }
+
+    /** 1.14.0: pays off the rest of the mortgage at once (no penalty). */
+    public static String payOff(Property p) {
+        if (!Mortgage.has(p)) return "There is no mortgage on this home.";
+        float left = p.loanLeft;
+        if (credits() < left) return "Not enough credits to pay off the mortgage (" + Misc.getDGSCredits(left) + ").";
+        Global.getSector().getPlayerFleet().getCargo().getCredits().subtract(left);
+        Mortgage.clear(p);
+        p.addLog("You paid off the mortgage: " + Misc.getDGSCredits(left) + ". The home is all yours.", true,
+                "paid off");
+        Global.getSoundPlayer().playUISound("ui_upgrade_industry", 1f, 1f);
+        return "Paid off the mortgage on " + p.displayName() + " for " + Misc.getDGSCredits(left) + ".";
+    }
+
+    /**
+     * 1.14.0: the bank takes the home after too many missed payments. Furniture goes back to your storage, the
+     * family and questions go; the caller removes the home from the portfolio. Returns the line for the player.
+     */
+    public static String repossess(Property p) {
+        for (Installed i : p.upgrades()) if (i.furniture) Portfolio.get().addFurniture(i.id, 1);
+        Family.release(p);
+        Choices.cancel(p);
+        Mortgage.clear(p);
+        return "The bank took " + p.displayName() + ": " + TierTable.economy().mortgageMissLimit
+                + " mortgage payments missed in a row. What you paid for it is gone.";
     }
 
     /**
@@ -135,13 +183,17 @@ public final class Actions {
         Family.release(p);
         Choices.cancel(p);
         Portfolio.get().properties().remove(p);
-        Global.getSector().getPlayerFleet().getCargo().getCredits().add(pay);
+        // 1.14.0: the sale pays off the rest of the mortgage first.
+        float loan = Mortgage.has(p) ? p.loanLeft : 0f;
+        Mortgage.clear(p);
+        Global.getSector().getPlayerFleet().getCargo().getCredits().add(pay - loan);
         try {
             Global.getSoundPlayer().playUISound("ui_cargo_special_tech_drop", 1f, 1f);
         } catch (Throwable ignored) {
         }
         String head = said != null ? said + " " + Misc.getDGSCredits(pay) + "." : "Sold: " + p.displayName() + " for "
                 + Misc.getDGSCredits(pay) + ".";
+        if (loan > 0f) head += " " + Misc.getDGSCredits(loan) + " of it paid off the mortgage.";
         if (said != null) Notify.line(head, true, null);
         return head
                 + (back > 0 ? " " + back + (back == 1 ? " piece of furniture is" : " pieces of furniture are")

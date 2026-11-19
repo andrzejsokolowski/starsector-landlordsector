@@ -27,6 +27,16 @@ public class Property {
     public boolean condemned;
     public RentSetting setting = RentSetting.NORMAL;
     public float paidPrice;
+    // ---- 1.14.0 mortgage (LLS-44, see Mortgage). All 0 for homes bought with cash and on older saves. ----
+    /** What is still owed on the loan. */
+    public float loanLeft;
+    /** The fixed monthly payment. */
+    public float loanPayment;
+    public int loanMonthsLeft;
+    /** Missed payments in a row. */
+    public int loanMissed;
+    /** Interest paid so far. */
+    public float loanInterest;
     public long boughtAt;
     /** Rent paid last month. */
     public float lastRent;

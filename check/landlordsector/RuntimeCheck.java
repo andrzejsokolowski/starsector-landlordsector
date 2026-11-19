@@ -601,6 +601,7 @@ public final class RuntimeCheck {
         checkManager161();
         checkLeases1120();
         checkChoices1120();
+        checkMortgage1140();
 
         // 0.8.0: a world from worlds.json. Eochu Bres, size 6, has room for 23 homes, lists every size and prices
         // like the Tri-Tachyon capital; the same market under another id is the plain size 6 rule.
@@ -1135,6 +1136,88 @@ public final class RuntimeCheck {
         t.wealth = Math.min(TenantRules.MAX_WEALTH, p.tier().index + 2);
         Actions.moveIn(p, t);
         return p;
+    }
+
+    /** A fresh market and its first listing, for the 1.14.0 mortgage check. */
+    private static MarketAPI freshMarket(String id) {
+        FakeMarket fm = new FakeMarket();
+        fm.id = id; fm.name = id; fm.factionId = "hegemony"; fm.size = 6;
+        fm.stability = 7f; fm.hazard = 1f; fm.habitable = true;
+        return market(fm);
+    }
+
+    private static Property homeAt(String marketId) {
+        for (Property q : Portfolio.get().properties()) if (marketId.equals(q.marketId)) return q;
+        return null;
+    }
+
+    /** 1.14.0 (LLS-44): mortgages. */
+    private static void checkMortgage1140() {
+        // Andrzej's example: 115,000 over 10 cycles at 10% = 1,216 a month and about 53,900 interest.
+        float pay = Mortgage.payment(92_000f, 120);
+        expect(Math.abs(pay - 1216f) < 2f && Math.abs(Mortgage.totalInterest(115_000f, 10) - 53_894f) < 60f
+                && Math.abs(Mortgage.payment(92_000f, 60) - 1955f) < 2f,
+                "mortgage payments match the 1.14.0 table: " + pay);
+        MonthlyTick tick = new MonthlyTick();
+
+        MarketAPI a = freshMarket("fake_mortgage_a");
+        Listing l = MarketRules.listings(a).list().get(0);
+        float price = MarketRules.buyPrice(a, l);
+        float before = credits.get();
+        String res = Actions.buy(a, l, 10);
+        Property p = homeAt(a.getId());
+        expect(p != null && res.contains("mortgage") && Math.abs(before - credits.get() - price * 0.2f) < CREDIT_EPS,
+                "a mortgage takes 20% now: " + res);
+        if (p == null) return;
+        expect(Mortgage.has(p) && Math.abs(p.loanLeft - price * 0.8f) < 1f && p.loanMonthsLeft == 120
+                && Math.abs(p.loanPayment - Mortgage.payment(price * 0.8f, 120)) < 0.5f, "the loan is 80% over 120 months");
+        float left = p.loanLeft;
+        float interest = left * Mortgage.monthlyRate();
+        float due = Mortgage.due(p);
+        month(tick);
+        expect(p.loanMonthsLeft == 119 && Math.abs(p.loanLeft - (left + interest - due)) < 1f
+                && Portfolio.get().lastMortgage >= due - 0.5f, "a month pays the mortgage: " + p.loanLeft);
+
+        // Paying off early.
+        before = credits.get();
+        left = p.loanLeft;
+        String off = Actions.payOff(p);
+        expect(!Mortgage.has(p) && Math.abs(before - credits.get() - left) < CREDIT_EPS && off.startsWith("Paid off"),
+                "paying off clears the loan: " + off);
+        Actions.sell(p);
+
+        // Selling pays the rest of the loan first.
+        MarketAPI b = freshMarket("fake_mortgage_b");
+        Listing lb = MarketRules.listings(b).list().get(0);
+        Actions.buy(b, lb, 5);
+        Property pb = homeAt(b.getId());
+        expect(pb != null && pb.loanMonthsLeft == 60, "a 5-cycle mortgage runs 60 months");
+        if (pb != null) {
+            float loan = pb.loanLeft;
+            float sale = pb.saleValue(false);
+            before = credits.get();
+            String sold = Actions.sell(pb);
+            expect(Math.abs(credits.get() - before - (sale - loan)) < CREDIT_EPS && sold.contains("mortgage"),
+                    "selling pays off the mortgage first: " + sold);
+        }
+
+        // Three missed payments in a row: the bank takes the home.
+        MarketAPI c = freshMarket("fake_mortgage_c");
+        Listing lc = MarketRules.listings(c).list().get(0);
+        Actions.buy(c, lc, 10);
+        Property pc = homeAt(c.getId());
+        float keep = credits.get();
+        credits.subtract(keep);
+        month(tick);
+        expect(pc != null && pc.loanMissed == 1 && homeAt(c.getId()) != null, "a missed payment is counted");
+        // Other homes' rent comes in each month: empty the purse again before each payment.
+        credits.subtract(credits.get());
+        month(tick);
+        credits.subtract(credits.get());
+        month(tick);
+        expect(homeAt(c.getId()) == null, "three missed payments in a row: the bank takes the home");
+        credits.subtract(credits.get());
+        credits.add(keep);
     }
 
     /** 1.12.0 (LLS-33): leases. */

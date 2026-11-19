@@ -706,12 +706,16 @@ public final class Family {
         String line = text + (took > 0 ? " " + capital(he(t)) + " took the " + (took == 1 ? "kid" : "kids")
                 + " with " + (he(t).equals("they") ? "them" : (female(t) ? "her" : "him")) + "." : "");
         if (divorce) {
-            float sale = p.saleValue(true);
-            float share = sale * DIVORCE_SHARE;
+            // 1.14.0: the sale pays off the mortgage first; you get half of what is left (or pay what it lacks).
+            float loan = Mortgage.has(p) ? p.loanLeft : 0f;
+            Mortgage.clear(p);
+            float rest = p.saleValue(true) - loan;
+            float share = rest >= 0f ? rest * DIVORCE_SHARE : rest;
             release(p);
             Portfolio.get().properties().remove(p);
             Global.getSector().getPlayerFleet().getCargo().getCredits().add(share);
-            line += " " + p.displayName() + " was sold. Your half: " + Misc.getDGSCredits(share) + ".";
+            line += " " + p.displayName() + " was sold. " + (share >= 0f ? "Your half: " + Misc.getDGSCredits(share)
+                    : "The sale did not cover the mortgage. You paid " + Misc.getDGSCredits(-share)) + ".";
             Notify.news(line, null, false);
             return line;
         }

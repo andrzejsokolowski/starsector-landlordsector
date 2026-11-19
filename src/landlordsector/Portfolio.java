@@ -101,6 +101,8 @@ public class Portfolio {
     public float lastRent;
     public float lastTax;
     public float lastSales;
+    /** 1.14.0: mortgage payments last month. */
+    public float lastMortgage;
     /** Something happened the player has not looked at on the Manage page. */
     public boolean news;
 

@@ -312,3 +312,10 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   2.9), 69 empty days (was 74).
   Landlord achievements (LLS-42): draft names and hints on https://claude.ai/artifact/XUUiFtiZ2sV2SueNRpwGvc
   (`tools/review-pages/achievement_names.html`, db collection "names"); nothing built yet.
+- 1.14.0 (LLS-44, Andrzej: "How about taking a mortgage through the property agent?", took the proposal as is):
+  `Mortgage` (loan on `Property.loanLeft` / `loanPayment` / `loanMonthsLeft` / `loanMissed` / `loanInterest`, 0 on
+  cash homes and old saves). tiers.json economy `mortgageDown` 0.2, `mortgageRate` 0.10 a cycle, `mortgageMissLimit` 3;
+  terms `Mortgage.TERMS` 5 or 10 cycles. `Actions.buy(market, listing, cycles)` (BuyScreen: Loan length + Mortgage
+  buttons), `payOff`, `repossess`; `sellFor` and the divorce sale pay the loan first. `MonthlyTick` pays it as an
+  upkeep node "Mortgage, <home>" when credits (minus payments already due this month) cover it, else
+  `Mortgage.miss` (interest still runs); at the limit the bank takes the home. Check: `checkMortgage1140`.

@@ -39,6 +39,9 @@ public final class TierTable {
             e.brokerFee = num(ec, "brokerFee", e.brokerFee);
             e.ownColonyPrice = num(ec, "ownColonyPrice", e.ownColonyPrice);
             e.housingTariff = Math.max(0f, num(ec, "housingTariff", e.housingTariff));
+            e.mortgageDown = Pricing.clamp(num(ec, "mortgageDown", e.mortgageDown), 0f, 1f);
+            e.mortgageRate = Math.max(0f, num(ec, "mortgageRate", e.mortgageRate));
+            e.mortgageMissLimit = Math.max(1, Math.round(num(ec, "mortgageMissLimit", e.mortgageMissLimit)));
             e.listingRefreshDays = Math.max(1f, num(ec, "listingRefreshDays", e.listingRefreshDays));
             e.npcBuyChance = num(ec, "npcBuyChance", e.npcBuyChance);
             e.npcSaleShare = num(ec, "npcSaleShare", e.npcSaleShare);

@@ -3490,6 +3490,146 @@
 			"line": "How long new tenants sign for: 6, 12 or 24 months. During a lease the tenant stays even when unhappy, the rent stays as signed (you can still lower it), and evicting costs you half the rent of the months left, unless they broke the lease first. A longer lease makes tenants a little happier. When it ends, you decide whether to renew. A happy tenant can also get an open-ended lease: they stay as long as they are happy, and the rent and evicting are up to you at any time.",
 			"when": "Tooltip of the Lease button on the Tenants tab (reworded: No lease is gone, leases are binding, open-ended leases).",
 			"area": "Leases (1.13.0)"
+		},
+		{
+			"id": "m_btn_mortgage",
+			"version": "1.14.0",
+			"line": "Mortgage: 23,000 down",
+			"when": "Button on the property agent's screen, left of Buy. The number is 20% of the price.",
+			"area": "Mortgages (1.14.0)"
+		},
+		{
+			"id": "m_btn_term",
+			"version": "1.14.0",
+			"line": "Loan: 10 cycles",
+			"when": "Button left of the mortgage button; click to switch between 5 and 10 cycles.",
+			"area": "Mortgages (1.14.0)"
+		},
+		{
+			"id": "m_tip_mortgage",
+			"version": "1.14.0",
+			"line": "Pay 23,000 now and borrow the other 92,000 from the agent's bank at 10% interest a cycle. You pay 1,216 a month for 10 cycles, 53,894 of it interest. It comes out of your monthly income. / Pay it off early at any time from the Manage page, with no fee. Selling the home pays off the rest first. Miss 3 payments in a row and the bank takes the home.",
+			"when": "Tooltip of the mortgage button (title \"Mortgage\"; the / splits its two paragraphs).",
+			"area": "Mortgages (1.14.0)"
+		},
+		{
+			"id": "m_tip_term",
+			"version": "1.14.0",
+			"line": "How long the mortgage runs: 5 or 10 cycles. A longer loan costs less a month and more interest in all.",
+			"when": "Tooltip of the loan length button (title \"Loan length\").",
+			"area": "Mortgages (1.14.0)"
+		},
+		{
+			"id": "m_bought",
+			"version": "1.14.0",
+			"line": "Bought: Leafy Cottage with a mortgage. You paid 23,000 now and 1,216 a month for 10 cycles.",
+			"when": "Message on the agent's screen after buying with a mortgage.",
+			"area": "Mortgages (1.14.0)"
+		},
+		{
+			"id": "m_no_down",
+			"version": "1.14.0",
+			"line": "Not enough credits for the down payment.",
+			"when": "Message when you click the mortgage button without the down payment (the button is greyed out then too).",
+			"area": "Mortgages (1.14.0)"
+		},
+		{
+			"id": "m_log_start",
+			"version": "1.14.0",
+			"line": "Mortgage: 92,000 borrowed for 10 cycles, 1,216 a month.",
+			"when": "Home log, when you buy a home with a mortgage.",
+			"area": "Mortgages (1.14.0)"
+		},
+		{
+			"id": "m_log_done",
+			"version": "1.14.0",
+			"line": "The mortgage is paid off. The home is all yours.",
+			"when": "Home log, after the last monthly payment.",
+			"area": "Mortgages (1.14.0)"
+		},
+		{
+			"id": "m_sheet",
+			"version": "1.14.0",
+			"line": "Mortgage: 45,000 left, 1,216 a month, 87 months to go. Missed 1 of 3 payments",
+			"when": "Row on the home sheet in the Real estate tab while a mortgage runs (the Missed part only after a missed payment).",
+			"area": "Mortgages (1.14.0)"
+		},
+		{
+			"id": "m_payoff_btn",
+			"version": "1.14.0",
+			"line": "Pay off the mortgage: 45,000",
+			"when": "Button under the Repair and Sell buttons in the Real estate tab while a mortgage runs.",
+			"area": "Mortgages (1.14.0)"
+		},
+		{
+			"id": "m_payoff_tip",
+			"version": "1.14.0",
+			"line": "Pays the rest of the loan now, with no fee. No more monthly payments.",
+			"when": "Tooltip of the pay off button (title \"Pay off\").",
+			"area": "Mortgages (1.14.0)"
+		},
+		{
+			"id": "m_payoff_done",
+			"version": "1.14.0",
+			"line": "Paid off the mortgage on Leafy Cottage for 45,000.",
+			"when": "Message after paying off; the home log says \"You paid off the mortgage: 45,000. The home is all yours.\"",
+			"area": "Mortgages (1.14.0)"
+		},
+		{
+			"id": "m_payoff_short",
+			"version": "1.14.0",
+			"line": "Not enough credits to pay off the mortgage (45,000).",
+			"when": "Message when you can't pay it off.",
+			"area": "Mortgages (1.14.0)"
+		},
+		{
+			"id": "m_sell_tip",
+			"version": "1.14.0",
+			"line": "The rest of the mortgage (45,000) comes out of the price first.",
+			"when": "Added at the end of the Sell button's tooltip while a mortgage runs.",
+			"area": "Mortgages (1.14.0)"
+		},
+		{
+			"id": "m_sold",
+			"version": "1.14.0",
+			"line": "Sold: Leafy Cottage for 98,000. 45,000 of it paid off the mortgage.",
+			"when": "Message after selling a home with a mortgage.",
+			"area": "Mortgages (1.14.0)"
+		},
+		{
+			"id": "m_missed",
+			"version": "1.14.0",
+			"line": "Missed a mortgage payment on Leafy Cottage: not enough credits (1 of 3).",
+			"when": "Home log and the monthly Real estate message when you lack the credits at the end of the month.",
+			"area": "Mortgages (1.14.0)"
+		},
+		{
+			"id": "m_taken",
+			"version": "1.14.0",
+			"line": "The bank took Leafy Cottage: 3 mortgage payments missed in a row. What you paid for it is gone.",
+			"when": "Monthly Real estate message when the bank takes the home.",
+			"area": "Mortgages (1.14.0)"
+		},
+		{
+			"id": "m_report",
+			"version": "1.14.0",
+			"line": "Mortgage, Leafy Cottage",
+			"when": "Line in the monthly income report (under Real estate) with the payment.",
+			"area": "Mortgages (1.14.0)"
+		},
+		{
+			"id": "m_month",
+			"version": "1.14.0",
+			"line": "Mortgage payments: 1,216",
+			"when": "Line in the monthly Real estate message.",
+			"area": "Mortgages (1.14.0)"
+		},
+		{
+			"id": "m_divorce",
+			"version": "1.14.0",
+			"line": "The sale did not cover the mortgage. You paid 3,000.",
+			"when": "End of the divorce message when the sale of your home was less than the mortgage left (otherwise it says \"Your half: ...\").",
+			"area": "Mortgages (1.14.0)"
 		}
 	]
 }

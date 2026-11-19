@@ -39,6 +39,10 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
     private static final float TOP = 76f;
     private static final String LEAVE = "leave";
     private static final String BUY = "buy";
+    /** 1.14.0 (LLS-44): buy with a mortgage, and the loan length it uses. */
+    private static final String MORTGAGE = "mortgage";
+    private static final String TERM = "term";
+    private int loanCycles = landlordsector.Mortgage.DEFAULT_TERM;
 
     private final MarketAPI market;
     private final Runnable onClose;
@@ -194,8 +198,29 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
 
             float price = MarketRules.buyPrice(market, l);
             boolean afford = Actions.credits() >= price;
-            button(BUY, "Buy for " + Misc.getDGSCredits(price), width - MARGIN - 150f - 12f - 230f, height - 46f, 230f,
+            float buyX = width - MARGIN - 150f - 12f - 230f;
+            button(BUY, "Buy for " + Misc.getDGSCredits(price), buyX, height - 46f, 230f,
                     30f, blocked == null && afford);
+            // 1.14.0 (LLS-44): a mortgage, 20% down, 5 or 10 cycles.
+            float down = landlordsector.Mortgage.down(price);
+            float mx = buyX - 12f - 250f;
+            float tx = mx - 8f - 140f;
+            button(MORTGAGE, "Mortgage: " + Misc.getDGSCredits(down) + " down", mx, height - 46f, 250f, 30f,
+                    blocked == null && Actions.credits() >= down);
+            button(TERM, "Loan: " + loanCycles + " cycles", tx, height - 46f, 140f, 30f, true);
+            float loan = price - down;
+            float monthly = landlordsector.Mortgage.payment(loan, loanCycles * 12);
+            tip(mx, height - 46f, 250f, 30f, "Mortgage", "Pay " + Misc.getDGSCredits(down) + " now and borrow the other "
+                    + Misc.getDGSCredits(loan) + " from the agent's bank at "
+                    + Math.round(landlordsector.TierTable.economy().mortgageRate * 100f) + "% interest a cycle. You pay "
+                    + Misc.getDGSCredits(monthly) + " a month for " + loanCycles + " cycles, "
+                    + Misc.getDGSCredits(landlordsector.Mortgage.totalInterest(price, loanCycles))
+                    + " of it interest. It comes out of your monthly income.",
+                    "Pay it off early at any time from the Manage page, with no fee. Selling the home pays off the rest"
+                    + " first. Miss " + landlordsector.TierTable.economy().mortgageMissLimit + " payments in a row and"
+                    + " the bank takes the home.");
+            tip(tx, height - 46f, 140f, 30f, "Loan length", "How long the mortgage runs: 5 or 10 cycles. A longer loan"
+                    + " costs less a month and more interest in all.");
             if (blocked == null && !afford && message.isEmpty()) {
                 message = "Not enough credits for this one.";
                 messageColor = Misc.getNegativeHighlightColor();
@@ -205,7 +230,7 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
             message = blocked;
             messageColor = Misc.getNegativeHighlightColor();
         }
-        text(message, messageColor, MARGIN, height - 42f, width - 2 * MARGIN - 410f);
+        text(message, messageColor, MARGIN, height - 42f, Math.max(120f, width - 2 * MARGIN - 410f - 410f));
         button(LEAVE, "Leave", width - MARGIN - 150f, height - 46f, 150f, 30f, true);
     }
 
@@ -221,10 +246,15 @@ public class BuyScreen extends PropertyView implements CustomVisualDialogDelegat
             rebuild();
             return;
         }
-        if (BUY.equals(action)) {
+        if (TERM.equals(action)) {
+            loanCycles = landlordsector.Mortgage.nextTerm(loanCycles);
+            rebuild();
+            return;
+        }
+        if (BUY.equals(action) || MORTGAGE.equals(action)) {
             List<Listing> shown = MarketRules.listings(market).list();
             if (selected < 0 || selected >= shown.size()) return;
-            String result = Actions.buy(market, shown.get(selected));
+            String result = Actions.buy(market, shown.get(selected), MORTGAGE.equals(action) ? loanCycles : 0);
             message = result;
             messageColor = result.startsWith("Bought") ? Misc.getPositiveHighlightColor()
                     : Misc.getNegativeHighlightColor();

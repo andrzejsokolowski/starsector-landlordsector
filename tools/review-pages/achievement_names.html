@@ -62,6 +62,7 @@ input.name { font-family: var(--display); font-weight: 700; }
 .foot button { font: inherit; color: var(--muted); background: none; border: none; padding: 0; text-decoration: underline; cursor: pointer; }
 .foot button:focus-visible { outline: 2px solid var(--gold); }
 .saved { margin-left: auto; }
+.nohint { margin: 0; align-self: end; padding-bottom: 9px; font-size: .85rem; color: var(--muted); }
 .saved.ok { color: var(--ok); }
 .saved.err { color: var(--cut); }
 @media (max-width: 560px) { .card { grid-template-columns: 1fr; } }
@@ -132,7 +133,7 @@ function card(a) {
   el.innerHTML = `
     <div class="cond"><span class="tag">${a.secret ? "Secret" : "Condition"}</span><p></p></div>
     <label for="n-${a.id}">Name<input type="text" class="name" id="n-${a.id}"></label>
-    <label for="h-${a.id}">Hint<input type="text" id="h-${a.id}"></label>
+    ${a.secret ? '<p class="nohint">No hint: secret until you get it.</p>' : `<label for="h-${a.id}">Hint<input type="text" id="h-${a.id}"></label>`}
     <div class="foot">
       <label><input type="checkbox" id="c-${a.id}"> Cut</label>
       <button type="button">Back to the draft</button>
@@ -141,16 +142,16 @@ function card(a) {
   el.querySelector(".cond p").textContent = a.condition;
   const n = el.querySelector("#n-" + a.id), h = el.querySelector("#h-" + a.id), c = el.querySelector("#c-" + a.id);
   const note = el.querySelector(".saved");
-  n.value = v.name; h.value = v.hint; c.checked = v.cut;
+  n.value = v.name; if (h) h.value = v.hint; c.checked = v.cut;
   const changed = () => {
     el.classList.toggle("is-cut", c.checked);
-    queueSave(a.id, { name: n.value.trim(), hint: h.value.trim(), cut: c.checked }, note);
+    queueSave(a.id, { name: n.value.trim(), hint: h ? h.value.trim() : "", cut: c.checked }, note);
   };
   n.addEventListener("input", changed);
-  h.addEventListener("input", changed);
+  if (h) h.addEventListener("input", changed);
   c.addEventListener("change", () => { changed(); updateCounts(); });
   el.querySelector("button").addEventListener("click", () => {
-    n.value = a.name; h.value = a.hint; c.checked = false; changed(); updateCounts();
+    n.value = a.name; if (h) h.value = a.hint; c.checked = false; changed(); updateCounts();
   });
   return el;
 }

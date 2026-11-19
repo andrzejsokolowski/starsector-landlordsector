@@ -87,6 +87,8 @@ public class MonthlyTick implements EconomyTickListener, ColonyPlayerHostileActL
         Map<String, Float> repByFaction = new HashMap<>();
         List<String> news = new ArrayList<>();
         float rentTotal = 0f;
+        // 1.14.0: mortgage payments this month, so the credits check counts what is already due.
+        float mortgageTotal = 0f;
 
         Iterator<Property> it = portfolio.properties().iterator();
         while (it.hasNext()) {
@@ -128,6 +130,28 @@ public class MonthlyTick implements EconomyTickListener, ColonyPlayerHostileActL
                 node.income += net;
                 node.custom = p.id;
                 node.tooltipCreator = TIP;
+            }
+
+            // 1.14.0 (LLS-44): the mortgage payment, through the income report; missed without the credits.
+            if (Mortgage.has(p)) {
+                float due = Mortgage.due(p);
+                if (Actions.credits() - mortgageTotal >= due) {
+                    Mortgage.pay(p);
+                    mortgageTotal += due;
+                    FDNode node = report.getNode(root, p.id + "_mortgage");
+                    node.name = "Mortgage, " + p.displayName();
+                    node.upkeep += due;
+                    node.tooltipCreator = TIP;
+                } else if (Mortgage.miss(p)) {
+                    news.add(Actions.repossess(p));
+                    it.remove();
+                    continue;
+                } else {
+                    String line = "Missed a mortgage payment on " + p.displayName() + ": not enough credits ("
+                            + p.loanMissed + " of " + eco.mortgageMissLimit + ").";
+                    p.addLog(line, false, "Missed");
+                    news.add(line);
+                }
             }
 
             // Services (0.6.0): paid every month while hired; some clean or repair.
@@ -176,16 +200,21 @@ public class MonthlyTick implements EconomyTickListener, ColonyPlayerHostileActL
         float[] npc = runOwnColonies(portfolio, report, root, news);
 
         portfolio.lastRent = rentTotal;
+        portfolio.lastMortgage = mortgageTotal;
         portfolio.lastSales = npc[0];
         portfolio.lastTax = npc[1];
         if (!news.isEmpty()) portfolio.news = true;
 
-        if (rentTotal > 0f || npc[0] > 0f || npc[1] > 0f || !news.isEmpty() || portfolio.lastKidPay > 0f
+        if (rentTotal > 0f || mortgageTotal > 0f || npc[0] > 0f || npc[1] > 0f || !news.isEmpty() || portfolio.lastKidPay > 0f
                 || portfolio.lastAlimony > 0f) {
             MessageIntel msg = new MessageIntel("Real estate this month", Misc.getBasePlayerColor());
             if (rentTotal > 0f) {
                 msg.addLine("Rent: %s", Misc.getTextColor(), new String[] {Misc.getDGSCredits(rentTotal)},
                         Misc.getHighlightColor());
+            }
+            if (mortgageTotal > 0f) {
+                msg.addLine("Mortgage payments: %s", Misc.getTextColor(),
+                        new String[] {Misc.getDGSCredits(mortgageTotal)}, Misc.getNegativeHighlightColor());
             }
             if (npc[0] > 0f) {
                 msg.addLine("Home sales on your colonies: %s", Misc.getTextColor(),

@@ -317,10 +317,19 @@ public class RealEstatePage implements ManagePage {
             s.extra.add(new String[] {"Bought for", Misc.getDGSCredits(chosen.paidPrice)});
             s.extra.add(new String[] {"Rent so far", Misc.getDGSCredits(chosen.totalRent)
                     + " (last month " + Misc.getDGSCredits(chosen.lastRent) + ")"});
-            float maxImg = height - y0 - sheetTextHeight(s, rw) - 48f;
+            // 1.14.0 (LLS-44): the mortgage, with a Pay off button on its own row under the others.
+            boolean loan = landlordsector.Mortgage.has(chosen);
+            if (loan) s.extra.add(new String[] {"Mortgage", landlordsector.Mortgage.sheetLine(chosen)});
+            float maxImg = height - y0 - sheetTextHeight(s, rw) - 48f - (loan ? 34f : 0f);
             float end = sheet(s, rx, y0, rw, maxImg);
 
-            float cy = Math.min(end + 8f, height - 36f);
+            float cy = Math.min(end + 8f, height - 36f - (loan ? 34f : 0f));
+            if (loan) {
+                button("payoff:" + chosen.id, "Pay off the mortgage: " + Misc.getDGSCredits(chosen.loanLeft), rx,
+                        cy + 34f, 300f, 28f, Actions.credits() >= chosen.loanLeft);
+                tip(rx, cy + 34f, 300f, 28f, "Pay off", "Pays the rest of the loan now, with no fee. No more monthly"
+                        + " payments.");
+            }
             // 1.12.0: the arrows set the rent you ask; a running lease keeps its own rent until it ends.
             RentSetting set = chosen.askingRent();
             if (!chosen.playerHome) {
@@ -344,7 +353,8 @@ public class RealEstatePage implements ManagePage {
             tip(rx + 430f, cy, 220f, 28f, "Selling", "You can sell a home in any condition, rented or not. You get"
                     + " its value minus a " + Math.round(landlordsector.TierTable.economy().brokerFee * 100f)
                     + "% broker fee." + (furnished ? " The furniture goes back into your"
-                    + " furniture storage." : ""), noSale);
+                    + " furniture storage." : "") + (loan ? " The rest of the mortgage ("
+                    + Misc.getDGSCredits(chosen.loanLeft) + ") comes out of the price first." : ""), noSale);
             // Only as wide as the sheet, so it never runs into the event log.
             float fw = Math.min(230f, contentWidth(rw) - 660f);
             if (furnished && fw >= 150f) {
@@ -1270,6 +1280,9 @@ public class RealEstatePage implements ManagePage {
                     break;
                 case "repair":
                     result(Actions.repair(pr));
+                    break;
+                case "payoff":
+                    result(Actions.payOff(pr));
                     break;
                 case "sellfurnished":
                     if (("furnished:" + pr.id).equals(pendingSell)) {

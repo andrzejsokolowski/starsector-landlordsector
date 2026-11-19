@@ -10,6 +10,12 @@ public final class Economy {
     public float ownColonyPrice = 1f;
     /** 1.12.3 (LLS-37): share of the market's tariff paid once, when buying a home away from the player's colonies. */
     public float housingTariff = 0.5f;
+    /** 1.14.0 (LLS-44): share of the price paid up front on a mortgage. */
+    public float mortgageDown = 0.2f;
+    /** 1.14.0: mortgage interest a cycle. */
+    public float mortgageRate = 0.10f;
+    /** 1.14.0: missed payments in a row before the bank takes the home. */
+    public int mortgageMissLimit = 3;
     public float listingRefreshDays = 90f;
     public float npcBuyChance = 0.15f;
     public float npcSaleShare = 0.5f;
