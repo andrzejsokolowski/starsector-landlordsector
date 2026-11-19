@@ -103,6 +103,13 @@ public class Portfolio {
     public float lastSales;
     /** 1.14.0: mortgage payments last month. */
     public float lastMortgage;
+    /** 1.15.0: headhunters that brought you tenants (null on older saves). */
+    public java.util.List<String> headhuntersUsed;
+
+    public java.util.List<String> headhuntersUsed() {
+        if (headhuntersUsed == null) headhuntersUsed = new java.util.ArrayList<>();
+        return headhuntersUsed;
+    }
     /** Something happened the player has not looked at on the Manage page. */
     public boolean news;
 

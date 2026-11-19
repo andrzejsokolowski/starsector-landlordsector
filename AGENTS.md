@@ -319,3 +319,9 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   buttons), `payOff`, `repossess`; `sellFor` and the divorce sale pay the loan first. `MonthlyTick` pays it as an
   upkeep node "Mortgage, <home>" when credits (minus payments already due this month) cover it, else
   `Mortgage.miss` (interest still runs); at the limit the bank takes the home. Check: `checkMortgage1140`.
+- 1.15.0 (LLS-42, Andrzej's names from https://claude.ai/artifact/XUUiFtiZ2sV2SueNRpwGvc): 23 achievements in
+  `data/config/achievements_renewed/achievements.csv`, each read by Achievements - Renewed's built-in
+  `memory:$lls_ach_<key>` script. `Feats` sets the sector memory keys (flags, and counts that only go up:
+  homes, worlds, rent, tenantMonths, furniture, headhunters); `Feats.scan` runs on buying and each month. No code
+  link to Achievements - Renewed. Names: Andrzej's, every word capitalized (his ACR rule); secret rows have no hint.
+  `checkFeats150` in RulesCheck checks the file against `Feats.KEYS`. `Property.boughtWorn`, `Portfolio.headhuntersUsed`.

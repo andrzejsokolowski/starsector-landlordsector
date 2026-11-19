@@ -110,6 +110,7 @@ public final class Actions {
         p.artPath = listing.artPath;
         p.basePrice = listing.basePrice;
         p.condition = listing.condition();
+        p.boughtWorn = p.condition < 0.995f;
         p.paidPrice = price;
         p.boughtAt = Global.getSector().getClock().getTimestamp();
         p.traits = listing.traits != null ? new java.util.ArrayList<>(listing.traits) : new java.util.ArrayList<>();
@@ -119,6 +120,7 @@ public final class Actions {
         p.advertising = true;
         p.addLog("Bought for " + Misc.getDGSCredits(price) + ". Advertising for tenants.");
         portfolio.properties().add(p);
+        Feats.scan();
         // 1.4.0 (Andrzej): owning a home opens the market's storage, free.
         if (!market.isPlayerOwned() && FreeStorage.unlock(market)) {
             p.addLog("The storage here is open to you now, free of charge.", true, "storage");
@@ -183,6 +185,8 @@ public final class Actions {
         Family.release(p);
         Choices.cancel(p);
         Portfolio.get().properties().remove(p);
+        // 1.15.0: a worn home, repaired and sold for more than it cost.
+        if (p.boughtWorn && p.condition >= 0.995f && pay > p.paidPrice) Feats.mark("flip");
         // 1.14.0: the sale pays off the rest of the mortgage first.
         float loan = Mortgage.has(p) ? p.loanLeft : 0f;
         Mortgage.clear(p);

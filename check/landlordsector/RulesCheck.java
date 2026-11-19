@@ -399,6 +399,8 @@ public final class RulesCheck {
                 "barren, toxic, lava and rocky worlds are hostile");
         checkPlanetTypes042(java.nio.file.Paths.get(args[0]).getParent());
         checkWorlds080();
+        checkFeats150(java.nio.file.Paths.get(args[0]).getParent().getParent().resolve("achievements_renewed")
+                .resolve("achievements.csv"));
 
         if (!problems.isEmpty()) {
             for (String p : problems) System.err.println("FAIL: " + p);
@@ -812,6 +814,68 @@ public final class RulesCheck {
                 && landlordsector.data.HouseTraits.get("graffiti").weight == 0f, "graffiti is a mark that lowers decor");
         expect(landlordsector.data.HouseTraits.get("clean").health > 0f && landlordsector.data.HouseTraits.get("dirty").health < 0f,
                 "Clean homes are healthier, Dirty ones less");
+    }
+
+    /**
+     * 1.15.0 (LLS-42): the achievements file for Achievements - Renewed. Every row reads a key Feats sets, ids are
+     * unique and start with lls_, secret ones have no hint, chains point at rows that exist.
+     */
+    private static void checkFeats150(java.nio.file.Path csv) throws Exception {
+        java.util.List<String> lines = java.nio.file.Files.readAllLines(csv, java.nio.charset.StandardCharsets.UTF_8);
+        expect(!lines.isEmpty() && !lines.get(0).startsWith("\uFEFF"), "achievements.csv has a header and no BOM");
+        java.util.List<String> head = csvRow(lines.get(0));
+        int id = head.indexOf("id"), hint = head.indexOf("hint"), secret = head.indexOf("secret"),
+                script = head.indexOf("script"), after = head.indexOf("after"), name = head.indexOf("name");
+        java.util.Set<String> keys = new java.util.HashSet<>(java.util.Arrays.asList(Feats.KEYS));
+        java.util.Set<String> ids = new java.util.HashSet<>();
+        java.util.List<String> afters = new java.util.ArrayList<>();
+        int rows = 0;
+        for (int i = 1; i < lines.size(); i++) {
+            if (lines.get(i).isBlank()) continue;
+            java.util.List<String> r = csvRow(lines.get(i));
+            expect(r.size() == head.size(), "achievements.csv row " + i + " has every column");
+            if (r.size() != head.size()) continue;
+            rows++;
+            String rid = r.get(id);
+            expect(rid.startsWith("lls_") && ids.add(rid), "achievement id is unique and starts with lls_: " + rid);
+            expect(!r.get(name).isBlank(), "achievement has a name: " + rid);
+            String s = r.get(script);
+            expect(s.startsWith("memory:" + Feats.PREFIX) && keys.contains(s.substring(("memory:" + Feats.PREFIX).length())),
+                    "achievement reads a key Feats sets: " + rid + " " + s);
+            if ("true".equals(r.get(secret))) expect(r.get(hint).isEmpty(), "a secret achievement has no hint: " + rid);
+            if (!r.get(after).isEmpty()) afters.add(r.get(after));
+        }
+        expect(rows == 23, "23 landlord achievements: " + rows);
+        for (String a : afters) expect(ids.contains(a), "an achievement's 'after' exists: " + a);
+    }
+
+    /** One CSV line with "quoted, fields". */
+    private static java.util.List<String> csvRow(String line) {
+        java.util.List<String> out = new java.util.ArrayList<>();
+        StringBuilder b = new StringBuilder();
+        boolean q = false;
+        for (int i = 0; i < line.length(); i++) {
+            char c = line.charAt(i);
+            if (q) {
+                if (c == '"' && i + 1 < line.length() && line.charAt(i + 1) == '"') {
+                    b.append('"');
+                    i++;
+                } else if (c == '"') {
+                    q = false;
+                } else {
+                    b.append(c);
+                }
+            } else if (c == '"') {
+                q = true;
+            } else if (c == ',') {
+                out.add(b.toString());
+                b.setLength(0);
+            } else {
+                b.append(c);
+            }
+        }
+        out.add(b.toString());
+        return out;
     }
 
     private static void expect(boolean ok, String what) {

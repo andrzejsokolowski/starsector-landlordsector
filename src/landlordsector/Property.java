@@ -37,6 +37,8 @@ public class Property {
     public int loanMissed;
     /** Interest paid so far. */
     public float loanInterest;
+    /** 1.15.0: bought below full condition (the flipping achievement). */
+    public boolean boughtWorn;
     public long boughtAt;
     /** Rent paid last month. */
     public float lastRent;

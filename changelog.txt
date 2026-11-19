@@ -1,3 +1,7 @@
+Version 1.15.0 (2026-11-19)
+- 23 landlord achievements for Achievements - Renewed, 8 of them secret. Landlordsector still works without Achievements - Renewed
+- Rent earned before this version does not count toward the rent achievements
+
 Version 1.14.0 (2026-11-19)
 - Property agents offer mortgages: pay 20% of the price now and borrow the rest at 10% interest a cycle, over 5 or 10 cycles
 - The mortgage payment comes out of your monthly income, with its own line in the income report

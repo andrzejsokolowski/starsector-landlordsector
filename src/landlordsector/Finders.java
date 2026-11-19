@@ -196,6 +196,9 @@ public final class Finders {
                 Tenant t = Tenants.create(d.profile, null, d.badTraits, true, d.id, random, d.wealthShift, d.traitBoost);
                 Portfolio.get().tenantPool().add(t);
             }
+            // 1.15.0: the headhunters you have used (an achievement).
+            if (!Portfolio.get().headhuntersUsed().contains(d.id)) Portfolio.get().headhuntersUsed().add(d.id);
+            Feats.atLeast("headhunters", Portfolio.get().headhuntersUsed().size());
             String found = d.name() + " found " + d.tenants + " tenants";
             Notify.news(found + ". They wait in your tenant pool on the Real estate tab.", found, true);
         }

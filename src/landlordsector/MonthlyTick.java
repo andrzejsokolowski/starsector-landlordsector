@@ -200,6 +200,9 @@ public class MonthlyTick implements EconomyTickListener, ColonyPlayerHostileActL
         float[] npc = runOwnColonies(portfolio, report, root, news);
 
         portfolio.lastRent = rentTotal;
+        // 1.15.0 (LLS-42): achievements.
+        Feats.add("rent", Math.round(rentTotal));
+        Feats.scan();
         portfolio.lastMortgage = mortgageTotal;
         portfolio.lastSales = npc[0];
         portfolio.lastTax = npc[1];

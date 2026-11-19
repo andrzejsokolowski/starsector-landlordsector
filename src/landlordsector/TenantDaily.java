@@ -274,6 +274,9 @@ public class TenantDaily implements EveryFrameScript {
      */
     public static String applyOutcome(Property p, MarketAPI m, TenantEvents.Def e, String prefix, String suffix) {
         Tenant t = p.tenant;
+        // 1.15.0 (LLS-42): achievements.
+        if (e.id != null && e.id.startsWith("hidden_crate")) Feats.mark("crate");
+        if (e.id != null && e.id.startsWith("police_raid")) Feats.mark("raid");
         String text = prefix + eventText(p, e.text, t) + suffix;
         if (e.condition != 0f && !p.condemned) {
             // 1.12.1: event damage counts less (Andrzej: "make repairs less needed").

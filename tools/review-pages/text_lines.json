@@ -3630,6 +3630,167 @@
 			"line": "The sale did not cover the mortgage. You paid 3,000.",
 			"when": "End of the divorce message when the sale of your home was less than the mortgage left (otherwise it says \"Your half: ...\").",
 			"area": "Mortgages (1.14.0)"
+		},
+		{
+			"id": "a_lls_first_home",
+			"version": "1.15.0",
+			"line": "Buy your first home.",
+			"when": "Achievements - Renewed, the condition of \"The 1%\": shown when the player turns on its setting to see conditions instead of hints, and under the name once done. The name and hint are Andrzej's.",
+			"area": "Achievements (1.15.0)"
+		},
+		{
+			"id": "a_lls_homes_5",
+			"version": "1.15.0",
+			"line": "Own 5 homes at once.",
+			"when": "Achievements - Renewed, the condition of \"Full House\": shown when the player turns on its setting to see conditions instead of hints, and under the name once done. The name and hint are Andrzej's.",
+			"area": "Achievements (1.15.0)"
+		},
+		{
+			"id": "a_lls_estate",
+			"version": "1.15.0",
+			"line": "Own an estate.",
+			"when": "Achievements - Renewed, the condition of \"Bigger And Fatter\": shown when the player turns on its setting to see conditions instead of hints, and under the name once done. The name and hint are Andrzej's.",
+			"area": "Achievements (1.15.0)"
+		},
+		{
+			"id": "a_lls_worlds_5",
+			"version": "1.15.0",
+			"line": "Own homes on 5 different worlds at once.",
+			"when": "Achievements - Renewed, the condition of \"Asset Diversification\": shown when the player turns on its setting to see conditions instead of hints, and under the name once done. The name and hint are Andrzej's.",
+			"area": "Achievements (1.15.0)"
+		},
+		{
+			"id": "a_lls_flip",
+			"version": "1.15.0",
+			"line": "Buy a worn home, repair it fully and sell it for more than you paid.",
+			"when": "Achievements - Renewed, the condition of \"Professional Flipper\": shown when the player turns on its setting to see conditions instead of hints, and under the name once done. The name and hint are Andrzej's.",
+			"area": "Achievements (1.15.0)"
+		},
+		{
+			"id": "a_lls_furnished",
+			"version": "1.15.0",
+			"line": "Put 8 pieces of furniture in one home (an estate has room for 8).",
+			"when": "Achievements - Renewed, the condition of \"IKEA\": shown when the player turns on its setting to see conditions instead of hints, and under the name once done. The name and hint are Andrzej's.",
+			"area": "Achievements (1.15.0)"
+		},
+		{
+			"id": "a_lls_rent_100k",
+			"version": "1.15.0",
+			"line": "Earn 100,000 credits in rent in one campaign.",
+			"when": "Achievements - Renewed, the condition of \"Keeping The Poors Poor.\": shown when the player turns on its setting to see conditions instead of hints, and under the name once done. The name and hint are Andrzej's.",
+			"area": "Achievements (1.15.0)"
+		},
+		{
+			"id": "a_lls_rent_1m",
+			"version": "1.15.0",
+			"line": "Earn 1,000,000 credits in rent in one campaign.",
+			"when": "Achievements - Renewed, the condition of \"Single Mother Drain Tank\": shown when the player turns on its setting to see conditions instead of hints, and under the name once done. The name and hint are Andrzej's.",
+			"area": "Achievements (1.15.0)"
+		},
+		{
+			"id": "a_lls_tenant_2y",
+			"version": "1.15.0",
+			"line": "Keep the same tenant for 2 years (24 months).",
+			"when": "Achievements - Renewed, the condition of \"Loyal Slave\": shown when the player turns on its setting to see conditions instead of hints, and under the name once done. The name and hint are Andrzej's.",
+			"area": "Achievements (1.15.0)"
+		},
+		{
+			"id": "a_lls_tenant_5y",
+			"version": "1.15.0",
+			"line": "Keep the same tenant for 5 years (60 months).",
+			"when": "Achievements - Renewed, the condition of \"Dedicated Rentoid\": shown when the player turns on its setting to see conditions instead of hints, and under the name once done. The name and hint are Andrzej's.",
+			"area": "Achievements (1.15.0)"
+		},
+		{
+			"id": "a_lls_happy",
+			"version": "1.15.0",
+			"line": "A tenant reaches 100 happiness at the end of a month.",
+			"when": "Achievements - Renewed, the condition of \"Mutual Beneficiary\": shown when the player turns on its setting to see conditions instead of hints, and under the name once done. The name and hint are Andrzej's.",
+			"area": "Achievements (1.15.0)"
+		},
+		{
+			"id": "a_lls_headhunters",
+			"version": "1.15.0",
+			"line": "Get tenants from all 11 headhunters.",
+			"when": "Achievements - Renewed, the condition of \"HR\": shown when the player turns on its setting to see conditions instead of hints, and under the name once done. The name and hint are Andrzej's.",
+			"area": "Achievements (1.15.0)"
+		},
+		{
+			"id": "a_lls_married",
+			"version": "1.15.0",
+			"line": "Get married.",
+			"when": "Achievements - Renewed, the condition of \"Willfull Self-sabotage\": shown when the player turns on its setting to see conditions instead of hints, and under the name once done. The name and hint are Andrzej's.",
+			"area": "Achievements (1.15.0)"
+		},
+		{
+			"id": "a_lls_child",
+			"version": "1.15.0",
+			"line": "Have your first child.",
+			"when": "Achievements - Renewed, the condition of \"Spawn\": shown when the player turns on its setting to see conditions instead of hints, and under the name once done. The name and hint are Andrzej's.",
+			"area": "Achievements (1.15.0)"
+		},
+		{
+			"id": "a_lls_grown",
+			"version": "1.15.0",
+			"line": "A child of yours grows up and starts their own life.",
+			"when": "Achievements - Renewed, the condition of \"Child Protective Services\": shown when the player turns on its setting to see conditions instead of hints, and under the name once done. The name and hint are Andrzej's.",
+			"area": "Achievements (1.15.0)"
+		},
+		{
+			"id": "a_lls_cheated",
+			"version": "1.15.0",
+			"line": "The one you propose to says they are cheating on you.",
+			"when": "Achievements - Renewed, the condition of \"Cucklord\" (secret): shown when the player turns on its setting to see conditions instead of hints, and under the name once done. The name and hint are Andrzej's.",
+			"area": "Achievements (1.15.0)"
+		},
+		{
+			"id": "a_lls_child_lost",
+			"version": "1.15.0",
+			"line": "Lose a child.",
+			"when": "Achievements - Renewed, the condition of \"Look At How They Massacred My Boy\" (secret): shown when the player turns on its setting to see conditions instead of hints, and under the name once done. The name and hint are Andrzej's.",
+			"area": "Achievements (1.15.0)"
+		},
+		{
+			"id": "a_lls_kite",
+			"version": "1.15.0",
+			"line": "Your child dies when the Kite explodes.",
+			"when": "Achievements - Renewed, the condition of \"I Turn Now. Good Luck Everyone Else\" (secret): shown when the player turns on its setting to see conditions instead of hints, and under the name once done. The name and hint are Andrzej's.",
+			"area": "Achievements (1.15.0)"
+		},
+		{
+			"id": "a_lls_divorce",
+			"version": "1.15.0",
+			"line": "Get divorced.",
+			"when": "Achievements - Renewed, the condition of \"It Was Only Your Turn\" (secret): shown when the player turns on its setting to see conditions instead of hints, and under the name once done. The name and hint are Andrzej's.",
+			"area": "Achievements (1.15.0)"
+		},
+		{
+			"id": "a_lls_sophia",
+			"version": "1.15.0",
+			"line": "Marry Sophia Anderson.",
+			"when": "Achievements - Renewed, the condition of \"Kaysaar Will Nuke You Now\" (secret): shown when the player turns on its setting to see conditions instead of hints, and under the name once done. The name and hint are Andrzej's.",
+			"area": "Achievements (1.15.0)"
+		},
+		{
+			"id": "a_lls_condemned",
+			"version": "1.15.0",
+			"line": "One of your homes is condemned.",
+			"when": "Achievements - Renewed, the condition of \"Slumdog\" (secret): shown when the player turns on its setting to see conditions instead of hints, and under the name once done. The name and hint are Andrzej's.",
+			"area": "Achievements (1.15.0)"
+		},
+		{
+			"id": "a_lls_crate",
+			"version": "1.15.0",
+			"line": "A tenant hides a crate of contraband in the walls of your home.",
+			"when": "Achievements - Renewed, the condition of \"Mom Found The Piss Drawer\" (secret): shown when the player turns on its setting to see conditions instead of hints, and under the name once done. The name and hint are Andrzej's.",
+			"area": "Achievements (1.15.0)"
+		},
+		{
+			"id": "a_lls_raid",
+			"version": "1.15.0",
+			"line": "The police raid one of your tenants.",
+			"when": "Achievements - Renewed, the condition of \"He Did Not Do Nothing, In Fact.\" (secret): shown when the player turns on its setting to see conditions instead of hints, and under the name once done. The name and hint are Andrzej's.",
+			"area": "Achievements (1.15.0)"
 		}
 	]
 }

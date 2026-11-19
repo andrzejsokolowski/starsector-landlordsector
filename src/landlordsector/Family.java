@@ -305,6 +305,7 @@ public final class Family {
         boolean sophia = isSophia(who);
         if (!sophia && random.nextFloat() < CHEAT_CHANCE) {
             if (who.getMemoryWithoutUpdate() != null) who.getMemoryWithoutUpdate().set(CHEATED_KEY, true);
+            Feats.mark("cheated");
             return who.getNameString() + ": \"Actually... I'm cheating on you.\"";
         }
         MarketAPI m = p.market();
@@ -327,6 +328,8 @@ public final class Family {
         p.tenant = t;
         p.advertising = false;
         p.applicants().clear();
+        Feats.mark("married");
+        if (sophia) Feats.mark("sophia");
         placePerson(m, who, post(t));
         who.getMemoryWithoutUpdate().set(PARTNER_FLAG, true);
         who.getMemoryWithoutUpdate().set(HOME_KEY, p.id);
@@ -692,6 +695,7 @@ public final class Family {
             return text;
         }
         boolean divorce = t.isSpouse();
+        if (divorce) Feats.mark("divorce");
         int took = 0;
         Iterator<Child> it = p.children().iterator();
         while (it.hasNext()) {
@@ -787,6 +791,7 @@ public final class Family {
         c.bornAt = now();
         c.parentId = parent.id;
         c.parentName = parent.name;
+        Feats.mark("child");
         c.female = random.nextBoolean();
         Gender g = c.female ? Gender.FEMALE : Gender.MALE;
         int n = ++Portfolio.get().kidsBorn;
@@ -839,6 +844,7 @@ public final class Family {
      */
     public static boolean startLife(Property p, Child c, Random random) {
         if (c.path == null) return false;
+        Feats.mark("grown");
         int q = c.quality();
         // 1.8.0 (LLS-28): what they learned makes them better, bad traits and a hard childhood worse.
         int learned = Kids.training(c);
@@ -1217,6 +1223,8 @@ public final class Family {
         c.person = null;
         Tenant t = p.partner();
         if (t != null) t.mood = Pricing.clamp(t.mood - 30f, -30f, 30f);
+        Feats.mark("kite");
+        Feats.mark("childLost");
         String line = "The Kite's engine failed on takeoff. " + c.name + " died in the explosion.";
         Notify.event(p, c.name + " died when the Kite exploded.", false, true);
         return line;
@@ -1224,6 +1232,7 @@ public final class Family {
 
     /** 1.8.0: a kid died in an event. Your spouse takes it hard. */
     static void kidDies(Property p, Child c) {
+        Feats.mark("childLost");
         p.children().remove(c);
         if (c.person != null) removePerson(c.person);
         c.person = null;
