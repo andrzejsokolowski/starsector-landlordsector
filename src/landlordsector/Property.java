@@ -285,9 +285,9 @@ public class Property {
         return later;
     }
 
-    /** The lease length new tenants sign here, in months (0: no lease). */
+    /** The lease length new tenants sign here, in months. 1.13.0: never 0 ("No lease" is gone; old saves get 12). */
     public int leaseTerm() {
-        return leaseSet ? leaseTerm : Leases.DEFAULT_MONTHS;
+        return leaseSet && leaseTerm > 0 ? leaseTerm : Leases.DEFAULT_MONTHS;
     }
 
     /** The market, or null when it is gone. */

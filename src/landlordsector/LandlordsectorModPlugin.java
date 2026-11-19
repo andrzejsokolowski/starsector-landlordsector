@@ -63,6 +63,7 @@ public class LandlordsectorModPlugin extends BaseModPlugin {
         upgradeTo080(p);
         upgradeTo101(p);
         upgradeTo1120(p);
+        upgradeTo1130(p);
         Family.marryEveryPartner();
         // 1.8.0: kids from older saves get their stage (and babies lose the traits they were born with).
         for (Property home : p.properties()) {
@@ -83,6 +84,21 @@ public class LandlordsectorModPlugin extends BaseModPlugin {
         for (Property pr : p.properties()) {
             if (pr.tenant == null || pr.tenant.isPartner() || pr.playerHome || pr.tenant.leaseEnd != 0L) continue;
             Leases.start(pr, pr.tenant);
+        }
+    }
+
+    /**
+     * 1.13.0 (LLS-43): "No lease" is gone. A tenant who lived here without a lease has an open-ended one, and a home
+     * set to No lease signs 12 months with the next tenant. Public for the headless check.
+     */
+    public static void upgradeTo1130(Portfolio p) {
+        if (p.upgraded1130) return;
+        p.upgraded1130 = true;
+        for (Property pr : p.properties()) {
+            if (pr.leaseSet && pr.leaseTerm <= 0) pr.leaseTerm = Leases.DEFAULT_MONTHS;
+            Tenant t = pr.tenant;
+            if (t == null || t.isPartner() || pr.playerHome || t.leaseEnd != 0L) continue;
+            t.openEnded = true;
         }
     }
 

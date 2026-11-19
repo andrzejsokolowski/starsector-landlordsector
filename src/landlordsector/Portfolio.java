@@ -41,6 +41,8 @@ public class Portfolio {
     public boolean upgraded081;
     /** 1.12.0: tenants living in your homes got their lease. */
     public boolean upgraded1120;
+    /** 1.13.0: tenants on the old "No lease" got an open-ended lease. */
+    public boolean upgraded1130;
 
     /** 1.2.0: grown kids who work in the mines or inspire a colony, kept for their pay and bonus. */
     public List<Child> adultKids;

@@ -103,6 +103,11 @@ public final class Choices {
             if (no != null) return no;
         }
         if (a.rentStep < 0 && p.setting() == RentSetting.FREE) return "The rent is already Free.";
+        // 1.13.0 (LLS-43): only a happy tenant is offered a lease with no end.
+        if (a.openEnded && !Leases.canOfferOpenEnded(p)) {
+            return (p.tenant != null ? p.tenant.firstName() : "The tenant") + " is not happy enough here for an"
+                    + " open-ended lease.";
+        }
         return null;
     }
 
@@ -146,8 +151,8 @@ public final class Choices {
             close(q, result);
             return result;
         }
-        if (a.renew) {
-            result = prefix + Leases.renew(p);
+        if (a.renew || a.openEnded) {
+            result = prefix + (a.openEnded ? Leases.openEnded(p) : Leases.renew(p));
             Notify.event(p, result, p.tenant != null, false);
             close(q, result);
             return result;

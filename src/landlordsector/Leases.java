@@ -14,12 +14,18 @@ import com.fs.starfarer.api.util.Misc;
  * <li>a longer lease makes tenants a little happier (they feel settled).</li>
  * </ul>
  * When it ends, a happy enough tenant asks to renew and you answer; an unhappy one leaves.
+ * <p>1.13.0 (LLS-43, Andrzej: "Open-ended is earned ... I also like it being binding"): "No lease" is gone, every
+ * new tenant signs 6, 12 or 24 months, and an unhappy tenant no longer moves out while the lease runs. When it ends,
+ * a tenant at {@link #OPEN_ENDED_HAPPINESS}+ may be offered an open-ended lease ({@link Tenant#openEnded}): they stay
+ * while happy and leave when unhappy, with no fee, and the rent and evictions are free as without a lease.
  */
 public final class Leases {
 
     public static final int DEFAULT_MONTHS = 12;
     /** The terms the lease button cycles through. */
-    public static final int[] TERMS = {0, 6, 12, 24};
+    public static final int[] TERMS = {6, 12, 24};
+    /** Happiness a tenant needs to be offered an open-ended lease. */
+    public static final float OPEN_ENDED_HAPPINESS = 60f;
     public static final float BREACH_DAYS = 60f;
     /** Below this happiness a tenant does not renew (1.12.1: the same bar as moving out, was 35). */
     public static final float RENEW_HAPPINESS = TenantRules.MOVE_OUT_BELOW;
@@ -78,6 +84,7 @@ public final class Leases {
             clear(t);
             return;
         }
+        t.openEnded = false;
         t.leaseMonths = months;
         t.leaseEnd = now() + months * 30L * DAY_MS;
         t.leaseRent = p.askingRent();
@@ -92,6 +99,7 @@ public final class Leases {
 
     /** Happiness from feeling settled: a longer lease, a happier tenant. */
     public static float happiness(Tenant t) {
+        if (t != null && t.openEnded && !t.isPartner()) return 6f;
         if (!running(t)) return 0f;
         if (t.leaseMonths >= 24) return 6f;
         if (t.leaseMonths >= 12) return 4f;
@@ -200,8 +208,39 @@ public final class Leases {
         return t.name + " signed a new " + p.leaseTerm() + "-month lease at " + p.displayName() + "." + raise;
     }
 
+    /** 1.13.0: true when the tenant at this home is happy enough to be offered an open-ended lease. */
+    public static boolean canOfferOpenEnded(Property p) {
+        return p.tenant != null && !p.tenant.isPartner() && p.stats().happiness >= OPEN_ENDED_HAPPINESS;
+    }
+
+    /**
+     * 1.13.0: the tenant signs a lease with no end at the rent you ask now. A tenant who cannot pay it leaves; a raise
+     * puts them in a bad mood. Returns what happened, for the log.
+     */
+    public static String openEnded(Property p) {
+        Tenant t = p.tenant;
+        if (t == null) return "";
+        RentSetting before = t.leaseRent != null ? t.leaseRent : p.askingRent();
+        RentSetting asking = p.askingRent();
+        if (!TenantRules.canAfford(p.tier().index, asking, t.wealth)) {
+            String name = t.name;
+            p.tenant = null;
+            p.advertising = true;
+            return name + " can't pay " + asking.label + " rent and moved out of " + p.displayName() + ".";
+        }
+        clear(t);
+        t.openEnded = true;
+        String raise = "";
+        if (asking.ordinal() > before.ordinal()) {
+            t.mood = Pricing.clamp(t.mood - 8f, -30f, 30f);
+            raise = " " + t.firstName() + " is not happy about the raise.";
+        }
+        return t.name + " signed an open-ended lease at " + p.displayName() + "." + raise;
+    }
+
     /** One line for the tenant card: "Lease: 7 months left, Normal rent". */
     public static String cardLine(Tenant t) {
+        if (t != null && t.openEnded) return "Open-ended lease: stays as long as happy here.";
         if (!has(t)) return "No lease.";
         if (!running(t)) return "The lease has ended. Waiting for your answer about renewing.";
         int m = monthsLeft(t);

@@ -1,0 +1,206 @@
+<title>Landlord Achievements</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Layout: one narrow column of achievement cards, condition on top, name + hint inputs below. */
+:root {
+  --bg: #eef1f6;
+  --panel: #ffffff;
+  --ink: #1b2233;
+  --muted: #5b6478;
+  --line: #d3d9e4;
+  --gold: #9a6b12;
+  --gold-soft: #f3e6c8;
+  --secret: #6b3f8f;
+  --secret-soft: #ece2f4;
+  --ok: #2f7a4a;
+  --cut: #a8402f;
+  --display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --body: "Inter", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1522; --panel: #182033; --ink: #e8ecf4; --muted: #98a2b8; --line: #2a3550;
+    --gold: #e0b45a; --gold-soft: #3a2f17; --secret: #c9a3ea; --secret-soft: #2e2340;
+    --ok: #6cc28c; --cut: #e48a78; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1522; --panel: #182033; --ink: #e8ecf4; --muted: #98a2b8; --line: #2a3550;
+  --gold: #e0b45a; --gold-soft: #3a2f17; --secret: #c9a3ea; --secret-soft: #2e2340;
+  --ok: #6cc28c; --cut: #e48a78; color-scheme: dark;
+}
+body { background: var(--bg); color: var(--ink); font-family: var(--body); line-height: 1.5; }
+.wrap { max-width: 760px; margin: 0 auto; padding-block: 32px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 28px; }
+h1 { font-family: var(--display); font-size: 1.9rem; margin: 0; text-wrap: balance; }
+h1 span { color: var(--gold); }
+.lead { margin: 6px 0 0; color: var(--muted); max-width: 62ch; }
+.status { font-size: .85rem; color: var(--muted); }
+h2 { font-family: var(--display); font-size: 1.15rem; margin: 0 0 4px; display: flex; gap: 10px; align-items: baseline; }
+h2 small { font-family: var(--body); font-weight: 400; font-size: .85rem; color: var(--muted); }
+section { display: flex; flex-direction: column; gap: 12px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px 14px; }
+.card.secret { border-left: 4px solid var(--secret); }
+.card.normal { border-left: 4px solid var(--gold); }
+.card.is-cut { opacity: .55; }
+.cond { grid-column: 1 / -1; display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; min-width: 0; }
+.tag { font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; padding: 2px 7px; border-radius: 4px; }
+.normal .tag { background: var(--gold-soft); color: var(--gold); }
+.secret .tag { background: var(--secret-soft); color: var(--secret); }
+.cond p { margin: 0; min-width: 0; }
+label { display: flex; flex-direction: column; gap: 4px; font-size: .75rem; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); min-width: 0; }
+input[type=text] { font: 500 1rem var(--body); color: var(--ink); background: var(--bg); border: 1px solid var(--line);
+  border-radius: 6px; padding: 8px 10px; text-transform: none; letter-spacing: 0; width: 100%; box-sizing: border-box; }
+input[type=text]:focus { outline: 2px solid var(--gold); outline-offset: 1px; border-color: transparent; }
+input.name { font-family: var(--display); font-weight: 700; }
+.foot { grid-column: 1 / -1; display: flex; gap: 14px; align-items: center; flex-wrap: wrap; font-size: .85rem; color: var(--muted); }
+.foot label { flex-direction: row; align-items: center; gap: 6px; text-transform: none; letter-spacing: 0; font-size: .85rem; cursor: pointer; }
+.foot input[type=checkbox] { accent-color: var(--cut); width: 16px; height: 16px; }
+.foot button { font: inherit; color: var(--muted); background: none; border: none; padding: 0; text-decoration: underline; cursor: pointer; }
+.foot button:focus-visible { outline: 2px solid var(--gold); }
+.saved { margin-left: auto; }
+.saved.ok { color: var(--ok); }
+.saved.err { color: var(--cut); }
+@media (max-width: 560px) { .card { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1><span>Landlord</span> Achievements</h1>
+    <p class="lead">Landlordsector's achievements for Achievements - Renewed. The condition is what you have to do. Change the name and the hint as you like; every change saves by itself. Tick "Cut" to drop one. Secret ones read "Secret Achievement" in the game until you get them.</p>
+    <p class="status" id="status">Loading your saved changes...</p>
+  </header>
+  <section id="normal"><h2>Things to do <small id="count-normal"></small></h2></section>
+  <section id="secret"><h2>Secret <small id="count-secret"></small></h2></section>
+</div>
+
+<script>
+const DRAFT = [
+  ["lls_first_home", "Foot In The Door", "Every landlord starts somewhere.", "Buy your first home.", false],
+  ["lls_homes_5", "Full House", "Collect a few more keys.", "Own 5 homes at once.", false],
+  ["lls_estate", "Lord Of The Manor", "Think big. Very big.", "Own an estate.", false],
+  ["lls_worlds_5", "All Over The Map", "Spread out across the Sector.", "Own homes on 5 different worlds.", false],
+  ["lls_flip", "Fixer-Upper", "Buy low, fix it up, sell high.", "Repair a worn home and sell it for more than you paid.", false],
+  ["lls_rent_100k", "Rent Collector", "Let the rent roll in.", "Earn 100,000 credits in rent.", false],
+  ["lls_rent_1m", "Rentier", "Never work again.", "Earn 1,000,000 credits in rent.", false],
+  ["lls_tenant_2y", "Good Neighbors", "Find someone worth keeping.", "Keep the same tenant for 2 years.", false],
+  ["lls_tenant_5y", "Part Of The Family", "Some tenants never leave.", "Keep the same tenant for 5 years.", false],
+  ["lls_happy", "Happy Home", "Make someone really happy.", "A tenant reaches full happiness.", false],
+  ["lls_furnished", "Fully Furnished", "Fill a home to the brim.", "Put 10 pieces of furniture in one home.", false],
+  ["lls_headhunters", "Headhunted", "Meet every headhunter in the Sector.", "Get a tenant from every headhunter.", false],
+  ["lls_married", "Tied The Knot", "Put a ring on it.", "Get married.", false],
+  ["lls_child", "Proud Parent", "Start a family.", "Have your first child.", false],
+  ["lls_grown", "All Grown Up", "Raise them right.", "A child of yours grows up.", false],
+  ["lls_cheated", "\"Actually...\"", "Love is blind.", "The one you proposed to turns out to be cheating on you.", true],
+  ["lls_child_lost", "Gone Too Soon", "Not every story ends well.", "Lose a child.", true],
+  ["lls_kite", "Should Have Taken The Shuttle", "Check the engine first.", "Your child dies when the Kite explodes.", true],
+  ["lls_divorce", "Half Of Everything", "Till death do us part. Or not.", "Get divorced.", true],
+  ["lls_condemned", "Slumlord", "Let a home fall apart.", "One of your homes is condemned.", true],
+  ["lls_crate", "Finders Keepers", "Check behind the walls.", "Find the hidden crate in a home.", true],
+  ["lls_raid", "Not My Business", "Rent to the wrong crowd.", "The police raid one of your tenants.", true],
+  ["lls_sophia", "The Councilor's Choice", "Someone in research catches your eye.", "Marry Sophia Anderson (only with AoTD).", true],
+].map(([id, name, hint, condition, secret]) => ({ id, name, hint, condition, secret }));
+
+const saved = {};       // id -> {name, hint, cut} from the store
+const timers = {};
+let db = null;
+
+function current(a) {
+  const s = saved[a.id] || {};
+  return { name: s.name ?? a.name, hint: s.hint ?? a.hint, cut: !!s.cut };
+}
+
+function render() {
+  for (const kind of ["normal", "secret"]) {
+    const sec = document.getElementById(kind);
+    sec.querySelectorAll(".card").forEach(c => c.remove());
+    const list = DRAFT.filter(a => a.secret === (kind === "secret"));
+    document.getElementById("count-" + kind).textContent =
+      list.filter(a => !current(a).cut).length + " of " + list.length + " kept";
+    for (const a of list) sec.appendChild(card(a));
+  }
+}
+
+function card(a) {
+  const v = current(a);
+  const el = document.createElement("article");
+  el.className = "card " + (a.secret ? "secret" : "normal") + (v.cut ? " is-cut" : "");
+  el.innerHTML = `
+    <div class="cond"><span class="tag">${a.secret ? "Secret" : "Condition"}</span><p></p></div>
+    <label for="n-${a.id}">Name<input type="text" class="name" id="n-${a.id}"></label>
+    <label for="h-${a.id}">Hint<input type="text" id="h-${a.id}"></label>
+    <div class="foot">
+      <label><input type="checkbox" id="c-${a.id}"> Cut</label>
+      <button type="button">Back to the draft</button>
+      <span class="saved" aria-live="polite"></span>
+    </div>`;
+  el.querySelector(".cond p").textContent = a.condition;
+  const n = el.querySelector("#n-" + a.id), h = el.querySelector("#h-" + a.id), c = el.querySelector("#c-" + a.id);
+  const note = el.querySelector(".saved");
+  n.value = v.name; h.value = v.hint; c.checked = v.cut;
+  const changed = () => {
+    el.classList.toggle("is-cut", c.checked);
+    queueSave(a.id, { name: n.value.trim(), hint: h.value.trim(), cut: c.checked }, note);
+  };
+  n.addEventListener("input", changed);
+  h.addEventListener("input", changed);
+  c.addEventListener("change", () => { changed(); updateCounts(); });
+  el.querySelector("button").addEventListener("click", () => {
+    n.value = a.name; h.value = a.hint; c.checked = false; changed(); updateCounts();
+  });
+  return el;
+}
+
+function updateCounts() {
+  for (const kind of ["normal", "secret"]) {
+    const list = DRAFT.filter(a => a.secret === (kind === "secret"));
+    const kept = list.filter(a => !document.getElementById("c-" + a.id).checked).length;
+    document.getElementById("count-" + kind).textContent = kept + " of " + list.length + " kept";
+  }
+}
+
+function queueSave(id, data, note) {
+  clearTimeout(timers[id]);
+  note.className = "saved"; note.textContent = "Saving...";
+  timers[id] = setTimeout(async () => {
+    if (!db) { note.className = "saved err"; note.textContent = "Not saved: this view can't store changes."; return; }
+    try {
+      await db.collection("names").doc(id).set(data);
+      saved[id] = data;
+      note.className = "saved ok"; note.textContent = "Saved";
+    } catch (e) {
+      note.className = "saved err"; note.textContent = "Not saved. Try again in a moment.";
+    }
+  }, 700);
+}
+
+render();
+
+(async () => {
+  const status = document.getElementById("status");
+  const give = setTimeout(() => { status.textContent = "Couldn't load saved changes. Showing the draft."; }, 10000);
+  try {
+    db = window.claude && claude.use ? await claude.use("db") : null;
+  } catch (e) { db = null; }
+  if (!db) {
+    clearTimeout(give);
+    status.textContent = "Changes can't be saved in this view. Open the page signed in to claude.ai to edit.";
+    return;
+  }
+  try {
+    const snap = await db.collection("names").get();
+    clearTimeout(give);
+    snap.docs.forEach(d => { const x = d.data(); if (x) saved[d.id] = x; });
+    const n = snap.size;
+    status.textContent = n ? n + " achievement" + (n === 1 ? "" : "s") + " changed from the draft so far." : "Nothing changed yet. This is the draft.";
+    render();
+  } catch (e) {
+    clearTimeout(give);
+    status.textContent = "Couldn't load saved changes. Showing the draft.";
+  }
+})();
+</script>

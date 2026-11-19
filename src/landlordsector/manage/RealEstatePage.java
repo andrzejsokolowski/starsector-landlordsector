@@ -387,7 +387,8 @@ public class RealEstatePage implements ManagePage {
                 tip(rx, ny + 30f, 240f, 28f, "Evict", fee > 0f ? "The lease still runs " + landlordsector.Leases.monthsLeft(
                         p.tenant) + " months. Breaking it costs you half their rent for the months left, at least one"
                         + " month." : (landlordsector.Leases.breached(p.tenant) ? p.tenant.firstName() + " broke the"
-                        + " lease lately, so evicting is free." : "Free: there is no lease to break."));
+                        + " lease lately, so evicting is free." : (p.tenant.openEnded ? "Free: an open-ended lease can"
+                        + " end at any time." : "Free: there is no lease to break.")));
                 declareButton(p, rx + 250f, ny + 30f);
                 nicknameButton(p, p.tenant, rx + 460f, ny + 30f);
                 leaseButton(p, rx, ny + 64f, "Next lease: ");
@@ -457,11 +458,12 @@ public class RealEstatePage implements ManagePage {
         /** 1.12.0 (LLS-33): the lease length new tenants sign here. */
         private void leaseButton(Property p, float x, float y, String caption) {
             button("lease:" + p.id, caption + landlordsector.Leases.termName(p.leaseTerm()), x, y, 200f, 28f, true);
-            tip(x, y, 200f, 28f, "Lease", "How long new tenants sign for: no lease, 6, 12 or 24 months. During a lease the"
-                    + " rent stays as signed (you can still lower it), a tenant who moves out early pays you a month's"
-                    + " rent, and evicting costs you half the rent of the months left, unless they broke the lease"
-                    + " first. A longer lease makes tenants a little happier. When it ends, you decide whether to"
-                    + " renew.");
+            tip(x, y, 200f, 28f, "Lease", "How long new tenants sign for: 6, 12 or 24 months. During a lease the"
+                    + " tenant stays even when unhappy, the rent stays as signed (you can still lower it), and"
+                    + " evicting costs you half the rent of the months left, unless they broke the lease first. A"
+                    + " longer lease makes tenants a little happier. When it ends, you decide whether to renew. A"
+                    + " happy tenant can also get an open-ended lease: they stay as long as they are happy, and the"
+                    + " rent and evicting are up to you at any time.");
         }
 
         /** 1.12.0 (LLS-32): a question from this home, with a button per answer. */

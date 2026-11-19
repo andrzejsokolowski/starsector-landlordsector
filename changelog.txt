@@ -1,3 +1,9 @@
+Version 1.13.0 (2026-11-19)
+- Leases are binding: while a lease runs, an unhappy tenant stays and keeps paying instead of moving out. Only illness, death, a job offer you agree to or your eviction end it early
+- The No lease option is gone: every new tenant signs for 6, 12 or 24 months. Homes that were set to No lease use 12 months for the next tenant
+- When a lease ends, a happy tenant can be offered an open-ended lease. They stay as long as they are happy and get the biggest lease happiness bonus. You can change the rent and evict for free, and they leave without a fee once they turn unhappy
+- Tenants who lived in your homes without a lease now have an open-ended one
+
 Version 1.12.3 (2026-11-18)
 - Homes on your own colonies cost full price (was half price), still with no tariff
 - Buying a home on another faction's world pays a tariff once: half the market's tariff (15% at the usual 30%). Rent and sales pay no tariff anymore

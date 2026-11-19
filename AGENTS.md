@@ -303,3 +303,12 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   weights (`HouseTraits.roll` overload with the world map). A trait named with 1+ skips its anyCondition and climate
   (`fitsLore`: tier and station only); 10+ (`MARK_MULT`) is on every home there. `upgradeTo080` re-rolls once more
   (`upgraded081`).
+- 1.13.0 (LLS-43, Andrzej: "Open-ended is earned ... I also like it being binding"): `Leases.TERMS` is 6/12/24 ("No
+  lease" gone; `Property.leaseTerm()` turns an old 0 into 12). A running lease is binding: `TenantDaily.maybeMoveOut`
+  returns while `Leases.running`. The `lease_end` question's second answer (`openEnded` in tenant_events.json,
+  `Def.openEnded`) gives `Tenant.openEnded` when happiness is `OPEN_ENDED_HAPPINESS` (60)+ (`Choices.cannot` greys it
+  out below): no end date, +6 happiness, free rent changes and evictions, moves out when unhappy with no fee.
+  `upgradeTo1130` gives old no-lease tenants an open-ended lease. Balance run: 2.7 tenants per home in 10 years (was
+  2.9), 69 empty days (was 74).
+  Landlord achievements (LLS-42): draft names and hints on https://claude.ai/artifact/XUUiFtiZ2sV2SueNRpwGvc
+  (`tools/review-pages/achievement_names.html`, db collection "names"); nothing built yet.

@@ -443,7 +443,8 @@ public final class PropertyStats {
         float settled = Leases.happiness(t);
         if (settled >= 0.5f) {
             flip += settled;
-            s.notes.add(new Note("Signed a " + t.leaseMonths + "-month lease (+" + Math.round(settled) + ")", true));
+            s.notes.add(new Note((t.openEnded ? "Has an open-ended lease" : "Signed a " + t.leaseMonths + "-month lease")
+                    + " (+" + Math.round(settled) + ")", true));
         }
         if (t.mood >= 5f) s.notes.add(new Note("In a good mood (+" + Math.round(t.mood) + ")", true));
         if (t.mood <= -5f) s.notes.add(new Note("In a bad mood (" + Math.round(t.mood) + ")", false));

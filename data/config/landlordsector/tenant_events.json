@@ -33,7 +33,7 @@
 	# Each answer: "label" (button, $cost / $gain / $price filled in), "text" (what happened), the effects above, and
 	#   cost / gain: months of the home's Normal rent the player pays / gets
 	#   evict: the tenant is put out (no lease fee), rentStep: -1 lowers the rent a step (the lease's too),
-	#   sellMult: the home is sold at this share of its sale value, renew: the lease starts again,
+	#   sellMult: the home is sold at this share of its sale value, renew: the lease starts again, openEnded: a lease with no end (happy tenants only),
 	#   managerPick: the tenant manager's answer (else the default),
 	#   fail: {"chance", "text", effects}: the answer goes wrong instead ("below": only while the tenant's happiness is
 	#     under this),
@@ -250,6 +250,7 @@
 		]},
 		{"id":"lease_end", "type":"tenant", "kind":"life", "good":true, "system":true, "weight":0, "text":"$tenant's lease at $home has ended. $HeIs asking to renew it.", "default":0, "choices":[
 			{"label":"Renew the lease", "managerPick":true, "good":true, "renew":true, "text":""},
+			{"label":"Offer an open-ended lease", "good":true, "openEnded":true, "text":""},
 			{"label":"Let $first go", "leave":true, "text":"$tenant moved out of $home at the end of the lease."}
 		]}
 	]

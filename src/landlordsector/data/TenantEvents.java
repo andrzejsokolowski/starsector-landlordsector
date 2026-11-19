@@ -65,6 +65,8 @@ public final class TenantEvents {
         public float sellMult;
         /** An answer: the lease starts again for the home's lease term. */
         public boolean renew;
+        /** 1.13.0: an answer that gives a happy tenant an open-ended lease. */
+        public boolean openEnded;
         /** An answer: the tenant is put out for breaking the lease (no fee). */
         public boolean evict;
         /** The tenant broke the lease: evicting them is free for a while (skipped rent, police raid, trashed). */
@@ -201,6 +203,7 @@ public final class TenantEvents {
         d.rentStep = e.optInt("rentStep", 0);
         d.sellMult = (float) e.optDouble("sellMult", 0);
         d.renew = e.optBoolean("renew", false);
+        d.openEnded = e.optBoolean("openEnded", false);
         d.evict = e.optBoolean("evict", false);
         d.breach = e.optBoolean("breach", false);
         d.managerPick = e.optBoolean("managerPick", false);

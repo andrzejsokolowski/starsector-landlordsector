@@ -382,7 +382,9 @@ public class TenantDaily implements EveryFrameScript {
         return text.replace("$tenant", Family.who(t));
     }
 
-    private static void maybeMoveOut(Property p, Random random) {
+    static void maybeMoveOut(Property p, Random random) {
+        // 1.13.0 (LLS-43, Andrzej: "I also like it being binding"): an unhappy tenant stays until the lease ends.
+        if (Leases.running(p.tenant)) return;
         PropertyStats st = p.stats();
         if (random.nextFloat() >= TenantRules.moveOutChance(st.happiness, p.tenant.loyal())) return;
         if (p.tenant.isPartner()) {

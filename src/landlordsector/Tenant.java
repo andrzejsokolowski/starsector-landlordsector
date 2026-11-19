@@ -64,6 +64,11 @@ public class Tenant {
     public RentSetting leaseRent;
     /** When the tenant last broke the lease (unpaid rent, a police raid, a trashed home): evicting is free for a while. */
     public long breachAt;
+    /**
+     * 1.13.0 (LLS-43, Andrzej: "Open-ended is earned ... I also like it being binding"): a happy tenant who finished a
+     * lease signed one with no end date. They stay while happy and leave when unhappy, with no fee either way.
+     */
+    public boolean openEnded;
 
     public boolean hasNickname() {
         return realName != null;

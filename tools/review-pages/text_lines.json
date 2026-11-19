@@ -3441,6 +3441,55 @@
 			"line": "Rent from your homes, and the money NPC homeowners bring your colonies. Manage your homes from the Manage (Y) button.",
 			"when": "Tooltip of the Real estate line in the monthly income report (\"after the local tariff\" taken off).",
 			"area": "Prices and tariff (1.12.3)"
+		},
+		{
+			"id": "l13_btn_open",
+			"version": "1.13.0",
+			"line": "Offer an open-ended lease",
+			"when": "Answer button on the question when a tenant's lease ends, next to Renew the lease and Let them go.",
+			"area": "Leases (1.13.0)"
+		},
+		{
+			"id": "l13_cannot_open",
+			"version": "1.13.0",
+			"line": "Mira is not happy enough here for an open-ended lease.",
+			"when": "Shown on that answer button when the tenant is not happy enough to be offered it (the button can't be picked).",
+			"area": "Leases (1.13.0)"
+		},
+		{
+			"id": "l13_signed_open",
+			"version": "1.13.0",
+			"line": "Mira Okoye signed an open-ended lease at Leafy Cottage.",
+			"when": "Home log and intel after you give a tenant an open-ended lease (\" Mira is not happy about the raise.\" follows when you raised the rent).",
+			"area": "Leases (1.13.0)"
+		},
+		{
+			"id": "l13_card_open",
+			"version": "1.13.0",
+			"line": "Open-ended lease: stays as long as happy here.",
+			"when": "Tenants tab, the line under the tenant card, for a tenant on an open-ended lease.",
+			"area": "Leases (1.13.0)"
+		},
+		{
+			"id": "l13_evict_open",
+			"version": "1.13.0",
+			"line": "Free: an open-ended lease can end at any time.",
+			"when": "Tooltip of the Evict button for a tenant on an open-ended lease.",
+			"area": "Leases (1.13.0)"
+		},
+		{
+			"id": "l13_note_open",
+			"version": "1.13.0",
+			"line": "Has an open-ended lease (+6)",
+			"when": "Tenant happiness tooltip, the line for an open-ended lease (timed leases keep \"Signed a 12-month lease (+4)\").",
+			"area": "Leases (1.13.0)"
+		},
+		{
+			"id": "l13_lease_tip",
+			"version": "1.13.0",
+			"line": "How long new tenants sign for: 6, 12 or 24 months. During a lease the tenant stays even when unhappy, the rent stays as signed (you can still lower it), and evicting costs you half the rent of the months left, unless they broke the lease first. A longer lease makes tenants a little happier. When it ends, you decide whether to renew. A happy tenant can also get an open-ended lease: they stay as long as they are happy, and the rent and evicting are up to you at any time.",
+			"when": "Tooltip of the Lease button on the Tenants tab (reworded: No lease is gone, leases are binding, open-ended leases).",
+			"area": "Leases (1.13.0)"
 		}
 	]
 }

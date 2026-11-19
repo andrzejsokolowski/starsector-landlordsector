@@ -1197,14 +1197,52 @@ public final class RuntimeCheck {
         String res = Choices.answer(p, 0, Choices.PLAYER, r);
         expect(p.tenant == n && Leases.running(n) && n.leaseRent == RentSetting.HIGH && res.contains("signed a new"),
                 "renewing starts a new lease at the rent you ask: " + res);
+        // 1.13.0 (LLS-43): "No lease" is gone; binding leases; open-ended leases for happy tenants.
         Leases.setTerm(p, 0);
-        Actions.setRent(p, RentSetting.NORMAL);
+        expect(p.leaseTerm() == Leases.DEFAULT_MONTHS, "a home set to No lease signs 12 months now");
+        Random always = new Random() {
+            @Override
+            public float nextFloat() {
+                return 0f;
+            }
+        };
+        n.mood = -30f;
+        n.leaseRent = RentSetting.GREEDY;
+        p.setting = RentSetting.GREEDY;
+        float unhappy = p.stats().happiness;
+        TenantDaily.maybeMoveOut(p, always);
+        expect(p.tenant == n, "an unhappy tenant stays while the lease runs (happiness " + unhappy + ")");
+        p.setting = RentSetting.FREE;
+        n.leaseRent = RentSetting.FREE;
         n.mood = 30f;
         n.leaseEnd = now - DAY;
         Leases.daily(p, r);
-        Choices.answer(p, 0, Choices.PLAYER, r);
-        expect(p.tenant == n && !Leases.has(n), "renewing with No lease leaves them without one");
-        expect(Leases.evictFee(p) == 0f, "no lease, no eviction fee");
+        expect(p.decision != null && Leases.END_EVENT.equals(p.decision.eventId), "the lease end asks again");
+        landlordsector.data.TenantEvents.Def open = landlordsector.data.TenantEvents.answer(Leases.END_EVENT, 1);
+        expect(open != null && open.openEnded, "the second answer offers an open-ended lease");
+        float happy = p.stats().happiness;
+        expect(Leases.canOfferOpenEnded(p) == (happy >= Leases.OPEN_ENDED_HAPPINESS)
+                && (Choices.cannot(p, open) == null) == Leases.canOfferOpenEnded(p),
+                "only a happy tenant is offered an open-ended lease (happiness " + happy + ")");
+        expect(Leases.canOfferOpenEnded(p), "a tenant on Free rent in a good mood is happy enough: " + happy);
+        String oe = Choices.answer(p, 1, Choices.PLAYER, r);
+        expect(p.tenant == n && n.openEnded && !Leases.has(n) && oe.contains("open-ended"),
+                "the tenant signs an open-ended lease: " + oe);
+        expect(Leases.happiness(n) == 6f && Leases.evictFee(p) == 0f && Actions.setRent(p, RentSetting.HIGH) == null
+                && p.setting() == RentSetting.HIGH, "open-ended: the biggest happiness bonus, free eviction, raises at once");
+        n.mood = -30f;
+        p.setting = RentSetting.GREEDY;
+        float low = p.stats().happiness;
+        TenantDaily.maybeMoveOut(p, always);
+        expect(low >= TenantRules.MOVE_OUT_BELOW || p.tenant == null,
+                "an unhappy tenant on an open-ended lease moves out (happiness " + low + ")");
+        if (p.tenant == null) Actions.moveIn(p, n);
+        Leases.start(p, n);
+        expect(!n.openEnded && Leases.running(n), "a new timed lease ends the open-ended one");
+        Leases.clear(n);
+        Portfolio.get().upgraded1130 = false;
+        LandlordsectorModPlugin.upgradeTo1130(Portfolio.get());
+        expect(n.openEnded, "a tenant from an old save without a lease gets an open-ended one");
         Actions.sell(p);
     }
 
@@ -1234,7 +1272,7 @@ public final class RuntimeCheck {
             expect(def.cost <= 0f && def.sellMult <= 0f, "a question's default answer is free: " + d.id);
             for (landlordsector.data.TenantEvents.Def a : d.choices) {
                 expect(!a.label.isEmpty(), "every answer has a button text: " + a.id);
-                expect(a.renew || !a.text.isEmpty() || a.sellMult > 0f, "every answer says what happened: " + a.id);
+                expect(a.renew || a.openEnded || !a.text.isEmpty() || a.sellMult > 0f, "every answer says what happened: " + a.id);
             }
         }
         Choices.ask(p, cant, r);
