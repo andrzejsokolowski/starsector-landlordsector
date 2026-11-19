@@ -42,6 +42,13 @@ public final class RulesCheck {
         float earth = Pricing.marketMult(6, 7f, 0.5f, true, true, false, false, false);
         float lunamun = Pricing.marketMult(5, 10f, 1.65f, false, false, false, false, false);
         float magma = Pricing.marketMult(5, 4f, 2.75f, false, false, false, true, false);
+        // 1.15.1: Luddic Path cells count fully when active, half when disrupted, not at all as sleepers.
+        expect(Pricing.patherThreat(false, 0f) == 1f && Pricing.patherThreat(true, 30f) == 0.5f
+                && Pricing.patherThreat(true, 0f) == 0f, "active, disrupted and sleeper cells count 1, 0.5 and 0");
+        expect(Pricing.security(5f, 0f, 0f, false, 1f) == 20f && Pricing.security(5f, 0f, 0f, false, 0.5f) == 25f
+                && Pricing.security(5f, 0f, 0f, false, 0f) == 30f, "cells take 10, 5 or 0 security");
+        expect(Math.abs(Pricing.dangerMult(false, 1f) - 0.85f) < 1e-6f && Math.abs(Pricing.dangerMult(false, 0.5f) - 0.925f) < 1e-6f
+                && Pricing.dangerMult(false, 0f) == 1f, "cells take 15%, 7.5% or nothing off the price");
         expect(Math.abs(prime - 4f) < 1e-4, "the best possible world reaches 4x, got " + prime);
         expect(Math.abs(worst - 0.25f) < 1e-4, "the worst world drops to 0.25x, got " + worst);
         expect(Math.abs(typical - 0.95f) < 0.06f, "a standard world sits near 1x, got " + typical);

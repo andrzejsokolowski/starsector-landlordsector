@@ -66,7 +66,8 @@ public final class MarketRules {
         java.util.Set<String> c = Tenants.conditions(market);
         return Pricing.marketMult(market.getSize(), market.getStabilityValue(), market.getHazardValue(),
                 c.contains(Conditions.HABITABLE), c.contains(Conditions.MILD_CLIMATE), c.contains(Conditions.POLLUTION),
-                c.contains(Conditions.PIRATE_ACTIVITY), c.contains(Conditions.PATHER_CELLS));
+                c.contains(Conditions.PIRATE_ACTIVITY),
+                c.contains(Conditions.PATHER_CELLS) ? PatherCells.threat(market) : 0f);
     }
 
     /**

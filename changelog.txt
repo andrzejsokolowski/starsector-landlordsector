@@ -1,3 +1,6 @@
+Version 1.15.1 (2026-11-19)
+- Luddic Path cells follow their state: active cells take 10 security and 15% off home prices, disrupted cells (their base was destroyed) half that, sleeper cells nothing. Your colonies count as sleeper after the Planetkiller deal with the Path
+
 Version 1.15.0 (2026-11-19)
 - 23 landlord achievements for Achievements - Renewed, 8 of them secret. Landlordsector still works without Achievements - Renewed
 - Rent earned before this version does not count toward the rent achievements

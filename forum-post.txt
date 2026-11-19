@@ -125,6 +125,10 @@ This mod is under the CC0 (Creative Commons Zero) License, allowing you to do wh
 [/spoiler]
 
 [spoiler=Version log]
+[b]1.15.1[/b]
+[list]
+[li]Luddic Path cells follow their state: active cells take 10 security and 15% off home prices, disrupted cells (their base was destroyed) half that, sleeper cells nothing. Your colonies count as sleeper after the Planetkiller deal with the Path[/li]
+[/list]
 [b]1.15.0[/b]
 [list]
 [li]23 landlord achievements for Achievements - Renewed, 8 of them secret. Landlordsector still works without Achievements - Renewed[/li]

@@ -325,3 +325,7 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   homes, worlds, rent, tenantMonths, furniture, headhunters); `Feats.scan` runs on buying and each month. No code
   link to Achievements - Renewed. Names: Andrzej's, every word capitalized (his ACR rule); secret rows have no hint.
   `checkFeats150` in RulesCheck checks the file against `Feats.KEYS`. `Property.boughtWorn`, `Portfolio.headhuntersUsed`.
+- 1.15.1 (Andrzej: Pather cells "remain static across Active, Disrupted, and Sleeper states"): `PatherCells.threat`
+  reads the cells' `LuddicPathCellsIntel` (from the condition plugin, else `getCellsForMarket`): active 1, disrupted
+  (sleeper with a timeout) `Pricing.PATHER_DISRUPTED` 0.5, sleeper 0 (the game's `isSleeper` is also true on player
+  colonies with the Pather agreement). `Pricing.security` / `dangerMult` / `marketMult` take that as a float.

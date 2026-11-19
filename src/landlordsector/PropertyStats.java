@@ -196,7 +196,8 @@ public final class PropertyStats {
         boolean mild = conds.contains(Conditions.MILD_CLIMATE);
         boolean pollution = conds.contains(Conditions.POLLUTION);
         boolean pirates = conds.contains(Conditions.PIRATE_ACTIVITY);
-        boolean pathers = conds.contains(Conditions.PATHER_CELLS);
+        // 1.15.1: active, disrupted or sleeper Luddic Path cells count 1, 0.5 or 0.
+        float pathers = conds.contains(Conditions.PATHER_CELLS) ? PatherCells.threat(m) : 0f;
         float hazard = m.getHazardValue();
 
         // Comfort. A trait like Geothermal takes the cold (or the heat) of the world off this one home.
@@ -238,7 +239,9 @@ public final class PropertyStats {
         if (mil > 0f) s.securityLines.add(effect(industryName(m, MILITARY), mil, null));
         if (def > 0f) s.securityLines.add(effect(industryName(m, DEFENSES), def, null));
         if (pirates) s.securityLines.add(effect(conditionName(m, Conditions.PIRATE_ACTIVITY), -15f, null));
-        if (pathers) s.securityLines.add(effect(conditionName(m, Conditions.PATHER_CELLS), -10f, null));
+        if (pathers > 0f) {
+            s.securityLines.add(effect(conditionName(m, Conditions.PATHER_CELLS), -Pricing.patherSecurity(pathers), null));
+        }
         s.securityLines.addAll(condSecurityLines);
         if (Math.abs(s.neighbor.security) >= 0.5f) s.securityLines.add(effect(s.nextTo, s.neighbor.security, null));
         s.securityLines.addAll(traitSecurityLines);
@@ -299,7 +302,7 @@ public final class PropertyStats {
         if (mild) factor(s, "Mild climate", Pricing.planetMult(hazard, false, true, false) / bare);
         if (pollution) factor(s, "Pollution", Pricing.planetMult(hazard, false, false, true) / bare);
         if (pirates) factor(s, conditionName(m, Conditions.PIRATE_ACTIVITY), Pricing.dangerMult(true, false));
-        if (pathers) factor(s, conditionName(m, Conditions.PATHER_CELLS), Pricing.dangerMult(false, true));
+        if (pathers > 0f) factor(s, conditionName(m, Conditions.PATHER_CELLS), Pricing.dangerMult(false, pathers));
         s.gradeLines.addAll(condPriceLines);
         if (Math.abs(s.neighbor.price - 1f) > 0.001f) factor(s, s.nextTo, s.neighbor.price);
         String total = "Location multiplier: x" + two(s.marketMult);

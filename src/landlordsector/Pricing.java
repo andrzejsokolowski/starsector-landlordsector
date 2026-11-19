@@ -25,9 +25,27 @@ public final class Pricing {
      */
     public static float marketMult(int size, float stability, float hazard, boolean habitable, boolean mild,
             boolean pollution, boolean pirates, boolean pathers) {
+        return marketMult(size, stability, hazard, habitable, mild, pollution, pirates, pathers ? 1f : 0f);
+    }
+
+    /** 1.15.1: {@code pathers} is how much the Luddic Path cells count ({@link #patherThreat}). */
+    public static float marketMult(int size, float stability, float hazard, boolean habitable, boolean mild,
+            boolean pollution, boolean pirates, float pathers) {
         float m = sizeMult(size) * stabilityMult(stability) * planetMult(hazard, habitable, mild, pollution)
                 * dangerMult(pirates, pathers);
         return clamp(m, MULT_MIN, MULT_MAX);
+    }
+
+    /** 1.15.1: share of the Luddic Path cells' effect while their base is destroyed (Disrupted). */
+    public static final float PATHER_DISRUPTED = 0.5f;
+
+    /**
+     * 1.15.1: how much Luddic Path cells count: active 1, disrupted (sleeper with a timeout, their base is gone)
+     * {@link #PATHER_DISRUPTED}, sleeper 0.
+     */
+    public static float patherThreat(boolean sleeper, float sleeperTimeout) {
+        if (!sleeper) return 1f;
+        return sleeperTimeout > 0f ? PATHER_DISRUPTED : 0f;
     }
 
     /** Size 5 and 6 are standard (about 1). Small markets cost less, 7 and 8 much more. */
@@ -64,9 +82,14 @@ public final class Pricing {
 
     /** Pirates nearby take 30 percent off, Pather cells 15. */
     public static float dangerMult(boolean pirates, boolean pathers) {
+        return dangerMult(pirates, pathers ? 1f : 0f);
+    }
+
+    /** 1.15.1: active cells take 15% off, disrupted ones half that, sleepers nothing. */
+    public static float dangerMult(boolean pirates, float pathers) {
         float m = 1f;
         if (pirates) m *= 0.7f;
-        if (pathers) m *= 0.85f;
+        m *= 1f - 0.15f * clamp(pathers, 0f, 1f);
         return m;
     }
 
@@ -161,10 +184,20 @@ public final class Pricing {
      */
     public static float security(float stability, float military, float defenses, boolean pirates,
             boolean pathers) {
+        return security(stability, military, defenses, pirates, pathers ? 1f : 0f);
+    }
+
+    /** 1.15.1: active cells -10, disrupted -5, sleepers 0. */
+    public static float security(float stability, float military, float defenses, boolean pirates, float pathers) {
         float s = clamp(stability, 0f, 10f) * 6f + military + defenses;
         if (pirates) s -= 15f;
-        if (pathers) s -= 10f;
+        s -= patherSecurity(pathers);
         return clamp(s, 0f, 100f);
+    }
+
+    /** 1.15.1: security lost to Luddic Path cells that count this much. */
+    public static float patherSecurity(float pathers) {
+        return 10f * clamp(pathers, 0f, 1f);
     }
 
     /** Raids and disruption hurt a well-guarded home less: a third less at security 50, two thirds at 100. */
