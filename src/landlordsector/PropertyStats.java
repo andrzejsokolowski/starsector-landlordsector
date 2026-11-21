@@ -338,6 +338,9 @@ public final class PropertyStats {
         tags.addAll(nextTags);
         tags.addAll(colony);
         int liked = 0, disliked = 0;
+        // 1.15.2: each thing a trait likes or hates counts once. Leafy carries garden and plants, and a Gardener
+        // likes both: that is one +8, not two (found in Landlordsector Renewed, LLS-47).
+        Set<String> counted = new java.util.HashSet<>();
         for (String id : t.traits()) {
             TenantTraits.Def d = TenantTraits.get(id);
             if (d == null) continue;
@@ -346,19 +349,23 @@ public final class PropertyStats {
                 String num = signed(d.happiness);
                 s.notes.add(new Note(d.name + ": " + num, null, d.name, dc, num, d.happiness > 0f ? "+" : "-"));
             }
+            counted.clear();
             for (String tag : d.likes) {
                 if (!tags.contains(tag)) continue;
-                liked++;
                 HouseTraits.Def h = traitWithTag(tag, houseTraits);
                 String hn = h != null ? h.name : source(m, s, tag);
+                if (!counted.add(hn)) continue;
+                liked++;
                 s.notes.add(new Note(d.name + ": likes " + what(h, hn) + " (+" + Math.round(TenantRules.LIKE) + ")", null,
                         d.name, dc, "likes", "+", hn, h == null ? null : (h.good ? "+" : "-")));
             }
+            counted.clear();
             for (String tag : d.dislikes) {
                 if (!tags.contains(tag)) continue;
-                disliked++;
                 HouseTraits.Def h = traitWithTag(tag, houseTraits);
                 String hn = h != null ? h.name : source(m, s, tag);
+                if (!counted.add(hn)) continue;
+                disliked++;
                 s.notes.add(new Note(d.name + ": hates " + what(h, hn) + " (-" + Math.round(TenantRules.DISLIKE) + ")",
                         null, d.name, dc, "hates", "-", hn, h == null ? null : (h.good ? "+" : "-")));
             }

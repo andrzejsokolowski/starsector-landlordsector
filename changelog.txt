@@ -1,3 +1,7 @@
+Version 1.15.2 (2026-11-21)
+- Likes count once per home feature: a Gardener in a Leafy home and a Loves water tenant in a Seaside home now get +8 happiness, not +16
+- Hates count once too: criminals on a colony with a spy agency and allergic tenants next to the AoTD Garden of Elysium now lose 15 happiness, not 30
+
 Version 1.15.1 (2026-11-19)
 - Luddic Path cells follow their state: active cells take 10 security and 15% off home prices, disrupted cells (their base was destroyed) half that, sleeper cells nothing. Your colonies count as sleeper after the Planetkiller deal with the Path
 

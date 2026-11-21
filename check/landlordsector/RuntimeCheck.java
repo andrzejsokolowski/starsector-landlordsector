@@ -492,6 +492,25 @@ public final class RuntimeCheck {
             // Happiness can sit at 0 on this Greedy home, so the note is what is checked.
             expect(hatesPolice && crook.happiness <= free.happiness, "a criminal hates the Patrol HQ on the colony");
             expect(!still, "without police on the colony the criminal hates nothing here");
+
+            // 1.15.2 (LLS-47): a liked feature counts once even when it carries two liked tags. Leafy has garden and
+            // plants, a Gardener likes both; Seaside has view and water, Loves water likes both.
+            java.util.List<String> keepHome = new java.util.ArrayList<>(home.traits());
+            String[][] once = {{"gardener", "garden", "Leafy"}, {"water_lover", "ocean_view", "Seaside"}};
+            for (String[] pair : once) {
+                tt.traits().clear();
+                tt.traits().add(pair[0]);
+                home.traits().clear();
+                home.traits().add(pair[1]);
+                int likes = 0;
+                for (PropertyStats.Note n : home.stats().notes) {
+                    if (n.text.contains(": likes ")) likes++;
+                }
+                expect(likes == 1, landlordsector.data.TenantTraits.get(pair[0]).name + " in a " + pair[2] + " home likes it once, not per tag: "
+                        + likes + " likes");
+            }
+            home.traits().clear();
+            home.traits().addAll(keepHome);
             tt.traits().clear();
             tt.traits().addAll(keep);
 

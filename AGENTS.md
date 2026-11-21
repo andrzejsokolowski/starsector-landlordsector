@@ -329,3 +329,6 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
   reads the cells' `LuddicPathCellsIntel` (from the condition plugin, else `getCellsForMarket`): active 1, disrupted
   (sleeper with a timeout) `Pricing.PATHER_DISRUPTED` 0.5, sleeper 0 (the game's `isSleeper` is also true on player
   colonies with the Pather agreement). `Pricing.security` / `dangerMult` / `marketMult` take that as a float.
+- 1.15.2 (LLS-47, found in the Landlordsector Renewed fork): `PropertyStats.tenantHappiness` counts each liked or hated
+  source once per tenant trait (a set of source names, as Renewed does), so a feature with two matching tags (Leafy:
+  garden + plants, Seaside: view + water, spy agencies: police + spying) is one like or hate. `checkRuntime` pins it.
