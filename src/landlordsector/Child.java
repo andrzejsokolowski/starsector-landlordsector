@@ -77,6 +77,8 @@ public class Child {
     public List<String> skills;
     /** Grown celebrities with classes: stability on their colony. */
     public float stability;
+    /** 1.16.0 (LLS-46): when they took the loss of a parent hard (0: never); unhappy for a cycle after. */
+    public long heartbreakAt;
 
     public List<String> skills() {
         if (skills == null) skills = new ArrayList<>();

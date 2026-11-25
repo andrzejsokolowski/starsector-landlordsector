@@ -68,12 +68,9 @@ public class LLS_Family extends BaseCommandPlugin {
                 if (t == null) return false;
                 opts.clearOptions();
                 opts.addOption("Yes. It's over.", "lls_fam_breakup_yes");
-                if (t.isSpouse()) {
-                    opts.setTooltip("lls_fam_breakup_yes", "The house is sold and you get half. The kids go with "
-                            + him(t) + ".");
-                } else if (!p.children().isEmpty()) {
-                    opts.setTooltip("lls_fam_breakup_yes", capital(Family.his(t)) + " kids go with " + him(t) + ".");
-                }
+                // 1.16.0 (LLS-46): who leaves, the child support and the share of the home that stays yours.
+                String tip = Family.breakupTip(p);
+                if (tip != null) opts.setTooltip("lls_fam_breakup_yes", tip);
                 opts.addOption("No. Forget I said anything.", "lls_fam_breakup_no");
                 return true;
             case "breakupYes": {
@@ -276,7 +273,7 @@ public class LLS_Family extends BaseCommandPlugin {
                 say(text, "I followed the neighbor around all day and he never saw me.");
                 break;
             case Child.GROWTH:
-                say(text, "Everyone at school says I'm the prettiest.");
+                say(text, "I got the lead in the school play. Come and watch!");
                 break;
             default:
                 say(text, "Hi, " + dad + "!");
@@ -304,7 +301,7 @@ public class LLS_Family extends BaseCommandPlugin {
                 opts.addOption("That 007 movie is pretty cool, eh?", "lls_kid_agent");
                 wish(opts, "lls_kid_agent", Child.AGENT);
             }
-            opts.addOption("Wow, you're so pretty!", "lls_kid_growth");
+            opts.addOption("You were good up on that stage.", "lls_kid_growth");
             wish(opts, "lls_kid_growth", Child.GROWTH);
         }
         if (c.grown) return true;
@@ -537,11 +534,6 @@ public class LLS_Family extends BaseCommandPlugin {
 
     private static String pick(String... lines) {
         return lines[RANDOM.nextInt(lines.length)];
-    }
-
-    private static String him(Tenant t) {
-        String he = Family.he(t);
-        return "she".equals(he) ? "her" : ("he".equals(he) ? "him" : "them");
     }
 
     private static String capital(String s) {

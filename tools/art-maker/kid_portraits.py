@@ -5,8 +5,11 @@
                                              and data/config/settings.json ("lls_kid_portraits")
   python kid_portraits.py sheet <inbox> <out.png>   a contact sheet to check them
 
-Keys are <stage>_<f|m>_1 for baby, toddler, child and teen: the kid seen from behind, no face, skin or hair
-(Andrzej, 2026-11-17). From the Adult stage the kid shows the random portrait from your faction picked at birth.
+Keys were <stage>_<f|m>_1 for baby, toddler, child and teen: the kid seen from behind, no face, skin or hair
+(2026-11-17). From the Adult stage the kid shows the random portrait from your faction picked at birth.
+
+1.16.0 (LLS-46): the mod now ships Landlordsector Renewed's pictures instead, <stage>_1 to <stage>_4 (four clothes
+colors, never by boy or girl). Running build again would replace them with the old <stage>_<f|m>_1 set.
 """
 import json
 import os

@@ -332,3 +332,22 @@ Proxy stand-in markets, on the game's own Java with bytecode checks off, plus an
 - 1.15.2 (LLS-47, found in the Landlordsector Renewed fork): `PropertyStats.tenantHappiness` counts each liked or hated
   source once per tenant trait (a set of source names, as Renewed does), so a feature with two matching tags (Leafy:
   garden + plants, Seaside: view + water, spy agencies: police + spying) is one like or hate. `checkRuntime` pins it.
+- 1.16.0 (LLS-46, the owner's picks from the Landlordsector Renewed fork by Wisp, pick page
+  https://claude.ai/artifact/Pqpt25XrssSsTnAxe5D7Q6): `manage/FamilyPage` (page id `landlordsector_family`, its own
+  Manage tab; homes with family left, partner card / Propose list / kid rows in blocks that scroll one at a time,
+  events right; the Real estate Family tab only links to it via `FamilyPage.open`, which falls back to
+  `ManageBar.requestTabSelect`). `PropertyView.homeLog` is the shared event log. `Partners`: proposals from afar
+  (`withYou`: fleet officers and Sophia always, administrators when the fleet is within radius + 400 of their colony;
+  15%, then person memory `$lls_askInPerson` until you meet), new relationship energy (+30 for 180 days, fading to 0 at
+  365, no unhappy move-out before 180), partner event rules and wording (`SKIP_EVENTS`, Zealot-only sabotage, Sophia
+  counts as working away, `TEXT`/`AWAY_TEXT`/`SAY`), home care (full `happyRepair` monthly with the partner at home,
+  `Property.careWarned` warnings at 25% / 10%, `Property.condemnedAt` 30-day grace). `Family`: baby names
+  (`babyName`: faction first name + parent's surname, `FALLBACK_FIRST` Sam), `useYourSurname` (one-word player name:
+  `juniorName`, the owner's note), divorce keeps the home and queues `HomeShare` (half of value before fees minus the
+  loan) in `Portfolio.homeShares`, paid in `monthly`; child support `childSupport` = `Kids.upkeep` x 0.5 (alimony
+  setting gone; `Portfolio.lastAlimony` now holds child support); `heartbreak` (-20 fading over 365 days) for kids who
+  stay when the partner dies (the partner takes the kids on a breakup, so only death leaves kids behind). Kids:
+  UPKEEP child 750 / teen 1250, `LOOKS` 4 pictures per stage `<stage>_<n>` (Renewed's art), `neutralSkills` for ADHD /
+  Loner / Homebody (`KidSkills` Hyperfocus, SelfReliant, Careful, BigIdeas, Independent, KeepsWatch). Tenant traits
+  `costly` (seven illness traits, neutral). No spouse tariff. 53 icons from Renewed are in `graphics` and
+  `art-source/icons/<key>.png` (a png wins over our jpg in `icons.py build`).

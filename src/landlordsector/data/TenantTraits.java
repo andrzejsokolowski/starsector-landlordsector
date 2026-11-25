@@ -55,6 +55,11 @@ public final class TenantTraits {
         public String officerSkill, adminSkill;
         /** 1.8.0: added to what a kid learned. */
         public int training;
+        /**
+         * 1.16.0 (LLS-46, from Landlordsector Renewed): an illness or disability. Neither good nor bad (no screening
+         * filter, no flaw skill), but it still costs happiness and health; the tooltip says so.
+         */
+        public boolean costly;
     }
 
     private static Map<String, Def> defs = Collections.emptyMap();
@@ -97,6 +102,7 @@ public final class TenantTraits {
                 d.officerSkill = t.has("officerSkill") && !t.isNull("officerSkill") ? t.optString("officerSkill") : null;
                 d.adminSkill = t.has("adminSkill") && !t.isNull("adminSkill") ? t.optString("adminSkill") : null;
                 d.training = t.optInt("training", 0);
+                d.costly = t.optBoolean("costly", false);
                 map.put(d.id, d);
             }
         }

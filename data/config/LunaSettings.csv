@@ -8,6 +8,5 @@ lls_iconSize,Home icon size,Int,60,,"Size of the condition icons under each home
 lls_header_family,Family Header,Header,Family,,,,,
 lls_playerSex,Your sex,Radio,From your character,"From your character, Male, Female","Who you can marry and whether your kids call you Mom or Dad. Your portrait stays the same.",,,
 lls_growUpCycles,Cycles to grow up,Int,5,,"How many cycles your children take to grow up.",1,30,
-lls_alimony,Alimony per child,Int,5000,,"Credits you pay each month for every child who left with a former partner, until they grow up.",0,1000000,
 lls_header_other,Other Header,Header,Other,,,,,
 lls_kaysaarsDemise,Kaysaar's Demise,Boolean,false,,"With AoTD Vaults of Knowledge: you can marry Sophia Anderson once she is on your research council.",,,

@@ -251,6 +251,7 @@ public final class Tips {
         if (d.homeShift > 0) add(out, "Wants a home " + d.homeShift + " size bigger than they can comfortably pay for", null);
         if (d.homeShift < 0) add(out, "Happy with a home " + (-d.homeShift) + " size smaller than they can pay for", null);
         if (d.criminal) add(out, "A criminal: hates the police and anything that spies on them", "-");
+        if (d.costly) add(out, "Costs more to keep happy and healthy", null);
         if (d.health != 0f) add(out, signed(d.health) + " health", d.health > 0 ? "+" : "-");
         for (java.util.Map.Entry<String, Float> e : d.levels.entrySet()) {
             landlordsector.data.Environment.Score sc = landlordsector.data.Environment.score(e.getKey());

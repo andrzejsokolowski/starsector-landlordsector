@@ -52,8 +52,6 @@ public final class Settings {
 
     /** 1.2.0: cycles a child takes to grow up. */
     public static final int DEFAULT_GROW_UP_CYCLES = 5;
-    /** 1.2.0: alimony per child per month while they grow up. */
-    public static final int DEFAULT_ALIMONY = 5000;
 
     public static int growUpCycles() {
         try {
@@ -64,14 +62,6 @@ public final class Settings {
         }
     }
 
-    public static float alimony() {
-        try {
-            Integer i = LunaSettings.getInt(MOD_ID, "lls_alimony");
-            return i == null ? DEFAULT_ALIMONY : Math.max(0, i);
-        } catch (Throwable t) {
-            return DEFAULT_ALIMONY;
-        }
-    }
 
     /**
      * "Kaysaar's Demise" (Andrzej, 0.3.8), off by default. 1.2.2 (Andrzej): with AoTD, Sophia Anderson can marry you

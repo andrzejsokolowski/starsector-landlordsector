@@ -1,3 +1,24 @@
+Version 1.16.0 (2026-11-25)
+- New Family page in the Manage screen, next to Real estate: your homes with family, your wife or husband, proposals, your kids and the home's events. The Real estate page's Family tab has a button to it
+- Kids get a first name of their own and the surname of the parent who raises them, no more Junior. A Use your surname button gives them yours (with a one-word name they become your Junior). Renaming them still works
+- A divorce no longer sells the home: it stays yours, and your former wife or husband is owed half of what it is worth, minus what is left of its mortgage, at the end of the month
+- Alimony is now child support: half of what the kid would cost at home. The alimony setting is gone
+- A child costs 750 a month and a teen 1,250 (were 1,500 and 2,500)
+- No more tariff break on the market where your wife or husband lives
+- A proposal to someone who isn't with you works 15% of the time, and after a no they want to be asked in person. Officers in your fleet are always with you, administrators when your fleet is at their colony
+- A new wife or husband is much happier for 6 months, fading over the next 6, and won't leave you in that time
+- Your wife or husband at home keeps the home repaired. You get a warning below 25% and below 10% condition, and a condemned home gives you 30 days to repair it before they leave
+- Events read as your wife's or husband's: no graffiti, promotions or lost jobs for them, only a Zealot wrecks machinery for Ludd, their own words on big events, and "Your wife Mira's" reads right
+- Kids who stay when your wife or husband dies may take it hard and be unhappy for about a cycle
+- Kids' happiness has a tooltip, babies and toddlers say when their traits come, and a kid with more than 3 traits shows the rest as +N
+- Pollen allergy, Sensitive lungs, Sickly, Asthma, Allergies, Weak lungs and Hard of hearing are no longer bad traits: screening no longer filters them out and grown kids get no flaw skill from them. They still cost happiness and health
+- ADHD, Loner and Homebody (was NEET) are no longer bad traits. Grown kids get mixed skills from them: Hyperfocus (was ADHD), Big ideas, Self-reliant, Independent, Careful and Keeps an eye on things
+- Kid pictures come in four clothes colors per age, picked at random
+- 53 repainted trait and home icons
+- A kid who wants to be a local celebrity talks about stage shows, not looks
+- Supported game version: 0.98.5a-RC8
+- The icons, the kid pictures and these family changes come from Landlordsector Renewed by Wisp
+
 Version 1.15.2 (2026-11-21)
 - Likes count once per home feature: a Gardener in a Leafy home and a Loves water tenant in a Seaside home now get +8 happiness, not +16
 - Hates count once too: criminals on a colony with a spy agency and allergic tenants next to the AoTD Garden of Elysium now lose 15 happiness, not 30

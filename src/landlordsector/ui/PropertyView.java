@@ -213,6 +213,39 @@ public abstract class PropertyView extends Canvas {
         }
     }
 
+    /** The home's events, newest first, the event part in red or green (1.16.0: shared by the Family page). */
+    protected void homeLog(landlordsector.Property p, float x, float y0, float w) {
+        List<String> log = p.log();
+        if (log.isEmpty()) {
+            text("Nothing yet.", Misc.getGrayColor(), x, y0, w);
+            return;
+        }
+        float y = y0;
+        for (int i = log.size() - 1; i >= 0 && y < height - 40f; i--) {
+            String[] parts = log.get(i).split("\t", -1);
+            String date, colored, rest;
+            Boolean good = null;
+            if (parts.length == 4) {
+                good = "+".equals(parts[0]) ? Boolean.TRUE : ("-".equals(parts[0]) ? Boolean.FALSE : null);
+                date = parts[1];
+                colored = parts[2];
+                rest = parts[3];
+            } else {
+                // Entries written before 0.3.2: "date  text".
+                date = "";
+                colored = "";
+                rest = log.get(i);
+            }
+            if (!date.isEmpty()) {
+                text(date, Misc.getGrayColor(), x, y, w);
+                y += 16f;
+            }
+            String all = colored + rest;
+            int n = good == null ? 0 : colored.length();
+            y += wrapped(all, n, landlordsector.Notify.color(good), Misc.getTextColor(), x, y, w) + 6f;
+        }
+    }
+
     public static Color traitColor(Boolean good) {
         if (good == null) return Misc.getTextColor();
         return good ? Misc.getPositiveHighlightColor() : Misc.getNegativeHighlightColor();

@@ -78,24 +78,124 @@ public final class KidSkills {
         }
     }
 
-    // ---- Bad officer skills ----
+    // ---- Mixed skills from ADHD, Loner and Homebody (1.16.0, LLS-46, numbers from Landlordsector Renewed) ----
 
-    public static class Adhd extends Ship {
+    /** lls_adhd, shown as Hyperfocus: ADHD is no flaw any more. */
+    public static class Hyperfocus extends Ship {
         @Override
         public void apply(MutableShipStatsAPI stats, HullSize hullSize, String id, float level) {
-            stats.getAutofireAimAccuracy().modifyMult(id, 0.75f);
+            stats.getBallisticRoFMult().modifyMult(id, 1.1f);
+            stats.getEnergyRoFMult().modifyMult(id, 1.1f);
+            stats.getPeakCRDuration().modifyMult(id, 0.85f);
         }
 
         @Override
         public void unapply(MutableShipStatsAPI stats, HullSize hullSize, String id) {
-            stats.getAutofireAimAccuracy().unmodify(id);
+            stats.getBallisticRoFMult().unmodify(id);
+            stats.getEnergyRoFMult().unmodify(id);
+            stats.getPeakCRDuration().unmodify(id);
         }
 
         @Override
         public String getEffectDescription(float level) {
-            return "-25% autofire aim accuracy";
+            return "+10% ballistic and energy weapon rate of fire, -15% peak performance time";
         }
     }
+
+    public static class SelfReliant extends Ship {
+        @Override
+        public void apply(MutableShipStatsAPI stats, HullSize hullSize, String id, float level) {
+            stats.getCombatWeaponRepairTimeMult().modifyMult(id, 0.75f);
+            stats.getCombatEngineRepairTimeMult().modifyMult(id, 0.75f);
+        }
+
+        @Override
+        public void unapply(MutableShipStatsAPI stats, HullSize hullSize, String id) {
+            stats.getCombatWeaponRepairTimeMult().unmodify(id);
+            stats.getCombatEngineRepairTimeMult().unmodify(id);
+        }
+
+        @Override
+        public String getEffectDescription(float level) {
+            return "Weapons and engines are repaired 25% faster in combat";
+        }
+    }
+
+    public static class Careful extends Ship {
+        @Override
+        public void apply(MutableShipStatsAPI stats, HullSize hullSize, String id, float level) {
+            stats.getWeaponDamageTakenMult().modifyMult(id, 0.85f);
+            stats.getEngineDamageTakenMult().modifyMult(id, 0.85f);
+        }
+
+        @Override
+        public void unapply(MutableShipStatsAPI stats, HullSize hullSize, String id) {
+            stats.getWeaponDamageTakenMult().unmodify(id);
+            stats.getEngineDamageTakenMult().unmodify(id);
+        }
+
+        @Override
+        public String getEffectDescription(float level) {
+            return "-15% damage to weapons and engines";
+        }
+    }
+
+    public static class BigIdeas extends Colony {
+        @Override
+        public void apply(MarketAPI market, String id, float level) {
+            market.getIncomeMult().modifyMult(id, 1.1f, "Big ideas");
+            market.getUpkeepMult().modifyMult(id, 1.1f, "Big ideas");
+        }
+
+        @Override
+        public void unapply(MarketAPI market, String id) {
+            market.getIncomeMult().unmodify(id);
+            market.getUpkeepMult().unmodify(id);
+        }
+
+        @Override
+        public String getEffectDescription(float level) {
+            return "+10% colony income, +10% colony upkeep";
+        }
+    }
+
+    public static class Independent extends Colony {
+        @Override
+        public void apply(MarketAPI market, String id, float level) {
+            market.getStability().modifyFlat(id, 1f, "Independent governor");
+            market.getAccessibilityMod().modifyFlat(id, -0.05f, "Independent governor");
+        }
+
+        @Override
+        public void unapply(MarketAPI market, String id) {
+            market.getStability().unmodify(id);
+            market.getAccessibilityMod().unmodifyFlat(id);
+        }
+
+        @Override
+        public String getEffectDescription(float level) {
+            return "+1 stability, -5% accessibility";
+        }
+    }
+
+    public static class KeepsWatch extends Colony {
+        @Override
+        public void apply(MarketAPI market, String id, float level) {
+            market.getHazard().modifyFlat(id, -0.05f, "Governor keeps an eye on things");
+        }
+
+        @Override
+        public void unapply(MarketAPI market, String id) {
+            market.getHazard().unmodify(id);
+        }
+
+        @Override
+        public String getEffectDescription(float level) {
+            return "-5% hazard rating";
+        }
+    }
+
+    // ---- Bad officer skills ----
 
     public static class Lazy extends Ship {
         @Override

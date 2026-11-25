@@ -31,7 +31,8 @@ public final class Kids {
     /** Your spouse's happiness per kid at home, by stage (a teen rolls help or trouble). */
     public static final float BURDEN_BABY = -5f, BURDEN_TODDLER = -8f, BURDEN_CHILD = -3f, TEEN_SWING = 4f;
     /** What each kid at home costs a month, by stage. Adults work and cost nothing. */
-    public static final float UPKEEP_BABY = 500f, UPKEEP_TODDLER = 500f, UPKEEP_CHILD = 1500f, UPKEEP_TEEN = 2500f;
+    // 1.16.0 (LLS-46, from Landlordsector Renewed): a child 750 and a teen 1,250 a month, were 1,500 and 2,500.
+    public static final float UPKEEP_BABY = 500f, UPKEEP_TODDLER = 500f, UPKEEP_CHILD = 750f, UPKEEP_TEEN = 1250f;
 
     /** Teen lessons: price, how many, and how far apart. */
     public static final float LESSON_COST = 25000f;
@@ -62,11 +63,11 @@ public final class Kids {
     public static final String TUTORED = "lls_tutored", BUSINESS = "lls_business_school";
 
     /**
-     * Portrait variants per stage and sex (graphics/landlordsector/portraits/kids/<stage>_<f|m>_<n>.png). Andrzej,
-     * 2026-11-17: a kid in a small spacesuit with a dark visor, no face ("race ambiguous"), one per sex; adults show
-     * the random portrait from your faction picked at birth.
+     * Portrait variants per stage (graphics/landlordsector/portraits/kids/<stage>_<n>.png): a kid seen from behind, no
+     * face (2026-11-17). 1.16.0 (LLS-46): Landlordsector Renewed's four clothes colors per stage replace the one boy and
+     * one girl picture ("theirs are better"). Adults show the random portrait from your faction picked at birth.
      */
-    public static final int LOOKS = 1;
+    public static final int LOOKS = 4;
 
     private Kids() {
     }
@@ -376,6 +377,21 @@ public final class Kids {
         for (String id : c.traits()) {
             TenantTraits.Def d = TenantTraits.get(id);
             if (d == null || !Boolean.TRUE.equals(d.good)) continue;
+            String s = officer ? d.officerSkill : d.adminSkill;
+            if (s != null && !out.contains(s)) out.add(s);
+        }
+        return out;
+    }
+
+    /**
+     * 1.16.0 (LLS-46, from Landlordsector Renewed): the mixed skills of neutral traits (ADHD gives Hyperfocus or Big
+     * ideas, Loner and Homebody theirs), each once.
+     */
+    public static List<String> neutralSkills(Child c, boolean officer) {
+        List<String> out = new ArrayList<>();
+        for (String id : c.traits()) {
+            TenantTraits.Def d = TenantTraits.get(id);
+            if (d == null || d.good != null) continue;
             String s = officer ? d.officerSkill : d.adminSkill;
             if (s != null && !out.contains(s)) out.add(s);
         }
@@ -713,15 +729,19 @@ public final class Kids {
         return c.look >= 0 ? c.look : random.nextInt(LOOKS);
     }
 
-    /** settings.json "graphics" category that lists the kid portraits, keyed <stage>_<f|m>_<n>. */
+    /**
+     * settings.json "graphics" category that lists the kid portraits, keyed <stage>_<n>. 1.16.0 (LLS-46): the four
+     * pictures per stage from Landlordsector Renewed, picked at random and never by boy or girl.
+     */
     public static final String PORTRAITS = "lls_kid_portraits";
 
     /** The picture for this stage, or null when the mod lists none (then the old one stays). */
     public static String portrait(Child c) {
         int s = stageOf(c);
         if (s >= ADULT) return c.adultPortrait;
-        int n = 1 + Math.floorMod(c.look < 0 ? 0 : c.look, LOOKS);
-        String key = STAGE_KEY[s] + "_" + (c.female ? "f" : "m") + "_" + n;
+        // The kid's id spreads kids from older saves (all look 0) over the four pictures; a kid keeps one across stages.
+        int n = 1 + Math.floorMod((c.look < 0 ? 0 : c.look) + java.util.Objects.hashCode(c.id), LOOKS);
+        String key = STAGE_KEY[s] + "_" + n;
         try {
             String path = Global.getSettings().getSpriteName(PORTRAITS, key);
             return path == null || path.isEmpty() || !path.endsWith(".png") ? null : path;

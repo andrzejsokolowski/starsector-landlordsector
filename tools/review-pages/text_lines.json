@@ -335,13 +335,6 @@
 			"area": "Breaking up"
 		},
 		{
-			"id": "f_tip_divorce",
-			"version": "1.2.0",
-			"line": "The house is sold and you get half. The kids go with her.",
-			"when": "Tooltip on \"Yes. It's over.\" when you are married.",
-			"area": "Breaking up"
-		},
-		{
 			"id": "f_tip_breakup_kids",
 			"version": "1.2.0",
 			"line": "Her kids go with her.",
@@ -360,20 +353,6 @@
 			"version": "1.2.0",
 			"line": "Fine. I'll pack my things.",
 			"when": "Their answer when you break up (not married).",
-			"area": "Breaking up"
-		},
-		{
-			"id": "f_broke_up",
-			"version": "1.2.0",
-			"line": "You broke up with Mira Okoye. She took the kids with her.",
-			"when": "Dialog, home log and intel after a break-up (the kids part only if any).",
-			"area": "Breaking up"
-		},
-		{
-			"id": "f_divorced",
-			"version": "1.2.0",
-			"line": "You and Mira Okoye are divorced. She took the kids with her. Leafy Cottage was sold. Your half: 210,000 credits.",
-			"when": "Dialog and intel message after a divorce.",
 			"area": "Breaking up"
 		},
 		{
@@ -468,13 +447,6 @@
 			"area": "Your kids"
 		},
 		{
-			"id": "f_kid_growth",
-			"version": "1.2.0",
-			"line": "Everyone at school says I'm the prettiest.",
-			"when": "Your child greets you when you open their comm link: wants to be a local celebrity.",
-			"area": "Your kids"
-		},
-		{
 			"id": "f_kid_hi",
 			"version": "1.2.0",
 			"line": "Hi, Dad!",
@@ -514,13 +486,6 @@
 			"version": "1.2.0",
 			"line": "That 007 movie is pretty cool, eh?",
 			"when": "Option in your child's comm link: toward being an agent. Only with Nexerelin.",
-			"area": "Your kids"
-		},
-		{
-			"id": "f_kopt_growth",
-			"version": "1.2.0",
-			"line": "Wow, you're so pretty!",
-			"when": "Option in your child's comm link: toward being a local celebrity (colony growth).",
 			"area": "Your kids"
 		},
 		{
@@ -790,13 +755,6 @@
 			"area": "Real estate tab"
 		},
 		{
-			"id": "f_alimony_line",
-			"version": "1.2.0",
-			"line": "2 children live with a former partner. Alimony: 10,000 credits a month.",
-			"when": "Real estate tab: family section when you pay alimony.",
-			"area": "Real estate tab"
-		},
-		{
 			"id": "f_tab_family",
 			"version": "1.2.0",
 			"line": "Family",
@@ -867,38 +825,10 @@
 			"area": "Real estate tab"
 		},
 		{
-			"id": "f_month_family_v2",
-			"version": "1.3.0",
-			"line": "Last month: rent 12,000 credits, ..., your kids sent home 2,000 credits, alimony 5,000 credits",
-			"when": "Real estate tab: the last-month line at the top (the family parts only when they apply).",
-			"area": "Monthly, settings and names"
-		},
-		{
 			"id": "f_msg_kids_pay",
 			"version": "1.2.0",
 			"line": "Sent home by your kids: 2,000 credits",
 			"when": "Monthly real estate message: money from kids who work in the mines.",
-			"area": "Monthly, settings and names"
-		},
-		{
-			"id": "f_msg_alimony",
-			"version": "1.2.0",
-			"line": "Alimony: 5,000 credits",
-			"when": "Monthly real estate message.",
-			"area": "Monthly, settings and names"
-		},
-		{
-			"id": "f_report_alimony",
-			"version": "1.2.0",
-			"line": "Alimony for Tomas",
-			"when": "Monthly income report (the colony report screen): one row per child you pay alimony for.",
-			"area": "Monthly, settings and names"
-		},
-		{
-			"id": "f_tariff_family",
-			"version": "1.2.0",
-			"line": "Your family lives here",
-			"when": "Tooltip of the market's tariff: why it is 0% where your wife or husband lives.",
 			"area": "Monthly, settings and names"
 		},
 		{
@@ -920,13 +850,6 @@
 			"version": "1.2.0",
 			"line": "Cycles to grow up",
 			"when": "LunaLib settings: name. Description: \"How many cycles your children take to grow up.\"",
-			"area": "Monthly, settings and names"
-		},
-		{
-			"id": "f_set_alimony",
-			"version": "1.2.0",
-			"line": "Alimony per child",
-			"when": "LunaLib settings: name. Description: \"Credits you pay each month for every child who left with a former partner, until they grow up.\"",
 			"area": "Monthly, settings and names"
 		},
 		{
@@ -1581,13 +1504,6 @@
 			"area": "Kids growing up"
 		},
 		{
-			"id": "k_tab_no_traits",
-			"version": "1.8.0",
-			"line": "Traits come when he starts school.",
-			"when": "Kid row on the Family tab, in place of the traits, for babies and toddlers.",
-			"area": "Kids growing up"
-		},
-		{
 			"id": "k_month_raising",
 			"version": "1.8.0",
 			"line": "..., raising your kids {3,000}, ...",
@@ -1847,13 +1763,6 @@
 			"area": "Kid traits and skills"
 		},
 		{
-			"id": "kt_neet",
-			"version": "1.8.0",
-			"line": "NEET",
-			"when": "Kid trait name. Comes from teens on a bad location, or at random.",
-			"area": "Kid traits and skills"
-		},
-		{
 			"id": "kt_bullied",
 			"version": "1.8.0",
 			"line": "Bullied",
@@ -1907,13 +1816,6 @@
 			"version": "1.9.0",
 			"line": "As an administrator, starts with {Slacker}",
 			"when": "Kid trait tooltip for bad traits, in red. 1.9.0: only on kids' traits.",
-			"area": "Kid traits and skills"
-		},
-		{
-			"id": "ks_lls_adhd",
-			"version": "1.8.0",
-			"line": "ADHD | Could never sit still in class. | -25% autofire aim accuracy",
-			"when": "Skill of a grown kid (name | description | effect), on the officer or administrator. Bad ones come from bad traits and a hard childhood (below 35 and 20 average happiness).",
 			"area": "Kid traits and skills"
 		},
 		{
@@ -3625,13 +3527,6 @@
 			"area": "Mortgages (1.14.0)"
 		},
 		{
-			"id": "m_divorce",
-			"version": "1.14.0",
-			"line": "The sale did not cover the mortgage. You paid 3,000.",
-			"when": "End of the divorce message when the sale of your home was less than the mortgage left (otherwise it says \"Your half: ...\").",
-			"area": "Mortgages (1.14.0)"
-		},
-		{
 			"id": "a_lls_first_home",
 			"version": "1.15.0",
 			"line": "Buy your first home.",
@@ -3791,6 +3686,531 @@
 			"line": "The police raid one of your tenants.",
 			"when": "Achievements - Renewed, the condition of \"He Did Not Do Nothing, In Fact.\" (secret): shown when the player turns on its setting to see conditions instead of hints, and under the name once done. The name and hint are Andrzej's.",
 			"area": "Achievements (1.15.0)"
+		},
+		{
+			"id": "r_kid_celebrity_say",
+			"version": "1.16.0",
+			"line": "I got the lead in the school play. Come and watch!",
+			"when": "A kid who wants to be a local celebrity greets you in the comm directory (was \"Everyone at school says I'm the prettiest.\").",
+			"area": "Renewed picks: kids and traits"
+		},
+		{
+			"id": "r_kid_celebrity_opt",
+			"version": "1.16.0",
+			"line": "You were good up on that stage.",
+			"when": "Your option in a kid's comm dialog that steers them toward becoming a local celebrity (was \"Wow, you're so pretty!\").",
+			"area": "Renewed picks: kids and traits"
+		},
+		{
+			"id": "r_trait_costly",
+			"version": "1.16.0",
+			"line": "Costs more to keep happy and healthy",
+			"when": "Tooltip line on Pollen allergy, Sensitive lungs, Sickly, Asthma, Allergies, Weak lungs and Hard of hearing. They are no longer bad traits.",
+			"area": "Renewed picks: kids and traits"
+		},
+		{
+			"id": "r_trait_homebody",
+			"version": "1.16.0",
+			"line": "Homebody",
+			"when": "Teen trait name, was NEET. Neutral now: +4 happiness, a bit worse at what they want to become.",
+			"area": "Renewed picks: kids and traits"
+		},
+		{
+			"id": "r_skill_hyperfocus",
+			"version": "1.16.0",
+			"line": "Hyperfocus | Locks onto one thing and won't let go. | +10% ballistic and energy weapon rate of fire, -15% peak performance time",
+			"when": "Skill of a grown officer who had ADHD: name | description | effect (was ADHD, -25% autofire aim accuracy).",
+			"area": "Renewed picks: kids and traits"
+		},
+		{
+			"id": "r_skill_self_reliant",
+			"version": "1.16.0",
+			"line": "Self-reliant | Fixes things without waiting for help. | Weapons and engines are repaired 25% faster in combat",
+			"when": "Skill of a grown officer who was a Loner: name | description | effect.",
+			"area": "Renewed picks: kids and traits"
+		},
+		{
+			"id": "r_skill_careful",
+			"version": "1.16.0",
+			"line": "Careful | Checks everything twice. | -15% damage to weapons and engines",
+			"when": "Skill of a grown officer who was a Homebody: name | description | effect.",
+			"area": "Renewed picks: kids and traits"
+		},
+		{
+			"id": "r_skill_big_ideas",
+			"version": "1.16.0",
+			"line": "Big ideas | Always has a plan for something bigger. | +10% colony income, +10% colony upkeep",
+			"when": "Skill of a grown administrator who had ADHD (was Slacker): name | description | effect.",
+			"area": "Renewed picks: kids and traits"
+		},
+		{
+			"id": "r_skill_independent",
+			"version": "1.16.0",
+			"line": "Independent | Runs the colony with a small, quiet staff. | +1 stability, -5% accessibility",
+			"when": "Skill of a grown administrator who was a Loner (was Unpopular): name | description | effect.",
+			"area": "Renewed picks: kids and traits"
+		},
+		{
+			"id": "r_skill_keeps_watch",
+			"version": "1.16.0",
+			"line": "Keeps an eye on things | Rarely leaves the colony. Hears about problems early. | -5% hazard rating",
+			"when": "Skill of a grown administrator who was a Homebody (was Slacker): name | description | effect.",
+			"area": "Renewed picks: kids and traits"
+		},
+		{
+			"id": "r_kid_hard",
+			"version": "1.16.0",
+			"line": "Your wife, Mira Okoye, died. Ada takes it hard.",
+			"when": "Added to the line when your wife or husband dies and a kid at home takes it hard (half of them do): -20 happiness, fading over a cycle. \"Ada and Ben take it hard.\" for two.",
+			"area": "Renewed picks: kids and traits"
+		},
+		{
+			"id": "r_kid_tip_hard",
+			"version": "1.16.0",
+			"line": "Took a loss hard: -18",
+			"when": "Kid's happiness tooltip on the Family page while the loss still hurts.",
+			"area": "Renewed picks: kids and traits"
+		},
+		{
+			"id": "r_tip_breakup_kids",
+			"version": "1.16.0",
+			"line": "Ada and Ben leave with Mira Okoye. You pay child support until they come of age.",
+			"when": "Tooltip of \"Yes. It's over.\" in your wife's comm dialog. \"until she comes of age\" for one kid.",
+			"area": "Renewed picks: breakups and money"
+		},
+		{
+			"id": "r_tip_breakup_home",
+			"version": "1.16.0",
+			"line": "Mira Okoye is owed 210,000 credits for her share of the home, due at the end of the month. The home stays yours.",
+			"when": "Same tooltip, after the kids: half of what the home is worth before the broker fee, minus what is left of its mortgage.",
+			"area": "Renewed picks: breakups and money"
+		},
+		{
+			"id": "r_divorced",
+			"version": "1.16.0",
+			"line": "You and Mira Okoye are divorced. She took Ada and Ben with her. Her share of Leafy Cottage, 210,000 credits, comes due at the end of the month.",
+			"when": "Home log and intel message when you divorce (was: the home sold, you get half).",
+			"area": "Renewed picks: breakups and money"
+		},
+		{
+			"id": "r_left_you",
+			"version": "1.16.0",
+			"line": "Your wife, Mira Okoye, divorced you. She took Ada with her. Her share of Leafy Cottage, 210,000 credits, comes due at the end of the month.",
+			"when": "Same, when she leaves you because she is unhappy.",
+			"area": "Renewed picks: breakups and money"
+		},
+		{
+			"id": "r_report_support",
+			"version": "1.16.0",
+			"line": "Child support for Ada Okoye",
+			"when": "Monthly income report: one row per kid who left with a former spouse, until they grow up (was \"Alimony for\").",
+			"area": "Renewed picks: breakups and money"
+		},
+		{
+			"id": "r_report_share",
+			"version": "1.16.0",
+			"line": "Mira Okoye's share of the home",
+			"when": "Monthly income report: the share of the home owed after a divorce, paid once.",
+			"area": "Renewed picks: breakups and money"
+		},
+		{
+			"id": "r_msg_support",
+			"version": "1.16.0",
+			"line": "Child support you paid: 625 credits",
+			"when": "\"Real estate this month\" message (was \"Alimony:\").",
+			"area": "Renewed picks: breakups and money"
+		},
+		{
+			"id": "r_msg_share",
+			"version": "1.16.0",
+			"line": "A former spouse's share of a home: 210,000 credits",
+			"when": "\"Real estate this month\" message, the month a share was paid.",
+			"area": "Renewed picks: breakups and money"
+		},
+		{
+			"id": "r_month_line",
+			"version": "1.16.0",
+			"line": "Last month: rent 12,000 credits, ..., child support 625 credits, a former spouse's share of a home 210,000 credits.",
+			"when": "The gray line at the top of the Real estate page (was \", alimony\").",
+			"area": "Renewed picks: breakups and money"
+		},
+		{
+			"id": "r_support_line",
+			"version": "1.16.0",
+			"line": "2 children live with a former spouse. Child support: 1,000 credits a month.",
+			"when": "Under the summary on the Family page. Child support is half of what the kid would cost at home.",
+			"area": "Renewed picks: breakups and money"
+		},
+		{
+			"id": "r_afar_no",
+			"version": "1.16.0",
+			"line": "Lena Orr: \"Not like this. Ask me in person.\"",
+			"when": "Family page message when a proposal to someone who isn't with you fails (85% of the time). Officers in your fleet and Sophia are always with you; an administrator is when your fleet is at their colony.",
+			"area": "Renewed picks: your wife or husband"
+		},
+		{
+			"id": "r_afar_reason",
+			"version": "1.16.0",
+			"line": "Ask in person.",
+			"when": "Red text on the candidate's row, Propose greyed out, after a no from afar, until you meet them.",
+			"area": "Renewed picks: your wife or husband"
+		},
+		{
+			"id": "r_afar_away",
+			"version": "1.16.0",
+			"line": "Administrator, governed 12 of 12 months. On Orrstead. Unlikely to accept from afar",
+			"when": "Second line of a candidate's row when they aren't with you. \"Wants to be asked in person\" after a no.",
+			"area": "Renewed picks: your wife or husband"
+		},
+		{
+			"id": "r_afar_tip_away",
+			"version": "1.16.0",
+			"line": "Lena Orr is on Orrstead. Proposals made from afar rarely succeed. Go there and ask in person.",
+			"when": "Propose button tooltip for someone who isn't with you.",
+			"area": "Renewed picks: your wife or husband"
+		},
+		{
+			"id": "r_afar_tip_no",
+			"version": "1.16.0",
+			"line": "Lena Orr turned down your proposal from afar. Go to Orrstead and ask in person.",
+			"when": "Propose button tooltip after a no from afar.",
+			"area": "Renewed picks: your wife or husband"
+		},
+		{
+			"id": "r_nre",
+			"version": "1.16.0",
+			"line": "New relationship energy (+30)",
+			"when": "Your wife or husband's happiness tooltip: +30 for the first 6 months, fading to nothing at a cycle. They won't leave you in the first 6 months.",
+			"area": "Renewed picks: your wife or husband"
+		},
+		{
+			"id": "r_wife_footer",
+			"version": "1.16.0",
+			"line": "A happy wife makes home a good place to come back to. An unhappy one may end things.",
+			"when": "Last line of your wife or husband's happiness tooltip (tenants keep theirs).",
+			"area": "Renewed picks: your wife or husband"
+		},
+		{
+			"id": "r_ev_mess",
+			"version": "1.16.0",
+			"line": "Your wife, Mira Okoye, made a filthy mess of Leafy Cottage.",
+			"when": "Event, her wording (tenants: \"left $home a filthy mess\").",
+			"area": "Renewed picks: your wife or husband"
+		},
+		{
+			"id": "r_ev_window",
+			"version": "1.16.0",
+			"line": "Your wife, Mira Okoye, broke a window at Leafy Cottage moving furniture.",
+			"when": "Event, her wording (tenants: \"smashed a window\").",
+			"area": "Renewed picks: your wife or husband"
+		},
+		{
+			"id": "r_ev_quietest",
+			"version": "1.16.0",
+			"line": "The neighbors say your wife Mira Okoye is the quietest person on the street.",
+			"when": "Event, her wording (tenants: \"quietest tenant\").",
+			"area": "Renewed picks: your wife or husband"
+		},
+		{
+			"id": "r_ev_recommended",
+			"version": "1.16.0",
+			"line": "Your wife, Mira Okoye, has been telling the neighbors good things about you.",
+			"when": "Event, her wording (tenants: \"you are a good landlord\").",
+			"area": "Renewed picks: your wife or husband"
+		},
+		{
+			"id": "r_ev_sick",
+			"version": "1.16.0",
+			"line": "Your wife, Mira Okoye, fell sick and spent a few days in bed.",
+			"when": "Event, her wording (tenants: \"missed work\").",
+			"area": "Renewed picks: your wife or husband"
+		},
+		{
+			"id": "r_ev_mugged_away",
+			"version": "1.16.0",
+			"line": "Your wife, Sophia Anderson, was mugged on a visit home.",
+			"when": "Event for Sophia, who keeps her research post.",
+			"area": "Renewed picks: your wife or husband"
+		},
+		{
+			"id": "r_ev_locked_away",
+			"version": "1.16.0",
+			"line": "Your wife, Sophia Anderson, came home for a few days, found the lock jammed and broke a window to get in.",
+			"when": "Event for Sophia.",
+			"area": "Renewed picks: your wife or husband"
+		},
+		{
+			"id": "r_ev_lock_away",
+			"version": "1.16.0",
+			"line": "The front door lock at Leafy Cottage broke.",
+			"when": "Event for Sophia (tenants: \"$tenant slept with a chair against the door\").",
+			"area": "Renewed picks: your wife or husband"
+		},
+		{
+			"id": "r_ev_nights",
+			"version": "1.16.0",
+			"line": "Your wife Mira Okoye's late nights kept the neighbors up again.",
+			"when": "Events starting \"$tenant's\" (was \"Your wife, Mira Okoye,'s\").",
+			"area": "Renewed picks: your wife or husband"
+		},
+		{
+			"id": "r_say_fire1",
+			"version": "1.16.0",
+			"line": "The kitchen caught fire. Everyone's out and fine. The kitchen isn't.",
+			"when": "What she says about a small fire (one of two).",
+			"area": "Renewed picks: your wife or husband"
+		},
+		{
+			"id": "r_say_fire2",
+			"version": "1.16.0",
+			"line": "Fire's out. Mostly. Someone should look at the wiring.",
+			"when": "What she says about a small fire (one of two).",
+			"area": "Renewed picks: your wife or husband"
+		},
+		{
+			"id": "r_say_hospital1",
+			"version": "1.16.0",
+			"line": "Doctors want to keep me a few more days.",
+			"when": "What she says from the hospital (one of two).",
+			"area": "Renewed picks: your wife or husband"
+		},
+		{
+			"id": "r_say_hospital2",
+			"version": "1.16.0",
+			"line": "I'm in the ward for a bit. Let you know when I get out.",
+			"when": "What she says from the hospital (one of two).",
+			"area": "Renewed picks: your wife or husband"
+		},
+		{
+			"id": "r_say_raid1",
+			"version": "1.16.0",
+			"line": "I swear that crate wasn't mine.",
+			"when": "What she says after a police raid (one of two).",
+			"area": "Renewed picks: your wife or husband"
+		},
+		{
+			"id": "r_say_raid2",
+			"version": "1.16.0",
+			"line": "Police tore the place apart. The door needs fixing.",
+			"when": "What she says after a police raid (one of two).",
+			"area": "Renewed picks: your wife or husband"
+		},
+		{
+			"id": "r_say_sabotage1",
+			"version": "1.16.0",
+			"line": "It had to be done. The Lord sees all.",
+			"when": "What a Zealot wife says after wrecking machinery (one of two).",
+			"area": "Renewed picks: your wife or husband"
+		},
+		{
+			"id": "r_say_sabotage2",
+			"version": "1.16.0",
+			"line": "The machines are silent now. Ludd be praised.",
+			"when": "Same (one of two).",
+			"area": "Renewed picks: your wife or husband"
+		},
+		{
+			"id": "r_say_furniture1",
+			"version": "1.16.0",
+			"line": "I got us some new furniture!",
+			"when": "What she says after buying furniture (one of two).",
+			"area": "Renewed picks: your wife or husband"
+		},
+		{
+			"id": "r_say_furniture2",
+			"version": "1.16.0",
+			"line": "Hope you like the new sofa. I didn't ask.",
+			"when": "Same (one of two).",
+			"area": "Renewed picks: your wife or husband"
+		},
+		{
+			"id": "r_care_low",
+			"version": "1.16.0",
+			"line": "Leafy Cottage is falling into disrepair. Repairs would cost 12,000 credits. If it is condemned, your wife Mira Okoye will leave you and take Ada.",
+			"when": "Home log and intel news when your family's home drops below 25% condition. Your wife or husband at home always gives the full monthly repair, so this needs accidents.",
+			"area": "Renewed picks: your wife or husband"
+		},
+		{
+			"id": "r_care_critical",
+			"version": "1.16.0",
+			"line": "Leafy Cottage is close to being condemned. Repairs would cost 18,000 credits. If it is condemned, your wife Mira Okoye will leave you and take Ada.",
+			"when": "Same, below 10%.",
+			"area": "Renewed picks: your wife or husband"
+		},
+		{
+			"id": "r_care_condemned",
+			"version": "1.16.0",
+			"line": "Leafy Cottage has been condemned. Unless it is repaired within 30 days, your wife Mira Okoye will leave you and take Ada. Repairs would cost 25,000 credits.",
+			"when": "Same, the day it is condemned (before, she left the same day).",
+			"area": "Renewed picks: your wife or husband"
+		},
+		{
+			"id": "r_page_tab",
+			"version": "1.16.0",
+			"line": "Family",
+			"when": "Tab name on the Manage screen, next to Real estate.",
+			"area": "Renewed picks: the Family page"
+		},
+		{
+			"id": "r_page_summary",
+			"version": "1.16.0",
+			"line": "2 homes with family: 1 spouse and 3 kids. Raising them costs 2,250 credits a month.",
+			"when": "Top line of the Family page.",
+			"area": "Renewed picks: the Family page"
+		},
+		{
+			"id": "r_page_empty",
+			"version": "1.16.0",
+			"line": "You don't live in any of your homes. Move into one on the Real estate page.",
+			"when": "Family page when you live nowhere and have no family.",
+			"area": "Renewed picks: the Family page"
+		},
+		{
+			"id": "r_page_row",
+			"version": "1.16.0",
+			"line": "Mira Okoye, 2 kids",
+			"when": "Second line of a home in the list on the left. \"You live here alone\" or \"1 kid\" otherwise.",
+			"area": "Renewed picks: the Family page"
+		},
+		{
+			"id": "r_page_row_repair",
+			"version": "1.16.0",
+			"line": "Needs repairs: 20%",
+			"when": "Same line in red after a repair warning. \"Condemned. Repair within 12 days\" when condemned.",
+			"area": "Renewed picks: the Family page"
+		},
+		{
+			"id": "r_page_wife_title",
+			"version": "1.16.0",
+			"line": "Your wife",
+			"when": "Heading above her card.",
+			"area": "Renewed picks: the Family page"
+		},
+		{
+			"id": "r_page_wife_since",
+			"version": "1.16.0",
+			"line": "Wife. Together 3 months.",
+			"when": "Her card, second line.",
+			"area": "Renewed picks: the Family page"
+		},
+		{
+			"id": "r_page_wife_visit",
+			"version": "1.16.0",
+			"line": "Last visited 4 days ago.",
+			"when": "Her card, third line. Sophia: \"Keeps her research post. Last visited today.\"",
+			"area": "Renewed picks: the Family page"
+		},
+		{
+			"id": "r_page_romantic",
+			"version": "1.16.0",
+			"line": "A Romantic bedroom makes a child likelier.",
+			"when": "Tooltip of \"Chance of a child each time you try: 25%.\" while the home has no upgrade that raises it.",
+			"area": "Renewed picks: the Family page"
+		},
+		{
+			"id": "r_page_needs_now",
+			"version": "1.16.0",
+			"line": "Another child needs happiness 50 and comfort 40. Now: 32 and 45.",
+			"when": "Under her card, in red, when the home doesn't meet the needs yet.",
+			"area": "Renewed picks: the Family page"
+		},
+		{
+			"id": "r_page_propose",
+			"version": "1.16.0",
+			"line": "Propose",
+			"when": "Heading of the list of officers and administrators when you live alone. Right of it: \"12 in your service\".",
+			"area": "Renewed picks: the Family page"
+		},
+		{
+			"id": "r_page_kids",
+			"version": "1.16.0",
+			"line": "Kids",
+			"when": "Heading of the kids' list.",
+			"area": "Renewed picks: the Family page"
+		},
+		{
+			"id": "r_page_kid_line",
+			"version": "1.16.0",
+			"line": "Toddler, 2 cycles old. No traits until school age.",
+			"when": "Second line of a baby's or toddler's row (was \"Traits come when he starts school.\" in the traits spot).",
+			"area": "Renewed picks: the Family page"
+		},
+		{
+			"id": "r_page_more_traits",
+			"version": "1.16.0",
+			"line": "2 more traits",
+			"when": "Tooltip title of the \"+2\" box when a kid has more than 3 traits; the box lists the hidden ones.",
+			"area": "Renewed picks: the Family page"
+		},
+		{
+			"id": "r_page_kid_home",
+			"version": "1.16.0",
+			"line": "Home: 55",
+			"when": "First line of a kid's happiness tooltip.",
+			"area": "Renewed picks: the Family page"
+		},
+		{
+			"id": "r_page_kid_wife",
+			"version": "1.16.0",
+			"line": "Your wife lives here: +15",
+			"when": "Kid's happiness tooltip.",
+			"area": "Renewed picks: the Family page"
+		},
+		{
+			"id": "r_page_kid_footer",
+			"version": "1.16.0",
+			"line": "A happy kid learns more, and a kid raised well is far less likely to die young. Your visits help.",
+			"when": "Last line of a kid's happiness tooltip.",
+			"area": "Renewed picks: the Family page"
+		},
+		{
+			"id": "r_page_surname",
+			"version": "1.16.0",
+			"line": "Use your surname",
+			"when": "Button on a kid's row when the kid doesn't carry your surname. With a one-word name: \"Use your name\" (makes them your Junior, the owner's note).",
+			"area": "Renewed picks: the Family page"
+		},
+		{
+			"id": "r_page_surname_tip",
+			"version": "1.16.0",
+			"line": "Changes Sam Okoye to Sam Pilot.",
+			"when": "Tooltip of that button. One-word name: \"Changes Sam Okoye to Oddisz Junior.\"",
+			"area": "Renewed picks: the Family page"
+		},
+		{
+			"id": "r_page_surname_done",
+			"version": "1.16.0",
+			"line": "Sam Okoye now goes by Sam Pilot.",
+			"when": "Family page message and home log after the button.",
+			"area": "Renewed picks: the Family page"
+		},
+		{
+			"id": "r_page_re_note",
+			"version": "1.16.0",
+			"line": "Your family is on the Family page of the Manage screen.",
+			"when": "Real estate page, Family tab of your home (it showed the family before).",
+			"area": "Renewed picks: the Family page"
+		},
+		{
+			"id": "r_page_re_button",
+			"version": "1.16.0",
+			"line": "Go to Family page",
+			"when": "Button under that line.",
+			"area": "Renewed picks: the Family page"
+		},
+		{
+			"id": "r_page_re_failed",
+			"version": "1.16.0",
+			"line": "If the Family page didn't open, its tab is at the top of the Manage screen.",
+			"when": "Message when the button could not switch the page.",
+			"area": "Renewed picks: the Family page"
+		},
+		{
+			"id": "r_baby_name",
+			"version": "1.16.0",
+			"line": "Your wife, Mira Okoye, gave birth to your son, Tomas Okoye.",
+			"when": "Birth message: a first name of their own and the parent's surname, no more \"Junior\". Rename in their comm dialog still works; a new first name alone keeps their surname.",
+			"area": "Renewed picks: the Family page"
 		}
 	]
 }

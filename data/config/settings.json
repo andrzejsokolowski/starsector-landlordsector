@@ -1,14 +1,22 @@
 {
 	"graphics": {
 		"lls_kid_portraits": {
-			"baby_m_1": "graphics/landlordsector/portraits/kids/baby_m_1.png",
-			"baby_f_1": "graphics/landlordsector/portraits/kids/baby_f_1.png",
-			"toddler_m_1": "graphics/landlordsector/portraits/kids/toddler_m_1.png",
-			"toddler_f_1": "graphics/landlordsector/portraits/kids/toddler_f_1.png",
-			"child_m_1": "graphics/landlordsector/portraits/kids/child_m_1.png",
-			"child_f_1": "graphics/landlordsector/portraits/kids/child_f_1.png",
-			"teen_m_1": "graphics/landlordsector/portraits/kids/teen_m_1.png",
-			"teen_f_1": "graphics/landlordsector/portraits/kids/teen_f_1.png"
+			"baby_1": "graphics/landlordsector/portraits/kids/baby_1.png",
+			"baby_2": "graphics/landlordsector/portraits/kids/baby_2.png",
+			"baby_3": "graphics/landlordsector/portraits/kids/baby_3.png",
+			"baby_4": "graphics/landlordsector/portraits/kids/baby_4.png",
+			"toddler_1": "graphics/landlordsector/portraits/kids/toddler_1.png",
+			"toddler_2": "graphics/landlordsector/portraits/kids/toddler_2.png",
+			"toddler_3": "graphics/landlordsector/portraits/kids/toddler_3.png",
+			"toddler_4": "graphics/landlordsector/portraits/kids/toddler_4.png",
+			"child_1": "graphics/landlordsector/portraits/kids/child_1.png",
+			"child_2": "graphics/landlordsector/portraits/kids/child_2.png",
+			"child_3": "graphics/landlordsector/portraits/kids/child_3.png",
+			"child_4": "graphics/landlordsector/portraits/kids/child_4.png",
+			"teen_1": "graphics/landlordsector/portraits/kids/teen_1.png",
+			"teen_2": "graphics/landlordsector/portraits/kids/teen_2.png",
+			"teen_3": "graphics/landlordsector/portraits/kids/teen_3.png",
+			"teen_4": "graphics/landlordsector/portraits/kids/teen_4.png"
 		}
 	}
 }

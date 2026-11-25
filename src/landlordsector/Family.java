@@ -66,7 +66,19 @@ public final class Family {
     public static final float BIRTH_DAYS = 30f;
     /** Andrzej: "a small 2% chance of her rejecting you with a 'Actually, I'm cheating on you'". */
     public static final float CHEAT_CHANCE = 0.02f;
+    /**
+     * 1.16.0 (LLS-46, Landlordsector Renewed's way): a divorce no longer sells the home. Your former wife or husband is
+     * owed this share of what it is worth (before the broker fee, minus what is left of its mortgage), paid with the
+     * month's report.
+     */
     public static final float DIVORCE_SHARE = 0.5f;
+    /** 1.16.0 (LLS-46): child support replaces alimony: half of what the kid would cost at home. */
+    public static final float SUPPORT_SHARE = 0.5f;
+    /**
+     * 1.16.0 (LLS-46): a kid who loses a parent may take it hard: this much less happy, fading to nothing over a cycle.
+     * Your partner takes the kids when they move out, so here it is the kids who stay when your partner dies.
+     */
+    public static final float HEARTBREAK = 20f, HEARTBREAK_DAYS = 365f, HEARTBREAK_CHANCE = 0.5f;
     /** Kids are happier with their parent as your partner, more so as your wife or husband. */
     public static final float KID_HAPPY_PARTNER = 5f;
     public static final float KID_HAPPY_SPOUSE = 15f;
@@ -82,7 +94,7 @@ public final class Family {
             "tip", "partner_moves_in", "child_born"));
     /** Tenant traits a partner never has: they live with you, pay no rent and have no other family. */
     public static final Set<String> PARTNER_SKIP_TRAITS = new HashSet<>(Arrays.asList("couple", "family", "elderly",
-            "late_payer", "social_climber", "frugal", "generous"));
+            "late_payer", "social_climber", "frugal", "generous", "long_hours", "remote_worker"));
     /** Tenant traits a child never has. */
     public static final Set<String> CHILD_SKIP_TRAITS = new HashSet<>(Arrays.asList("couple", "family", "elderly",
             "late_payer", "social_climber", "frugal", "generous", "long_hours", "remote_worker", "prosperous",
@@ -147,7 +159,7 @@ public final class Family {
         return false;
     }
 
-    private static boolean inFleet(PersonAPI p) {
+    static boolean inFleet(PersonAPI p) {
         CampaignFleetAPI fleet = Global.getSector().getPlayerFleet();
         if (fleet == null || fleet.getFleetData() == null) return false;
         for (OfficerDataAPI o : fleet.getFleetData().getOfficersCopy()) if (o.getPerson() == p) return true;
@@ -291,7 +303,10 @@ public final class Family {
         if (p.condemned) return "Repair it first.";
         if (p.market() == null) return "The colony is gone.";
         if (partnerHome(who) != null) return "Already married to you.";
-        return wouldRefuse(who);
+        String no = wouldRefuse(who);
+        if (no != null) return no;
+        // 1.16.0 (LLS-46): someone who turned down a proposal from afar wants to be asked in person.
+        return Partners.askInPerson(who) ? Partners.ASK_REASON : null;
     }
 
     /**
@@ -303,6 +318,9 @@ public final class Family {
         String no = cannotPropose(p, who);
         if (no != null) return no;
         boolean sophia = isSophia(who);
+        // 1.16.0 (LLS-46, from Landlordsector Renewed): a proposal from afar works 15% of the time.
+        String afar = Partners.fromAfar(who, random);
+        if (afar != null) return afar;
         if (!sophia && random.nextFloat() < CHEAT_CHANCE) {
             if (who.getMemoryWithoutUpdate() != null) who.getMemoryWithoutUpdate().set(CHEATED_KEY, true);
             Feats.mark("cheated");
@@ -445,6 +463,124 @@ public final class Family {
         return playerGender() == Gender.FEMALE ? "Mom" : "Dad";
     }
 
+    // ---- Names (1.16.0, LLS-46: from Landlordsector Renewed, with the owner's notes) ----
+
+    /** A first name used when the game can't make one. */
+    static final String FALLBACK_FIRST = "Sam";
+
+    /**
+     * Baby names: a first name of their own (from the person your faction's name maker made for them) and the surname
+     * of the parent who raises them, else yours. The rename in their comm dialog stays (LLS-46: "Take, but still have
+     * the rename function").
+     */
+    static FullName babyName(PersonAPI kid, Tenant parent, Gender gender) {
+        String first = null;
+        try {
+            if (kid != null && kid.getName() != null) first = kid.getName().getFirst();
+        } catch (Throwable ignored) {
+            // A stand-in person without a name.
+        }
+        if (first == null || first.trim().isEmpty()) first = FALLBACK_FIRST;
+        String last = surnameOf(parent);
+        if (last.isEmpty()) last = playerSurname();
+        return new FullName(first.trim(), last, gender);
+    }
+
+    /** Your character's surname, "" for a one-word name. */
+    public static String playerSurname() {
+        try {
+            PersonAPI me = Global.getSector().getPlayerPerson();
+            String last = me != null && me.getName() != null ? me.getName().getLast() : null;
+            return last == null ? "" : last.trim();
+        } catch (Throwable t) {
+            return "";
+        }
+    }
+
+    /** A partner's surname: their person's last name, else the last word of a two-word name, else "". */
+    static String surnameOf(Tenant t) {
+        if (t == null) return "";
+        if (t.person != null && t.person.getName() != null) {
+            String last = t.person.getName().getLast();
+            return last == null ? "" : last.trim();
+        }
+        String n = t.realName != null ? t.realName : t.name;
+        if (n == null) return "";
+        n = n.trim();
+        int space = n.lastIndexOf(' ');
+        return space > 0 ? n.substring(space + 1) : "";
+    }
+
+    /** A kid's surname: their person's last name, else everything after the first word of their name. */
+    public static String kidSurname(Child c) {
+        if (c == null) return "";
+        if (c.person != null && c.person.getName() != null && c.person.getName().getLast() != null) {
+            return c.person.getName().getLast().trim();
+        }
+        String n = c.name == null ? "" : c.name.trim();
+        int space = n.indexOf(' ');
+        return space > 0 ? n.substring(space + 1).trim() : "";
+    }
+
+    /** A kid's own first name. */
+    static String kidFirst(Child c) {
+        if (c.person != null && c.person.getName() != null && c.person.getName().getFirst() != null
+                && !c.person.getName().getFirst().trim().isEmpty()) {
+            return c.person.getName().getFirst().trim();
+        }
+        return Kids.firstName(c);
+    }
+
+    /**
+     * "Use your surname" on the Family page: the name the kid would take. The owner's note on LLS-46: "if the player has a one-word
+     * name, use "junior" instead", so with a one-word name the kid becomes "<your name> Junior" (then II, III...).
+     */
+    public static FullName yourName(Child c) {
+        Gender g = c.female ? Gender.FEMALE : Gender.MALE;
+        String last = playerSurname();
+        if (!last.isEmpty()) return new FullName(kidFirst(c), last, g);
+        return juniorName(juniorsBut(c) + 1, g);
+    }
+
+    /** Kids (at home, grown or with an ex) named after you, this one left out. */
+    private static int juniorsBut(Child skip) {
+        FullName base = juniorName(1, Gender.MALE);
+        String prefix = (base.getFirst() + " " + base.getLast()).trim();
+        int n = 0;
+        List<Child> all = new ArrayList<>(Portfolio.get().adultKids());
+        all.addAll(Portfolio.get().exKids());
+        for (Property p : Portfolio.get().properties()) all.addAll(p.children());
+        for (Child c : all) if (c != skip && c.name != null && c.name.startsWith(prefix)) n++;
+        return n;
+    }
+
+    /** True when "Use your surname" would change this kid's name: a kid at home who does not carry it yet. */
+    public static boolean offerSurname(Child c) {
+        if (c == null || c.grown) return false;
+        if (!playerSurname().isEmpty()) return !playerSurname().equals(kidSurname(c));
+        FullName base = juniorName(1, Gender.MALE);
+        return c.name == null || !c.name.startsWith((base.getFirst() + " " + base.getLast()).trim());
+    }
+
+    /** The kid takes your surname (or becomes your Junior). Returns the line for the page. */
+    public static String useYourSurname(Property p, Child c) {
+        if (!offerSurname(c)) return "";
+        String before = c.name;
+        FullName n = yourName(c);
+        c.name = (n.getFirst() + " " + n.getLast()).trim();
+        if (c.person != null) c.person.setName(n);
+        String line = before + " now goes by " + c.name + ".";
+        p.addLog(line, true, c.name);
+        return line;
+    }
+
+    /** "Anna", "Anna and Ben", "Anna, Ben and Cora". */
+    static String names(List<String> list) {
+        if (list.isEmpty()) return "";
+        if (list.size() == 1) return list.get(0);
+        return String.join(", ", list.subList(0, list.size() - 1)) + " and " + list.get(list.size() - 1);
+    }
+
     /** "{playerName} Junior", then Junior II, Junior III... */
     static FullName juniorName(int n, Gender gender) {
         PersonAPI me = Global.getSector().getPlayerPerson();
@@ -521,6 +657,8 @@ public final class Family {
                 t.partner = 2;
                 t.marriedAt = now();
             }
+            // 1.16.0 (LLS-46): no Long hours or Works from home for the one you live with.
+            Partners.stripTraits(t);
             // 1.7.0: Wife or Husband shown again on every load (Sophia showed as Husband).
             if (t.person != null) {
                 if (isSophia(t.person) && t.person.getGender() != Gender.FEMALE) t.person.setGender(Gender.FEMALE);
@@ -680,8 +818,10 @@ public final class Family {
 
     /**
      * The partner moves out or dies. Moving out takes their kids (Andrzej: "Your partner will also take the kids
-     * seeing as you're leading a dangerous outlaw life in the persean sector"); a wife or husband also takes half the
-     * home: it is sold and the player gets half. Kids who stay or leave young cost alimony until they grow up.
+     * seeing as you're leading a dangerous outlaw life in the persean sector"), and you pay child support for the young
+     * ones until they grow up. 1.16.0 (LLS-46): a wife or husband who moves out no longer sells the home: it stays
+     * yours, and they are owed their share of it at the end of the month. Kids who stay when your partner dies may take
+     * it hard.
      *
      * @return the line shown to the player
      */
@@ -691,40 +831,114 @@ public final class Family {
         if (t.person != null) removePerson(t.person);
         p.tenant = null;
         if (dies) {
-            Notify.event(p, text, false, true);
-            return text;
+            String line = text + takeItHard(p, RANDOM_HOME);
+            Notify.event(p, line, false, true);
+            return line;
         }
         boolean divorce = t.isSpouse();
         if (divorce) Feats.mark("divorce");
-        int took = 0;
+        List<String> took = new ArrayList<>();
         Iterator<Child> it = p.children().iterator();
         while (it.hasNext()) {
             Child c = it.next();
             if (!divorce && !t.id.equals(c.parentId)) continue;
             it.remove();
-            took++;
+            took.add(Kids.firstName(c));
             if (c.person != null) removePerson(c.person);
             c.person = null;
             if (!c.grown) Portfolio.get().exKids().add(c);
         }
-        String line = text + (took > 0 ? " " + capital(he(t)) + " took the " + (took == 1 ? "kid" : "kids")
-                + " with " + (he(t).equals("they") ? "them" : (female(t) ? "her" : "him")) + "." : "");
+        String line = text + (took.isEmpty() ? "" : " " + capital(he(t)) + " took " + names(took) + " with " + him(t)
+                + ".");
         if (divorce) {
-            // 1.14.0: the sale pays off the mortgage first; you get half of what is left (or pay what it lacks).
-            float loan = Mortgage.has(p) ? p.loanLeft : 0f;
-            Mortgage.clear(p);
-            float rest = p.saleValue(true) - loan;
-            float share = rest >= 0f ? rest * DIVORCE_SHARE : rest;
-            release(p);
-            Portfolio.get().properties().remove(p);
-            Global.getSector().getPlayerFleet().getCargo().getCredits().add(share);
-            line += " " + p.displayName() + " was sold. " + (share >= 0f ? "Your half: " + Misc.getDGSCredits(share)
-                    : "The sale did not cover the mortgage. You paid " + Misc.getDGSCredits(-share)) + ".";
-            Notify.news(line, null, false);
-            return line;
+            float share = homeShare(p);
+            if (share > 0f) {
+                Portfolio.get().homeShares().add(new HomeShare(t.name, share));
+                line += " " + capital(his(t)) + " share of " + p.displayName() + ", " + Misc.getDGSCredits(share)
+                        + ", comes due at the end of the month.";
+            }
         }
         Notify.event(p, line, false, true);
         return line;
+    }
+
+    /**
+     * 1.16.0 (LLS-46): what a former wife or husband is owed for their share of the home: half of its worth before the
+     * broker fee (furniture included), minus what is left of the mortgage, which stays with you and the home.
+     */
+    public static float homeShare(Property p) {
+        float worth = Pricing.value(p.fullValue(true), p.condition, p.condemned, TierTable.economy().landValue)
+                + p.furnitureValue();
+        float loan = Mortgage.has(p) ? p.loanLeft : 0f;
+        return Math.max(0f, worth - loan) * DIVORCE_SHARE;
+    }
+
+    /** "him", "her" or "them". */
+    static String him(Tenant t) {
+        return female(t) ? "her" : (male(t) ? "him" : "them");
+    }
+
+    /**
+     * 1.16.0 (LLS-46, from Landlordsector Renewed): the hover text on "Yes. It's over.": who leaves, the child support and
+     * the share of the home. Null when there is nothing to say.
+     */
+    public static String breakupTip(Property p) {
+        Tenant t = p.partner();
+        if (t == null) return null;
+        boolean divorce = t.isSpouse();
+        List<String> going = new ArrayList<>();
+        List<Child> young = new ArrayList<>();
+        for (Child c : p.children()) {
+            if (!divorce && !t.id.equals(c.parentId)) continue;
+            going.add(Kids.firstName(c));
+            if (!c.grown) young.add(c);
+        }
+        List<String> parts = new ArrayList<>();
+        if (!going.isEmpty()) {
+            String s = names(going) + (going.size() == 1 ? " leaves" : " leave") + " with " + t.name + ".";
+            if (!young.isEmpty()) s += " You pay child support until " + (young.size() == 1 ? Kids.he(young.get(0))
+                    + " comes" : "they come") + " of age.";
+            parts.add(s);
+        }
+        if (divorce) {
+            float share = homeShare(p);
+            parts.add(share > 0f ? t.name + " is owed " + Misc.getDGSCredits(share) + " for " + his(t) + " share of the"
+                    + " home, due at the end of the month. The home stays yours." : "The home stays yours.");
+        }
+        return parts.isEmpty() ? null : String.join(" ", parts);
+    }
+
+    /** 1.16.0 (LLS-46): each kid at home may take a loss hard. Returns " Anna takes it hard." or "". */
+    static String takeItHard(Property p, Random random) {
+        List<String> hard = new ArrayList<>();
+        for (Child c : p.children()) {
+            if (c.grown || random.nextFloat() >= HEARTBREAK_CHANCE) continue;
+            c.heartbreakAt = now();
+            hard.add(Kids.firstName(c));
+        }
+        if (hard.isEmpty()) return "";
+        return " " + names(hard) + (hard.size() == 1 ? " takes it hard." : " take it hard.");
+    }
+
+    /** 1.16.0 (LLS-46): what a kid who took a loss hard loses in happiness today: -20, gone after a cycle. */
+    public static float heartbreak(Child c) {
+        if (c == null || c.heartbreakAt == 0L) return 0f;
+        float d = daysSince(c.heartbreakAt);
+        if (d >= HEARTBREAK_DAYS) return 0f;
+        return -HEARTBREAK * (1f - d / HEARTBREAK_DAYS);
+    }
+
+    /** 1.16.0 (LLS-46): child support for a kid who left with a former wife or husband: half their cost at home. */
+    public static float childSupport(Child c) {
+        if (c == null || c.grown || ageDays(c) >= growUpDays()) return 0f;
+        return Kids.upkeep(c) * SUPPORT_SHARE;
+    }
+
+    /** All child support due this month. */
+    public static float supportOut() {
+        float s = 0f;
+        for (Child c : Portfolio.get().exKids()) s += childSupport(c);
+        return s;
     }
 
     /** Takes everyone living in a home that is gone or sold out of the comm directories. */
@@ -780,7 +994,59 @@ public final class Family {
             if (d != null) h += d.happiness;
         }
         h -= visitPenalty(daysSince(p.lastVisit));
+        h += heartbreak(c);
         return Pricing.clamp(h, 0f, 100f);
+    }
+
+    /**
+     * 1.16.0 (LLS-46, from Landlordsector Renewed): what makes up a kid's happiness, for its tooltip on the Family page,
+     * in the order {@link #kidHappiness} adds it up.
+     */
+    public static List<String[]> kidHappinessLines(Property p, Child c) {
+        List<String[]> out = new ArrayList<>();
+        String home = String.valueOf(Math.round(PropertyStats.withTenant(p, null).happiness));
+        out.add(new String[] {"Home: " + home, null, home, "g"});
+        Tenant t = p.partner();
+        if (t != null) {
+            String n = "+" + Math.round(t.isSpouse() ? KID_HAPPY_SPOUSE : KID_HAPPY_PARTNER);
+            out.add(new String[] {"Your " + noun(t) + " lives here: " + n, null, n, "+"});
+        }
+        for (String id : c.traits()) {
+            TenantTraits.Def d = TenantTraits.get(id);
+            if (d == null || Math.abs(d.happiness) < 0.5f) continue;
+            String n = (d.happiness > 0f ? "+" : "") + Math.round(d.happiness);
+            String dc = d.good == null ? null : (d.good ? "+" : "-");
+            out.add(new String[] {d.name + ": " + n, null, d.name, dc, n, d.happiness > 0f ? "+" : "-"});
+        }
+        float hurt = heartbreak(c);
+        if (hurt <= -0.5f) {
+            String n = String.valueOf(Math.round(hurt));
+            out.add(new String[] {"Took a loss hard: " + n, null, n, "-"});
+        }
+        int days = Math.round(daysSince(p.lastVisit));
+        String when = days <= 0 ? "today" : (days == 1 ? "yesterday" : days + " days ago");
+        float pen = visitPenalty(days);
+        if (pen >= 0.5f) {
+            String n = "-" + Math.round(pen);
+            out.add(new String[] {"Last visited: " + when + " (" + n + ")", null, n, "-"});
+        } else {
+            out.add(new String[] {"Last visited: " + when, null});
+        }
+        out.add(new String[] {"A happy kid learns more, and a kid raised well is far less likely to die young. Your"
+                + " visits help.", null});
+        return out;
+    }
+
+    /** "today", "yesterday", "12 days ago": when you last saw your wife or husband. */
+    public static String lastVisited(Tenant t) {
+        int days = Math.round(daysSince(t.lastVisit));
+        return days <= 0 ? "today" : (days == 1 ? "yesterday" : days + " days ago");
+    }
+
+    /** "Sam Pilot": the name "Use your surname" gives this kid. */
+    public static String yourNameText(Child c) {
+        FullName n = yourName(c);
+        return (n.getFirst() + " " + n.getLast()).trim();
     }
 
     /** A child is born (public since 1.6.0 for the console's lls_baby). */
@@ -794,20 +1060,21 @@ public final class Family {
         Feats.mark("child");
         c.female = random.nextBoolean();
         Gender g = c.female ? Gender.FEMALE : Gender.MALE;
-        int n = ++Portfolio.get().kidsBorn;
-        FullName name = juniorName(n, g);
-        c.name = (name.getFirst() + " " + name.getLast()).trim();
-        // 1.8.0 (Andrzej: "only roll those traits on childhood stage"): babies have none.
-        c.traits = new ArrayList<>();
-        c.stage = Kids.BABY;
-        c.look = random.nextInt(Kids.LOOKS);
-        c.happiness = kidHappiness(p, c);
+        Portfolio.get().kidsBorn++;
         PersonAPI kid = null;
         try {
             kid = Global.getSector().getPlayerFaction().createRandomPerson(g, random);
         } catch (Throwable ignored) {
         }
         if (kid == null) kid = Global.getFactory().createPerson();
+        // 1.16.0 (LLS-46): a first name of their own and the parent's surname, no more "Junior".
+        FullName name = babyName(kid, parent, g);
+        c.name = (name.getFirst() + " " + name.getLast()).trim();
+        // 1.8.0 (LLS-28: "only roll those traits on childhood stage"): babies have none.
+        c.traits = new ArrayList<>();
+        c.stage = Kids.BABY;
+        c.look = random.nextInt(Kids.LOOKS);
+        c.happiness = kidHappiness(p, c);
         if (kid != null) {
             kid.setName(name);
             kid.setGender(g);
@@ -827,13 +1094,14 @@ public final class Family {
         Notify.event(p, text, true, true);
     }
 
-    /** Renames a child (the player types a new first name, or a first and last name). */
+    /**
+     * Renames a child (the player types a new first name, or a first and last name). 1.16.0 (LLS-46): a first name alone
+     * keeps the kid's own surname.
+     */
     public static void rename(Child c, String typed) {
         if (c == null || typed == null || typed.trim().isEmpty()) return;
         String[] parts = typed.trim().split("\\s+", 2);
-        PersonAPI me = Global.getSector().getPlayerPerson();
-        String last = parts.length > 1 ? parts[1]
-                : (me != null && me.getName() != null && me.getName().getLast() != null ? me.getName().getLast() : "");
+        String last = parts.length > 1 ? parts[1] : kidSurname(c);
         c.name = (parts[0] + " " + last).trim();
         if (c.person != null) c.person.setName(new FullName(parts[0], last, c.female ? Gender.FEMALE : Gender.MALE));
     }
@@ -862,6 +1130,7 @@ public final class Family {
                             OfficerManagerEvent.SkillPickPreference.ANY, random);
                     copyIdentity(c, o);
                     List<String> skills = new ArrayList<>(Kids.goodSkills(c, true));
+                    skills.addAll(Kids.neutralSkills(c, true));
                     skills.addAll(Kids.badSkills(c, true));
                     if (c.academy) skills.add(Kids.ACADEMY_OFFICER);
                     if (c.classes) skills.add(Kids.TUTORED);
@@ -878,6 +1147,7 @@ public final class Family {
                             q + learned >= 3 ? 2 : 1, random);
                     copyIdentity(c, a);
                     List<String> skills = new ArrayList<>(Kids.goodSkills(c, false));
+                    skills.addAll(Kids.neutralSkills(c, false));
                     skills.addAll(Kids.badSkills(c, false));
                     if (c.academy) skills.add(Kids.ACADEMY_ADMIN);
                     if (c.classes) skills.add(Kids.BUSINESS);
@@ -1050,7 +1320,7 @@ public final class Family {
                 n.income += c.pay;
             }
         }
-        float each = Settings.alimony();
+        // 1.16.0 (LLS-46): child support (half of what the kid costs at home) instead of alimony.
         Iterator<Child> it = portfolio.exKids().iterator();
         while (it.hasNext()) {
             Child c = it.next();
@@ -1058,14 +1328,30 @@ public final class Family {
                 it.remove();
                 continue;
             }
+            float each = childSupport(c);
             if (each <= 0f) continue;
             alimony += each;
             if (report != null) {
                 FDNode n = report.getNode(root, "alimony_" + c.id);
-                n.name = "Alimony for " + c.name;
+                n.name = "Child support for " + c.name;
                 n.upkeep += each;
             }
         }
+        // 1.16.0 (LLS-46): a former wife or husband's share of the home, paid once with this month's report.
+        float shares = 0f;
+        List<HomeShare> due = portfolio.homeShares();
+        for (int i = 0; i < due.size(); i++) {
+            HomeShare s = due.get(i);
+            if (s == null || s.amount <= 0f) continue;
+            shares += s.amount;
+            if (report != null) {
+                FDNode n = report.getNode(root, "home_share_" + i);
+                n.name = s.name + "'s share of the home";
+                n.upkeep += s.amount;
+            }
+        }
+        due.clear();
+        portfolio.lastHomeShares = shares;
         // 1.8.0 (Andrzej: a child "costs more money to maintain"): every kid at home costs by stage, adults nothing.
         float raising = 0f;
         for (Property p : portfolio.properties()) {
@@ -1240,15 +1526,6 @@ public final class Family {
         if (t != null) t.mood = Pricing.clamp(t.mood - 30f, -30f, 30f);
     }
 
-    /** Markets where your wife or husband lives with you: no tariff there. */
-    public static Set<String> spouseMarkets() {
-        Set<String> out = new HashSet<>();
-        for (Property p : Portfolio.get().properties()) {
-            if (p.playerHome && p.partner() != null && p.partner().isSpouse()) out.add(p.marketId);
-        }
-        return out;
-    }
-
     /** 1.8.0: stability each colony gets from your celebrity kids who took extra classes. */
     public static float stabilityAt(String marketId) {
         float s = 0f;
@@ -1294,7 +1571,7 @@ public final class Family {
         }
     }
 
-    static String capital(String s) {
+    public static String capital(String s) {
         return s == null || s.isEmpty() ? s : Character.toUpperCase(s.charAt(0)) + s.substring(1);
     }
 }

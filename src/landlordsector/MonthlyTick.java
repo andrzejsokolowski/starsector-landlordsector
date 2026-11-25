@@ -185,6 +185,8 @@ public class MonthlyTick implements EconomyTickListener, ColonyPlayerHostileActL
                 // the home again (0.5.0 had taken it out).
                 if (p.tenant != null) p.condition = Math.min(1f, p.condition + Pricing.happyRepair(stats.happiness,
                         eco.happyRepair, eco.happyRepairFrom));
+                // 1.16.0 (LLS-46): your wife or husband at home always gives the full repair.
+                p.condition = Math.min(1f, p.condition + Partners.monthlyCare(p, stats.happiness));
                 if (p.condition <= 0f) {
                     p.condition = 0f;
                     p.condemned = true;
@@ -195,7 +197,7 @@ public class MonthlyTick implements EconomyTickListener, ColonyPlayerHostileActL
 
         applyReputation(repByFaction);
         Agents.update(random, false);
-        // 1.2.0: what grown kids send home, alimony, and closer officers.
+        // 1.2.0: what grown kids send home, child support (1.16.0, was alimony), and closer officers.
         Family.monthly(report, root);
         float[] npc = runOwnColonies(portfolio, report, root, news);
 
@@ -209,7 +211,7 @@ public class MonthlyTick implements EconomyTickListener, ColonyPlayerHostileActL
         if (!news.isEmpty()) portfolio.news = true;
 
         if (rentTotal > 0f || mortgageTotal > 0f || npc[0] > 0f || npc[1] > 0f || !news.isEmpty() || portfolio.lastKidPay > 0f
-                || portfolio.lastAlimony > 0f) {
+                || portfolio.lastAlimony > 0f || portfolio.lastHomeShares > 0f) {
             MessageIntel msg = new MessageIntel("Real estate this month", Misc.getBasePlayerColor());
             if (rentTotal > 0f) {
                 msg.addLine("Rent: %s", Misc.getTextColor(), new String[] {Misc.getDGSCredits(rentTotal)},
@@ -232,8 +234,12 @@ public class MonthlyTick implements EconomyTickListener, ColonyPlayerHostileActL
                         new String[] {Misc.getDGSCredits(portfolio.lastKidPay)}, Misc.getHighlightColor());
             }
             if (portfolio.lastAlimony > 0f) {
-                msg.addLine("Alimony: %s", Misc.getTextColor(), new String[] {Misc.getDGSCredits(portfolio.lastAlimony)},
-                        Misc.getNegativeHighlightColor());
+                msg.addLine("Child support you paid: %s", Misc.getTextColor(),
+                        new String[] {Misc.getDGSCredits(portfolio.lastAlimony)}, Misc.getNegativeHighlightColor());
+            }
+            if (portfolio.lastHomeShares > 0f) {
+                msg.addLine("A former spouse's share of a home: %s", Misc.getTextColor(),
+                        new String[] {Misc.getDGSCredits(portfolio.lastHomeShares)}, Misc.getNegativeHighlightColor());
             }
             for (String line : news) msg.addLine(line);
             msg.setIcon(Global.getSettings().getSpriteName("intel", "monthly_income_report"));

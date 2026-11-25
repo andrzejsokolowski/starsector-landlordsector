@@ -115,6 +115,10 @@ public class Property {
 
     /** The player lives here: no rent, no adverts, and a partner may move in with them. */
     public boolean playerHome;
+    /** 1.16.0 (LLS-46): the last repair warning sent for your home (0 none, 1 below 25%, 2 below 10%). */
+    public int careWarned;
+    /** 1.16.0 (LLS-46): when your home with family in it was condemned (0: not condemned): 30 days to repair. */
+    public long condemnedAt;
     /** When the player last docked at this home's market (for their kids). */
     public long lastVisit;
     /** The player's children living here. Null on older saves. */

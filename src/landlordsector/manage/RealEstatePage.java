@@ -39,8 +39,6 @@ public class RealEstatePage implements ManagePage {
     private String selectedHome;
     private String selectedPool;
     private String selectedFinder;
-    /** 1.2.0: the "Move in with" list is open. */
-    private boolean choosingPartner;
 
     @Override
     public CustomPanelAPI createPanel(float width, float height) {
@@ -88,7 +86,9 @@ public class RealEstatePage implements ManagePage {
                     10f, 38f, width - 20f);
             String family = (portfolio.lastKidPay > 0f ? ", your kids sent home " + Misc.getDGSCredits(portfolio.lastKidPay)
                     : "") + (portfolio.lastKidCost > 0f ? ", raising your kids " + Misc.getDGSCredits(portfolio.lastKidCost)
-                    : "") + (portfolio.lastAlimony > 0f ? ", alimony " + Misc.getDGSCredits(portfolio.lastAlimony) : "");
+                    : "") + (portfolio.lastAlimony > 0f ? ", child support " + Misc.getDGSCredits(portfolio.lastAlimony) : "")
+                    + (portfolio.lastHomeShares > 0f ? ", a former spouse's share of a home "
+                    + Misc.getDGSCredits(portfolio.lastHomeShares) : "");
             text("Last month: rent " + Misc.getDGSCredits(portfolio.lastRent) + ", home sales on your colonies "
                     + Misc.getDGSCredits(portfolio.lastSales) + ", property tax "
                     + Misc.getDGSCredits(portfolio.lastTax) + family + ".", Misc.getGrayColor(), 10f, 56f, width - 20f);
@@ -232,7 +232,7 @@ public class RealEstatePage implements ManagePage {
                     buildServicesTab(chosen, rx, y0);
                     break;
                 case LOG:
-                    buildLog(chosen, rx, y0, contentWidth(rightW()));
+                    homeLog(chosen, rx, y0, contentWidth(rightW()));
                     break;
                 default:
                     buildDetails(chosen, rx, y0);
@@ -240,7 +240,7 @@ public class RealEstatePage implements ManagePage {
             if (sideLog) {
                 float lx = sideLogX();
                 title("Events", lx, TOP, width - 8f - lx);
-                buildLog(chosen, lx, TOP + 34f, width - 8f - lx);
+                homeLog(chosen, lx, TOP + 34f, width - 8f - lx);
             }
         }
 
@@ -379,7 +379,9 @@ public class RealEstatePage implements ManagePage {
         private void buildTenantTab(Property p, float rx, float y0) {
             float cw = contentWidth(rightW());
             if (p.playerHome) {
-                buildFamilyTab(p, rx, y0, cw);
+                // 1.16.0 (LLS-46): the family has its own page next to this one.
+                text("Your family is on the Family page of the Manage screen.", Misc.getGrayColor(), rx, y0 + 5f, cw);
+                button("familypage:" + p.id, "Go to Family page", rx, y0 + 34f, 200f, 28f, true);
                 return;
             }
             if (p.tenant != null) {
@@ -529,194 +531,6 @@ public class RealEstatePage implements ManagePage {
             String no = landlordsector.Family.cannotDeclare(p);
             button("declare:" + p.id, "Declare player home", x, y, 200f, 28f, no == null);
             if (no != null) tip(x, y, 200f, 28f, "Declare player home", no);
-        }
-
-        /**
-         * 1.2.0 (Andrzej's family design): the home you live in. Alone: move in with one of your officers or
-         * administrators. With a partner: their card. Then your kids.
-         */
-        private void buildFamilyTab(Property p, float rx, float y0, float cw) {
-            landlordsector.Tenant t = p.partner();
-            float y = y0;
-            if (t == null) {
-                text("You live here.", Misc.getGrayColor(), rx, y + 5f, 200f);
-                Btn mw = button("choose:" + p.id, "Propose to...", rx + 210f, y, 200f, 28f, !p.condemned);
-                mw.selected = choosingPartner;
-                String no = landlordsector.Family.cannotLeave(p);
-                button("leave:" + p.id, "Move out", rx + 420f, y, 200f, 28f, no == null);
-                if (no != null) tip(rx + 420f, y, 200f, 28f, "Move out", no);
-                y += 40f;
-                if (choosingPartner) y = partnerList(p, rx, y, cw);
-            } else {
-                y = partnerCard(p, t, rx, y, cw);
-                float[] need = landlordsector.Family.childNeeds(p.children().size());
-                if (need != null) {
-                    boolean ok = landlordsector.Family.cannotTry(p) == null;
-                    text("Another child needs happiness " + Math.round(need[0]) + " and comfort " + Math.round(need[1])
-                            + ".", traitColor(ok ? null : Boolean.FALSE), rx, y, cw);
-                    y += 22f;
-                }
-            }
-            y = kidsList(p, rx, y + 8f, cw);
-            int away = Portfolio.get().exKids().size();
-            if (away > 0 && y < height - 30f) {
-                text(away + (away == 1 ? " child lives" : " children live") + " with a former partner. Alimony: "
-                        + Misc.getDGSCredits(away * landlordsector.Settings.alimony()) + " a month.",
-                        Misc.getGrayColor(), rx, y + 4f, cw);
-            }
-        }
-
-        /**
-         * Officers and administrators of the opposite sex (and Sophia Anderson with AoTD), with what they need to say
-         * yes and a Propose button (Andrzej, 2026-11-16).
-         */
-        private float partnerList(Property p, float rx, float y, float cw) {
-            List<com.fs.starfarer.api.characters.PersonAPI> people = landlordsector.Family.candidates();
-            if (people.isEmpty()) {
-                text("No officers or administrators of the opposite sex.", Misc.getGrayColor(), rx, y, cw);
-                return y + 26f;
-            }
-            for (com.fs.starfarer.api.characters.PersonAPI who : people) {
-                if (y + 60f > height - 8f) break;
-                box(rx, y, cw, 56f);
-                portrait(who.getPortraitSprite(), rx + 4f, y + 4f, 48f);
-                text(who.getNameString(), Misc.getHighlightColor(), rx + 60f, y + 6f, cw - 300f);
-                String no = landlordsector.Family.cannotPropose(p, who);
-                text(landlordsector.Family.role(who), traitColor(no == null ? Boolean.TRUE : null), rx + 60f, y + 28f,
-                        cw - 300f);
-                float bx = rx + cw - 8f - 160f;
-                button("partner:" + p.id + ":" + who.getId(), "Propose", bx, y + 14f, 160f, 28f, no == null);
-                if (no != null) tip(bx, y + 14f, 160f, 28f, "Propose", no);
-                else tip(bx, y + 14f, 160f, 28f, "Propose", landlordsector.Family.isSophia(who)
-                        ? "Moves in with you and keeps her research post." : "Retires and moves in with you.");
-                y += 60f;
-            }
-            return y;
-        }
-
-        /** The partner: portrait, how long together, traits, happiness and health with what makes them up. */
-        private float partnerCard(Property p, landlordsector.Tenant t, float x, float y, float w) {
-            float size = 86f;
-            portrait(t.portrait, x, y, size);
-            float tx = x + size + 12f;
-            float tw = w - size - 12f;
-            title(t.name, tx, y, tw);
-            float months = Global.getSector().getClock().getElapsedDaysSince(t.since) / 30f;
-            int mo = Math.max(0, Math.round(months));
-            text("Your " + landlordsector.Family.noun(t) + ". Together " + mo + (mo == 1 ? " month." : " months."),
-                    Misc.getGrayColor(), tx, y + 28f, tw);
-            text("Traits", Misc.getGrayColor(), tx, y + 48f, 60f);
-            traitRow(tenantTraits(t), tx + 60f, y + 46f, 36f, tw - 60f);
-            float ny = y + size + 8f;
-            PropertyStats st = p.stats();
-            text("Happiness", Misc.getGrayColor(), x, ny, 120f);
-            Color happy = st.happiness >= 50f ? Misc.getPositiveHighlightColor()
-                    : (st.happiness >= 25f ? Misc.getHighlightColor() : Misc.getNegativeHighlightColor());
-            bar(x + 120f, ny + 5f, 110f, 10f, st.happiness / 100f, happy);
-            text(String.valueOf(Math.round(st.happiness)), x + 238f, ny, 40f);
-            tipColored(x, ny, 280f, 22f, "Happiness: " + Math.round(st.happiness), st.happinessLines);
-            ny += 22f;
-            text("Health", Misc.getGrayColor(), x, ny, 120f);
-            Color healthy = st.health >= landlordsector.data.Levels.sickBelow() ? Misc.getPositiveHighlightColor()
-                    : (st.health >= landlordsector.data.Levels.treatmentBelow() ? Misc.getHighlightColor()
-                            : Misc.getNegativeHighlightColor());
-            bar(x + 120f, ny + 5f, 110f, 10f, st.health / 100f, healthy);
-            text(String.valueOf(Math.round(st.health)), x + 238f, ny, 40f);
-            tipColored(x, ny, 280f, 22f, "Health: " + Math.round(st.health), st.healthLines);
-            ny += 22f;
-            for (PropertyStats.Note n : st.notes) {
-                com.fs.starfarer.api.ui.LabelAPI nl = text(n.text, traitColor(n.good), x + 12f, ny, w - 12f);
-                landlordsector.ui.Canvas.highlight(nl, n.text, n.line());
-                ny += 18f;
-            }
-            if (t.conceivedAt == 0L || !t.toldPregnant) {
-                text("Chance of a child each time you try: " + Math.round(landlordsector.Family.childChance(p) * 100f)
-                        + "%.", Misc.getGrayColor(), x, ny + 4f, w);
-                ny += 22f;
-            }
-            if (t.conceivedAt != 0L && t.toldPregnant) {
-                int days = Math.max(1, Math.round(landlordsector.Family.BIRTH_DAYS
-                        - landlordsector.Family.daysSince(t.conceivedAt)));
-                text("A baby is on the way: " + days + (days == 1 ? " day left." : " days left."),
-                        Misc.getPositiveHighlightColor(), x, ny + 4f, w);
-                ny += 22f;
-            }
-            return ny + 8f;
-        }
-
-        /** Your kids living here: name, age, happiness and what they want to be. */
-        private float kidsList(Property p, float x, float y, float w) {
-            if (p.children().isEmpty()) return y;
-            title("Kids", x, y, w);
-            y += 30f;
-            for (landlordsector.Child c : p.children()) {
-                if (y + 82f > height - 8f) break;
-                box(x, y, w, 78f);
-                portrait(c.portrait, x + 4f, y + 4f, 70f);
-                float tx = x + 82f, tw = w - 82f - 240f;
-                text(c.name, Misc.getHighlightColor(), tx, y + 6f, tw);
-                // 1.8.0 (LLS-28): the stage, the wish (decided from the Teen stage) and what was paid for.
-                String what = landlordsector.Family.pathName(c.path);
-                String stage = c.grown ? "Grown up" : landlordsector.Kids.stageName(c) + ", "
-                        + landlordsector.Family.age(c).toLowerCase();
-                text(stage + (what != null ? (c.pathLocked ? ". Will become " : ". Wants to be ") + what + "." : "."),
-                        Misc.getGrayColor(), tx, y + 28f, tw);
-                text(training(c), Misc.getGrayColor(), tx, y + 50f, tw);
-                float h = c.happiness;
-                text("Happiness " + Math.round(h), traitColor(h >= 50f ? Boolean.TRUE : (h < 25f ? Boolean.FALSE : null)),
-                        x + w - 230f, y + 6f, 110f);
-                // 1.9.0: the kid's own health, with what makes it up.
-                if (!c.grown) {
-                    PropertyStats ks = landlordsector.Kids.healthOf(p, c);
-                    float kh = ks.health;
-                    text("Health " + Math.round(kh), traitColor(kh >= landlordsector.data.Levels.sickBelow() ? Boolean.TRUE
-                            : (kh < landlordsector.data.Levels.treatmentBelow() ? Boolean.FALSE : null)),
-                            x + w - 115f, y + 6f, 110f);
-                    List<String[]> lines = new ArrayList<>(ks.healthLines);
-                    if (!lines.isEmpty()) lines.remove(lines.size() - 1);
-                    lines.add(new String[] {"Sick kids fall ill more often. A childhood in poor health (below "
-                            + Math.round(landlordsector.Kids.SICKLY_CHILDHOOD) + " on average) leaves a mark for life,"
-                            + " and how well a kid is raised (happiness and health) decides the risk of losing them.",
-                            null});
-                    tipColored(x + w - 115f, y + 6f, 110f, 20f, "Health: " + Math.round(kh), lines);
-                }
-                if (c.traits().isEmpty() && !c.grown && landlordsector.Kids.stageOf(c) < landlordsector.Kids.CHILD) {
-                    text("Traits come when " + landlordsector.Kids.he(c) + " starts school.", Misc.getGrayColor(),
-                            x + w - 230f, y + 28f, 220f);
-                } else {
-                    traitRow(kidTraits(c), x + w - 230f, y + 28f, 40f, 220f);
-                }
-                y += 82f;
-            }
-            return y;
-        }
-
-        /** "Costs 2,500 a month. Lessons 1 of 3, 5 days together, the Academy, extra classes." */
-        private String training(landlordsector.Child c) {
-            List<String> parts = new ArrayList<>();
-            int s = landlordsector.Kids.stageOf(c);
-            if (s >= landlordsector.Kids.TEEN) {
-                parts.add("lessons " + c.lessons + " of " + landlordsector.Kids.MAX_LESSONS);
-                parts.add(c.bonds + (c.bonds == 1 ? " day" : " days") + " together");
-            }
-            if (c.academy) parts.add("the Academy");
-            if (c.classes) parts.add("extra classes");
-            float cost = landlordsector.Kids.upkeep(c);
-            String head = cost > 0f ? "Costs " + Misc.getDGSCredits(cost) + " a month." : "Costs you nothing.";
-            if (parts.isEmpty()) return head;
-            String list = String.join(", ", parts);
-            return head + " " + Character.toUpperCase(list.charAt(0)) + list.substring(1) + ".";
-        }
-
-        private List<Object[]> kidTraits(landlordsector.Child c) {
-            List<Object[]> out = new ArrayList<>();
-            for (String id : c.traits()) {
-                landlordsector.data.TenantTraits.Def d = landlordsector.data.TenantTraits.get(id);
-                if (d != null) {
-                    out.add(new Object[] {d.name, d.good, d.name, landlordsector.ui.Tips.kidTrait(d), traitIcon(d.id)});
-                }
-            }
-            return out;
         }
 
         /**
@@ -1007,39 +821,6 @@ public class RealEstatePage implements ManagePage {
             button("reject:" + p.id + ":" + a.id, "Turn away", bx + 246f, y + 18f, 84f, 28f, true);
         }
 
-        /** The home's events, newest first, the event part in red or green. */
-        private void buildLog(Property p, float x, float y0, float w) {
-            List<String> log = p.log();
-            if (log.isEmpty()) {
-                text("Nothing yet.", Misc.getGrayColor(), x, y0, w);
-                return;
-            }
-            float y = y0;
-            for (int i = log.size() - 1; i >= 0 && y < height - 40f; i--) {
-                String[] parts = log.get(i).split("\t", -1);
-                String date, colored, rest;
-                Boolean good = null;
-                if (parts.length == 4) {
-                    good = "+".equals(parts[0]) ? Boolean.TRUE : ("-".equals(parts[0]) ? Boolean.FALSE : null);
-                    date = parts[1];
-                    colored = parts[2];
-                    rest = parts[3];
-                } else {
-                    // Entries written before 0.3.2: "date  text".
-                    date = "";
-                    colored = "";
-                    rest = log.get(i);
-                }
-                if (!date.isEmpty()) {
-                    text(date, Misc.getGrayColor(), x, y, w);
-                    y += 16f;
-                }
-                String all = colored + rest;
-                int n = good == null ? 0 : colored.length();
-                y += wrapped(all, n, landlordsector.Notify.color(good), Misc.getTextColor(), x, y, w) + 6f;
-            }
-        }
-
         // ---- Tenant pool ----
 
         private void buildPool() {
@@ -1204,8 +985,12 @@ public class RealEstatePage implements ManagePage {
                     break;
                 case "home":
                     selectedHome = parts[1];
-                    choosingPartner = false;
                     message = "";
+                    break;
+                case "familypage":
+                    if (!FamilyPage.open(parts[1])) {
+                        note("If the Family page didn't open, its tab is at the top of the Manage screen.");
+                    }
                     break;
                 case "pool":
                     selectedPool = parts[1];
@@ -1339,23 +1124,6 @@ public class RealEstatePage implements ManagePage {
                     result(landlordsector.Family.declareHome(pr));
                     sub = Sub.TENANT;
                     break;
-                case "leave":
-                    result(landlordsector.Family.stopLiving(pr));
-                    choosingPartner = false;
-                    break;
-                case "choose":
-                    choosingPartner = !choosingPartner;
-                    message = "";
-                    break;
-                case "partner": {
-                    com.fs.starfarer.api.characters.PersonAPI who = null;
-                    for (com.fs.starfarer.api.characters.PersonAPI c : landlordsector.Family.candidates()) {
-                        if (parts.length > 2 && c.getId().equals(parts[2])) who = c;
-                    }
-                    if (who != null) result(landlordsector.Family.propose(pr, who, new java.util.Random()));
-                    choosingPartner = false;
-                    break;
-                }
                 default:
                     break;
             }

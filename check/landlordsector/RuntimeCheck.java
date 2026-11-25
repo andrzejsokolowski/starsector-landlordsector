@@ -1521,6 +1521,41 @@ public final class RuntimeCheck {
         if (wife == null) return;
         for (String t : wife.traits()) expect(!Family.PARTNER_SKIP_TRAITS.contains(t), "no " + t + " partner");
         expect(!home.isRented() && home.expectedRent() == 0f, "your wife pays no rent");
+        // 1.16.0 (LLS-46): new relationship energy, her own wording, her events, and a home she looks after.
+        expect(Partners.newLove(wife) == 30f && Partners.honeymoon(wife), "a new wife: +30 and no leaving for 6 months");
+        boolean nre = false;
+        for (PropertyStats.Note n : home.stats().notes) nre |= n.text.equals("New relationship energy (+30)");
+        expect(nre, "the happiness tooltip names new relationship energy");
+        String nights = TenantDaily.tenantWords("$tenant's late nights kept the neighbors up again.", wife);
+        expect(nights.equals("Your wife Mira Vance's late nights kept the neighbors up again."), "her nights: " + nights);
+        expect(!Partners.allowed(wife, "graffiti") && !Partners.allowed(wife, "promotion")
+                && !Partners.allowed(wife, "sabotage") && Partners.allowed(wife, "small_fire"),
+                "no graffiti, promotion or sabotage for a wife who is no Zealot");
+        expect(Partners.caredFor(home) && Math.abs(Partners.monthlyCare(home, 0f) - TierTable.economy().happyRepair) < 1e-4f,
+                "a wife at home gives the full monthly repair, however unhappy");
+        float cond0 = home.condition;
+        home.condition = 0.2f;
+        Partners.daily(home);
+        int warned = home.careWarned;
+        String row = Partners.repairWarning(home);
+        Partners.daily(home);
+        expect(warned == 1 && "Needs repairs: 20%".equals(row) && home.careWarned == 1,
+                "one warning below 25%: " + row);
+        home.condition = 0.05f;
+        Partners.daily(home);
+        expect(home.careWarned == 2, "a second warning below 10%");
+        home.condemned = true;
+        Partners.daily(home);
+        expect(Partners.waits(home) && home.condemnedAt != 0L
+                && "Condemned. Repair within 30 days".equals(Partners.repairWarning(home)),
+                "a condemned home gives your family 30 days: " + Partners.repairWarning(home));
+        now += 31 * DAY;
+        expect(!Partners.waits(home), "after 30 days they leave");
+        now -= 31 * DAY;
+        home.condemned = false;
+        home.condition = cond0;
+        Partners.daily(home);
+        expect(home.careWarned == 0 && home.condemnedAt == 0L, "repaired: the warnings reset");
         MonthlyTick tick = new MonthlyTick();
         month(tick);
         expect(home.lastRent == 0f, "no rent from your own home at the month's end");
@@ -1536,7 +1571,6 @@ public final class RuntimeCheck {
         Family.visit(fm);
         expect(Family.daysSince(wife.lastVisit) == 0f && wife.lastGap >= 89f, "docking there is a visit");
 
-        expect(Family.spouseMarkets().contains("fake_family"), "no tariff where your wife lives");
         for (int i = 0; i < 300; i++) {
             landlordsector.data.TenantEvents.Def e = TenantDaily.pickTenantEvent(home, new Random(i));
             expect(e == null || !Family.PARTNER_SKIP_EVENTS.contains(e.id), "no rent events for your wife: "
@@ -1552,9 +1586,21 @@ public final class RuntimeCheck {
         Family.daily(half);
         expect(home.children().size() == 1 && wife.conceivedAt == 0L, "born 30 days after the try");
         Child kid = home.children().isEmpty() ? null : home.children().get(0);
-        expect(kid != null && kid.name.equals("Test Pilot Junior"), "the first child is the player's name and Junior: "
+        // 1.16.0 (LLS-46): a first name of their own (the stand-in faction makes none, so the fallback) and the
+        // mother's surname.
+        expect(kid != null && kid.name.equals("Sam Vance"), "a baby takes its own first name and the parent's surname: "
                 + (kid == null ? null : kid.name));
         if (kid == null) return;
+        expect(Family.offerSurname(kid) && Family.useYourSurname(home, kid).equals("Sam Vance now goes by Sam Pilot.")
+                && kid.name.equals("Sam Pilot") && !Family.offerSurname(kid), "Use your surname: " + kid.name);
+        Family.rename(kid, "Ada");
+        expect(kid.name.equals("Ada Pilot"), "a new first name keeps the kid's surname: " + kid.name);
+        kid.heartbreakAt = now;
+        float hurt = Family.heartbreak(kid);
+        kid.heartbreakAt = now - 400L * DAY;
+        expect(Math.abs(hurt + Family.HEARTBREAK) < 0.01f && Family.heartbreak(kid) == 0f,
+                "a kid who took a loss hard: -20, gone after a cycle: " + hurt);
+        kid.heartbreakAt = 0L;
         for (String t : kid.traits()) expect(!Family.CHILD_SKIP_TRAITS.contains(t), "no " + t + " child");
         Family.daily(half);
         expect(kid.happyDays >= 1 && wife.kidsAtHome == 1 && wife.hasKids(), "a child's days are counted");
@@ -1569,19 +1615,31 @@ public final class RuntimeCheck {
         if (!enough) expect(Family.tryForChild(home, yes) == 3, "no try for a second child without the needs");
         expect(Actions.cannotSell(home) != null, "you can't sell the home your family lives in");
 
-        float sale = home.saleValue(true);
+        // 1.16.0 (LLS-46): a divorce keeps the home; your ex is owed half its worth before fees at the month's end.
+        float owed = Family.homeShare(home);
         float c0 = credits.get();
+        String tip = Family.breakupTip(home);
+        expect(tip != null && tip.contains("Ada leaves with Mira Vance. You pay child support until she comes of age.")
+                && tip.contains("The home stays yours."), "the breakup tooltip: " + tip);
         String split = Family.breakUp(home);
-        expect(!Portfolio.get().properties().contains(home), "a divorce sells the house: " + split);
-        expect(Math.abs(credits.get() - c0 - sale * 0.5f) < CREDIT_EPS, "a divorce pays you half the sale");
+        expect(Portfolio.get().properties().contains(home) && home.playerHome && home.tenant == null,
+                "a divorce keeps the home: " + split);
+        expect(credits.get() == c0 && owed > 0f && Portfolio.get().homeShares().size() == 1
+                && Math.abs(Portfolio.get().homeShares().get(0).amount - owed) < CREDIT_EPS
+                && split.contains("comes due at the end of the month"), "her share is owed, not paid at once: " + split);
         expect(Portfolio.get().exKids().contains(kid) && !ff.directory.contains(she),
                 "your ex takes the kids and leaves the comm directory");
         month(tick);
-        expect(Portfolio.get().lastAlimony == Settings.DEFAULT_ALIMONY, "alimony for the child: "
-                + Portfolio.get().lastAlimony);
+        expect(Math.abs(Portfolio.get().lastHomeShares - owed) < CREDIT_EPS && Portfolio.get().homeShares().isEmpty(),
+                "her share is paid with the month: " + Portfolio.get().lastHomeShares);
+        expect(Portfolio.get().lastAlimony == Kids.upkeep(kid) * Family.SUPPORT_SHARE && Portfolio.get().lastAlimony > 0f,
+                "child support for the child, half the cost at home: " + Portfolio.get().lastAlimony);
         now += (long) (Family.growUpDays() * DAY) + DAY;
         month(tick);
-        expect(Portfolio.get().exKids().isEmpty() && Portfolio.get().lastAlimony == 0f, "no alimony once the kid grows up");
+        expect(Portfolio.get().exKids().isEmpty() && Portfolio.get().lastAlimony == 0f,
+                "no child support once the kid grows up");
+        Family.release(home);
+        Portfolio.get().properties().remove(home);
 
         Listing l2 = MarketRules.listings(fm).list().get(0);
         Actions.buy(fm, l2);
@@ -1598,6 +1656,18 @@ public final class RuntimeCheck {
                 return 0.01f;
             }
         };
+        // 1.16.0 (LLS-46): an administrator away from you says no 85% of the time, then only in person.
+        String afar = Family.propose(home2, gov, new Random(5) {
+            @Override
+            public float nextFloat() {
+                return 0.5f;
+            }
+        });
+        expect(afar.equals("Lena Orr: \"Not like this. Ask me in person.\"") && home2.partner() == null
+                && Partners.ASK_REASON.equals(Family.cannotPropose(home2, gov))
+                && Partners.awayLine(gov).equals("On Orrstead. Wants to be asked in person"),
+                "a proposal from afar: " + afar + " / " + Partners.awayLine(gov));
+        gov.getMemoryWithoutUpdate().unset(Partners.ASK_IN_PERSON);
         String no = Family.propose(home2, gov, cheat);
         expect(no.contains("cheating on you") && home2.partner() == null && Family.isAdmin(gov)
                 && "Seeing someone else.".equals(Family.wouldRefuse(gov)),
@@ -1788,10 +1858,21 @@ public final class RuntimeCheck {
         rough.happySum = 10f;
         rough.happyDays = 1;
         List<String> off = Kids.badSkills(rough, true), adm = Kids.badSkills(rough, false);
-        expect(off.contains("lls_adhd") && off.contains("lls_weak_lungs") && off.contains("lls_timid")
+        // 1.16.0 (LLS-46): ADHD and Asthma are no flaws: ADHD gives its mixed skills, Asthma none.
+        expect(!off.contains("lls_adhd") && !off.contains("lls_weak_lungs") && off.contains("lls_timid")
                 && off.contains("lls_hothead"), "a rough childhood: officer skills " + off);
-        expect(adm.contains("lls_slacker") && adm.contains("lls_wasteful") && adm.contains("lls_unpopular"),
+        expect(!adm.contains("lls_slacker") && adm.contains("lls_wasteful") && adm.contains("lls_unpopular"),
                 "a rough childhood: administrator skills " + adm);
+        expect(Kids.neutralSkills(rough, true).equals(java.util.Arrays.asList("lls_adhd"))
+                && Kids.neutralSkills(rough, false).equals(java.util.Arrays.asList("lls_big_ideas")),
+                "ADHD gives Hyperfocus or Big ideas: " + Kids.neutralSkills(rough, true) + Kids.neutralSkills(rough, false));
+        Child loner = new Child();
+        loner.traits().add("loner");
+        loner.traits().add("neet");
+        expect(Kids.neutralSkills(loner, true).equals(java.util.Arrays.asList("lls_self_reliant", "lls_careful"))
+                && Kids.neutralSkills(loner, false).equals(java.util.Arrays.asList("lls_independent", "lls_keeps_watch"))
+                && Kids.badMarks(loner) == 0 && Kids.training(loner) == 0,
+                "Loner and Homebody: mixed skills, no bad marks, training +1 -1: " + Kids.neutralSkills(loner, true));
         // 1.9.0: a sickly childhood adds Weak lungs / Wasteful and a bad mark; good traits give good skills.
         Child sick = new Child();
         sick.healthSum = 30f;
@@ -1806,7 +1887,7 @@ public final class RuntimeCheck {
         bright.traits().add("adhd");
         expect(Kids.goodSkills(bright, true).equals(java.util.Arrays.asList("lls_fit", "lls_team_player"))
                 && Kids.goodSkills(bright, false).equals(java.util.Arrays.asList("lls_hard_worker", "lls_beloved"))
-                && !Kids.goodSkills(bright, true).contains("lls_adhd") && Kids.badSkills(bright, true).contains("lls_adhd")
+                && !Kids.goodSkills(bright, true).contains("lls_adhd") && !Kids.badSkills(bright, true).contains("lls_adhd")
                 && Kids.goodTraits(bright) == 2, "good traits give good skills: " + Kids.goodSkills(bright, true));
         Child wheezy = new Child();
         wheezy.traits().add("asthma");

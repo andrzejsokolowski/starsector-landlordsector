@@ -21,7 +21,6 @@ import oddiszcommons.ledger.Ledger;
 public class HomeownerScript implements EveryFrameScript, MarketImmigrationModifier {
 
     private static final String MOD_ID = "landlordsector_homeowners";
-    private static final String WIFE_ID = "landlordsector_family";
     private static final String KIDS_ID = "landlordsector_kids";
     private static HomeownerScript current;
 
@@ -72,11 +71,8 @@ public class HomeownerScript implements EveryFrameScript, MarketImmigrationModif
             ledger.flat(m.getStability(), MOD_ID, stability, "Homeowners", m);
             if (withGrowth.add(m)) m.addTransientImmigrationModifier(this);
         }
-        // 1.2.0: no tariff where your wife or husband lives with you; growth where your kids inspire people.
-        for (String id : Family.spouseMarkets()) {
-            MarketAPI m = Global.getSector().getEconomy().getMarket(id);
-            if (m != null) ledger.mult(m.getTariff(), WIFE_ID, 0f, "Your family lives here", m);
-        }
+        // Growth where your kids inspire people. 1.16.0 (LLS-46, Landlordsector Renewed's way): the 1.2.0 "no tariff
+        // where your wife or husband lives" is gone; the ledger's sweep takes it off markets that still carry it.
         for (Child c : Portfolio.get().adultKids()) {
             if (c.marketId == null) continue;
             MarketAPI m = Global.getSector().getEconomy().getMarket(c.marketId);

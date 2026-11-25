@@ -69,7 +69,9 @@ public class TenantDaily implements EveryFrameScript {
             finishWork(p);
             if (p.tenant != null) {
                 p.tenant.mood = settle(p.tenant.mood);
-                if (p.condemned) {
+                // 1.16.0 (LLS-46): warnings as your home falls apart, and 30 days to repair a condemned one.
+                if (p.playerHome) Partners.daily(p);
+                if (p.condemned && !(p.tenant.isPartner() && Partners.waits(p))) {
                     if (p.tenant.isPartner()) {
                         Family.leaves(p, false, Family.subject(p.tenant) + " left you: " + p.displayName()
                                 + " is falling apart.");
@@ -224,6 +226,8 @@ public class TenantDaily implements EveryFrameScript {
     private static boolean allowed(Property p, TenantEvents.Def d) {
         // 1.2.0: no rent, tips or new partners for the one who lives with you.
         if (p.tenant != null && p.tenant.isPartner() && Family.PARTNER_SKIP_EVENTS.contains(d.id)) return false;
+        // 1.16.0 (LLS-46): no graffiti, promotions or lost jobs for your wife or husband; only a Zealot wrecks machinery.
+        if (p.tenant != null && !Partners.allowed(p.tenant, d.id)) return false;
         // 1.2.2: Sophia Anderson still runs AoTD research, so tenant events never kill her.
         if (d.dies && p.tenant != null && Family.isSophia(p.tenant.person)) return false;
         if (d.isQuestion()) {
@@ -277,7 +281,7 @@ public class TenantDaily implements EveryFrameScript {
         // 1.15.0 (LLS-42): achievements.
         if (e.id != null && e.id.startsWith("hidden_crate")) Feats.mark("crate");
         if (e.id != null && e.id.startsWith("police_raid")) Feats.mark("raid");
-        String text = prefix + eventText(p, e.text, t) + suffix;
+        String text = prefix + eventText(p, Partners.text(t, e.id, e.text), t) + suffix;
         if (e.condition != 0f && !p.condemned) {
             // 1.12.1: event damage counts less (Andrzej: "make repairs less needed").
             float dc = e.condition < 0f ? e.condition * TierTable.economy().eventDamage : e.condition;
@@ -311,8 +315,8 @@ public class TenantDaily implements EveryFrameScript {
             Family.leaves(p, e.dies, text);
             return text;
         }
-        String said = e.big && t != null && !e.dies
-                ? TenantEvents.say(e.id, t.traits(), t.factionId, new java.util.Random()) : null;
+        String said = e.big && t != null && !e.dies ? (t.isPartner() ? Partners.say(e.id, new java.util.Random())
+                : TenantEvents.say(e.id, t.traits(), t.factionId, new java.util.Random())) : null;
         Notify.event(p, text, e.good, e.big, t != null ? t.name : null, said);
         if (leaves && t != null) {
             p.tenant = null;
@@ -381,13 +385,20 @@ public class TenantDaily implements EveryFrameScript {
     static String tenantWords(String text, Tenant t) {
         if (t == null) return text.replace("$tenant", "The tenant");
         if (!t.isPartner()) return text.replace("$tenant", t.name);
-        if (text.startsWith("$tenant")) text = Family.subject(t) + text.substring("$tenant".length());
+        // 1.16.0 (LLS-46): "Your wife Mira Okoye's late nights", not "Your wife, Mira Okoye,'s".
+        if (text.startsWith("$tenant's")) {
+            text = "Your " + Family.noun(t) + " " + t.name + text.substring("$tenant".length());
+        } else if (text.startsWith("$tenant")) {
+            text = Family.subject(t) + text.substring("$tenant".length());
+        }
         return text.replace("$tenant", Family.who(t));
     }
 
     static void maybeMoveOut(Property p, Random random) {
         // 1.13.0 (LLS-43, Andrzej: "I also like it being binding"): an unhappy tenant stays until the lease ends.
         if (Leases.running(p.tenant)) return;
+        // 1.16.0 (LLS-46): a new wife or husband won't leave in the first 6 months.
+        if (Partners.honeymoon(p.tenant)) return;
         PropertyStats st = p.stats();
         if (random.nextFloat() >= TenantRules.moveOutChance(st.happiness, p.tenant.loyal())) return;
         if (p.tenant.isPartner()) {

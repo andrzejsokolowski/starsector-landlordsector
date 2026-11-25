@@ -46,15 +46,23 @@ public class Portfolio {
 
     /** 1.2.0: grown kids who work in the mines or inspire a colony, kept for their pay and bonus. */
     public List<Child> adultKids;
-    /** 1.2.0: kids who left with a former partner: alimony until they grow up. */
+    /** 1.2.0: kids who left with a former partner: child support (alimony before 1.16.0) until they grow up. */
     public List<Child> exKids;
-    /** 1.2.0: children born so far, for "Junior II", "Junior III". */
+    /** 1.2.0: children born so far. */
     public int kidsBorn;
-    /** 1.2.0: last month's alimony and the pay grown kids sent home. */
+    /** 1.2.0: last month's child support (named alimony before 1.16.0) and the pay grown kids sent home. */
     public float lastAlimony;
+    /** 1.16.0 (LLS-46): former spouses' shares of a home, paid with the next month's report, and last month's total. */
+    public List<HomeShare> homeShares;
+    public float lastHomeShares;
     public float lastKidPay;
     /** 1.8.0: what raising the kids at home cost last month. */
     public float lastKidCost;
+
+    public List<HomeShare> homeShares() {
+        if (homeShares == null) homeShares = new ArrayList<>();
+        return homeShares;
+    }
 
     public List<Child> adultKids() {
         if (adultKids == null) adultKids = new ArrayList<>();

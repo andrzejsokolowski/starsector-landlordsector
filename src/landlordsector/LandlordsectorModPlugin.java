@@ -37,6 +37,9 @@ public class LandlordsectorModPlugin extends BaseModPlugin {
         Kids.load(Global.getSettings().getMergedJSON(Kids.EVENTS_PATH));
         Art.loadFurnitureIcons();
         Manage.addPage(Settings.MOD_ID, "Real estate", new Color(200, 170, 80), new RealEstatePage());
+        // 1.16.0 (LLS-46, from Landlordsector Renewed): the family has its own page next to Real estate.
+        Manage.addPage(landlordsector.manage.FamilyPage.PAGE_ID, "Family", new Color(200, 170, 80),
+                new landlordsector.manage.FamilyPage());
     }
 
     @Override

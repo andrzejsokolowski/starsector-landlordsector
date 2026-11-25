@@ -287,7 +287,9 @@ public final class PropertyStats {
             for (Note n : s.notes) s.happinessLines.add(n.line());
         }
         // Andrzej, 0.5.0: "Don't spoil the effects of high tenant happiness - make a general description".
-        s.happinessLines.add(new String[] {"A happy tenant looks after your home, and good things happen more often."
+        s.happinessLines.add(new String[] {tenant != null && tenant.isPartner() ? "A happy " + Family.noun(tenant)
+                + " makes home a good place to come back to. An unhappy one may end things."
+                : "A happy tenant looks after your home, and good things happen more often."
                 + " An unhappy one causes trouble and may move out.", null});
         health(s, houseTraits, condition, tenant);
 
@@ -425,6 +427,12 @@ public final class PropertyStats {
                 float v = (Float) b[1];
                 levelExtra += v;
                 s.notes.add(new Note(b[0] + " (" + signed(v) + ")", v > 0f));
+            }
+            // 1.16.0 (LLS-46, from Landlordsector Renewed): +30 for the first 6 months, fading out by a cycle.
+            float love = Math.round(Partners.newLove(t));
+            if (love >= 1f) {
+                levelExtra += love;
+                s.notes.add(new Note("New relationship energy (+" + Math.round(love) + ")", true));
             }
             return TenantRules.tenantHappiness(home, t.traitHappiness() + levelExtra, liked, disliked, away, t.mood);
         }
